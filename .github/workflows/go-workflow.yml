@@ -20,7 +20,10 @@ jobs:
         run: go version
           
       - name: Build
-        run: go build .
+        run: |
+          cd SteamAPI/ 
+          go build 
+
 
       - name: Run Tests
         run: go test .
