@@ -1,0 +1,4 @@
+/gcp/cloud_storage/terraform.tfstate
+/gcp/cloud_storage/.terraform.lock.hcl
+/gcp/cloud_storage/.terraform
+/gcp/cloud_storage/terraform.tfstate.backup
