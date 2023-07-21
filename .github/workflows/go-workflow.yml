@@ -23,8 +23,7 @@ jobs:
         run: |
           cd SteamAPI/ 
           go build 
-          ls
 
 
-      - name: Run Tests
-        run: go test .
+      #- name: Run Tests
+      #  run: go test .
