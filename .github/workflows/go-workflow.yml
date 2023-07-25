@@ -25,5 +25,7 @@ jobs:
           go build 
 
 
-      #- name: Run Tests
-      #  run: go test .
+      - name: Run Tests
+        run: |
+          cd SteamAPI/api/tests
+          go test -v ./.
