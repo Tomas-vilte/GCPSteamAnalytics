@@ -2,8 +2,17 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 )
+
+// DataFetcher representa la interfaz para obtener datos.
+type DataFetcher interface {
+	GetData() ([]Item, error)
+}
+
+// RealDataFetcher implementa DataFetcher para obtener datos reales de la API.
+type RealDataFetcher struct{}
 
 // APIResponse representa la estructura del JSON devuelto por la API.
 type APIResponse struct {
@@ -20,7 +29,7 @@ type Item struct {
 
 // GetData realiza una solicitud HTTP GET al endpoint "http://localhost:5000/datos" para obtener los datos.
 // Retorna una lista de elementos (Item) y un error en caso de que la solicitud falle o el JSON no pueda ser decodificado.
-func GetData() ([]Item, error) {
+func (r *RealDataFetcher) GetData() ([]Item, error) {
 	// Realizar la solicitud HTTP GET a la API para obtener los datos.
 	response, err := http.Get("http://localhost:5000/datos")
 	if err != nil {
@@ -38,3 +47,6 @@ func GetData() ([]Item, error) {
 
 	return apiResponse.Data.StoreItems, nil
 }
+
+// Definir un error personalizado para cuando falle la obtención de datos.
+var ErrDataFetch = errors.New("error al obtener datos")
