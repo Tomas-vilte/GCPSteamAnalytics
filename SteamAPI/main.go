@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"steamAPI/api/db"
 	"steamAPI/api/handlers"
 )
 
@@ -19,4 +21,15 @@ func main() {
 		fmt.Println(v)
 	}
 
+	var dba db.MySQLDatabase
+
+	err = dba.Connect()
+	if err != nil {
+		log.Fatal("Error al conectar a Mysql:", err)
+	}
+	defer func() {
+		if err := dba.Close(); err != nil {
+			log.Println("Error al cerrar la conexión:", err)
+		}
+	}()
 }
