@@ -20,13 +20,12 @@ func (m *MySQLDatabase) Connect() error {
 	var err error
 	m.db, err = sql.Open("mysql", "root:root@tcp(localhost:3306)/goweb")
 	if err != nil {
-		log.Fatalf("Hubo un error al conectarse al Mysql: %v", err)
 		return err
 	}
 
 	err = m.db.Ping()
 	if err != nil {
-		log.Fatalf("Error al cerrar la conexion: %v", err)
+		log.Fatalf("Hubo un error al conectarse a la base de datos: %v", err)
 		m.db.Close()
 		return err
 	}

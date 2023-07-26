@@ -21,7 +21,7 @@ func main() {
 		fmt.Println(v)
 	}
 
-	var dba db.MySQLDatabase
+	dba := db.MySQLDatabase{}
 
 	err = dba.Connect()
 	if err != nil {
