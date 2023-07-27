@@ -14,7 +14,7 @@ func main() {
 	dataFetcher := &handlers.RealDataFetcher{}
 	res, err := dataFetcher.GetData()
 	if err != nil {
-		fmt.Println("Error:", err)
+		log.Println("Error al obtener datos:", err)
 		return
 	}
 	for _, v := range res {

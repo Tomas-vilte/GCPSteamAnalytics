@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 )
 
@@ -16,9 +17,9 @@ type RealDataFetcher struct{}
 
 // APIResponse representa la estructura del JSON devuelto por la API.
 type APIResponse struct {
-	Data struct {
-		StoreItems []Item `json:"store_items"`
-	} `json:"data"`
+	Applist struct {
+		Apps []Item `json:"apps"`
+	} `json:"applist"`
 }
 
 // Item representa cada elemento del array "store_items".
@@ -27,12 +28,13 @@ type Item struct {
 	Name  string `json:"name"`
 }
 
-// GetData realiza una solicitud HTTP GET al endpoint "http://localhost:5000/datos" para obtener los datos.
+// GetData realiza una solicitud HTTP GET al endpoint de Steam para obtener los datos.
 // Retorna una lista de elementos (Item) y un error en caso de que la solicitud falle o el JSON no pueda ser decodificado.
 func (r *RealDataFetcher) GetData() ([]Item, error) {
 	// Realizar la solicitud HTTP GET a la API para obtener los datos.
-	response, err := http.Get("http://localhost:5000/datos")
+	response, err := http.Get("https://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=1A059D89640D054BB20FF254FB529E14&format=json")
 	if err != nil {
+		log.Printf("Error al realzar una request: %v", err)
 		return nil, err
 	}
 
@@ -42,10 +44,10 @@ func (r *RealDataFetcher) GetData() ([]Item, error) {
 	var apiResponse APIResponse
 	err = json.NewDecoder(response.Body).Decode(&apiResponse)
 	if err != nil {
+		log.Printf("Error al decodificar la respuesta JSON: %v", err)
 		return nil, err
 	}
-
-	return apiResponse.Data.StoreItems, nil
+	return apiResponse.Applist.Apps, nil
 }
 
 // Definir un error personalizado para cuando falle la obtención de datos.
