@@ -32,4 +32,17 @@ func main() {
 			log.Println("Error al cerrar la conexión:", err)
 		}
 	}()
+
+	for _, item := range data {
+		newItem := handlers.Item{
+			Appid: item.Appid,
+			Name:  item.Name,
+		}
+		log.Println("Juego insertado en la tabla", newItem.Name)
+		err := dba.Insert(newItem)
+		if err != nil {
+			log.Printf("Error al insertar el elemento: %v", err)
+		}
+
+	}
 }

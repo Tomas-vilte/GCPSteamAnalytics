@@ -8,10 +8,12 @@ import (
 	"steamAPI/api/handlers"
 )
 
+const batchSize = 1000
+
 type Database interface {
 	Connect() error
 	Close() error
-	Insert(item handlers.Item) error
+	InsertBatch(items []handlers.Item) error
 }
 
 type MySQLDatabase struct {
@@ -46,5 +48,9 @@ func (m *MySQLDatabase) Insert(item handlers.Item) error {
 		log.Printf("Error al insertar el elemento: %v", err)
 		return err
 	}
+	return nil
+}
+
+func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
 	return nil
 }
