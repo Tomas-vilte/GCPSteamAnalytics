@@ -12,20 +12,20 @@ func main() {
 	//file := "/home/tomi/GCPSteamAnalytics/SteamAPI/api/data/hola2.txt"
 	//fmt.Println(utilities.UploadFileToGCS(file, "steam-analytics", "hola12.txt"))
 	dataFetcher := &handlers.RealDataFetcher{}
-	res, err := dataFetcher.GetData()
+	data, err := dataFetcher.GetData()
 	if err != nil {
 		log.Println("Error al obtener datos:", err)
 		return
 	}
-	for _, v := range res {
+	for _, v := range data {
 		fmt.Println(v)
 	}
 
-	dba := db.MySQLDatabase{}
+	dba := &db.MySQLDatabase{}
 
 	err = dba.Connect()
 	if err != nil {
-		log.Fatal("Error al conectar a Mysql:", err)
+		log.Println("Error al conectar a Mysql:", err)
 	}
 	defer func() {
 		if err := dba.Close(); err != nil {
