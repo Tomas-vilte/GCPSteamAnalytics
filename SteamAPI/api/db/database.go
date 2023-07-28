@@ -53,19 +53,14 @@ func (m *MySQLDatabase) Insert(item handlers.Item) error {
 }
 
 func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
-	if len(items) == 0 {
-		return nil
-	}
-
-	// Dividimos los datos en lotes
+	// Dividir los datos en lotes
 	numItems := len(items)
 	numBatches := (numItems + batchSize - 1) / batchSize
 
-	// Iteramos los lotes y realizamos la insercion por lotes
+	// Recorrer los lotes y realizar inserción por lotes
 	for i := 0; i < numBatches; i++ {
 		start := i * batchSize
 		end := (i + 1) * batchSize
-
 		if end > numItems {
 			end = numItems
 		}
@@ -77,8 +72,8 @@ func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
 			log.Printf("Error al insertar el lote de elementos: %v", err)
 			return err
 		}
-
 	}
+
 	return nil
 }
 
@@ -87,35 +82,23 @@ func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 		return nil
 	}
 
-	// Creamos la query para insertar los lotes
-	query := "INSERT INTO games (appid, name) VALUES (?, ?)"
-	stmt, err := m.db.Prepare(query)
-	if err != nil {
-		log.Printf("Error al preparar la consulta: %v", err)
-		return err
-	}
-	defer stmt.Close()
-
-	// Ejecutamos la query en la base de datos utilizando transacciones
-	tx, err := m.db.Begin()
-	if err != nil {
-		log.Printf("Error al iniciar la transaccion: %v", err)
-		return err
-	}
-	tx.Rollback() // Si hay un error, se hace un rollback de la transaccion
-
-	// Iteramos sobre los elementos y ejecutamos la query con los valores correspondientes
-	for _, item := range items {
-		_, err := tx.Stmt(stmt).Exec(item.Appid, item.Name)
-		if err != nil {
-			log.Printf("Error al insertar el lote de elementos: %v", err)
-			return err
+	// Crear la consulta de inserción en lote
+	query := "INSERT INTO games (appid, name) VALUES "
+	vals := []interface{}{}
+	for i, item := range items {
+		query += "(?, ?)"
+		vals = append(vals, item.Appid, item.Name)
+		if i < len(items)-1 {
+			query += ", "
 		}
 	}
-	// Hacemos commit de la transaccion una vez que se insertan todos los elementos
-	if err = tx.Commit(); err != nil {
-		log.Printf("Error al hacer commit de la transaccion: %v", err)
+
+	// Ejecutar la consulta en la base de datos
+	_, err := m.db.Exec(query, vals...)
+	if err != nil {
+		log.Printf("Error al insertar el lote de elementos: %v", err)
 		return err
 	}
+
 	return nil
 }
