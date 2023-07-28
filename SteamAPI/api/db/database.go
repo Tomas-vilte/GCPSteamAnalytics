@@ -14,6 +14,7 @@ type Database interface {
 	Connect() error
 	Close() error
 	InsertBatch(items []handlers.Item) error
+	InsertBatchData(items []handlers.Item) error
 }
 
 type MySQLDatabase struct {
@@ -52,5 +53,35 @@ func (m *MySQLDatabase) Insert(item handlers.Item) error {
 }
 
 func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
+	if len(items) == 0 {
+		return nil
+	}
+
+	// Dividimos los datos en lotes
+	numItems := len(items)
+	numBatches := (numItems + batchSize - 1) / batchSize
+
+	// Iteramos los lotes y realizamos la insercion por lotes
+	for i := 0; i < numBatches; i++ {
+		start := i * batchSize
+		end := (i + 1) * batchSize
+
+		if end > numItems {
+			end = numItems
+		}
+
+		batchData := items[start:end]
+
+		err := m.InsertBatchData(batchData)
+		if err != nil {
+			log.Printf("Error al insertar el lote de elementos: %v", err)
+			return err
+		}
+
+	}
+	return nil
+}
+
+func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 	return nil
 }
