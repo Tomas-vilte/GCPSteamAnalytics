@@ -56,10 +56,10 @@ func TestConnectWithError(t *testing.T) {
 }
 
 func TestInsertBatchData_Success(t *testing.T) {
-	// Crear el mock de la base de datos
+	// Crea el mock de la base de datos
 	mockDB := &mocks.MockDatabase{}
 
-	// Simular una conexión exitosa
+	// Simula una conexión exitosa
 	mockDB.Connect()
 
 	// Datos de prueba para insertar en lotes
@@ -69,16 +69,16 @@ func TestInsertBatchData_Success(t *testing.T) {
 		// Agregar más items según sea necesario
 	}
 
-	// Configurar el mock para simular una inserción exitosa
+	// Configura el mock para simular una inserción exitosa
 	mockDB.ShouldInsert = true
 
-	// Ejecutar la función que se va a probar (InsertBatchData) con el mock como base de datos
+	// Ejecuta la función que se va a probar (InsertBatchData) con el mock como base de datos
 	err := mockDB.InsertBatchData(items)
 	if err != nil {
 		t.Errorf("Se esperaba una inserción exitosa, pero ocurrió un error: %v", err)
 	}
 
-	// Verificar que los items se hayan insertado correctamente en el mock
+	// Verifica que los items se hayan insertado correctamente en el mock
 	insertedItems := mockDB.GetInsertedItems()
 	if len(insertedItems) != len(items) {
 		t.Errorf("Número incorrecto de items insertados. Se esperaba %d, se obtuvo %d", len(items), len(insertedItems))

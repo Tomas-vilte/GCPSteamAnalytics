@@ -81,13 +81,13 @@ func TestGetDataErrorHandling(t *testing.T) {
 }
 
 func TestInsertData_Success(t *testing.T) {
-	// Crear el mock del DataFetcher
+	// Crea el mock del DataFetcher
 	mockDataFetcher := &mocks.MockDataFetcher{}
 
-	// Crear el mock de la base de datos
+	// Crea el mock de la base de datos
 	mockDB := &mocks.MockDatabase{}
 
-	// Simular una conexión exitosa en el mock de la base de datos
+	// Simula una conexión exitosa en el mock de la base de datos
 	mockDB.Connected = true
 
 	// Datos de prueba que devolverá el mock del DataFetcher
@@ -96,17 +96,17 @@ func TestInsertData_Success(t *testing.T) {
 		{Appid: 2, Name: "Juego 2"},
 	}
 
-	// Configurar el mock del DataFetcher para devolver los items de prueba
+	// Configura el mock del DataFetcher para devolver los items de prueba
 	mockDataFetcher.On("GetData").Return(items, nil)
 
-	// Configurar el mock de la base de datos para simular una inserción exitosa
+	// Configura el mock de la base de datos para simular una inserción exitosa
 	mockDB.ShouldInsert = true
 
 	// Ejecuta la función que se va a probar (InsertData) con los mocks
 	err := mockDB.InsertData(mockDataFetcher)
 	assert.NoError(t, err, "Se esperaba una inserción exitosa")
 
-	// Verificar que los items se hayan insertado correctamente en el mock de la base de datos
+	// Verifica que los items se hayan insertado correctamente en el mock de la base de datos
 	insertedItems := mockDB.GetInsertedItems()
 	assert.Equal(t, len(items), len(insertedItems), "Número incorrecto de items insertados")
 

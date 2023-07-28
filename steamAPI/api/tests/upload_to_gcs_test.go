@@ -24,7 +24,7 @@ func TestUploadFileToGCS_Success(t *testing.T) {
 	mockUploader := new(MockUploader)
 
 	// Definimos el comportamiento esperado del mock.
-	filePath := "GCPSteamAnalytics/SteamAPI/api/data/hola2.txt"
+	filePath := "GCPSteamAnalytics/steamAPI/api/data/hola2.txt"
 	bucket := "steam-analytics"
 	object := "hola3.txt"
 	mockUploader.On("UploadFileToGCS", filePath, bucket, object).Return(nil)
@@ -44,7 +44,7 @@ func TestUploadFileToGCS_Error(t *testing.T) {
 	mockUploader := new(MockUploader)
 
 	// Definimos el comportamiento esperado del mock para retornar un error.
-	filePath := "GCPSteamAnalytics/SteamAPI/api/data/hola2.txt"
+	filePath := "GCPSteamAnalytics/steamAPI/api/data/hola2.txt"
 	bucket := "steam-analytics"
 	object := "hola3.txt"
 	expectedError := fmt.Errorf("error al subir archivo")
