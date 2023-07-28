@@ -2,6 +2,7 @@ package tests
 
 import (
 	"steamAPI/api/db/mocks"
+	"steamAPI/api/handlers"
 	"testing"
 )
 
@@ -51,5 +52,35 @@ func TestConnectWithError(t *testing.T) {
 
 	if database.Connected {
 		t.Errorf("Se esperaba que la conexión fallara, pero la base de datos está conectada")
+	}
+}
+
+func TestInsertBatchData_Success(t *testing.T) {
+	// Crear el mock de la base de datos
+	mockDB := &mocks.MockDatabase{}
+
+	// Simular una conexión exitosa
+	mockDB.Connect()
+
+	// Datos de prueba para insertar en lotes
+	items := []handlers.Item{
+		{Appid: 1, Name: "Juego 1"},
+		{Appid: 2, Name: "Juego 2"},
+		// Agregar más items según sea necesario
+	}
+
+	// Configurar el mock para simular una inserción exitosa
+	mockDB.ShouldInsert = true
+
+	// Ejecutar la función que se va a probar (InsertBatchData) con el mock como base de datos
+	err := mockDB.InsertBatchData(items)
+	if err != nil {
+		t.Errorf("Se esperaba una inserción exitosa, pero ocurrió un error: %v", err)
+	}
+
+	// Verificar que los items se hayan insertado correctamente en el mock
+	insertedItems := mockDB.GetInsertedItems()
+	if len(insertedItems) != len(items) {
+		t.Errorf("Número incorrecto de items insertados. Se esperaba %d, se obtuvo %d", len(items), len(insertedItems))
 	}
 }

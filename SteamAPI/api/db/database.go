@@ -43,21 +43,15 @@ func (m *MySQLDatabase) Close() error {
 	return m.db.Close()
 }
 
-func (m *MySQLDatabase) Insert(item handlers.Item) error {
-	_, err := m.db.Exec("INSERT INTO games (appid, name) VALUES (?, ?) ", item.Appid, item.Name)
-	if err != nil {
-		log.Printf("Error al insertar el elemento: %v", err)
-		return err
-	}
-	return nil
-}
-
+// InsertBatch realiza la inserción de datos en la base de datos por lotes.
+// Divide los datos ingresados en lotes más pequeñas y llama a la función InsertBatchData para cada lote.
+// Si ocurre algún problema durante la inserción en lotes, la función devuelve un error.
 func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
-	// Dividir los datos en lotes
+	// Dividimos los datos en lotes
 	numItems := len(items)
 	numBatches := (numItems + batchSize - 1) / batchSize
 
-	// Recorrer los lotes y realizar inserción por lotes
+	// Iteramos los lotes y realizamos la inserción por lotes
 	for i := 0; i < numBatches; i++ {
 		start := i * batchSize
 		end := (i + 1) * batchSize
@@ -77,14 +71,18 @@ func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
 	return nil
 }
 
+// InsertBatchData realiza la inserción en la base de datos de una tanda de elementos.
+// La función recibe una lista de elementos (items) y construye una consulta SQL para insertarlos en la tabla "games".
+// Utiliza marcadores de posición (?) para evitar inyecciones de SQL y luego ejecuta la consulta en la base de datos.
+// Los valores de los elementos se proporcionan como argumentos para la consulta utilizando el operador "..." para desempaquetar el slice de valores.
 func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 	if len(items) == 0 {
 		return nil
 	}
 
-	// Crear la consulta de inserción en lote
+	// Creamos la consulta para la insercion en lotes
 	query := "INSERT INTO games (appid, name) VALUES "
-	vals := []interface{}{}
+	var vals []interface{}
 	for i, item := range items {
 		query += "(?, ?)"
 		vals = append(vals, item.Appid, item.Name)
@@ -93,7 +91,7 @@ func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 		}
 	}
 
-	// Ejecutar la consulta en la base de datos
+	// Ejecutamos la consulta en la base de datos
 	_, err := m.db.Exec(query, vals...)
 	if err != nil {
 		log.Printf("Error al insertar el lote de elementos: %v", err)
