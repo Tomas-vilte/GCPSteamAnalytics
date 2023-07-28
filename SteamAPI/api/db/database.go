@@ -83,5 +83,39 @@ func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
 }
 
 func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
+	if len(items) == 0 {
+		return nil
+	}
+
+	// Creamos la query para insertar los lotes
+	query := "INSERT INTO games (appid, name) VALUES (?, ?)"
+	stmt, err := m.db.Prepare(query)
+	if err != nil {
+		log.Printf("Error al preparar la consulta: %v", err)
+		return err
+	}
+	defer stmt.Close()
+
+	// Ejecutamos la query en la base de datos utilizando transacciones
+	tx, err := m.db.Begin()
+	if err != nil {
+		log.Printf("Error al iniciar la transaccion: %v", err)
+		return err
+	}
+	tx.Rollback() // Si hay un error, se hace un rollback de la transaccion
+
+	// Iteramos sobre los elementos y ejecutamos la query con los valores correspondientes
+	for _, item := range items {
+		_, err := tx.Stmt(stmt).Exec(item.Appid, item.Name)
+		if err != nil {
+			log.Printf("Error al insertar el lote de elementos: %v", err)
+			return err
+		}
+	}
+	// Hacemos commit de la transaccion una vez que se insertan todos los elementos
+	if err = tx.Commit(); err != nil {
+		log.Printf("Error al hacer commit de la transaccion: %v", err)
+		return err
+	}
 	return nil
 }
