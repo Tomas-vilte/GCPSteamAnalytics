@@ -3,3 +3,7 @@ provider "google" {
     project = "gcpsteamanalytics"
     region = "US"
 }
+
+module "cloud_function" {
+  source = "./cloud_function"
+}

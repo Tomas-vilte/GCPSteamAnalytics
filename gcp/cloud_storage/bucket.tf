@@ -1,4 +1,4 @@
-resource "google_storage_bucket" "static" {
+resource "google_storage_bucket" "bucket" {
   name = "steam-analytics"
   location = "US"
   storage_class = "STANDARD"
