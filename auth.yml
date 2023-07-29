@@ -1,0 +1,24 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Mi API
+  description: Descripción de mi API
+
+paths:
+  /dbgames:
+    get:
+      summary: Obtener datos de juegos de la base de datos
+      description: Activa la Google Cloud Function para obtener datos de juegos desde la base de datos.
+      responses:
+        '200':
+          description: Respuesta exitosa
+          schema:
+            type: object
+            properties:
+              datos:
+                type: array
+                items:
+                  $ref: '#/definitions/Juego'
+
+x-google-backend:
+  address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/function-1  # Reemplaza esto con la URL de tu función en Google Cloud Functions
