@@ -2,8 +2,8 @@ package mocks
 
 import (
 	"errors"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
 	"github.com/stretchr/testify/mock"
-	"steamAPI/api/handlers"
 )
 
 type MockDatabase struct {

@@ -21,11 +21,11 @@ jobs:
           
       - name: Build
         run: |
-          cd steamAPI/ 
+          ls
           go build 
 
 
       - name: Run Tests
         run: |
-          cd steamAPI/api/tests
+          cd tests
           go test -v ./.

@@ -1,9 +1,9 @@
 package tests
 
 import (
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers/mocks"
 	"github.com/stretchr/testify/assert"
-	"steamAPI/api/handlers"
-	"steamAPI/api/handlers/mocks"
 	"testing"
 )
 

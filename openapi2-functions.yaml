@@ -1,0 +1,23 @@
+swagger: '2.0'
+info:
+  title: myapi
+  description: Sample API on API Gateway with a Google Cloud Functions backend
+  version: 1.0.0
+host: myapi.apigateway.gcpsteamanalytics.cloud.goog 
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /dbgames:
+    post:
+      summary: Get games from steam
+      operationId: getGamesFromSteam
+      x-google-backend:
+        address: >-
+          https://us-central1-gcpsteamanalytics.cloudfunctions.net/processDataSteam
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
