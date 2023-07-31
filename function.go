@@ -1,23 +1,27 @@
-package funcgcp
+package GCPSteamAnalytics
 
 import (
 	"bytes"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"regexp"
-	"steamAPI/api/handlers"
-	"steamAPI/api/utilities"
 	"time"
+
+	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utilities"
 )
 
-func ProcessSteamDataAndSaveToStorage(c *gin.Context) {
-	if c.Request.Method != http.MethodPost {
-		c.JSON(http.StatusMethodNotAllowed, gin.H{
-			"error": "Método no permitido. Debes utilizar POST para procesar los datos.",
-		})
+func init() {
+	functions.HTTP("ProcessSteamDataAndSaveToStorage", ProcessSteamDataAndSaveToStorage)
+}
+
+func ProcessSteamDataAndSaveToStorage(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Método no permitido. Debes utilizar POST para procesar los datos.", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -26,10 +30,7 @@ func ProcessSteamDataAndSaveToStorage(c *gin.Context) {
 	data, err := dataFetcher.GetData()
 	if err != nil {
 		log.Printf("Error al obtener los datos de la API: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"success": false,
-			"error":   "Error al obtener los datos de la API",
-		})
+		http.Error(w, "Error al obtener los datos de la API", http.StatusInternalServerError)
 		return
 	}
 
@@ -56,10 +57,7 @@ func ProcessSteamDataAndSaveToStorage(c *gin.Context) {
 	// Verificar si el nombre del archivo cumple con los requisitos
 	if !isValidFileName(fileName) {
 		log.Printf("Nombre de archivo no válido: %s", fileName)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"success": false,
-			"error":   "Nombre de archivo no válido",
-		})
+		http.Error(w, "Nombre de archivo no válido", http.StatusInternalServerError)
 		return
 	}
 
@@ -67,12 +65,10 @@ func ProcessSteamDataAndSaveToStorage(c *gin.Context) {
 	err = utilities.UploadFileToGCS(csvContent.String(), "steam-analytics", fileName)
 	if err != nil {
 		log.Printf("Error al subir el archivo .csv a Cloud Storage: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"success": false,
-			"error":   "Error al subir el archivo .csv a Cloud Storage",
-		})
+		http.Error(w, "Error al subir el archivo .csv a Cloud Storage", http.StatusInternalServerError)
 		return
 	}
+
 	startTime := time.Now()
 	// Calcular la duración del proceso de carga
 	duration := time.Since(startTime).Seconds()
@@ -91,13 +87,19 @@ func ProcessSteamDataAndSaveToStorage(c *gin.Context) {
 		"upload_time": uploadTime,
 	}
 
-	c.JSON(http.StatusOK, response)
+	writeJSONResponse(w, response, http.StatusOK)
 }
 
+// Verifica que el nombre cumpla con los requisitos usando expresiones regulares
+// Expresión regular: debe comenzar y terminar con letra o número, y puede contener letras, números, guiones, guiones bajos y puntos
+// Además, debe tener entre 3 y 63 caracteres.
 func isValidFileName(fileName string) bool {
-	// Verificar que el nombre cumpla con los requisitos usando expresiones regulares
-	// Expresión regular: debe comenzar y terminar con letra o número, y puede contener letras, números, guiones, guiones bajos y puntos
-	// Además, debe tener entre 3 y 63 caracteres.
 	validNameRegex := regexp.MustCompile(`^[a-z0-9][-a-z0-9_.]{1,61}[a-z0-9]$`)
 	return validNameRegex.MatchString(fileName)
+}
+
+func writeJSONResponse(w http.ResponseWriter, data interface{}, statusCode int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+	_ = json.NewEncoder(w).Encode(data)
 }

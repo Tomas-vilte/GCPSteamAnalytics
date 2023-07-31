@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"steamAPI/api/db/mocks"
-	"steamAPI/api/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/db/mocks"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
 	"testing"
 )
 

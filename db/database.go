@@ -3,9 +3,10 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"steamAPI/api/handlers"
+
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const batchSize = 1000

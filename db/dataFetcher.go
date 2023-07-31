@@ -2,7 +2,8 @@ package db
 
 import (
 	"log"
-	"steamAPI/api/handlers"
+
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
 )
 
 // InsertData realiza la inserción de datos en la base de datos utilizando la carga por lotes.
