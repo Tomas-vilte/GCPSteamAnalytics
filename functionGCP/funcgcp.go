@@ -5,12 +5,13 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/utilities"
 	"log"
 	"net/http"
 	"regexp"
 	"time"
+
+	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utilities"
 )
 
 func ProcessSteamDataAndSaveToStorage(w http.ResponseWriter, r *http.Request) {
