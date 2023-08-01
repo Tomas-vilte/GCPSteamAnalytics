@@ -15,7 +15,7 @@ paths:
       operationId: getGamesFromSteam
       x-google-backend:
         address: >-
-          "you url of cloud function"
+          "you url"
       responses:
         '200':
           description: A successful response

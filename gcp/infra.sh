@@ -11,4 +11,4 @@ terraform plan
 
 terraform apply --auto-approve
 
-gcloud functions deploy process-steam-analytics --region=us-central1 --source=gs://steam-analytics/steam.zip
+#gcloud functions deploy process-steam-analytics --region=us-central1 --source=gs://steam-analytics/steam.zip
