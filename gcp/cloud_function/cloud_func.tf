@@ -8,17 +8,25 @@
 // tipo de evento google.cloud.apigateway.gateway.v1.created
 // las cloud functions tienen que ser de generacion 2
 
-
-resource "google_cloudfunctions_function" "cloud_function" {
+resource "google_cloudfunctions2_function" "function" {
   name        = "process-steam-analytics"
+  location    = "us-central1"
   description = "steam-analytics"
-  runtime     = "go120"
-  available_memory_mb = 1024
-  source_archive_bucket = "steam-analytics"
-  source_archive_object = "steam.zip"
-  entry_point = "ProcessSteamDataAndSaveToStorage"
-  timeout = 60
-  trigger_http = true
-  region = "us-central1"
-  project = "gcpsteamanalytics"
+
+  build_config {
+    runtime     = "go120"
+    entry_point = "ProcessSteamDataAndSaveToStorage" # Set the entry point
+    source {
+      storage_source {  
+        bucket = "steam-analytics"
+        object = "steam.zip"
+      }
+    }
+  }
+
+  service_config {
+    max_instance_count = 1
+    available_memory   = "1024M"
+    timeout_seconds    = 60
+  }
 }

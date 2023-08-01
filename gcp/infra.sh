@@ -1,17 +1,14 @@
-# crea un archivo llamada steam.zip que comprima los archivos main.go, go.mod, go.sum y sus carpetas handlers, functionGCP, utilities 
-# y lo sube a un bucket de GCP 
-# estoy en el path /home/tomi/GCPSteamAnalytics/gcp
-# y los archivos y carpetas estan en /home/tomi/GCPSteamAnalytics
-# los archivos main.go go.sum, go.mod tienen que estar a primer nivel
+cd ..
+zip -r steam.zip go.mod main.go go.sum utilities handlers functionGCP
 
-# primero crear el .zip
-zip -r steam.zip ../main.go ../go.mod ../go.sum ../handlers ../functionGCP ../utilities
 
-# luego subirlo al bucket
 gsutil cp steam.zip gs://steam-analytics
 
-# verificar si hay actualizaciones en la infraestructura de GCP con terraform
+cd gcp
+terraform init
+
 terraform plan
 
-# actualizar la funcion
+terraform apply --auto-approve
+
 gcloud functions deploy process-steam-analytics --region=us-central1 --source=gs://steam-analytics/steam.zip
