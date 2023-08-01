@@ -21,9 +21,8 @@ jobs:
 
       - name: Format code
         run: |
-          go get -u golang.org/x/lint/golint
-          golint ./...
-          
+          go fmt ./...
+                    
       - name: Build
         run: |
           ls

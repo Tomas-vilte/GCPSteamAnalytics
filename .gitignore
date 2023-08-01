@@ -1,5 +1,7 @@
-/gcp/cloud_storage/terraform.tfstate
-/gcp/cloud_storage/.terraform.lock.hcl
-/gcp/cloud_storage/.terraform
-/gcp/cloud_storage/terraform.tfstate.backup
 .idea
+gcp/.terraform/
+gcp/.terraform/modules
+gcp/terraform.tfstate
+gcp/terraform.tfstate.backup
+gcp/.terraform.lock.hcl
+application_default_credentials.json
