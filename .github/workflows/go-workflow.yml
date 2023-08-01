@@ -18,6 +18,11 @@ jobs:
       
       - name: Get version Go
         run: go version
+
+      - name: Format code
+        run: |
+          go get -u golang.org/x/lint/golint
+          golint ./...
           
       - name: Build
         run: |
