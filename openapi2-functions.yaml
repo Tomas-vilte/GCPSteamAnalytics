@@ -15,7 +15,7 @@ paths:
       operationId: getGamesFromSteam
       x-google-backend:
         address: >-
-          https://us-central1-gcpsteamanalytics.cloudfunctions.net/processDataSteam
+          "you url of cloud function"
       responses:
         '200':
           description: A successful response
