@@ -3,6 +3,10 @@ provider "google" {
   region      = "US"
 }
 
+module "cloud_storage" {
+  source = "./cloud_storage"
+}
+
 module "cloud_function" {
   source = "./cloud_function"
 }

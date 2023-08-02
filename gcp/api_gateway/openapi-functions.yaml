@@ -20,14 +20,3 @@ paths:
           description: A successful response
           schema:
             type: string
-  /test:
-    get:
-      summary: Test endpoint for your Cloud Function
-      operationId: testEndpoint
-      x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
-      responses:
-        '200':
-          description: A successful response
-          schema:
-            type: string
