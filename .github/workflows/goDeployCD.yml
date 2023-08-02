@@ -1,0 +1,30 @@
+name: Deploy to Google Cloud Functions
+
+on:
+  workflow_run:
+    workflows: ["Go API Cloud Functions"]
+    types:
+      - completed
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      
+      - name: Deploy
+        run: |
+          cd gcp
+          bash deploy.sh
+      
+      - name: Validate deployment
+        run: |
+          curl -s https://us-central1-${{ secrets.GCP_PROJECT_ID }}.cloudfunctions.net/process-steam-analytics 
