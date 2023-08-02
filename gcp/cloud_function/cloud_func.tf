@@ -5,7 +5,7 @@ resource "google_cloudfunctions2_function" "function" {
 
   build_config {
     runtime     = "go120"
-    entry_point = "ProcessSteamDataAndSaveToStorage" 
+    entry_point = "MyCloudFunction" 
     source {
       storage_source {  
         bucket = "steam-analytics"
