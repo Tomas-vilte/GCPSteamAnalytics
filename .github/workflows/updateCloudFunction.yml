@@ -28,11 +28,11 @@ jobs:
           gcloud --version
           gcloud info
       
-      - name: Deploy
+      - name: Update Cloud Function
         run: |
           cd gcp
-          bash deploy.sh
+          bash updateCloudFunction.sh
       
       - name: Validate deployment
         run: |
-          curl -s "https://gw-7tl86y4z.uc.gateway.dev/test"
+          curl -s "${{ secrets.GCP_CLOUD_FUNCTIONS_URL }}"

@@ -1,0 +1,35 @@
+name: Update Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'gcp/**'  # Activar solo si hay cambios en el directorio 'gcp' y sus subdirectorios.
+
+jobs:
+  update_infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt-get update && sudo apt-get install terraform
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -out=tfplan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+
+      - name: Validate Infrastructure
+        run: |
+          # Aquí puedes agregar comandos para validar la infraestructura si es necesario
+          # Por ejemplo, verifica si los recursos de GCP fueron creados correctamente.

@@ -5,7 +5,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"regexp"
@@ -98,21 +97,6 @@ func writeJSONResponse(w http.ResponseWriter, data interface{}, statusCode int) 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	_ = json.NewEncoder(w).Encode(data)
-}
-
-func MyCloudFunction(w http.ResponseWriter, r *http.Request) {
-	route := mux.CurrentRoute(r)
-	path, _ := route.GetPathTemplate()
-	method := r.Method
-
-	switch {
-	case method == http.MethodGet && path == "/test":
-		OkResponse(w, r)
-	case method == http.MethodPost && path == "/dbgames":
-		ProcessSteamDataAndSaveToStorage(w, r)
-	default:
-		http.Error(w, "Ruta o método no permitido.", http.StatusMethodNotAllowed)
-	}
 }
 
 type Response struct {

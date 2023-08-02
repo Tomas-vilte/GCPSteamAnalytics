@@ -6,5 +6,5 @@ import (
 )
 
 func init() {
-	functions.HTTP("MyCloudFunction", functionGCP.MyCloudFunction)
+	functions.HTTP("ProcessSteamDataAndSaveToStorage", functionGCP.ProcessSteamDataAndSaveToStorage)
 }
