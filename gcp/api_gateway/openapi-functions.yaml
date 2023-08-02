@@ -3,7 +3,7 @@ info:
   title: myapi
   description: Sample API on API Gateway with a Google Cloud Functions backend
   version: 1.0.0
-host: myapi.apigateway.gcpsteamanalytics.cloud.goog 
+host: myapi.apigateway.gcpsteamanalytics.cloud.goog
 schemes:
   - https
 produces:
@@ -14,8 +14,18 @@ paths:
       summary: Get games from steam
       operationId: getGamesFromSteam
       x-google-backend:
-        address: >-
-          "you url"
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /test:
+    get:
+      summary: Test endpoint for your Cloud Function
+      operationId: testEndpoint
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
       responses:
         '200':
           description: A successful response
