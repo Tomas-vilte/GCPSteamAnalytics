@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/functionGCP"
+	"github.com/gorilla/mux"
 	"net/http"
 )
 
@@ -20,8 +21,14 @@ func OkResponse(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
-	// Registra la función HTTP con el nombre "ProcessSteamDataAndSaveToStorage"
-	functions.HTTP("ProcessSteamDataAndSaveToStorage", functionGCP.ProcessSteamDataAndSaveToStorage)
-	// Registra la función HTTP con el nombre "OkResponse" para el endpoint /test
-	functions.HTTP("OkResponse", OkResponse)
+	r := mux.NewRouter()
+
+	// Definir el manejador para la ruta /test con el método GET
+	r.HandleFunc("/test", OkResponse).Methods("GET")
+
+	// Definir el manejador para la ruta /dbgames con el método POST
+	r.HandleFunc("/dbgames", functionGCP.ProcessSteamDataAndSaveToStorage).Methods("POST")
+
+	// Registrar el enrutador en la función HTTP
+	functions.HTTP("api", r.ServeHTTP)
 }

@@ -35,4 +35,4 @@ jobs:
       
       - name: Validate deployment
         run: |
-          curl -s "https://us-central1-${{ secrets.GCP_PROJECT_ID }}.cloudfunctions.net/process-steam-analytics"
+          curl -s "https://gw-7tl86y4z.uc.gateway.dev/test"
