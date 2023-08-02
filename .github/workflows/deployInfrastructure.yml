@@ -3,7 +3,7 @@ name: Update Infrastructure
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'gcp/**'  # Activar solo si hay cambios en el directorio 'gcp' y sus subdirectorios.
 
@@ -31,5 +31,20 @@ jobs:
 
       - name: Validate Infrastructure
         run: |
-          # Aquí puedes agregar comandos para validar la infraestructura si es necesario
-          # Por ejemplo, verifica si los recursos de GCP fueron creados correctamente.
+            # Verificar el estado de Cloud Functions
+            gcloud functions list
+
+            # Verificar el estado de API Gateway
+            gcloud api-gateway gateways list
+
+            # Verificar el estado de Cloud Storage
+            gcloud storage buckets list
+
+
+            # Verificar el resultado de la validación
+            if [ $? -eq 0 ]; then
+              echo "Infrastructure validation passed. Infrastructure is updated successfully."
+            else
+              echo "Infrastructure validation failed. There might be issues with the updated infrastructure."
+              exit 1
+            fi
