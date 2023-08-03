@@ -19,7 +19,6 @@ func ProcessSteamDataAndSaveToStorage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Método no permitido. Debes utilizar POST para procesar los datos.", http.StatusMethodNotAllowed)
 		return
 	}
-
 	dataFetcher := &handlers.RealDataFetcher{}
 
 	data, err := dataFetcher.GetData()
@@ -99,14 +98,35 @@ func writeJSONResponse(w http.ResponseWriter, data interface{}, statusCode int) 
 	_ = json.NewEncoder(w).Encode(data)
 }
 
-type Response struct {
-	Message string `json:"message"`
-}
+func CheckHealth(w http.ResponseWriter, r *http.Request) {
 
-func OkResponse(w http.ResponseWriter, r *http.Request) {
-	// Respuesta que indica que todo está ok.
-	message := "Todo ok"
+	// Prepara el mensaje de respuesta
+	message := fmt.Sprintf("La función ProcessSteamDataAndSaveToStorage está funcionando bien, y su código de estado es %d", http.StatusOK)
+
+	// Código de estado de la función ProcessSteamDataAndSaveToStorage
+	statusCode := http.StatusOK
+
+	// Crear el JSON de respuesta
+	response := map[string]interface{}{
+		"message":     message,
+		"status_code": statusCode,
+	}
+
+	// Convertir el JSON a bytes
+	jsonBytes, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, "Error al formatear la respuesta JSON", http.StatusInternalServerError)
+		return
+	}
+
+	// Establecer las cabeceras para la respuesta JSON
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(Response{Message: message})
+	w.WriteHeader(statusCode)
+
+	// Escribir la respuesta JSON en el http.ResponseWriter
+	_, err = w.Write(jsonBytes)
+	if err != nil {
+		http.Error(w, "Error al escribir la respuesta", http.StatusInternalServerError)
+		return
+	}
 }

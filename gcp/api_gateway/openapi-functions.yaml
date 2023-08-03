@@ -9,12 +9,25 @@ schemes:
 produces:
   - application/json
 paths:
-  /dbgames:
+  /getGamesFromSteam:
     post:
       summary: Get games from steam
       operationId: getGamesFromSteam
       x-google-backend:
         address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /test-function:
+    get:
+      summary: Test function
+      operationId: testFunction
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: A successful response
