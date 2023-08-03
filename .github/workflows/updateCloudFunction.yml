@@ -35,4 +35,4 @@ jobs:
       
       - name: Validate deployment
         run: |
-          curl -X POST -d ${{ secrets.GCP_CLOUD_FUNCTIONS_URL }}
+          curl ${{ secrets.GCP_CLOUD_FUNCTIONS_URL }}
