@@ -31,8 +31,8 @@ jobs:
       - name: Update Cloud Function
         run: |
           cd gcp
-          bash updateCloudFunction.sh
+          bash updateCloudFunction.sh 
       
       - name: Validate deployment
         run: |
-          curl -s "${{ secrets.GCP_CLOUD_FUNCTIONS_URL }}"
+          curl -X POST -d ${{ secrets.GCP_CLOUD_FUNCTIONS_URL }}
