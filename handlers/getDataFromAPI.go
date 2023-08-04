@@ -34,7 +34,7 @@ func (r *RealDataFetcher) GetData() ([]Item, error) {
 	// Realizar la solicitud HTTP GET a la API para obtener los datos.
 	response, err := http.Get("https://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=1A059D89640D054BB20FF254FB529E14&format=json")
 	if err != nil {
-		log.Printf("Error al realzar una request: %v", err)
+		log.Printf("Error al realizar una request: %v", err)
 		return nil, err
 	}
 
@@ -47,7 +47,16 @@ func (r *RealDataFetcher) GetData() ([]Item, error) {
 		log.Printf("Error al decodificar la respuesta JSON: %v", err)
 		return nil, err
 	}
-	return apiResponse.Applist.Apps, nil
+
+	// Quitamos valores vacios de la columna name
+	var filteredApps []Item
+	for _, app := range apiResponse.Applist.Apps {
+		if app.Name != "" {
+			filteredApps = append(filteredApps, app)
+		}
+	}
+
+	return filteredApps, nil
 }
 
 // Definir un error personalizado para cuando falle la obtención de datos.
