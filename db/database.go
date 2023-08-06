@@ -3,10 +3,9 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"log"
-
 	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 const batchSize = 1000
@@ -16,6 +15,7 @@ type Database interface {
 	Close() error
 	InsertBatch(items []handlers.Item) error
 	InsertBatchData(items []handlers.Item) error
+	GetAppIDs() ([]int, error)
 }
 
 type MySQLDatabase struct {
@@ -82,7 +82,7 @@ func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 	}
 
 	// Creamos la consulta para la insercion en lotes
-	query := "INSERT INTO games (appid, name) VALUES "
+	query := "INSERT INTO gamesdetails (appid, name) VALUES "
 	var vals []interface{}
 	for i, item := range items {
 		query += "(?, ?)"
@@ -100,4 +100,31 @@ func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 	}
 
 	return nil
+}
+
+// GetAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
+func (m *MySQLDatabase) GetAppIDs() ([]int, error) {
+	rows, err := m.db.Query("SELECT appid FROM games")
+	if err != nil {
+		log.Printf("Error al obtener los appid desde la base de datos: %v", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var appids []int
+	for rows.Next() {
+		var appid int
+		if err := rows.Scan(&appid); err != nil {
+			log.Printf("Error al escanear el appid desde la base de datos: %v", err)
+			return nil, err
+		}
+		appids = append(appids, appid)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Printf("Error al obtener los appid desde la base de datos: %v", err)
+		return nil, err
+	}
+
+	return appids, nil
 }
