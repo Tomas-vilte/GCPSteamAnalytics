@@ -1,7 +1,7 @@
 package models
 
 type StoreItem struct {
-	Id_game           int64  `json:"id_game"`
-	Name              string `json:"name"`
-	Short_description string `json:"short_description"`
+	SteamAppid       int64  `json:"steam_appid"`
+	NameGame         string `json:"name"`
+	ShortDescription string `json:"short_description"`
 }
