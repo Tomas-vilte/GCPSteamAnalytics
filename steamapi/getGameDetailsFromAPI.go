@@ -1,82 +1,91 @@
 package steamapi
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"log"
 	"net/http"
-
-	"github.com/Tomas-vilte/GCPSteamAnalytics/db"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/models"
+	"sync"
 )
 
-type GameDetails struct {
-	models.StoreItem
-}
-
 type SteamAPI struct {
-	Dba db.Database
+	DB *sql.DB
 }
 
-type Response struct {
-	Success bool            `json:"success"`
-	Data    json.RawMessage `json:"data"`
-}
-
-type SteamData interface {
-	ExtractGameDetails() ([]GameDetails, error)
-}
-
-func (s *SteamAPI) ExtractGameDetails() ([]GameDetails, error) {
-	// Obtener los appids y nombres desde la base de datos
-	items, err := s.Dba.GetAppIDs()
+func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
+	// Obtener los appids desde la base de datos
+	appids, err := s.GetAppIDs()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// Realizar una solicitud HTTP para obtener los detalles de los juegos para cada appid
-	var gamesDetails []GameDetails
-	requestCount := 0
-	for _, item := range items {
-		if requestCount >= 10 {
-			break
-		}
-		appid := item
-		url := fmt.Sprintf("https://store.steampowered.com/api/appdetails?appids=%d", appid)
-		resp, err := http.Get(url)
-		if err != nil {
-			log.Printf("Error al obtener detalles para appid %d: %v\n\n", appid, err)
-			continue
-		}
-		defer resp.Body.Close()
+	// Utilizar un semáforo para controlar la concurrencia y el número máximo de solicitudes simultáneas
+	semaphore := make(chan struct{}, 10) // Permite 10 solicitudes simultáneas
 
-		var steamResponse map[string]Response
-		if err := json.NewDecoder(resp.Body).Decode(&steamResponse); err != nil {
-			log.Printf("Error al decodificar la respuesta %d: %v\n\n", appid, err)
-			continue
+	var wg sync.WaitGroup
+
+	count := 0 // Contador de appids procesados
+
+	var gamesDetails []steamapi.GameDetails // Slice para almacenar los datos a insertar en la base de datos
+
+	for _, appid := range appids {
+		if count >= limit {
+			break // Si ya procesamos 30,000 appids, detener el procesamiento
 		}
 
-		appidResponse := steamResponse[fmt.Sprintf("%d", appid)]
+		wg.Add(1)
+		semaphore <- struct{}{} // Bloquea si ya hay 10 solicitudes simultáneas
 
-		// Verifica si existe la key data
-		if appidResponse.Success {
-			var gameDetails GameDetails
-			if err := json.Unmarshal(appidResponse.Data, &gameDetails); err != nil {
-				log.Printf("Error al analizar los detalles del juego para appid %d: %v\n\n", appid, err)
-				continue
+		go func(appid int) {
+			defer func() {
+				<-semaphore // Libera un slot del semáforo para permitir otra solicitud
+				wg.Done()
+			}()
+
+			url := fmt.Sprintf("https://store.steampowered.com/api/appdetails?appids=%d", appid)
+			resp, err := http.Get(url)
+			if err != nil {
+				log.Printf("Error al obtener detalles para appid %d: %v\n", appid, err)
+				return
+			}
+			defer resp.Body.Close()
+
+			var steamResponse map[string]steamapi.SteamApiResponse
+			if err := json.NewDecoder(resp.Body).Decode(&steamResponse); err != nil {
+				log.Printf("Error al decodificar la respuesta %d: %v\n", appid, err)
+				return
 			}
 
-			log.Printf("ID de cada juego %d:\n\n\n", appid)
-			log.Printf("Nombre de cada juego: %s\n\n", gameDetails.NameGame)
-			log.Printf("Descripcion de cada juego: %s\n\n", gameDetails.ShortDescription)
+			appidResponse := steamResponse[fmt.Sprintf("%d", appid)]
 
-			// Agrega los detalles del juego al slice 'gamesDetails'
-			gamesDetails = append(gamesDetails, gameDetails)
-		} else {
-			log.Printf("Error al obtener detalles para appid %d: el success es false\n\n", appid)
-		}
-		requestCount++
+			// Verifica si existe la key data
+			if appidResponse.Success {
+				var gameDetails steamapi.GameDetails
+				if err := json.Unmarshal(appidResponse.Data, &gameDetails); err != nil {
+					log.Printf("Error al analizar los detalles del juego para appid %d: %v\n", appid, err)
+					return
+				}
+
+				// Agregar el gameDetails al slice de juegos a insertar
+				gamesDetails = append(gamesDetails, gameDetails)
+				fmt.Println(gameDetails.NameGame)
+
+				// Incrementar el contador de appids procesados
+				count++
+			} else {
+				log.Printf("Error al obtener detalles para appid %d: el success es false\n", appid)
+			}
+		}(appid)
 	}
 
-	return gamesDetails, nil
+	wg.Wait()
+
+	// Insertar los datos en la base de datos utilizando el método InsertBatch con goroutines
+	if err := s.InsertBatch(gamesDetails); err != nil {
+		return fmt.Errorf("error al guardar los detalles de los juegos en la base de datos: %v", err)
+	}
+
+	return nil
 }
