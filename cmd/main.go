@@ -1,30 +1,33 @@
 package main
 
 import (
-	"github.com/Tomas-vilte/GCPSteamAnalytics/db"
+	"database/sql"
+	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
 func main() {
-	dba := &db.MySQLDatabase{}
-	err := dba.Connect()
+	//dba := &db.MySQLDatabase{}
+	//err := dba.Connect()
+	//if err != nil {
+	//	log.Printf("Error al conectar a la bd: %v", err)
+	//}
+	//defer dba.Close()
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics")
 	if err != nil {
-		log.Printf("Error al conectar a la bd: %v", err)
+		return
 	}
-	defer dba.Close()
-
-	steamAPI := &steamapi.SteamAPI{
-		Dba: dba,
-	}
-
-	gameDetails, err := steamAPI.ExtractGameDetails()
+	err = db.Ping()
 	if err != nil {
-		log.Printf("Error al obtener los detalles de los juegos: %v", err)
+		log.Printf("Hubo un error al conectarse a la base de datos: %v", err)
+		db.Close()
+		return
 	}
-	for _, game := range gameDetails {
-		log.Printf("ID de cada juego %d:\n\n\n", game.SteamAppid)
-		log.Printf("Nombre de cada juego: %s\n\n", game.NameGame)
-		log.Printf("Descripcion de cada juego: %s\n\n", game.ShortDescription)
-	}
+
+	steamAPI := &steamapi.SteamAPI{DB: db}
+
+	gameDetails := steamAPI.ExtractAndSaveLimitedGameDetails(10)
+	fmt.Println(gameDetails)
 }
