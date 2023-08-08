@@ -59,22 +59,27 @@ func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
 	return nil
 }
 
-func (s *SteamAPI) InsertOneByOne(items []steamapi.GameDetails) error {
-	if len(items) == 0 {
-		return nil
-	}
-
-	// Iterar sobre cada GameDetails y realizar la inserción individualmente
+func (s *SteamAPI) InsertInBatch(items []steamapi.GameDetails) error {
 	for _, item := range items {
-		// Creamos la consulta para la inserción de un solo registro
-		query := "INSERT INTO gamesdetails (steamAppid, nameGame, shortDescription) VALUES (?, ?, ?)"
-
-		// Ejecutamos la consulta en la base de datos para insertar el registro
-		_, err := s.DB.Exec(query, item.SteamAppid, item.NameGame, item.ShortDescription)
+		// Verificar si el juego ya existe en la base de datos
+		exists, err := s.GameExistsInDatabase(int(item.SteamAppid))
 		if err != nil {
-			log.Printf("Error al insertar el registro para appid %d: %v", item.SteamAppid, err)
 			return err
 		}
+
+		// Si el juego ya existe, continuar con el siguiente
+		if exists {
+			continue
+		}
+
+		// Insertar el juego en la base de datos
+		err = s.InsertBatch([]steamapi.GameDetails{item})
+		if err != nil {
+			return err
+		}
+
+		// Registro de logging: Imprimir el juego insertado
+		log.Printf("Juego insertado en la base de datos: %s (appid: %d)", item.NameGame, item.SteamAppid)
 	}
 
 	return nil
