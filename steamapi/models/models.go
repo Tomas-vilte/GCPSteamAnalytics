@@ -17,6 +17,6 @@ type SteamApiResponse struct {
 type SteamData interface {
 	ExtractAndSaveLimitedGameDetails(limit int) error
 	InsertBatch(items []GameDetails) error
-	InsertDataDB(items []GameDetails) error
 	GetAppIDs() ([]int, error)
+	GameExistsInDatabase(appid int) (bool, error)
 }

@@ -106,3 +106,15 @@ func (s *SteamAPI) GetAppIDs() ([]int, error) {
 
 	return appids, nil
 }
+
+func (s *SteamAPI) GameExistsInDatabase(appid int) (bool, error) {
+	query := "SELECT COUNT(*) FROM gamesdetails WHERE steamAppid = ?"
+	var count int
+
+	err := s.DB.QueryRow(query, appid).Scan(&count)
+	if err != nil {
+		return false, err
+	}
+
+	return count > 0, nil
+}
