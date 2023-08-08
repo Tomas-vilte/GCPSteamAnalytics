@@ -87,7 +87,7 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 	close(semaphore)
 
 	//// Insertar los datos en la base de datos utilizando el método InsertBatch con goroutines
-	if err := s.InsertOneByOne(gamesDetails); err != nil {
+	if err := s.InsertInBatch(gamesDetails); err != nil {
 		return fmt.Errorf("error al guardar los detalles de los juegos en la base de datos: %v", err)
 	}
 	return nil
