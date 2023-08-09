@@ -5,33 +5,7 @@ import (
 	"log"
 )
 
-const batchSize = 100
-
-func (s *SteamAPI) InsertBatch(items []steamapi.GameDetails) error {
-
-	// Dividimos los datos en lotes
-	numItems := len(items)
-	numBatches := (numItems + batchSize - 1) / batchSize
-
-	// Iteramos los lotes y realizamos la inserción por lotes
-	for i := 0; i < numBatches; i++ {
-		start := i * batchSize
-		end := (i + 1) * batchSize
-		if end > numItems {
-			end = numItems
-		}
-
-		batchData := items[start:end]
-
-		err := s.InsertBatchData(batchData)
-		if err != nil {
-			log.Printf("Error al insertar el lote de elementos: %v", err)
-			return err
-		}
-	}
-
-	return nil
-}
+const batchSize = 10
 
 func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
 	if len(items) == 0 {
@@ -60,26 +34,42 @@ func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
 }
 
 func (s *SteamAPI) InsertInBatch(items []steamapi.GameDetails) error {
-	for _, item := range items {
-		// Verificar si el juego ya existe en la base de datos
-		exists, err := s.GameExistsInDatabase(int(item.SteamAppid))
+	// Dividir los datos en lotes
+	numItems := len(items)
+	numBatches := (numItems + batchSize - 1) / batchSize
+
+	// Iterar a través de los lotes y realizar la inserción por lotes
+	for i := 0; i < numBatches; i++ {
+		start := i * batchSize
+		end := (i + 1) * batchSize
+		if end > numItems {
+			end = numItems
+		}
+
+		batchData := items[start:end]
+
+		// Verificar si algún juego en el lote ya existe en la base de datos
+		existingGames := make([]steamapi.GameDetails, 0)
+		for _, item := range batchData {
+			exists, err := s.GameExistsInDatabase(int(item.SteamAppid))
+			if err != nil {
+				return err
+			}
+			if !exists {
+				existingGames = append(existingGames, item)
+			}
+		}
+
+		// Insertar los juegos que no existen en la base de datos
+		err := s.InsertBatchData(existingGames)
 		if err != nil {
 			return err
 		}
 
-		// Si el juego ya existe, continuar con el siguiente
-		if exists {
-			continue
+		// Registro de logging: Imprimir los juegos insertados en el lote
+		for _, item := range existingGames {
+			log.Printf("Juego insertado en la base de datos: %s (appid: %d)", item.NameGame, item.SteamAppid)
 		}
-
-		// Insertar el juego en la base de datos
-		err = s.InsertBatchData([]steamapi.GameDetails{item})
-		if err != nil {
-			return err
-		}
-
-		// Registro de logging: Imprimir el juego insertado
-		log.Printf("Juego insertado en la base de datos: %s (appid: %d)", item.NameGame, item.SteamAppid)
 	}
 
 	return nil
