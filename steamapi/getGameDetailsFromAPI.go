@@ -38,18 +38,43 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 
 	var wg sync.WaitGroup
 
-	var gamesDetails []steamapi.GameDetails // Slice para almacenar los datos a insertar en la base de datos
+	// var gamesDetails []steamapi.GameDetails // Slice para almacenar los datos a insertar en la base de datos
 
 	client := http.Client{}
 	var count int
 	var missingDataCount int
+
+	// Crear un canal para recibir los detalles de los juegos
+	gameDetailsChan := make(chan steamapi.GameDetails, 1000) // Tamaño del canal debe ser mayor que el tamaño de lote
+
+	// Crear una goroutine para insertar los detalles de los juegos en lotes
+	go func() {
+		var batchData []steamapi.GameDetails
+
+		for gameDetails := range gameDetailsChan {
+			batchData = append(batchData, gameDetails)
+			if len(batchData) >= 1000 { // Tamaño del lote
+				if err := s.InsertInBatch(batchData); err != nil {
+					log.Printf("Error al insertar lote de datos: %v\n", err)
+				}
+				batchData = nil
+			}
+		}
+
+		// Insertar los datos restantes en el último lote
+		if len(batchData) > 0 {
+			if err := s.InsertInBatch(batchData); err != nil {
+				log.Printf("Error al insertar lote de datos final: %v\n", err)
+			}
+		}
+	}()
+
 	for _, appid := range appids {
 		if count >= limit {
 			break // Salir del bucle una vez alcanzado el límite
 		}
 		wg.Add(1)
 		semaphore <- struct{}{} // Bloquea si ya hay 10 solicitudes simultáneas
-
 		go func(appid int) {
 			defer func() {
 				<-semaphore // Libera un slot del semáforo para permitir otra solicitud
@@ -97,8 +122,7 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 					}
 					processedCount++
 					// Agrega el gameDetails al slice de juegos a insertar
-					gamesDetails = append(gamesDetails, gameDetails)
-					fmt.Println(gameDetails.SteamAppid, gameDetails.NameGame)
+					gameDetailsChan <- gameDetails
 					log.Printf("Detalles de juegos insertados correctamente. Juegos procesados en total: %d\n", processedCount)
 
 				} else {
@@ -112,16 +136,13 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 
 	wg.Wait()
 	close(semaphore)
+	close(gameDetailsChan)
 
 	// Actualiza la tabla state_table con el último appID exitoso, incluso si hay errores
 	if lastSuccessfulAppID > lastProcessedAppID {
 		if err := s.SaveLastProcessedAppid(lastSuccessfulAppID); err != nil {
 			log.Printf("Error al guardar el último appID procesado: %v", err)
 		}
-	}
-	//// Insertar los datos en la base de datos utilizando el método InsertBatch con goroutines
-	if err := s.InsertInBatch(gamesDetails); err != nil {
-		return fmt.Errorf("error al guardar los detalles de los juegos en la base de datos: %v", err)
 	}
 	log.Printf("Total de detalles sin la clave \"data\": %d\n", missingDataCount)
 	return nil

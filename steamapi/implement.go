@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-const batchSize = 10
+const batchSize = 1000
 
 func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
 	if len(items) == 0 {
