@@ -118,7 +118,7 @@ func (s *SteamAPI) GameExistsInDatabase(appid int) (bool, error) {
 	return count > 0, nil
 }
 
-// Función para cargar el último appid procesado desde la tabla state_table
+// LoadLastProcessedAppid Función para cargar el último appid procesado desde la tabla state_table
 func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 	var lastProcessedAppid int
 	query := "SELECT last_appid FROM state_table"
@@ -127,4 +127,14 @@ func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 		return 0, err
 	}
 	return lastProcessedAppid, nil
+}
+
+// SaveLastProcessedAppid Función para guardar el último appid procesado en la tabla state_table
+func (s *SteamAPI) SaveLastProcessedAppid(lastProcessedAppid int) error {
+	query := "UPDATE state_table SET last_appid = ?"
+	_, err := s.DB.Exec(query, lastProcessedAppid)
+	if err != nil {
+		return err
+	}
+	return nil
 }
