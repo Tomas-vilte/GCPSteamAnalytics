@@ -7,7 +7,6 @@ import (
 	"fmt"
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"log"
-	"math"
 	"net/http"
 	"sync"
 	"time"
@@ -17,20 +16,17 @@ type SteamAPI struct {
 	DB *sql.DB
 }
 
-func backoffDuration(attempt int) time.Duration {
-	// Cálculo de la duración de espera utilizando backoff exponencial
-	return time.Duration(math.Pow(2, float64(attempt))) * time.Second
-}
-
 const maxAttempts = 10 // Número máximo de intentos de solicitud
 
 func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 	// Cargar el último appid procesado desde la base de datos
 	lastProcessedAppID, err := s.LoadLastProcessedAppid()
 	if err != nil {
+		log.Printf("Error al cargar el último appID procesado: %v", err)
 		return err
 	}
-
+	lastSuccessfulAppID := lastProcessedAppID
+	var processedCount int
 	// Obtener los appids desde la base de datos a partir del último procesado
 	appids, err := s.GetAppIDs(lastProcessedAppID)
 	if err != nil {
@@ -46,6 +42,7 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 
 	client := http.Client{}
 	var count int
+	var missingDataCount int
 	for _, appid := range appids {
 		if count >= limit {
 			break // Salir del bucle una vez alcanzado el límite
@@ -92,26 +89,22 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 
 				// Verifica si existe la key data
 				if appidResponse.Success && appidResponse.Data != nil {
+					lastSuccessfulAppID = appid
 					var gameDetails steamapi.GameDetails
 					if err := json.Unmarshal(appidResponse.Data, &gameDetails); err != nil {
 						log.Printf("Error al analizar los detalles del juego para appid %d: %v\n", appid, err)
 						return
 					}
-
-					// Agregar el gameDetails al slice de juegos a insertar
+					processedCount++
+					// Agrega el gameDetails al slice de juegos a insertar
 					gamesDetails = append(gamesDetails, gameDetails)
 					fmt.Println(gameDetails.SteamAppid, gameDetails.NameGame)
+					log.Printf("Detalles de juegos insertados correctamente. Juegos procesados en total: %d\n", processedCount)
 
 				} else {
+					missingDataCount++
 					log.Printf("Error al obtener detalles para appid %d: el success es false\n", appid)
 				}
-
-				// Guardar el último appid procesado en la base de datos
-				err = s.SaveLastProcessedAppid(appid)
-				if err != nil {
-					log.Printf("Error al guardar el último appid procesado: %v\n", err)
-				}
-
 				break
 			}
 		}(appid)
@@ -120,9 +113,16 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 	wg.Wait()
 	close(semaphore)
 
+	// Actualiza la tabla state_table con el último appID exitoso, incluso si hay errores
+	if lastSuccessfulAppID > lastProcessedAppID {
+		if err := s.SaveLastProcessedAppid(lastSuccessfulAppID); err != nil {
+			log.Printf("Error al guardar el último appID procesado: %v", err)
+		}
+	}
 	//// Insertar los datos en la base de datos utilizando el método InsertBatch con goroutines
 	if err := s.InsertInBatch(gamesDetails); err != nil {
 		return fmt.Errorf("error al guardar los detalles de los juegos en la base de datos: %v", err)
 	}
+	log.Printf("Total de detalles sin la clave \"data\": %d\n", missingDataCount)
 	return nil
 }

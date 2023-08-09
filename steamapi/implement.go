@@ -73,7 +73,7 @@ func (s *SteamAPI) InsertInBatch(items []steamapi.GameDetails) error {
 		}
 
 		// Insertar el juego en la base de datos
-		err = s.InsertBatch([]steamapi.GameDetails{item})
+		err = s.InsertBatchData([]steamapi.GameDetails{item})
 		if err != nil {
 			return err
 		}
@@ -118,7 +118,6 @@ func (s *SteamAPI) GameExistsInDatabase(appid int) (bool, error) {
 	return count > 0, nil
 }
 
-// LoadLastProcessedAppid Función para cargar el último appid procesado desde la tabla state_table
 func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 	var lastProcessedAppid int
 	query := "SELECT last_appid FROM state_table"
@@ -129,7 +128,7 @@ func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 	return lastProcessedAppid, nil
 }
 
-// SaveLastProcessedAppid Función para guardar el último appid procesado en la tabla state_table
+// Función para guardar el último appid procesado en la tabla state_table
 func (s *SteamAPI) SaveLastProcessedAppid(lastProcessedAppid int) error {
 	query := "UPDATE state_table SET last_appid = ?"
 	_, err := s.DB.Exec(query, lastProcessedAppid)
