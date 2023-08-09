@@ -28,6 +28,6 @@ func main() {
 
 	steamAPI := &steamapi.SteamAPI{DB: db}
 
-	gameDetails := steamAPI.ExtractAndSaveLimitedGameDetails(100)
+	gameDetails := steamAPI.ExtractAndSaveLimitedGameDetails(13)
 	fmt.Println(gameDetails)
 }
