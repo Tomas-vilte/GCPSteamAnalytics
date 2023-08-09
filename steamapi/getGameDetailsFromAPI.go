@@ -31,23 +31,19 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 		return err
 	}
 
-	// Obtener los appids desde la base de datos
+	// Obtener los appids desde la base de datos a partir del último procesado
 	appids, err := s.GetAppIDs(lastProcessedAppID)
 	if err != nil {
 		return err
 	}
-	// Utilizar un semáforo para controlar la concurrencia y el número máximo de solicitudes simultáneas
-	semaphore := make(chan struct{}, 10) // Permite 2 solicitudes simultáneas
 
-	// Crea un contexto para las goroutines
+	// Utilizar un semáforo para controlar la concurrencia y el número máximo de solicitudes simultáneas
+	semaphore := make(chan struct{}, 10) // Permite 10 solicitudes simultáneas
 
 	var wg sync.WaitGroup
 
 	var gamesDetails []steamapi.GameDetails // Slice para almacenar los datos a insertar en la base de datos
 
-	// Crear un canal para controlar el cierre del semáforo
-	done := make(chan struct{})
-	defer close(done) // Cerrar el semáforo al finalizar
 	client := http.Client{}
 	var count int
 	for _, appid := range appids {
@@ -64,7 +60,6 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 			}()
 
 			count++
-
 			url := fmt.Sprintf("https://store.steampowered.com/api/appdetails?l=spanish&appids=%d", appid)
 
 			for attempt := 0; attempt < maxAttempts; attempt++ {
@@ -110,14 +105,19 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 				} else {
 					log.Printf("Error al obtener detalles para appid %d: el success es false\n", appid)
 				}
+
+				// Guardar el último appid procesado en la base de datos
+				err = s.SaveLastProcessedAppid(appid)
+				if err != nil {
+					log.Printf("Error al guardar el último appid procesado: %v\n", err)
+				}
+
 				break
 			}
-
 		}(appid)
 	}
 
 	wg.Wait()
-
 	close(semaphore)
 
 	//// Insertar los datos en la base de datos utilizando el método InsertBatch con goroutines
