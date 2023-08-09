@@ -86,27 +86,21 @@ func (s *SteamAPI) InsertInBatch(items []steamapi.GameDetails) error {
 }
 
 // GetAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
-func (s *SteamAPI) GetAppIDs() ([]int, error) {
-	rows, err := s.DB.Query("SELECT appid FROM games")
+func (s *SteamAPI) GetAppIDs(appid int) ([]int, error) {
+	query := "SELECT appid FROM games WHERE appid >= ?"
+	rows, err := s.DB.Query(query, appid)
 	if err != nil {
-		log.Printf("Error al obtener los appid desde la base de datos: %v", err)
 		return nil, err
 	}
 	defer rows.Close()
 
 	var appids []int
 	for rows.Next() {
-		var appid int
-		if err := rows.Scan(&appid); err != nil {
-			log.Printf("Error al escanear el appid desde la base de datos: %v", err)
+		var steamAppid int
+		if err := rows.Scan(&steamAppid); err != nil {
 			return nil, err
 		}
-		appids = append(appids, appid)
-	}
-
-	if err := rows.Err(); err != nil {
-		log.Printf("Error al obtener los appid desde la base de datos: %v", err)
-		return nil, err
+		appids = append(appids, steamAppid)
 	}
 
 	return appids, nil
@@ -122,4 +116,15 @@ func (s *SteamAPI) GameExistsInDatabase(appid int) (bool, error) {
 	}
 
 	return count > 0, nil
+}
+
+// Función para cargar el último appid procesado desde la tabla state_table
+func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
+	var lastProcessedAppid int
+	query := "SELECT last_appid FROM state_table"
+	err := s.DB.QueryRow(query).Scan(&lastProcessedAppid)
+	if err != nil {
+		return 0, err
+	}
+	return lastProcessedAppid, nil
 }

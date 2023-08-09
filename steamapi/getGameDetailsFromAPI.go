@@ -25,9 +25,14 @@ func backoffDuration(attempt int) time.Duration {
 const maxAttempts = 10 // Número máximo de intentos de solicitud
 
 func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
+	// Cargar el último appid procesado desde la base de datos
+	lastProcessedAppID, err := s.LoadLastProcessedAppid()
+	if err != nil {
+		return err
+	}
 
 	// Obtener los appids desde la base de datos
-	appids, err := s.GetAppIDs()
+	appids, err := s.GetAppIDs(lastProcessedAppID)
 	if err != nil {
 		return err
 	}
