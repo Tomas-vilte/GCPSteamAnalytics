@@ -30,6 +30,7 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 	// Obtener los appids desde la base de datos a partir del último procesado
 	appids, err := s.GetAppIDs(lastProcessedAppID)
 	if err != nil {
+		log.Printf("Error al obtener los AppIDs: %v", err)
 		return err
 	}
 
@@ -38,14 +39,12 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 
 	var wg sync.WaitGroup
 
-	// var gamesDetails []steamapi.GameDetails // Slice para almacenar los datos a insertar en la base de datos
-
 	client := http.Client{}
 	var count int
 	var missingDataCount int
 
 	// Crear un canal para recibir los detalles de los juegos
-	gameDetailsChan := make(chan steamapi.GameDetails, 1000) // Tamaño del canal debe ser mayor que el tamaño de lote
+	gameDetailsChan := make(chan steamapi.GameDetails, 10) // Tamaño del canal debe ser mayor que el tamaño de lote
 
 	// Crear una goroutine para insertar los detalles de los juegos en lotes
 	go func() {
@@ -53,7 +52,7 @@ func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
 
 		for gameDetails := range gameDetailsChan {
 			batchData = append(batchData, gameDetails)
-			if len(batchData) >= 1000 { // Tamaño del lote
+			if len(batchData) >= 10 { // Tamaño del lote
 				if err := s.InsertInBatch(batchData); err != nil {
 					log.Printf("Error al insertar lote de datos: %v\n", err)
 				}

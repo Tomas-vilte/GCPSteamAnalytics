@@ -2,7 +2,9 @@ package steamapi
 
 import (
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
+	_ "github.com/lib/pq"
 	"log"
+	"strings"
 )
 
 const batchSize = 1000
@@ -12,12 +14,14 @@ func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
 		return nil
 	}
 
-	// Creamos la consulta para la insercion en lotes
-	query := "INSERT INTO gamesdetails (steamAppid, nameGame, shortDescription) VALUES "
+	// Creamos la consulta para la inserción en lotes
+	query := "INSERT INTO gamesdetails (steamAppid, nameGame, shortDescription, developers) VALUES "
 	var vals []interface{}
 	for i, item := range items {
-		query += "(?, ?, ?)"
-		vals = append(vals, item.SteamAppid, item.NameGame, item.ShortDescription)
+		query += "(?, ?, ?, ?)"
+		// Convertir el slice de developers a una cadena separada por comas
+		developersStr := strings.Join(item.Developers, ",")
+		vals = append(vals, item.SteamAppid, item.NameGame, item.ShortDescription, developersStr)
 		if i < len(items)-1 {
 			query += ", "
 		}
