@@ -7,6 +7,7 @@ import (
 
 type GameDetails struct {
 	models.StoreItem
+	Developers []string `json:"developers"`
 }
 
 type SteamApiResponse struct {

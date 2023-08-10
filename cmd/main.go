@@ -9,12 +9,6 @@ import (
 )
 
 func main() {
-	//dba := &db.MySQLDatabase{}
-	//err := dba.Connect()
-	//if err != nil {
-	//	log.Printf("Error al conectar a la bd: %v", err)
-	//}
-	//defer dba.Close()
 	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics")
 	if err != nil {
 		return
@@ -22,12 +16,12 @@ func main() {
 	err = db.Ping()
 	if err != nil {
 		log.Printf("Hubo un error al conectarse a la base de datos: %v", err)
-		db.Close()
+		defer db.Close()
 		return
 	}
 
 	steamAPI := &steamapi.SteamAPI{DB: db}
 
-	gameDetails := steamAPI.ExtractAndSaveLimitedGameDetails(13)
+	gameDetails := steamAPI.ExtractAndSaveLimitedGameDetails(20)
 	fmt.Println(gameDetails)
 }
