@@ -20,12 +20,8 @@ func main() {
 	}
 
 	steamAPI := &steamapi.SteamAPI{DB: db}
-	lastProcessedAppID, err := steamAPI.LoadLastProcessedAppid()
-	if err != nil {
-		log.Printf("Error al cargar el último appID procesado: %v", err)
-		return
-	}
-	appIDs, err := steamAPI.GetAppIDs(lastProcessedAppID)
+
+	appIDs, err := steamAPI.GetAllAppIDs()
 	if err != nil {
 		log.Printf("Error al obtener los appIDs: %v", err)
 		return

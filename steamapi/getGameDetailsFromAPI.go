@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -117,7 +118,7 @@ func getSteamData(appIDs []int) ([]AppDetails, error) {
 	return results, nil
 }
 
-func saveToCSV(data []AppDetails, filename string) error {
+func SaveToCSV(data []AppDetails, filename string) error {
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
@@ -157,16 +158,47 @@ func saveToCSV(data []AppDetails, filename string) error {
 	return nil
 }
 
-func (s *SteamAPI) RunSteamDataExtraction(appids []int) error {
-	data, err := getSteamData(appids)
+func loadExistingData(filePath string) (map[int]bool, error) {
+	existingData := make(map[int]bool)
+	file, err := os.Open(filePath)
 	if err != nil {
-		return fmt.Errorf("error getting Steam data: %v", err)
+		if os.IsNotExist(err) {
+			return existingData, nil
+		}
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+
+	// Leer y descartar la primera fila (encabezados)
+	_, err = reader.Read()
+	if err != nil {
+		return nil, err
 	}
 
-	err = saveToCSV(data, outputCSV)
-	if err != nil {
-		return fmt.Errorf("error saving data to CSV: %v", err)
+	// Leer las filas restantes y procesar los appIDs
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+
+		// Asegurarse de que haya al menos un valor en el registro antes de convertir
+		if len(record) < 1 {
+			continue
+		}
+
+		appID, err := strconv.Atoi(record[0])
+		if err != nil {
+			// Puede ser útil agregar un registro de depuración aquí para identificar registros incorrectos
+			continue // Saltar esta fila y seguir con la siguiente
+		}
+		existingData[appID] = true
 	}
 
-	return nil
+	return existingData, nil
 }
