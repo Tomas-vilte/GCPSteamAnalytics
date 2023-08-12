@@ -16,11 +16,10 @@ import (
 )
 
 const (
-	baseURL   = "https://store.steampowered.com/api/appdetails"
-	apiKey    = "YOUR_STEAM_API_KEY"
-	language  = "spanish"
-	outputCSV = "steam_data.csv"
-	cc        = "AR"
+	baseURL  = "https://store.steampowered.com/api/appdetails"
+	apiKey   = "1A059D89640D054BB20FF254FB529E14"
+	language = "spanish"
+	cc       = "AR"
 )
 
 type SteamAPI struct {
@@ -50,27 +49,28 @@ type AppDetails struct {
 	} `json:"platforms"`
 	PriceOverview struct {
 		Currency         string `json:"currency"`
-		DiscountPercent  int    `json:"discount_percent"`
+		DiscountPercent  int64  `json:"discount_percent"`
 		InitialFormatted string `json:"initial_formatted"`
 		FinalFormatted   string `json:"final_formatted"`
 	} `json:"price_overview"`
 }
 
-func getSteamData(appIDs []int) ([]AppDetails, error) {
+func GetSteamData(appIDs []int, limit int) ([]AppDetails, error) {
 	var wg sync.WaitGroup
 	var results []AppDetails
 	var errors []error
 
 	// Crear un semáforo con un límite de 10 solicitudes concurrentes
 	semaphore := make(chan struct{}, 10)
-
 	for i, appID := range appIDs {
+		if len(results) >= limit {
+			break
+		}
 		wg.Add(1)
 		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
 		go func(id int) {
 			defer wg.Done()
 			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-
 			url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 			req, err := http.NewRequest("GET", url, nil)
 			if err != nil {
@@ -99,7 +99,7 @@ func getSteamData(appIDs []int) ([]AppDetails, error) {
 					results = append(results, result)
 					log.Printf("Insertado juego/appID: %s/%d\n", result.Name, id)
 				} else {
-					log.Printf("No insertado (tipo no válido)/appID: %d\n", id)
+					log.Printf("No insertado (tipo no válido: %s)/appID: %d\n", result.Type, id)
 				}
 			}
 		}(appID)

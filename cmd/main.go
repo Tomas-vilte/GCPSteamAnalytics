@@ -20,12 +20,27 @@ func main() {
 	}
 
 	steamAPI := &steamapi.SteamAPI{DB: db}
-
+	// Cargar SteamAppIDs previamente procesados
 	appIDs, err := steamAPI.GetAllAppIDs()
 	if err != nil {
 		log.Printf("Error al obtener los appIDs: %v", err)
 		return
 	}
-	data := steamAPI.RunSteamDataExtraction(appIDs)
-	println(data)
+	data, err := steamapi.GetSteamData(appIDs, 50)
+	if err != nil {
+		log.Printf("Error al obtener los datos de Steam: %v", err)
+		return
+	}
+
+	// Imprimir información de los juegos obtenidos
+	for _, game := range data {
+		log.Printf("Juego: %s, AppID: %d\n", game.Name, game.SteamAppid)
+	}
+
+	err = steamapi.SaveToCSV(data, "Output.csv")
+	if err != nil {
+		log.Printf("error saving data to CSV: %v", err)
+		return
+	}
+
 }
