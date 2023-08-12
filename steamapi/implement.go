@@ -1,83 +1,76 @@
 package steamapi
 
-import (
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
-	_ "github.com/lib/pq"
-	"log"
-	"strings"
-)
-
-const batchSize = 1000
-
-func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
-	if len(items) == 0 {
-		return nil
-	}
-
-	// Creamos la consulta para la inserción en lotes
-	query := "INSERT INTO gamesdetails (steamAppid, nameGame, shortDescription, developers) VALUES "
-	var vals []interface{}
-	for i, item := range items {
-		query += "(?, ?, ?, ?)"
-		// Convertir el slice de developers a una cadena separada por comas
-		developersStr := strings.Join(item.Developers, ",")
-		vals = append(vals, item.SteamAppid, item.NameGame, item.ShortDescription, developersStr)
-		if i < len(items)-1 {
-			query += ", "
-		}
-	}
-
-	// Ejecutamos la consulta en la base de datos
-	_, err := s.DB.Exec(query, vals...)
-	if err != nil {
-		log.Printf("Error al insertar el lote de elementos: %v", err)
-		return err
-	}
-
-	return nil
-}
-
-func (s *SteamAPI) InsertInBatch(items []steamapi.GameDetails) error {
-	// Dividir los datos en lotes
-	numItems := len(items)
-	numBatches := (numItems + batchSize - 1) / batchSize
-
-	// Iterar a través de los lotes y realizar la inserción por lotes
-	for i := 0; i < numBatches; i++ {
-		start := i * batchSize
-		end := (i + 1) * batchSize
-		if end > numItems {
-			end = numItems
-		}
-
-		batchData := items[start:end]
-
-		// Verificar si algún juego en el lote ya existe en la base de datos
-		existingGames := make([]steamapi.GameDetails, 0)
-		for _, item := range batchData {
-			exists, err := s.GameExistsInDatabase(int(item.SteamAppid))
-			if err != nil {
-				return err
-			}
-			if !exists {
-				existingGames = append(existingGames, item)
-			}
-		}
-
-		// Insertar los juegos que no existen en la base de datos
-		err := s.InsertBatchData(existingGames)
-		if err != nil {
-			return err
-		}
-
-		// Registro de logging: Imprimir los juegos insertados en el lote
-		for _, item := range existingGames {
-			log.Printf("Juego insertado en la base de datos: %s (appid: %d)", item.NameGame, item.SteamAppid)
-		}
-	}
-
-	return nil
-}
+//const batchSize = 1000
+//
+//func (s *SteamAPI) InsertBatchData(items []steamapi.GameDetails) error {
+//	if len(items) == 0 {
+//		return nil
+//	}
+//
+//	// Creamos la consulta para la inserción en lotes
+//	query := "INSERT INTO gamesdetails (steamAppid, nameGame, shortDescription, developers) VALUES "
+//	var vals []interface{}
+//	for i, item := range items {
+//		query += "(?, ?, ?, ?)"
+//		// Convertir el slice de developers a una cadena separada por comas
+//		developersStr := strings.Join(item.Developers, ",")
+//		vals = append(vals, item.SteamAppid, item.NameGame, item.ShortDescription, developersStr)
+//		if i < len(items)-1 {
+//			query += ", "
+//		}
+//	}
+//
+//	// Ejecutamos la consulta en la base de datos
+//	_, err := s.DB.Exec(query, vals...)
+//	if err != nil {
+//		log.Printf("Error al insertar el lote de elementos: %v", err)
+//		return err
+//	}
+//
+//	return nil
+//}
+//
+//func (s *SteamAPI) InsertInBatch(items []steamapi.GameDetails) error {
+//	// Dividir los datos en lotes
+//	numItems := len(items)
+//	numBatches := (numItems + batchSize - 1) / batchSize
+//
+//	// Iterar a través de los lotes y realizar la inserción por lotes
+//	for i := 0; i < numBatches; i++ {
+//		start := i * batchSize
+//		end := (i + 1) * batchSize
+//		if end > numItems {
+//			end = numItems
+//		}
+//
+//		batchData := items[start:end]
+//
+//		// Verificar si algún juego en el lote ya existe en la base de datos
+//		existingGames := make([]steamapi.GameDetails, 0)
+//		for _, item := range batchData {
+//			exists, err := s.GameExistsInDatabase(int(item.SteamAppid))
+//			if err != nil {
+//				return err
+//			}
+//			if !exists {
+//				existingGames = append(existingGames, item)
+//			}
+//		}
+//
+//		// Insertar los juegos que no existen en la base de datos
+//		err := s.InsertBatchData(existingGames)
+//		if err != nil {
+//			return err
+//		}
+//
+//		// Registro de logging: Imprimir los juegos insertados en el lote
+//		for _, item := range existingGames {
+//			log.Printf("Juego insertado en la base de datos: %s (appid: %d)", item.NameGame, item.SteamAppid)
+//		}
+//	}
+//
+//	return nil
+//}
 
 // GetAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
 func (s *SteamAPI) GetAppIDs(appid int) ([]int, error) {

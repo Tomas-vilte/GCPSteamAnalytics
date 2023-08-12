@@ -6,7 +6,6 @@ require (
 	cloud.google.com/go/storage v1.31.0
 	github.com/GoogleCloudPlatform/functions-framework-go v1.7.4
 	github.com/go-sql-driver/mysql v1.7.1
-	github.com/lib/pq v1.10.9
 	github.com/stretchr/testify v1.8.4
 )
 

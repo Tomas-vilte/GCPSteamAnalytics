@@ -1,148 +1,172 @@
 package steamapi
 
 import (
-	"context"
 	"database/sql"
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
+	"strings"
 	"sync"
 	"time"
+)
+
+const (
+	baseURL   = "https://store.steampowered.com/api/appdetails"
+	apiKey    = "YOUR_STEAM_API_KEY"
+	language  = "spanish"
+	outputCSV = "steam_data.csv"
+	cc        = "AR"
 )
 
 type SteamAPI struct {
 	DB *sql.DB
 }
 
-const maxAttempts = 10 // Número máximo de intentos de solicitud
+type AppDetailsResponse struct {
+	Success bool       `json:"success"`
+	Data    AppDetails `json:"data"`
+}
 
-func (s *SteamAPI) ExtractAndSaveLimitedGameDetails(limit int) error {
-	// Cargar el último appid procesado desde la base de datos
-	lastProcessedAppID, err := s.LoadLastProcessedAppid()
-	if err != nil {
-		log.Printf("Error al cargar el último appID procesado: %v", err)
-		return err
-	}
-	lastSuccessfulAppID := lastProcessedAppID
-	var processedCount int
-	// Obtener los appids desde la base de datos a partir del último procesado
-	appids, err := s.GetAppIDs(lastProcessedAppID)
-	if err != nil {
-		log.Printf("Error al obtener los AppIDs: %v", err)
-		return err
-	}
+type AppDetails struct {
+	SteamAppid  int64    `json:"steam_appid"`
+	Type        string   `json:"type"`
+	Name        string   `json:"name"`
+	Description string   `json:"short_description"`
+	Developers  []string `json:"developers"`
+	Publishers  []string `json:"publishers"`
+	ReleaseDate struct {
+		ComingSoon bool   `json:"coming_soon"`
+		Date       string `json:"date"`
+	} `json:"release_date"`
+	Platforms struct {
+		Windows bool `json:"windows"`
+		Mac     bool `json:"mac"`
+		Linux   bool `json:"linux"`
+	} `json:"platforms"`
+	PriceOverview struct {
+		Currency         string `json:"currency"`
+		DiscountPercent  int    `json:"discount_percent"`
+		InitialFormatted string `json:"initial_formatted"`
+		FinalFormatted   string `json:"final_formatted"`
+	} `json:"price_overview"`
+}
 
-	// Utilizar un semáforo para controlar la concurrencia y el número máximo de solicitudes simultáneas
-	semaphore := make(chan struct{}, 10) // Permite 10 solicitudes simultáneas
-
+func getSteamData(appIDs []int) ([]AppDetails, error) {
 	var wg sync.WaitGroup
+	var results []AppDetails
+	var errors []error
 
-	client := http.Client{}
-	var count int
-	var missingDataCount int
+	// Crear un semáforo con un límite de 10 solicitudes concurrentes
+	semaphore := make(chan struct{}, 10)
 
-	// Crear un canal para recibir los detalles de los juegos
-	gameDetailsChan := make(chan steamapi.GameDetails, 10) // Tamaño del canal debe ser mayor que el tamaño de lote
-
-	// Crear una goroutine para insertar los detalles de los juegos en lotes
-	go func() {
-		var batchData []steamapi.GameDetails
-
-		for gameDetails := range gameDetailsChan {
-			batchData = append(batchData, gameDetails)
-			if len(batchData) >= 10 { // Tamaño del lote
-				if err := s.InsertInBatch(batchData); err != nil {
-					log.Printf("Error al insertar lote de datos: %v\n", err)
-				}
-				batchData = nil
-			}
-		}
-
-		// Insertar los datos restantes en el último lote
-		if len(batchData) > 0 {
-			if err := s.InsertInBatch(batchData); err != nil {
-				log.Printf("Error al insertar lote de datos final: %v\n", err)
-			}
-		}
-	}()
-
-	for _, appid := range appids {
-		if count >= limit {
-			break // Salir del bucle una vez alcanzado el límite
-		}
+	for i, appID := range appIDs {
 		wg.Add(1)
-		semaphore <- struct{}{} // Bloquea si ya hay 10 solicitudes simultáneas
-		go func(appid int) {
-			defer func() {
-				<-semaphore // Libera un slot del semáforo para permitir otra solicitud
-				wg.Done()
-			}()
+		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
+		go func(id int) {
+			defer wg.Done()
+			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
 
-			count++
-			url := fmt.Sprintf("https://store.steampowered.com/api/appdetails?l=spanish&appids=%d", appid)
-
-			for attempt := 0; attempt < maxAttempts; attempt++ {
-				ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-				defer cancel()
-				// Realiza la solicitud HTTP con el cliente configurado
-				req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-				resp, err := client.Do(req)
-				if err != nil {
-					log.Printf("Error al obtener detalles para appid %d (intentando de nuevo): %v\n", appid, err)
-					continue
-				}
-
-				if resp.StatusCode == http.StatusTooManyRequests {
-					log.Printf("Obtenido código de estado 429 (demasiadas solicitudes). Esperando 60 segundos...\n")
-					time.Sleep(60 * time.Second)
-					continue
-				}
-				defer resp.Body.Close()
-
-				time.Sleep(10 * time.Second)
-
-				var steamResponse map[string]steamapi.SteamApiResponse
-				if err := json.NewDecoder(resp.Body).Decode(&steamResponse); err != nil {
-					log.Printf("Error al decodificar la respuesta %d: %v\n", appid, err)
-					return
-				}
-
-				appidResponse := steamResponse[fmt.Sprintf("%d", appid)]
-
-				// Verifica si existe la key data
-				if appidResponse.Success && appidResponse.Data != nil {
-					lastSuccessfulAppID = appid
-					var gameDetails steamapi.GameDetails
-					if err := json.Unmarshal(appidResponse.Data, &gameDetails); err != nil {
-						log.Printf("Error al analizar los detalles del juego para appid %d: %v\n", appid, err)
-						return
-					}
-					processedCount++
-					// Agrega el gameDetails al slice de juegos a insertar
-					gameDetailsChan <- gameDetails
-					log.Printf("Detalles de juegos insertados correctamente. Juegos procesados en total: %d\n", processedCount)
-
-				} else {
-					missingDataCount++
-					log.Printf("Error al obtener detalles para appid %d: el success es false\n", appid)
-				}
-				break
+			url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
+			req, err := http.NewRequest("GET", url, nil)
+			if err != nil {
+				errors = append(errors, err)
+				return
 			}
-		}(appid)
-	}
 
-	wg.Wait()
-	close(semaphore)
-	close(gameDetailsChan)
+			client := &http.Client{}
+			response, err := client.Do(req)
+			if err != nil {
+				errors = append(errors, err)
+				return
+			}
+			defer response.Body.Close()
 
-	// Actualiza la tabla state_table con el último appID exitoso, incluso si hay errores
-	if lastSuccessfulAppID > lastProcessedAppID {
-		if err := s.SaveLastProcessedAppid(lastSuccessfulAppID); err != nil {
-			log.Printf("Error al guardar el último appID procesado: %v", err)
+			var responseData map[string]AppDetailsResponse
+			err = json.NewDecoder(response.Body).Decode(&responseData)
+			if err != nil {
+				errors = append(errors, err)
+				return
+			}
+
+			if responseData[strconv.Itoa(id)].Success {
+				result := responseData[strconv.Itoa(id)].Data
+				if result.Type == "game" || result.Type == "dlc" {
+					results = append(results, result)
+					log.Printf("Insertado juego/appID: %s/%d\n", result.Name, id)
+				} else {
+					log.Printf("No insertado (tipo no válido)/appID: %d\n", id)
+				}
+			}
+		}(appID)
+
+		// Aplicar un timeout después de cada grupo de 10 solicitudes
+		if (i+1)%10 == 0 || i == len(appIDs)-1 {
+			wg.Wait()                    // Esperar a que las solicitudes en progreso terminen antes de continuar
+			time.Sleep(10 * time.Second) // Aplicar el timeout de 10 segundos
 		}
 	}
-	log.Printf("Total de detalles sin la clave \"data\": %d\n", missingDataCount)
+
+	if len(errors) > 0 {
+		return nil, errors[0]
+	}
+
+	return results, nil
+}
+
+func saveToCSV(data []AppDetails, filename string) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	// Write header
+	writer.Write([]string{"SteamAppid", "Description", "Type", "Name", "Publishers", "Developers", "Windows", "Mac",
+		"Linux", "date", "comingSoon",
+		"currency", "discount_percent", "initial_formatted", "final_formatted"})
+
+	for _, entry := range data {
+		publishers := strings.Join(entry.Publishers, ", ")
+		developers := strings.Join(entry.Developers, ", ")
+		writer.Write([]string{
+			strconv.FormatInt(entry.SteamAppid, 10),
+			entry.Description,
+			entry.Type,
+			entry.Name,
+			publishers,
+			developers,
+			strconv.FormatBool(entry.Platforms.Windows),
+			strconv.FormatBool(entry.Platforms.Mac),
+			strconv.FormatBool(entry.Platforms.Linux),
+			entry.ReleaseDate.Date,
+			strconv.FormatBool(entry.ReleaseDate.ComingSoon),
+			entry.PriceOverview.Currency,
+			strconv.Itoa(entry.PriceOverview.DiscountPercent),
+			entry.PriceOverview.InitialFormatted,
+			entry.PriceOverview.FinalFormatted,
+		})
+	}
+
+	return nil
+}
+
+func (s *SteamAPI) RunSteamDataExtraction(appids []int) error {
+	data, err := getSteamData(appids)
+	if err != nil {
+		return fmt.Errorf("error getting Steam data: %v", err)
+	}
+
+	err = saveToCSV(data, outputCSV)
+	if err != nil {
+		return fmt.Errorf("error saving data to CSV: %v", err)
+	}
+
 	return nil
 }
