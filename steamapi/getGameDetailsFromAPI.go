@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -15,11 +16,10 @@ import (
 )
 
 const (
-	baseURL   = "https://store.steampowered.com/api/appdetails"
-	apiKey    = "YOUR_STEAM_API_KEY"
-	language  = "spanish"
-	outputCSV = "steam_data.csv"
-	cc        = "AR"
+	baseURL  = "https://store.steampowered.com/api/appdetails"
+	apiKey   = "1A059D89640D054BB20FF254FB529E14"
+	language = "spanish"
+	cc       = "AR"
 )
 
 type SteamAPI struct {
@@ -49,27 +49,28 @@ type AppDetails struct {
 	} `json:"platforms"`
 	PriceOverview struct {
 		Currency         string `json:"currency"`
-		DiscountPercent  int    `json:"discount_percent"`
+		DiscountPercent  int64  `json:"discount_percent"`
 		InitialFormatted string `json:"initial_formatted"`
 		FinalFormatted   string `json:"final_formatted"`
 	} `json:"price_overview"`
 }
 
-func getSteamData(appIDs []int) ([]AppDetails, error) {
+func GetSteamData(appIDs []int, limit int) ([]AppDetails, error) {
 	var wg sync.WaitGroup
 	var results []AppDetails
 	var errors []error
 
 	// Crear un semáforo con un límite de 10 solicitudes concurrentes
 	semaphore := make(chan struct{}, 10)
-
 	for i, appID := range appIDs {
+		if len(results) >= limit {
+			break
+		}
 		wg.Add(1)
 		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
 		go func(id int) {
 			defer wg.Done()
 			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-
 			url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 			req, err := http.NewRequest("GET", url, nil)
 			if err != nil {
@@ -98,7 +99,7 @@ func getSteamData(appIDs []int) ([]AppDetails, error) {
 					results = append(results, result)
 					log.Printf("Insertado juego/appID: %s/%d\n", result.Name, id)
 				} else {
-					log.Printf("No insertado (tipo no válido)/appID: %d\n", id)
+					log.Printf("No insertado (tipo no válido: %s)/appID: %d\n", result.Type, id)
 				}
 			}
 		}(appID)
@@ -117,8 +118,13 @@ func getSteamData(appIDs []int) ([]AppDetails, error) {
 	return results, nil
 }
 
-func saveToCSV(data []AppDetails, filename string) error {
-	file, err := os.Create(filename)
+func SaveToCSV(data []AppDetails, filePath string) error {
+	existingData, err := loadExistingData(filePath)
+	if err != nil {
+		return err
+	}
+
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
 	}
@@ -127,46 +133,104 @@ func saveToCSV(data []AppDetails, filename string) error {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	// Write header
-	writer.Write([]string{"SteamAppid", "Description", "Type", "Name", "Publishers", "Developers", "Windows", "Mac",
-		"Linux", "date", "comingSoon",
-		"currency", "discount_percent", "initial_formatted", "final_formatted"})
+	// Verificar si el archivo está vacío
+	fileInfo, _ := file.Stat()
+	if fileInfo.Size() == 0 {
+		header := []string{
+			"SteamAppid",
+			"Description",
+			"Type",
+			"Name",
+			"Publishers",
+			"Developers",
+			"Windows",
+			"Mac",
+			"Linux",
+			"Date",
+			"ComingSoon",
+			"Currency",
+			"DiscountPercent",
+			"InitialFormatted",
+			"FinalFormatted",
+		}
+		if err := writer.Write(header); err != nil {
+			return err
+		}
+	}
 
-	for _, entry := range data {
-		publishers := strings.Join(entry.Publishers, ", ")
-		developers := strings.Join(entry.Developers, ", ")
-		writer.Write([]string{
-			strconv.FormatInt(entry.SteamAppid, 10),
-			entry.Description,
-			entry.Type,
-			entry.Name,
-			publishers,
-			developers,
-			strconv.FormatBool(entry.Platforms.Windows),
-			strconv.FormatBool(entry.Platforms.Mac),
-			strconv.FormatBool(entry.Platforms.Linux),
-			entry.ReleaseDate.Date,
-			strconv.FormatBool(entry.ReleaseDate.ComingSoon),
-			entry.PriceOverview.Currency,
-			strconv.Itoa(entry.PriceOverview.DiscountPercent),
-			entry.PriceOverview.InitialFormatted,
-			entry.PriceOverview.FinalFormatted,
-		})
+	for _, app := range data {
+		if _, exists := existingData[int(app.SteamAppid)]; !exists {
+			record := []string{
+				strconv.Itoa(int(app.SteamAppid)),
+				app.Description,
+				app.Type,
+				app.Name,
+				strings.Join(app.Publishers, ", "),
+				strings.Join(app.Developers, ", "),
+				strconv.FormatBool(app.Platforms.Windows),
+				strconv.FormatBool(app.Platforms.Mac),
+				strconv.FormatBool(app.Platforms.Linux),
+				app.ReleaseDate.Date,
+				strconv.FormatBool(app.ReleaseDate.ComingSoon),
+				app.PriceOverview.Currency,
+				strconv.Itoa(int(app.PriceOverview.DiscountPercent)),
+				app.PriceOverview.InitialFormatted,
+				app.PriceOverview.FinalFormatted,
+				// ... otros campos que quieras guardar
+			}
+			if err := writer.Write(record); err != nil {
+				return err
+			}
+
+			// Agregar el appID al mapa de datos existentes
+			existingData[int(app.SteamAppid)] = true
+		}
 	}
 
 	return nil
 }
 
-func (s *SteamAPI) RunSteamDataExtraction(appids []int) error {
-	data, err := getSteamData(appids)
+func loadExistingData(filePath string) (map[int]bool, error) {
+	existingData := make(map[int]bool)
+	file, err := os.Open(filePath)
 	if err != nil {
-		return fmt.Errorf("error getting Steam data: %v", err)
+		if os.IsNotExist(err) {
+			return existingData, nil
+		}
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+
+	// Leer y descartar la primera fila (encabezados)
+	_, err = reader.Read()
+	if err != nil {
+		return nil, err
 	}
 
-	err = saveToCSV(data, outputCSV)
-	if err != nil {
-		return fmt.Errorf("error saving data to CSV: %v", err)
+	// Leer las filas restantes y procesar los appIDs
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+
+		// Asegurarse de que haya al menos un valor en el registro antes de convertir
+		if len(record) < 1 {
+			continue
+		}
+
+		appID, err := strconv.Atoi(record[0])
+		if err != nil {
+			// Puede ser útil agregar un registro de depuración aquí para identificar registros incorrectos
+			continue // Saltar esta fila y seguir con la siguiente
+		}
+		existingData[appID] = true
 	}
 
-	return nil
+	return existingData, nil
 }

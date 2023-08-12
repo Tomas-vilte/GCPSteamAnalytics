@@ -73,24 +73,24 @@ package steamapi
 //}
 
 // GetAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
-func (s *SteamAPI) GetAppIDs(appid int) ([]int, error) {
-	query := "SELECT appid FROM games WHERE appid >= ?"
-	rows, err := s.DB.Query(query, appid)
+func (s *SteamAPI) GetAllAppIDs() ([]int, error) {
+	query := "SELECT appid FROM games"
+	rows, err := s.DB.Query(query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var appids []int
+	var appIDs []int
 	for rows.Next() {
-		var steamAppid int
-		if err := rows.Scan(&steamAppid); err != nil {
+		var steamAppID int
+		if err := rows.Scan(&steamAppID); err != nil {
 			return nil, err
 		}
-		appids = append(appids, steamAppid)
+		appIDs = append(appIDs, steamAppID)
 	}
 
-	return appids, nil
+	return appIDs, nil
 }
 
 func (s *SteamAPI) GameExistsInDatabase(appid int) (bool, error) {
