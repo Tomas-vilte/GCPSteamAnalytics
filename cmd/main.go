@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
@@ -21,7 +20,16 @@ func main() {
 	}
 
 	steamAPI := &steamapi.SteamAPI{DB: db}
-
-	gameDetails := steamAPI.ExtractAndSaveLimitedGameDetails(20)
-	fmt.Println(gameDetails)
+	lastProcessedAppID, err := steamAPI.LoadLastProcessedAppid()
+	if err != nil {
+		log.Printf("Error al cargar el último appID procesado: %v", err)
+		return
+	}
+	appIDs, err := steamAPI.GetAppIDs(lastProcessedAppID)
+	if err != nil {
+		log.Printf("Error al obtener los appIDs: %v", err)
+		return
+	}
+	data := steamAPI.RunSteamDataExtraction(appIDs)
+	println(data)
 }
