@@ -2,9 +2,8 @@ name: Go API Cloud Functions
 
 on:  
   push:
-  pull_request:
-    branches:
-      - master
+    paths:
+      - 'cloud_function/**.zip'
   
 jobs:
   test:
