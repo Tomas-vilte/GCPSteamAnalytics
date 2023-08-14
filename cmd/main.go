@@ -26,7 +26,7 @@ func main() {
 		log.Printf("Error al obtener los appIDs: %v", err)
 		return
 	}
-	data, err := steamapi.GetSteamData(appIDs, 50)
+	data, err := steamapi.GetSteamData(appIDs, 20)
 	if err != nil {
 		log.Printf("Error al obtener los datos de Steam: %v", err)
 		return
