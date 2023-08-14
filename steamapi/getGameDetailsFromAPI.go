@@ -48,10 +48,10 @@ type AppDetails struct {
 		Linux   bool `json:"linux"`
 	} `json:"platforms"`
 	PriceOverview struct {
-		Currency         string `json:"currency"`
-		DiscountPercent  int64  `json:"discount_percent"`
-		InitialFormatted string `json:"initial_formatted"`
-		FinalFormatted   string `json:"final_formatted"`
+		Currency        string `json:"currency"`
+		DiscountPercent int64  `json:"discount_percent"`
+		Initial         int64  `json:"initial"`
+		FinalFormatted  string `json:"final_formatted"`
 	} `json:"price_overview"`
 }
 
@@ -174,9 +174,8 @@ func SaveToCSV(data []AppDetails, filePath string) error {
 				strconv.FormatBool(app.ReleaseDate.ComingSoon),
 				app.PriceOverview.Currency,
 				strconv.Itoa(int(app.PriceOverview.DiscountPercent)),
-				app.PriceOverview.InitialFormatted,
+				formatInitial(float64(app.PriceOverview.Initial) / 100),
 				app.PriceOverview.FinalFormatted,
-				// ... otros campos que quieras guardar
 			}
 			if err := writer.Write(record); err != nil {
 				return err
@@ -233,4 +232,8 @@ func loadExistingData(filePath string) (map[int]bool, error) {
 	}
 
 	return existingData, nil
+}
+
+func formatInitial(initial float64) string {
+	return fmt.Sprintf("ARS %.2f", initial)
 }

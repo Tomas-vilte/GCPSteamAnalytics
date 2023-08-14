@@ -1,6 +1,6 @@
 package steamapi
 
-// GetAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
+// GetAllAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
 func (s *SteamAPI) GetAllAppIDs() ([]int, error) {
 	query := "SELECT appid FROM games"
 	rows, err := s.DB.Query(query)
