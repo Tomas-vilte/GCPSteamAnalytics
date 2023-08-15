@@ -1,49 +1,38 @@
 package steamapi
 
-import (
-	"encoding/json"
-)
-
-type PriceOverview struct {
-	Currency         string `json:"currency"`
-	DiscountPercent  int    `json:"discount_percent"`
-	InitialFormatted string `json:"initial_formatted"`
-	FinalFormatted   string `json:"final_formatted"`
+type AppDetails struct {
+	SteamAppid  int64    `json:"steam_appid"`
+	Type        string   `json:"type"`
+	Name        string   `json:"name"`
+	Description string   `json:"short_description"`
+	Developers  []string `json:"developers"`
+	Publishers  []string `json:"publishers"`
+	IsFree      bool     `json:"is_free"`
+	ReleaseDate struct {
+		ComingSoon bool   `json:"coming_soon"`
+		Date       string `json:"date"`
+	} `json:"release_date"`
+	Platforms struct {
+		Windows bool `json:"windows"`
+		Mac     bool `json:"mac"`
+		Linux   bool `json:"linux"`
+	} `json:"platforms"`
+	PriceOverview struct {
+		Currency        string `json:"currency"`
+		DiscountPercent int64  `json:"discount_percent"`
+		Initial         int64  `json:"initial"`
+		FinalFormatted  string `json:"final_formatted"`
+	} `json:"price_overview"`
 }
 
-type Platforms struct {
-	Windows bool `json:"windows"`
-	Mac     bool `json:"mac"`
-	Linux   bool `json:"linux"`
-}
-
-type Release struct {
-	ComingSoon bool   `json:"coming_soon"`
-	Date       string `json:"date"`
-}
-
-type StoreItem struct {
-	SteamAppid       int64  `json:"steam_appid"`
-	NameGame         string `json:"name"`
-	ShortDescription string `json:"short_description"`
-	IsFree           bool   `json:"is_free"`
-}
-
-type GameDetails struct {
-	StoreItem      StoreItem
-	Developers     []string      `json:"developers"`
-	Publishers     []string      `json:"publishers"`
-	PriceOverviews PriceOverview `json:"price_overview"`
-	Platform       Platforms     `json:"platforms"`
-	ReleaseDate    Release       `json:"release_date"`
-	Type           string        `json:"type"`
-}
-
-type SteamApiResponse struct {
-	Success bool            `json:"success"`
-	Data    json.RawMessage `json:"data"`
+type AppDetailsResponse struct {
+	Success bool       `json:"success"`
+	Data    AppDetails `json:"data"`
 }
 
 type SteamData interface {
-	GetAllAppIDs() ([]int, error)
+	GetSteamData(appIDs []int, limit int) ([]AppDetails, error)
+	GetAllAppIDs(startID int) ([]int, error)
+	LoadLastProcessedAppid() (int, error)
+	SaveLastProcessedAppid(lastProcessedAppid int) error
 }
