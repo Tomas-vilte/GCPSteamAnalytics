@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"io"
 	"log"
 	"net/http"
@@ -26,38 +27,9 @@ type SteamAPI struct {
 	DB *sql.DB
 }
 
-type AppDetailsResponse struct {
-	Success bool       `json:"success"`
-	Data    AppDetails `json:"data"`
-}
-
-type AppDetails struct {
-	SteamAppid  int64    `json:"steam_appid"`
-	Type        string   `json:"type"`
-	Name        string   `json:"name"`
-	Description string   `json:"short_description"`
-	Developers  []string `json:"developers"`
-	Publishers  []string `json:"publishers"`
-	ReleaseDate struct {
-		ComingSoon bool   `json:"coming_soon"`
-		Date       string `json:"date"`
-	} `json:"release_date"`
-	Platforms struct {
-		Windows bool `json:"windows"`
-		Mac     bool `json:"mac"`
-		Linux   bool `json:"linux"`
-	} `json:"platforms"`
-	PriceOverview struct {
-		Currency        string `json:"currency"`
-		DiscountPercent int64  `json:"discount_percent"`
-		Initial         int64  `json:"initial"`
-		FinalFormatted  string `json:"final_formatted"`
-	} `json:"price_overview"`
-}
-
-func GetSteamData(appIDs []int, limit int) ([]AppDetails, error) {
+func (s *SteamAPI) GetSteamData(appIDs []int, limit int) ([]steamapi.AppDetails, error) {
 	var wg sync.WaitGroup
-	var results []AppDetails
+	var results []steamapi.AppDetails
 	var errors []error
 
 	// Crear un semáforo con un límite de 10 solicitudes concurrentes
@@ -86,7 +58,7 @@ func GetSteamData(appIDs []int, limit int) ([]AppDetails, error) {
 			}
 			defer response.Body.Close()
 
-			var responseData map[string]AppDetailsResponse
+			var responseData map[string]steamapi.AppDetailsResponse
 			err = json.NewDecoder(response.Body).Decode(&responseData)
 			if err != nil {
 				errors = append(errors, err)
@@ -101,6 +73,11 @@ func GetSteamData(appIDs []int, limit int) ([]AppDetails, error) {
 				} else {
 					log.Printf("No insertado (tipo no válido: %s)/appID: %d\n", result.Type, id)
 				}
+
+			}
+			err = s.SaveLastProcessedAppid(appID)
+			if err != nil {
+				log.Printf("Error al guardar el último appid procesado: %v\n", err)
 			}
 		}(appID)
 
@@ -118,7 +95,7 @@ func GetSteamData(appIDs []int, limit int) ([]AppDetails, error) {
 	return results, nil
 }
 
-func SaveToCSV(data []AppDetails, filePath string) error {
+func SaveToCSV(data []steamapi.AppDetails, filePath string) error {
 	existingData, err := loadExistingData(filePath)
 	if err != nil {
 		return err
@@ -143,6 +120,7 @@ func SaveToCSV(data []AppDetails, filePath string) error {
 			"Name",
 			"Publishers",
 			"Developers",
+			"isFree",
 			"Windows",
 			"Mac",
 			"Linux",
@@ -167,6 +145,7 @@ func SaveToCSV(data []AppDetails, filePath string) error {
 				app.Name,
 				strings.Join(app.Publishers, ", "),
 				strings.Join(app.Developers, ", "),
+				strconv.FormatBool(app.IsFree),
 				strconv.FormatBool(app.Platforms.Windows),
 				strconv.FormatBool(app.Platforms.Mac),
 				strconv.FormatBool(app.Platforms.Linux),
