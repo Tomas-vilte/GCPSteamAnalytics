@@ -1,6 +1,7 @@
 package steamapi
 
-// GetAllAppIDs obtiene todos los appid almacenados en la base de datos MySQL.
+// GetAllAppIDs obtiene todos los appIDs almacenados en la base de datos MySQL
+// que son mayores que el último appID procesado.
 func (s *SteamAPI) GetAllAppIDs(lastProcessedAppID int) ([]int, error) {
 	query := "SELECT appid FROM games WHERE appid > ?"
 	rows, err := s.DB.Query(query, lastProcessedAppID)
@@ -21,6 +22,7 @@ func (s *SteamAPI) GetAllAppIDs(lastProcessedAppID int) ([]int, error) {
 	return appids, nil
 }
 
+// LoadLastProcessedAppid carga el último appID procesado desde la tabla state_table.
 func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 	var lastProcessedAppid int
 	query := "SELECT last_appid FROM state_table"
@@ -31,6 +33,7 @@ func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 	return lastProcessedAppid, nil
 }
 
+// SaveLastProcessedAppid guarda el último appID procesado en la tabla state_table.
 func (s *SteamAPI) SaveLastProcessedAppid(lastProcessedAppid int) error {
 	query := "UPDATE state_table SET last_appid = ?"
 	_, err := s.DB.Exec(query, lastProcessedAppid)
