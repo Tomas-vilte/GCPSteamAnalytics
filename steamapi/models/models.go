@@ -1,4 +1,4 @@
-package steamapi
+package models
 
 // AppDetails representa los detalles de una aplicación en la tienda Steam.
 type AppDetails struct {

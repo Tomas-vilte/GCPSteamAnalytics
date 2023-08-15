@@ -23,9 +23,14 @@ const (
 	cc       = "AR"
 )
 
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
 // SteamAPI es una estructura que maneja la comunicación con la API de Steam y la base de datos.
 type SteamAPI struct {
-	DB *sql.DB
+	DB     *sql.DB
+	Client HTTPClient
 }
 
 // RunProcessData es la función principal que coordina el proceso de obtención, procesamiento y guardado de datos de Steam.
@@ -114,8 +119,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 		return nil, err
 	}
 
-	client := &http.Client{}
-	response, err := client.Do(req)
+	response, err := s.Client.Do(req)
 	if err != nil {
 		return nil, err
 	}
