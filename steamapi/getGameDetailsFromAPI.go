@@ -23,79 +23,131 @@ const (
 	cc       = "AR"
 )
 
+// SteamAPI es una estructura que maneja la comunicación con la API de Steam y la base de datos.
 type SteamAPI struct {
 	DB *sql.DB
 }
 
-func (s *SteamAPI) GetSteamData(appIDs []int, limit int) ([]steamapi.AppDetails, error) {
-	var wg sync.WaitGroup
-	var results []steamapi.AppDetails
-	var errors []error
+// RunProcessData es la función principal que coordina el proceso de obtención, procesamiento y guardado de datos de Steam.
+// Acepta una interfaz 'api' que debe cumplir con la interfaz 'SteamData' definida en models.go.
+// 'limit' es la cantidad máxima de juegos a procesar.
+func RunProcessData(api steamapi.SteamData, limit int) error {
+	// Cargar el último appID procesado.
+	lastProcessedAppID, err := api.LoadLastProcessedAppid()
+	if err != nil {
+		return err
+	}
 
-	// Crear un semáforo con un límite de 10 solicitudes concurrentes
+	// Cargar SteamAppIDs previamente procesados
+	appIDs, err := api.GetAllAppIDs(lastProcessedAppID)
+	if err != nil {
+		return err
+	}
+
+	// Procesar datos de Steam y obtener los detalles de los juegos.
+	data, err := api.ProcessSteamData(appIDs, limit)
+	if err != nil {
+		return err
+	}
+
+	// Guardar los datos procesados en un archivo CSV.
+	err = api.SaveToCSV(data, "../data/dataDetails.csv")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ProcessSteamData procesa los datos de los juegos de Steam.
+// 'appIDs' es una lista de appIDs a procesar, 'limit' es la cantidad máxima de juegos a procesar.
+// Retorna los detalles de los juegos procesados y posibles errores de procesamiento.
+func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDetails, error) {
+	var wg sync.WaitGroup
+	var processedData []steamapi.AppDetails
+	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
+
 	for i, appID := range appIDs {
-		if len(results) >= limit {
+		if len(processedData) >= limit {
 			break
 		}
+
 		wg.Add(1)
 		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
+
 		go func(id int) {
 			defer wg.Done()
 			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-			url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
-			req, err := http.NewRequest("GET", url, nil)
+
+			data, err := s.ProcessAppID(id)
 			if err != nil {
-				errors = append(errors, err)
+				processingErrors = append(processingErrors, err)
 				return
 			}
 
-			client := &http.Client{}
-			response, err := client.Do(req)
-			if err != nil {
-				errors = append(errors, err)
-				return
-			}
-			defer response.Body.Close()
-
-			var responseData map[string]steamapi.AppDetailsResponse
-			err = json.NewDecoder(response.Body).Decode(&responseData)
-			if err != nil {
-				errors = append(errors, err)
-				return
-			}
-
-			if responseData[strconv.Itoa(id)].Success {
-				result := responseData[strconv.Itoa(id)].Data
-				if result.Type == "game" || result.Type == "dlc" {
-					results = append(results, result)
-					log.Printf("Insertado juego/appID: %s/%d\n", result.Name, id)
-				} else {
-					log.Printf("No insertado (tipo no válido: %s)/appID: %d\n", result.Type, id)
-				}
-
-			}
-			err = s.SaveLastProcessedAppid(appID)
-			if err != nil {
-				log.Printf("Error al guardar el último appid procesado: %v\n", err)
+			if data != nil {
+				processedData = append(processedData, *data)
 			}
 		}(appID)
 
-		// Aplicar un timeout después de cada grupo de 10 solicitudes
 		if (i+1)%10 == 0 || i == len(appIDs)-1 {
-			wg.Wait()                    // Esperar a que las solicitudes en progreso terminen antes de continuar
-			time.Sleep(10 * time.Second) // Aplicar el timeout de 10 segundos
+			wg.Wait()
+			time.Sleep(10 * time.Second)
 		}
 	}
 
-	if len(errors) > 0 {
-		return nil, errors[0]
+	if len(processingErrors) > 0 {
+		return nil, processingErrors[0]
 	}
 
-	return results, nil
+	return processedData, nil
 }
 
-func SaveToCSV(data []steamapi.AppDetails, filePath string) error {
+// ProcessAppID procesa un appID específico y devuelve sus detalles si es un juego válido.
+// 'id' es el appID a procesar.
+// Retorna los detalles del juego y un posible error si ocurre.
+func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
+	url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	var responseData map[string]steamapi.AppDetailsResponse
+	err = json.NewDecoder(response.Body).Decode(&responseData)
+	if err != nil {
+		return nil, err
+	}
+
+	if responseData[strconv.Itoa(id)].Success {
+		data := responseData[strconv.Itoa(id)].Data
+		if data.Type == "game" || data.Type == "dlc" {
+			log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
+			err = s.SaveLastProcessedAppid(id)
+			if err != nil {
+				log.Printf("Error al guardar el último appid procesado: %v\n", err)
+			}
+			return &data, nil
+		} else {
+			log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
+		}
+	}
+
+	return nil, nil
+}
+
+// SaveToCSV guarda los detalles de los juegos en un archivo CSV.
+// 'data' es una lista de detalles de juegos a guardar, 'filePath' es la ubicación del archivo CSV.
+// Retorna un posible error si ocurre durante la escritura del archivo.
+func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error {
 	existingData, err := loadExistingData(filePath)
 	if err != nil {
 		return err
@@ -168,6 +220,9 @@ func SaveToCSV(data []steamapi.AppDetails, filePath string) error {
 	return nil
 }
 
+// loadExistingData carga los appIDs previamente existentes desde un archivo CSV.
+// 'filePath' es la ubicación del archivo CSV.
+// Retorna un mapa de appIDs existentes y un posible error si ocurre durante la lectura del archivo.
 func loadExistingData(filePath string) (map[int]bool, error) {
 	existingData := make(map[int]bool)
 	file, err := os.Open(filePath)
@@ -213,6 +268,9 @@ func loadExistingData(filePath string) (map[int]bool, error) {
 	return existingData, nil
 }
 
+// formatInitial formatea un valor inicial en moneda argentina.
+// 'initial' es el valor inicial a formatear.
+// Retorna el valor formateado en formato 'ARS X.YY'.
 func formatInitial(initial float64) string {
 	return fmt.Sprintf("ARS %.2f", initial)
 }
