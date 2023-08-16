@@ -1,0 +1,2 @@
+SteamAppid,Description,Type,Name,Publishers,Developers,isFree,Windows,Mac,Linux,Date,ComingSoon,Currency,DiscountPercent,InitialFormatted,FinalFormatted
+123,A test game,game,Test Game 1,Publisher 1,Developer 1,false,true,false,true,2023-08-15,false,USD,20,ARS 19.99,$15.99

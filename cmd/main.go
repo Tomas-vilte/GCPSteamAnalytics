@@ -5,6 +5,7 @@ import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"net/http"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 		defer db.Close()
 		return
 	}
-	steamAPI := &steamapi.SteamAPI{DB: db}
+	steamAPI := &steamapi.SteamAPI{DB: db, Client: &http.Client{}}
 
 	err = steamapi.RunProcessData(steamAPI, 10)
 	if err != nil {

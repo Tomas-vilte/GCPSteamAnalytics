@@ -5,7 +5,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"io"
 	"log"
 	"net/http"
@@ -14,6 +13,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 )
 
 const (
@@ -119,6 +120,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 		return nil, err
 	}
 
+	req.Close = true
 	response, err := s.Client.Do(req)
 	if err != nil {
 		return nil, err
@@ -152,7 +154,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 // 'data' es una lista de detalles de juegos a guardar, 'filePath' es la ubicación del archivo CSV.
 // Retorna un posible error si ocurre durante la escritura del archivo.
 func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error {
-	existingData, err := loadExistingData(filePath)
+	existingData, err := LoadExistingData(filePath)
 	if err != nil {
 		return err
 	}
@@ -224,10 +226,10 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 	return nil
 }
 
-// loadExistingData carga los appIDs previamente existentes desde un archivo CSV.
+// LoadExistingData carga los appIDs previamente existentes desde un archivo CSV.
 // 'filePath' es la ubicación del archivo CSV.
 // Retorna un mapa de appIDs existentes y un posible error si ocurre durante la lectura del archivo.
-func loadExistingData(filePath string) (map[int]bool, error) {
+func LoadExistingData(filePath string) (map[int]bool, error) {
 	existingData := make(map[int]bool)
 	file, err := os.Open(filePath)
 	if err != nil {
