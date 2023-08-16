@@ -5,7 +5,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"io"
 	"log"
 	"net/http"
@@ -14,6 +13,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 )
 
 const (
@@ -119,6 +120,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 		return nil, err
 	}
 
+	req.Close = true
 	response, err := s.Client.Do(req)
 	if err != nil {
 		return nil, err
