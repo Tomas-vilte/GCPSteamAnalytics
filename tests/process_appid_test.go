@@ -1,14 +1,12 @@
 package tests
 
 import (
-	"database/sql"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"testing"
@@ -25,21 +23,17 @@ func (m *MockHTTPClient) Do(req *http.Request) (*http.Response, error) {
 }
 
 func TestProcessAppID(t *testing.T) {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics")
-	if err != nil {
-		log.Printf("Error al abrir la base de datos: %v", err)
-		return
-	}
-	err = db.Ping()
-	if err != nil {
-		log.Printf("Hubo un error al conectarse a la base de datos: %v", err)
-		defer db.Close()
-		return
-	}
-	// Configura el cliente HTTP mock
+	db, mockdb, err := sqlmock.New()
+	assert.NoError(t, err)
+	defer db.Close()
+
+	// Configurar la expectativa para la consulta UPDATE
+	mockdb.ExpectExec("UPDATE state_table SET last_appid = ?").WithArgs(10).WillReturnResult(sqlmock.NewResult(1, 1))
+
+	// Configurar el cliente HTTP mock
 	mockClient := new(MockHTTPClient)
 
-	// Crea una instancia de SteamAPI con el cliente mock
+	// Crear una instancia de SteamAPI con la base de datos simulada y el cliente mock
 	api := &steamapi.SteamAPI{
 		DB:     db,
 		Client: mockClient,
@@ -52,7 +46,7 @@ func TestProcessAppID(t *testing.T) {
 		Body:       io.NopCloser(strings.NewReader(`{"10": {"success": true, "data": {"steam_appid": 10, "type": "game"}}}`)),
 	}
 
-	// Configura el comportamiento del cliente mock
+	// Configurar el comportamiento del cliente mock
 	mockClient.On("Do", mock.Anything).Return(expectedResponse, nil)
 
 	// Llama a la función que deseas probar
@@ -66,8 +60,8 @@ func TestProcessAppID(t *testing.T) {
 	assert.Equal(t, int64(10), appDetails.SteamAppid)
 	assert.Equal(t, "game", appDetails.Type)
 
-	// Verifica el comportamiento del cliente mock
-	mockClient.AssertExpectations(t)
+	// Verifica el comportamiento del mockClient y la base de datos simulada
+	assert.NoError(t, mockdb.ExpectationsWereMet())
 }
 
 func TestProcessAppID_UpdateLastProcessedAppID(t *testing.T) {
