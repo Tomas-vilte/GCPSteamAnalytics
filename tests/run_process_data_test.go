@@ -12,6 +12,21 @@ type MockSteamAPI struct {
 	mock.Mock
 }
 
+func (m *MockSteamAPI) GetStartIndexToProcess(lastProcessedAppID int, appIDs []int) int {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m *MockSteamAPI) IsEmptyAppID(appID int) (bool, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m *MockSteamAPI) AddToEmptyAppIDsTable(appID int) error {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (m *MockSteamAPI) ProcessAppID(id int) (*models.AppDetails, error) {
 	args := m.Called(id)
 	return args.Get(0).(*models.AppDetails), args.Error(1)

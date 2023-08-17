@@ -2,13 +2,14 @@ package models
 
 // AppDetails representa los detalles de una aplicación en la tienda Steam.
 type AppDetails struct {
-	SteamAppid  int64    `json:"steam_appid"`
-	Type        string   `json:"type"`
-	Name        string   `json:"name"`
-	Description string   `json:"short_description"`
-	Developers  []string `json:"developers"`
-	Publishers  []string `json:"publishers"`
-	IsFree      bool     `json:"is_free"`
+	SteamAppid       int64    `json:"steam_appid"`
+	Type             string   `json:"type"`
+	Name             string   `json:"name"`
+	Description      string   `json:"short_description"`
+	Developers       []string `json:"developers"`
+	Publishers       []string `json:"publishers"`
+	IsFree           bool     `json:"is_free"`
+	SupportLanguages string   `json:"supported_languages"`
 	// ReleaseDate contiene información sobre la fecha de lanzamiento.
 	ReleaseDate struct {
 		ComingSoon bool   `json:"coming_soon"`
@@ -49,4 +50,7 @@ type SteamData interface {
 	SaveLastProcessedAppid(lastProcessedAppid int) error
 	// SaveToCSV guarda los detalles de las aplicaciones en un archivo CSV.
 	SaveToCSV(data []AppDetails, filePath string) error
+	IsEmptyAppID(appID int) (bool, error)
+	AddToEmptyAppIDsTable(appID int) error
+	GetStartIndexToProcess(lastProcessedAppID int, appIDs []int) int
 }
