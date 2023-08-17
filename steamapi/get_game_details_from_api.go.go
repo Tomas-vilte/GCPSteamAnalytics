@@ -50,8 +50,11 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 		return err
 	}
 
+	// Obtener el indice de inicio para procesar los appIDs
+	startIndex := api.GetStartIndexToProcess(lastProcessedAppID, appIDs)
+
 	// Procesar datos de Steam y obtener los detalles de los juegos.
-	data, err := api.ProcessSteamData(appIDs, limit)
+	data, err := api.ProcessSteamData(appIDs[startIndex:], limit)
 	if err != nil {
 		return err
 	}
@@ -78,9 +81,19 @@ func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDeta
 		if len(processedData) >= limit {
 			break
 		}
-
 		wg.Add(1)
 		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
+
+		isEmptyAppID, err := s.IsEmptyAppID(appID)
+		if err != nil {
+			log.Printf("Error al verificar si el appID %d está vacío: %v\n", appID, err)
+			continue
+		}
+
+		if isEmptyAppID {
+			log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", appID)
+			continue
+		}
 
 		go func(id int) {
 			defer wg.Done()
@@ -89,16 +102,15 @@ func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDeta
 			data, err := s.ProcessAppID(id)
 			if err != nil {
 				processingErrors = append(processingErrors, err)
+
 				return
 			}
-
 			if data != nil {
 				processedData = append(processedData, *data)
 			}
 		}(appID)
 
 		if (i+1)%10 == 0 || i == len(appIDs)-1 {
-			wg.Wait()
 			time.Sleep(10 * time.Second)
 		}
 	}
@@ -106,7 +118,7 @@ func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDeta
 	if len(processingErrors) > 0 {
 		return nil, processingErrors[0]
 	}
-
+	log.Printf("Proceso de Steam completado. Juegos insertados: %d", len(processedData))
 	return processedData, nil
 }
 
@@ -143,10 +155,12 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 			}
 			return &data, nil
 		} else {
+			if err := s.AddToEmptyAppIDsTable(id); err != nil {
+				log.Printf("Error al agregar appID a la tabla empty_appids: %v\n", err)
+			}
 			log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
 		}
 	}
-
 	return nil, nil
 }
 
@@ -179,6 +193,7 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 			"Publishers",
 			"Developers",
 			"isFree",
+			"SupportLanguages",
 			"Windows",
 			"Mac",
 			"Linux",
@@ -204,6 +219,7 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 				strings.Join(app.Publishers, ", "),
 				strings.Join(app.Developers, ", "),
 				strconv.FormatBool(app.IsFree),
+				app.SupportLanguages,
 				strconv.FormatBool(app.Platforms.Windows),
 				strconv.FormatBool(app.Platforms.Mac),
 				strconv.FormatBool(app.Platforms.Linux),
