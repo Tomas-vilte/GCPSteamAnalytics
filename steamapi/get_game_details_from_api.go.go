@@ -213,9 +213,6 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 	}
 
 	for _, app := range data {
-		interfaceLangs := strings.Join(app.SupportedLanguages["interface"], ", ")
-		fullAudioLangs := strings.Join(app.SupportedLanguages["full_audio"], ", ")
-		subtitlesLangs := strings.Join(app.SupportedLanguages["subtitles"], ", ")
 		if _, exists := existingData[int(app.SteamAppid)]; !exists {
 			record := []string{
 				strconv.Itoa(int(app.SteamAppid)),
@@ -225,9 +222,9 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 				strings.Join(app.Publishers, ", "),
 				strings.Join(app.Developers, ", "),
 				strconv.FormatBool(app.IsFree),
-				interfaceLangs,
-				fullAudioLangs,
-				subtitlesLangs,
+				getSupportedLanguagesString(app.SupportedLanguages["interface"]),
+				getSupportedLanguagesString(app.SupportedLanguages["full_audio"]),
+				getSupportedLanguagesString(app.SupportedLanguages["subtitles"]),
 				strconv.FormatBool(app.Platforms.Windows),
 				strconv.FormatBool(app.Platforms.Mac),
 				strconv.FormatBool(app.Platforms.Linux),
@@ -323,4 +320,11 @@ func parseSupportedLanguages(raw string) map[string][]string {
 	}
 
 	return languages
+}
+
+func getSupportedLanguagesString(supportedLanguages []string) string {
+	if len(supportedLanguages) == 0 {
+		return "No support for this language type"
+	}
+	return strings.Join(supportedLanguages, ", ")
 }
