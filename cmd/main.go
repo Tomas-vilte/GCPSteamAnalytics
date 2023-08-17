@@ -21,7 +21,7 @@ func main() {
 	}
 	steamAPI := &steamapi.SteamAPI{DB: db, Client: &http.Client{}}
 
-	err = steamapi.RunProcessData(steamAPI, 5)
+	err = steamapi.RunProcessData(steamAPI, 10)
 	if err != nil {
 
 	}

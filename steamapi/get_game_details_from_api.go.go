@@ -60,7 +60,7 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 	}
 
 	// Guardar los datos procesados en un archivo CSV.
-	err = api.SaveToCSV(data, "../data/dataDetails.csv")
+	err = api.SaveToCSV(data, "/home/tomi/GCPSteamAnalytics/data/gamesDetails.csv")
 	if err != nil {
 		return err
 	}
@@ -147,6 +147,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 
 	if responseData[strconv.Itoa(id)].Success {
 		data := responseData[strconv.Itoa(id)].Data
+		data.SupportedLanguages = parseSupportedLanguages(data.SupportedLanguagesRaw)
 		if data.Type == "game" || data.Type == "dlc" {
 			log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
 			err = s.SaveLastProcessedAppid(id)
@@ -193,7 +194,9 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 			"Publishers",
 			"Developers",
 			"isFree",
-			"SupportLanguages",
+			"InterfaceLanguages",
+			"FullAudioLanguages",
+			"SubtitlesLanguages",
 			"Windows",
 			"Mac",
 			"Linux",
@@ -210,6 +213,9 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 	}
 
 	for _, app := range data {
+		interfaceLangs := strings.Join(app.SupportedLanguages["interface"], ", ")
+		fullAudioLangs := strings.Join(app.SupportedLanguages["full_audio"], ", ")
+		subtitlesLangs := strings.Join(app.SupportedLanguages["subtitles"], ", ")
 		if _, exists := existingData[int(app.SteamAppid)]; !exists {
 			record := []string{
 				strconv.Itoa(int(app.SteamAppid)),
@@ -219,7 +225,9 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 				strings.Join(app.Publishers, ", "),
 				strings.Join(app.Developers, ", "),
 				strconv.FormatBool(app.IsFree),
-				app.SupportLanguages,
+				interfaceLangs,
+				fullAudioLangs,
+				subtitlesLangs,
 				strconv.FormatBool(app.Platforms.Windows),
 				strconv.FormatBool(app.Platforms.Mac),
 				strconv.FormatBool(app.Platforms.Linux),
@@ -295,4 +303,24 @@ func LoadExistingData(filePath string) (map[int]bool, error) {
 // Retorna el valor formateado en formato 'ARS X.YY'.
 func formatInitial(initial float64) string {
 	return fmt.Sprintf("ARS %.2f", initial)
+}
+
+func parseSupportedLanguages(raw string) map[string][]string {
+	languages := make(map[string][]string)
+
+	parts := strings.Split(raw, ", ")
+	for _, part := range parts {
+		if strings.HasSuffix(part, "<strong>*</strong>") {
+			lang := strings.TrimSuffix(part, "<strong>*</strong>")
+			languages["full_audio"] = append(languages["full_audio"], lang)
+			languages["interface"] = append(languages["interface"], lang)
+			languages["subtitles"] = append(languages["subtitles"], lang)
+		} else {
+			lang := strings.TrimSuffix(part, "<br><strong>*</strong>idiomas con localización de audio")
+			languages["interface"] = append(languages["interface"], lang)
+			languages["subtitles"] = append(languages["subtitles"], lang)
+		}
+	}
+
+	return languages
 }

@@ -2,26 +2,24 @@ package models
 
 // AppDetails representa los detalles de una aplicación en la tienda Steam.
 type AppDetails struct {
-	SteamAppid       int64    `json:"steam_appid"`
-	Type             string   `json:"type"`
-	Name             string   `json:"name"`
-	Description      string   `json:"short_description"`
-	Developers       []string `json:"developers"`
-	Publishers       []string `json:"publishers"`
-	IsFree           bool     `json:"is_free"`
-	SupportLanguages string   `json:"supported_languages"`
-	// ReleaseDate contiene información sobre la fecha de lanzamiento.
-	ReleaseDate struct {
+	SteamAppid            int64    `json:"steam_appid"`
+	Type                  string   `json:"type"`
+	Name                  string   `json:"name"`
+	Description           string   `json:"short_description"`
+	Developers            []string `json:"developers"`
+	Publishers            []string `json:"publishers"`
+	IsFree                bool     `json:"is_free"`
+	SupportedLanguagesRaw string   `json:"supported_languages"`
+	SupportedLanguages    map[string][]string
+	ReleaseDate           struct {
 		ComingSoon bool   `json:"coming_soon"`
 		Date       string `json:"date"`
 	} `json:"release_date"`
-	// Platforms contiene información sobre las plataformas compatibles.
 	Platforms struct {
 		Windows bool `json:"windows"`
 		Mac     bool `json:"mac"`
 		Linux   bool `json:"linux"`
 	} `json:"platforms"`
-	// PriceOverview contiene detalles sobre el precio de la aplicación.
 	PriceOverview struct {
 		Currency        string `json:"currency"`
 		DiscountPercent int64  `json:"discount_percent"`
