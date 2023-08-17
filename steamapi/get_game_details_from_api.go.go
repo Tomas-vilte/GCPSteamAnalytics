@@ -324,7 +324,7 @@ func parseSupportedLanguages(raw string) map[string][]string {
 
 func getSupportedLanguagesString(supportedLanguages []string) string {
 	if len(supportedLanguages) == 0 {
-		return "No support for this language type"
+		return "No hay soporte para este tipo de idioma"
 	}
 	return strings.Join(supportedLanguages, ", ")
 }

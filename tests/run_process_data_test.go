@@ -1,7 +1,7 @@
 package tests
 
 import (
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -13,18 +13,18 @@ type MockSteamAPI struct {
 }
 
 func (m *MockSteamAPI) GetStartIndexToProcess(lastProcessedAppID int, appIDs []int) int {
-	//TODO implement me
-	panic("implement me")
+	args := m.Called(lastProcessedAppID, appIDs)
+	return args.Int(0)
 }
 
 func (m *MockSteamAPI) IsEmptyAppID(appID int) (bool, error) {
-	//TODO implement me
-	panic("implement me")
+	args := m.Called(appID)
+	return args.Bool(0), args.Error(1)
 }
 
 func (m *MockSteamAPI) AddToEmptyAppIDsTable(appID int) error {
-	//TODO implement me
-	panic("implement me")
+	args := m.Called(appID)
+	return args.Error(0)
 }
 
 func (m *MockSteamAPI) ProcessAppID(id int) (*models.AppDetails, error) {
@@ -58,17 +58,26 @@ func (m *MockSteamAPI) SaveToCSV(data []models.AppDetails, filePath string) erro
 }
 
 func TestRunProcessData(t *testing.T) {
-	mockAPI := new(MockSteamAPI)
-	lastProcessedAppID := 0
-	appIDs := []int{1, 2, 3}
-	data := []models.AppDetails{{}, {}, {}}
+	// Crea una instancia del mock
+	mockSteamData := new(MockSteamAPI)
 
-	mockAPI.On("LoadLastProcessedAppid").Return(lastProcessedAppID, nil)
-	mockAPI.On("GetAllAppIDs", lastProcessedAppID).Return(appIDs, nil)
-	mockAPI.On("ProcessSteamData", appIDs, 10).Return(data, nil)
-	mockAPI.On("SaveToCSV", data, "../data/dataDetails.csv").Return(nil)
-	err := steamapi.RunProcessData(mockAPI, 10)
+	// Configura el comportamiento del mock
+	lastProcessedAppID := 100
+	appIDs := []int{101, 102, 103}
+	startIndex := 0
+	data := []models.AppDetails{{SteamAppid: 101}, {SteamAppid: 102}, {SteamAppid: 103}}
+	limit := 10
 
+	mockSteamData.On("LoadLastProcessedAppid").Return(lastProcessedAppID, nil)
+	mockSteamData.On("GetAllAppIDs", lastProcessedAppID).Return(appIDs, nil)
+	mockSteamData.On("GetStartIndexToProcess", lastProcessedAppID, appIDs).Return(startIndex)
+	mockSteamData.On("ProcessSteamData", appIDs[startIndex:], limit).Return(data, nil)
+	mockSteamData.On("SaveToCSV", data, mock.AnythingOfType("string")).Return(nil)
+
+	// Llama a la función que deseas probar
+	err := steamapi.RunProcessData(mockSteamData, limit)
+
+	// Verifica que no haya error y que los métodos del mock hayan sido llamados
 	assert.NoError(t, err)
-	mockAPI.AssertExpectations(t)
+	mockSteamData.AssertExpectations(t)
 }
