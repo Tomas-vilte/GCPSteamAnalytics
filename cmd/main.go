@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
@@ -23,6 +24,13 @@ func main() {
 
 	err = steamapi.RunProcessData(steamAPI, 10)
 	if err != nil {
-
+		return
 	}
+	reviewAPI := &steamapi.SteamReviewAPI{Client: &http.Client{}}
+	reviews, err := reviewAPI.GetReviews(730)
+	if err != nil {
+		log.Printf("Error al obtener la reseña: %v", err)
+		return
+	}
+	fmt.Println(reviews.Reviews)
 }
