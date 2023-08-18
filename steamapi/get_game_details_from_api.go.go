@@ -102,7 +102,6 @@ func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDeta
 			data, err := s.ProcessAppID(id)
 			if err != nil {
 				processingErrors = append(processingErrors, err)
-
 				return
 			}
 			if data != nil {
@@ -324,7 +323,7 @@ func parseSupportedLanguages(raw string) map[string][]string {
 
 func getSupportedLanguagesString(supportedLanguages []string) string {
 	if len(supportedLanguages) == 0 {
-		return "No support for this language type"
+		return "No hay soporte para este tipo de idioma"
 	}
 	return strings.Join(supportedLanguages, ", ")
 }
