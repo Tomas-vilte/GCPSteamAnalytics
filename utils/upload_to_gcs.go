@@ -1,4 +1,4 @@
-package utilities
+package utils
 
 import (
 	"cloud.google.com/go/storage"
