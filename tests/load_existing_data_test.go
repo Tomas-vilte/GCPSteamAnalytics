@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
@@ -23,7 +23,7 @@ func createTempFile(content string) string {
 }
 
 func TestLoadExistingData_FileNotFound(t *testing.T) {
-	existingData, err := steamapi.LoadExistingData("nonexistent.csv")
+	existingData, err := utils.LoadExistingData("nonexistent.csv")
 	assert.NoError(t, err)
 	assert.Empty(t, existingData)
 }
@@ -33,7 +33,7 @@ func TestLoadExistingData_ValidFile(t *testing.T) {
 	filePath := createTempFile(fileContent)
 	defer os.Remove(filePath)
 
-	existingData, err := steamapi.LoadExistingData(filePath)
+	existingData, err := utils.LoadExistingData(filePath)
 	assert.NoError(t, err)
 	assert.Len(t, existingData, 3)
 	assert.True(t, existingData[10])
@@ -46,7 +46,7 @@ func TestLoadExistingData_InvalidData(t *testing.T) {
 	filePath := createTempFile(fileContent)
 	defer os.Remove(filePath)
 
-	existingData, err := steamapi.LoadExistingData(filePath)
+	existingData, err := utils.LoadExistingData(filePath)
 	assert.NoError(t, err)
 	assert.Len(t, existingData, 2)
 	assert.True(t, existingData[10])

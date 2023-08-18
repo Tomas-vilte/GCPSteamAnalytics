@@ -5,7 +5,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"io"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
 	"net/http"
 	"os"
@@ -146,7 +146,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 
 	if responseData[strconv.Itoa(id)].Success {
 		data := responseData[strconv.Itoa(id)].Data
-		data.SupportedLanguages = parseSupportedLanguages(data.SupportedLanguagesRaw)
+		data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
 		if data.Type == "game" || data.Type == "dlc" {
 			log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
 			err = s.SaveLastProcessedAppid(id)
@@ -168,7 +168,7 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 // 'data' es una lista de detalles de juegos a guardar, 'filePath' es la ubicación del archivo CSV.
 // Retorna un posible error si ocurre durante la escritura del archivo.
 func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error {
-	existingData, err := LoadExistingData(filePath)
+	existingData, err := utils.LoadExistingData(filePath)
 	if err != nil {
 		return err
 	}
@@ -221,9 +221,9 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 				strings.Join(app.Publishers, ", "),
 				strings.Join(app.Developers, ", "),
 				strconv.FormatBool(app.IsFree),
-				getSupportedLanguagesString(app.SupportedLanguages["interface"]),
-				getSupportedLanguagesString(app.SupportedLanguages["full_audio"]),
-				getSupportedLanguagesString(app.SupportedLanguages["subtitles"]),
+				utils.GetSupportedLanguagesString(app.SupportedLanguages["interface"]),
+				utils.GetSupportedLanguagesString(app.SupportedLanguages["full_audio"]),
+				utils.GetSupportedLanguagesString(app.SupportedLanguages["subtitles"]),
 				strconv.FormatBool(app.Platforms.Windows),
 				strconv.FormatBool(app.Platforms.Mac),
 				strconv.FormatBool(app.Platforms.Linux),
@@ -231,7 +231,7 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 				strconv.FormatBool(app.ReleaseDate.ComingSoon),
 				app.PriceOverview.Currency,
 				strconv.Itoa(int(app.PriceOverview.DiscountPercent)),
-				formatInitial(float64(app.PriceOverview.Initial) / 100),
+				utils.FormatInitial(float64(app.PriceOverview.Initial) / 100),
 				app.PriceOverview.FinalFormatted,
 			}
 			if err := writer.Write(record); err != nil {
@@ -244,86 +244,4 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 	}
 
 	return nil
-}
-
-// LoadExistingData carga los appIDs previamente existentes desde un archivo CSV.
-// 'filePath' es la ubicación del archivo CSV.
-// Retorna un mapa de appIDs existentes y un posible error si ocurre durante la lectura del archivo.
-func LoadExistingData(filePath string) (map[int]bool, error) {
-	existingData := make(map[int]bool)
-	file, err := os.Open(filePath)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return existingData, nil
-		}
-		return nil, err
-	}
-	defer file.Close()
-
-	reader := csv.NewReader(file)
-
-	// Leer y descartar la primera fila (encabezados)
-	_, err = reader.Read()
-	if err != nil {
-		return nil, err
-	}
-
-	// Leer las filas restantes y procesar los appIDs
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-
-		// Asegurarse de que haya al menos un valor en el registro antes de convertir
-		if len(record) < 1 {
-			continue
-		}
-
-		appID, err := strconv.Atoi(record[0])
-		if err != nil {
-			// Puede ser útil agregar un registro de depuración aquí para identificar registros incorrectos
-			continue // Saltar esta fila y seguir con la siguiente
-		}
-		existingData[appID] = true
-	}
-
-	return existingData, nil
-}
-
-// formatInitial formatea un valor inicial en moneda argentina.
-// 'initial' es el valor inicial a formatear.
-// Retorna el valor formateado en formato 'ARS X.YY'.
-func formatInitial(initial float64) string {
-	return fmt.Sprintf("ARS %.2f", initial)
-}
-
-func parseSupportedLanguages(raw string) map[string][]string {
-	languages := make(map[string][]string)
-
-	parts := strings.Split(raw, ", ")
-	for _, part := range parts {
-		if strings.HasSuffix(part, "<strong>*</strong>") {
-			lang := strings.TrimSuffix(part, "<strong>*</strong>")
-			languages["full_audio"] = append(languages["full_audio"], lang)
-			languages["interface"] = append(languages["interface"], lang)
-			languages["subtitles"] = append(languages["subtitles"], lang)
-		} else {
-			lang := strings.TrimSuffix(part, "<br><strong>*</strong>idiomas con localización de audio")
-			languages["interface"] = append(languages["interface"], lang)
-			languages["subtitles"] = append(languages["subtitles"], lang)
-		}
-	}
-
-	return languages
-}
-
-func getSupportedLanguagesString(supportedLanguages []string) string {
-	if len(supportedLanguages) == 0 {
-		return "No hay soporte para este tipo de idioma"
-	}
-	return strings.Join(supportedLanguages, ", ")
 }

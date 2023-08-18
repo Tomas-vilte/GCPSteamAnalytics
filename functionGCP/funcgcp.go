@@ -5,13 +5,13 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
 	"net/http"
 	"regexp"
 	"time"
 
 	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/utilities"
 )
 
 func ProcessSteamDataAndSaveToStorage(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +56,7 @@ func ProcessSteamDataAndSaveToStorage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Cargar el archivo CSV completo en Cloud Storage
-	err = utilities.UploadFileToGCS(csvContent.String(), "steam-analytics", fileName)
+	err = utils.UploadFileToGCS(csvContent.String(), "steam-analytics", fileName)
 	if err != nil {
 		log.Printf("Error al subir el archivo .csv a Cloud Storage: %v", err)
 		http.Error(w, "Error al subir el archivo .csv a Cloud Storage", http.StatusInternalServerError)
