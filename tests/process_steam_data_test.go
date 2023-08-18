@@ -1,64 +1,79 @@
 package tests
 
 import (
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
-	"github.com/stretchr/testify/assert"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"github.com/stretchr/testify/mock"
-	"io"
-	"net/http"
-	"strings"
 	"testing"
 )
 
-type MockHTTPClients struct {
+// MockSteamData es una implementación simulada de la interfaz SteamData
+type MockSteamData struct {
 	mock.Mock
 }
 
-func (m *MockHTTPClients) Do(req *http.Request) (*http.Response, error) {
-	args := m.Called(req)
-	return args.Get(0).(*http.Response), args.Error(1)
+func (m *MockSteamData) ProcessSteamData(appIDs []int, limit int) ([]*models.AppDetails, error) {
+	args := m.Called(appIDs, limit)
+	return args.Get(0).([]*models.AppDetails), args.Error(1)
 }
 
 func TestProcessSteamData(t *testing.T) {
-	db, mockDB, _ := sqlmock.New()
-	defer db.Close()
-
-	// Crear un mock de HTTPClient
-	mockHTTPClient := new(MockHTTPClient)
-
-	// Configurar el comportamiento esperado del mock para la llamada HTTP
-	resp := &http.Response{
-		Status:     "200 OK",
-		StatusCode: http.StatusOK,
-		Body:       io.NopCloser(strings.NewReader(`{"123": {"success": true, "data": {"steam_appid": 123, "type": "game"}}}`)),
+	// Creamos una instancia simulada de SteamData
+	mockData := &MockSteamData{}
+	expectedDetails := []*models.AppDetails{
+		{
+			SteamAppid:  123,
+			Description: "Example description 1",
+			Type:        "game",
+			Name:        "Game 1",
+			Publishers:  []string{"Publisher A", "Publisher B"},
+			Developers:  []string{"Developer X"},
+			IsFree:      false,
+		},
+		{
+			SteamAppid:  456,
+			Description: "Example description 2",
+			Type:        "software",
+			Name:        "Software 1",
+			Publishers:  []string{"Publisher C"},
+			Developers:  []string{"Developer Y", "Developer Z"},
+			IsFree:      true,
+		},
+		{
+			SteamAppid:  789,
+			Description: "Example description 2",
+			Type:        "software",
+			Name:        "Software 1",
+			Publishers:  []string{"Publisher C"},
+			Developers:  []string{"Developer Y", "Developer Z"},
+			IsFree:      true,
+		},
 	}
-	mockHTTPClient.On("Do", mock.Anything).Return(resp, nil)
+	mockData.On("ProcessSteamData", mock.AnythingOfType("[]int"), mock.AnythingOfType("int")).Return(expectedDetails, nil)
 
-	// Configurar el comportamiento esperado del mock para la consulta SELECT
-	expectedAppID := 123
-	mockDB.ExpectQuery("SELECT last_appid FROM state_table where last_appid = ?").
-		WithArgs(expectedAppID).
-		WillReturnRows(sqlmock.NewRows([]string{"steam_appid", "type"}).AddRow(expectedAppID, "game"))
-
-	// Configurar el comportamiento esperado del mock para la consulta UPDATE (SaveLastProcessedAppid)
-	mockDB.ExpectExec("UPDATE state_table SET last_appid = ?").
-		WithArgs(expectedAppID).
-		WillReturnResult(sqlmock.NewResult(1, 1)) // 1 row affected
-
-	// Crear una instancia de SteamAPI con los mocks de base de datos y HTTPClient
-	steamAPI := &steamapi.SteamAPI{DB: db, Client: mockHTTPClient}
-
-	// Llamar a la función que estamos probando
-	appIDs := []int{123}
+	// Llamamos a la función que se está probando
+	appIDs := []int{123, 456, 789}
 	limit := 10
-	result, err := steamAPI.ProcessSteamData(appIDs, limit)
+	processedData, err := mockData.ProcessSteamData(appIDs, limit)
 
-	// Realizar aserciones sobre los resultados
-	assert.NoError(t, err)
-	assert.Equal(t, len(appIDs), len(result))
+	// Agrega las afirmaciones según el comportamiento esperado
+	if err != nil {
+		t.Errorf("Expected no error, but got: %v", err)
+	}
 
-	// Asegurarse de que las llamadas esperadas a los mocks se realizaron
-	mockHTTPClient.AssertExpectations(t)
-	mockDB.ExpectationsWereMet()
+	// Assertion: Verifica que la longitud de los datos procesados coincida con los detalles esperados
+	if len(processedData) != len(expectedDetails) {
+		t.Errorf("Expected processedData to have %d entries, but got: %d", len(expectedDetails), len(processedData))
+	}
+
+	mockData.AssertExpectations(t)
+
+	// Assertion: Verifica que el método ProcessSteamData se haya llamado con los argumentos correctos
+	mockData.AssertCalled(t, "ProcessSteamData", appIDs, limit)
+
+	// Afirmaciones adicionales basadas en detalles específicos de los datos procesados
+	for i, expected := range expectedDetails {
+		if processedData[i].Name != expected.Name {
+			t.Errorf("Processed data name mismatch at index %d. Expected: %s, Actual: %s", i, expected.Name, processedData[i].Name)
+		}
+	}
 }

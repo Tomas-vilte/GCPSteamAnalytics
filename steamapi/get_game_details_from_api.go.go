@@ -102,7 +102,6 @@ func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDeta
 			data, err := s.ProcessAppID(id)
 			if err != nil {
 				processingErrors = append(processingErrors, err)
-
 				return
 			}
 			if data != nil {
