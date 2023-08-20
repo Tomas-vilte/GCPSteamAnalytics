@@ -111,3 +111,35 @@ func LoadExistingData(filePath string) (map[int]bool, error) {
 	log.Printf("Carga de datos existentes completada. Total de appIDs cargados: %d\n", len(existingData))
 	return existingData, nil
 }
+
+func ReadAppIDsFromCSV(filename string) ([]int, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		log.Printf("Error al abrir el archivo: %v", err)
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.Read()
+
+	var appIDs []int
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("Error al leer la primera fila: %v\n", err)
+			return nil, err
+		}
+		appID, err := strconv.Atoi(record[0])
+		if err != nil {
+			log.Printf("Error al convertir appID a entero: %v\n", err)
+			return nil, err
+		}
+		appIDs = append(appIDs, appID)
+	}
+	return appIDs, nil
+}
