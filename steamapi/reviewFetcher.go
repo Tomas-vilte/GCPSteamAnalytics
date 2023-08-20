@@ -1,11 +1,15 @@
 package steamapi
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 )
 
 type SteamReviewAPI struct {
@@ -45,4 +49,77 @@ func (s *SteamReviewAPI) GetReviews(appID int) (*models.ReviewResponse, error) {
 
 	// Devolver un puntero a la estructura ReviewResponse y un posible error
 	return &reviewResponse, nil
+}
+
+func (s *SteamReviewAPI) SaveReviewsToCSV(appID int, reviews *models.ReviewResponse, filePath string) error {
+	existingData, err := utils.LoadExistingData(filePath)
+	if err != nil {
+		log.Printf("Error: %v", err)
+		return err
+	}
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		log.Printf("Hubo un error al abrir el archivo csv: %v", err)
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	fileInfo, _ := file.Stat()
+	if fileInfo.Size() == 0 {
+		header := []string{
+			"SteamAppID",
+			"TotalReviews",
+			"NumReviews",
+			"TotalPositive",
+			"TotalNegative",
+			"ReviewScore",
+			"AuthorSteamID",
+			"Language",
+			"ReviewText",
+			"TimestampCreated",
+			"VotedUp",
+			"VotesUp",
+			"VotesFunny",
+			"CommentCount",
+			"SteamPurchase",
+			"ReceivedForFree",
+			"WrittenDuringEarlyAccess",
+		}
+		if err := writer.Write(header); err != nil {
+			return err
+		}
+	}
+
+	for _, review := range reviews.Reviews {
+		if _, exists := existingData[appID]; !exists {
+			record := []string{
+				strconv.Itoa(appID),
+				strconv.Itoa(review.ReviewSummary.TotalReviews),
+				strconv.Itoa(review.ReviewSummary.NumReviews),
+				strconv.Itoa(review.ReviewSummary.TotalPositive),
+				strconv.Itoa(review.ReviewSummary.TotalNegative),
+				strconv.Itoa(review.ReviewSummary.ReviewScore),
+				review.Author.SteamID,
+				review.Language,
+				review.ReviewText,
+				strconv.Itoa(review.TimestampCreated),
+				strconv.FormatBool(review.VotedUp),
+				strconv.Itoa(review.VotesUp),
+				strconv.Itoa(review.VotesFunny),
+				strconv.Itoa(review.CommentCount),
+				strconv.FormatBool(review.SteamPurchase),
+				strconv.FormatBool(review.ReceivedForFree),
+				strconv.FormatBool(review.WrittenDuringEarlyAccess),
+			}
+			if err := writer.Write(record); err != nil {
+				log.Printf("Error al escribir en el CSV: %v", err)
+				return err
+			}
+			existingData[appID] = true
+		}
+	}
+	return nil
 }
