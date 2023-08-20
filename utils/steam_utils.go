@@ -112,34 +112,42 @@ func LoadExistingData(filePath string) (map[int]bool, error) {
 	return existingData, nil
 }
 
-func ReadAppIDsFromCSV(filename string) ([]int, error) {
-	file, err := os.Open(filename)
+func ReadAppIDsFromCSV(filePath string) ([]int, error) {
+	file, err := os.Open(filePath)
 	if err != nil {
-		log.Printf("Error al abrir el archivo: %v", err)
 		return nil, err
 	}
 	defer file.Close()
 
 	reader := csv.NewReader(file)
-	reader.Read()
+
+	// Leer y descartar la primera fila (encabezados)
+	_, err = reader.Read()
+	if err != nil {
+		return nil, err
+	}
 
 	var appIDs []int
-
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
-			log.Printf("Error al leer la primera fila: %v\n", err)
 			return nil, err
 		}
+
+		// Asegurarse de que haya al menos un valor en el registro antes de convertir
+		if len(record) < 1 {
+			continue
+		}
+
 		appID, err := strconv.Atoi(record[0])
 		if err != nil {
-			log.Printf("Error al convertir appID a entero: %v\n", err)
-			return nil, err
+			continue // Saltar esta fila y seguir con la siguiente
 		}
 		appIDs = append(appIDs, appID)
 	}
+
 	return appIDs, nil
 }

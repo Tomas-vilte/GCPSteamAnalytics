@@ -3,9 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"net/http"
 )
 
 func main() {
@@ -25,7 +27,7 @@ func main() {
 	//if err != nil {
 	//	return
 	//}
-	//reviewAPI := &steamapi.SteamReviewAPI{Client: &http.Client{}}
+	reviewAPI := &steamapi.SteamReviewAPI{Client: &http.Client{}}
 	//reviews, err := reviewAPI.GetReviews(730)
 	//if err != nil {
 	//	log.Printf("Error al obtener la reseña: %v", err)
@@ -38,4 +40,13 @@ func main() {
 		log.Printf("Error al leer los appids: %v", err)
 	}
 	fmt.Println(appids)
+
+	for _, appid := range appids {
+		reviews, err := reviewAPI.GetReviews(appid)
+		if err != nil {
+			log.Printf("Error al obtener la reseña: %v", err)
+			continue
+		}
+		err = reviewAPI.SaveReviewsToCSV(appid, reviews, "../data/reviews.csv")
+	}
 }
