@@ -3,10 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"net/http"
 )
 
 func main() {
@@ -20,17 +19,23 @@ func main() {
 		defer db.Close()
 		return
 	}
-	steamAPI := &steamapi.SteamAPI{DB: db, Client: &http.Client{}}
+	//steamAPI := &steamapi.SteamAPI{DB: db, Client: &http.Client{}}
+	//
+	//err = steamapi.RunProcessData(steamAPI, 10)
+	//if err != nil {
+	//	return
+	//}
+	//reviewAPI := &steamapi.SteamReviewAPI{Client: &http.Client{}}
+	//reviews, err := reviewAPI.GetReviews(730)
+	//if err != nil {
+	//	log.Printf("Error al obtener la reseña: %v", err)
+	//	return
+	//}
+	//fmt.Println(reviews.Reviews)
 
-	err = steamapi.RunProcessData(steamAPI, 10)
+	appids, err := utils.ReadAppIDsFromCSV("../data/gamesDetails.csv")
 	if err != nil {
-		return
+		log.Printf("Error al leer los appids: %v", err)
 	}
-	reviewAPI := &steamapi.SteamReviewAPI{Client: &http.Client{}}
-	reviews, err := reviewAPI.GetReviews(730)
-	if err != nil {
-		log.Printf("Error al obtener la reseña: %v", err)
-		return
-	}
-	fmt.Println(reviews.Reviews)
+	fmt.Println(appids)
 }
