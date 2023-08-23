@@ -69,9 +69,10 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 	return nil
 }
 
-// ProcessSteamData procesa los datos de los juegos de Steam.
-// 'appIDs' es una lista de appIDs a procesar, 'limit' es la cantidad máxima de juegos a procesar.
-// Retorna los detalles de los juegos procesados y posibles errores de procesamiento.
+// ProcessSteamData realiza el procesamiento paralelo de los detalles de las aplicaciones Steam.
+// Utiliza un contexto 'ctx' para controlar la ejecución y procesa hasta 'limit' aplicaciones
+// a partir de los IDs de aplicación en 'appIDs'. Retorna una lista de AppDetails que contienen
+// los detalles de las aplicaciones procesadas y un posible error si ocurre algún problema.
 func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int) ([]steamapi.AppDetails, error) {
 	var wg sync.WaitGroup
 	var processedData []steamapi.AppDetails
@@ -79,55 +80,71 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 	semaphore := make(chan struct{}, 10)
 	processedCount := 0
 
+	// Obtener un mapa de IDs de aplicaciones vacías utilizando la función AreEmptyAppIDs
+	emptyAppIDsMap, err := s.AreEmptyAppIDs(appIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	// Capturar el error de cancelación del contexto
+	ctxErr := ctx.Err()
+
+	// Procesar los IDs de aplicaciones
 	for i, appID := range appIDs {
-		if len(processedData) >= limit || ctx.Err() != nil {
+		if len(processedData) >= limit || ctxErr != nil {
 			break
 		}
+
 		wg.Add(1)
 		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
 
-		select {
-		case <-ctx.Done():
-			break
-		default:
-			isEmptyAppID, err := s.IsEmptyAppID(appID)
+		isEmptyAppID := emptyAppIDsMap[appID] // Obtener el valor del mapa
+
+		// Procesar cada appID en una gorutina separada
+		go func(id int, isEmpty bool) {
+			defer wg.Done()
+			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
+
+			// Saltar si el appID está en la tabla de IDs vacíos
+			if isEmpty {
+				log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", id)
+				return
+			}
+
+			// Procesar los detalles de la aplicación utilizando la función ProcessAppID
+			data, err := s.ProcessAppID(id)
 			if err != nil {
-				log.Printf("Error al verificar si el appID %d está vacío: %v\n", appID, err)
-				continue
+				processingErrors = append(processingErrors, err)
+				log.Printf("Error al procesar appID %d: %v\n", id, err)
+				return
 			}
-
-			if isEmptyAppID {
-				log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", appID)
-				<-semaphore // Liberar el semáforo en caso de salto
-				wg.Done()
-				continue
+			if data != nil {
+				processedData = append(processedData, *data)
+				processedCount++
+				log.Printf("Elementos procesados hasta ahora: %d", processedCount)
 			}
+		}(appID, isEmptyAppID)
 
-			go func(id int) {
-				defer wg.Done()
-				defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-
-				data, err := s.ProcessAppID(id)
-				if err != nil {
-					processingErrors = append(processingErrors, err)
-					return
-				}
-				if data != nil {
-					processedData = append(processedData, *data)
-					processedCount++
-					log.Printf("Elementos procesados hasta ahora: %d", processedCount)
-				}
-			}(appID)
-		}
-
-		if (i+1)%10 == 0 || i == len(appIDs)-1 {
-			time.Sleep(2 * time.Second)
+		// Dormir por 3 segundos después de procesar cada 10 appIDs o al final
+		if i%10 == 0 || i == len(appIDs)-1 {
+			time.Sleep(3 * time.Second)
 		}
 	}
 
+	// Esperar a que todas las gorutinas terminen
+	wg.Wait()
+
+	// Manejar errores de procesamiento de manera más detallada
 	if len(processingErrors) > 0 {
+		errorDetails := make([]string, len(processingErrors))
+		for i, err := range processingErrors {
+			errorDetails[i] = err.Error()
+		}
+		log.Printf("Proceso de Steam completado con %d errores:\n%s\n", len(processingErrors), strings.Join(errorDetails, "\n"))
 		return nil, processingErrors[0]
 	}
+
+	// Registro de finalización del proceso
 	log.Printf("Proceso de Steam completado. Juegos insertados: %d", len(processedData))
 	return processedData, nil
 }
@@ -141,7 +158,6 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	req.Close = true
 	response, err := s.Client.Do(req)
 	if err != nil {

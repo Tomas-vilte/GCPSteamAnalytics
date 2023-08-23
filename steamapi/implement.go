@@ -1,5 +1,7 @@
 package steamapi
 
+import "strings"
+
 // GetAllAppIDs obtiene todos los appIDs almacenados en la base de datos MySQL
 // que son mayores que el último appID procesado.
 func (s *SteamAPI) GetAllAppIDs(lastProcessedAppID int) ([]int, error) {
@@ -43,14 +45,45 @@ func (s *SteamAPI) SaveLastProcessedAppid(lastProcessedAppid int) error {
 	return nil
 }
 
-func (s *SteamAPI) IsEmptyAppID(appID int) (bool, error) {
-	query := "SELECT COUNT(*) FROM empty_appids WHERE appid = ?"
-	var count int
-	err := s.DB.QueryRow(query, appID).Scan(&count)
-	if err != nil {
-		return false, err
+func (s *SteamAPI) AreEmptyAppIDs(appIDs []int) (map[int]bool, error) {
+	query := "SELECT appid FROM empty_appids WHERE appid IN (?)"
+
+	batchSize := 100 // Número de IDs por lote
+	emptyAppIDs := make(map[int]bool)
+
+	for i := 0; i < len(appIDs); i += batchSize {
+		end := i + batchSize
+		if end > len(appIDs) {
+			end = len(appIDs)
+		}
+
+		batchIDs := appIDs[i:end]
+		placeholders := make([]string, len(batchIDs))
+		args := make([]interface{}, len(batchIDs))
+
+		for j, id := range batchIDs {
+			placeholders[j] = "?"
+			args[j] = id
+		}
+
+		batchQuery := strings.Replace(query, "(?)", "("+strings.Join(placeholders, ",")+")", 1)
+		rows, err := s.DB.Query(batchQuery, args...)
+		if err != nil {
+			return nil, err
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var appID int
+			err := rows.Scan(&appID)
+			if err != nil {
+				return nil, err
+			}
+			emptyAppIDs[appID] = true
+		}
 	}
-	return count > 0, nil
+
+	return emptyAppIDs, nil
 }
 
 func (s *SteamAPI) AddToEmptyAppIDsTable(appID int) error {

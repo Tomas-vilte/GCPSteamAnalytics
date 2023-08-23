@@ -18,9 +18,13 @@ func (m *MockSteamAPI) GetStartIndexToProcess(lastProcessedAppID int, appIDs []i
 	return args.Int(0)
 }
 
-func (m *MockSteamAPI) IsEmptyAppID(appID int) (bool, error) {
-	args := m.Called(appID)
-	return args.Bool(0), args.Error(1)
+func (m *MockSteamAPI) AreEmptyAppIDs(appIDs []int) (map[int]bool, error) {
+	resultMap := make(map[int]bool)
+	for _, id := range appIDs {
+		args := m.Called(id)
+		resultMap[id] = args.Bool(0) // Suponiendo que el resultado está en la posición 0
+	}
+	return resultMap, nil // Simulamos que no hay error
 }
 
 func (m *MockSteamAPI) AddToEmptyAppIDsTable(appID int) error {
