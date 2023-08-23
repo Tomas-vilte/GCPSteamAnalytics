@@ -1,75 +1,345 @@
-SteamAppID,TotalReviews,NumReviews,TotalPositive,TotalNegative,ReviewScore,AuthorSteamID,Language,ReviewText,TimestampCreated,VotedUp,VotesUp,VotesFunny,CommentCount,SteamPurchase,ReceivedForFree,WrittenDuringEarlyAccess
-15740,0,0,0,0,0,76561198275469876,latam,"Con esta tercera entrega al fin se encaminaron a hacer un juego decente.
-El salto al 3D es lo mejor sin duda, permitiendo una libertad y un gameplay más satisfactorio que sus antecesores. No hace falta la perfección milimétrica.
-Los gráficos están bien para la época, siguiendo el estilo artístico característico de la saga. Con efectos como las nubes produciendo sombra sobre el terreno. Una evolución en cuanto a lo que veníamos viendo.
-Presentándonos al mejor personaje hasta el momento: Munch. Su historia y origen son muy interesantes.
-El tener dos personajes permite cierto dinamismo en algunos niveles, precisando la cooperación y sincronía entre ambos.
-Y el venir adaptado para mandos es algo que muchos juegos de su momento no hacían. Así que es otro punto a favor.
-Aunque no es un juego perfecto. Hay fallos en la cámara y el control algunas veces. Y hay algún que otro nivel mal diseñado.
-Sin embargo, no es suficiente para opacar a este gran videojuego.
-Una recomendación alta sin dudas.",1662866453,true,2,0,0,true,false,false
-15710,0,0,0,0,0,76561198100464696,latam,Este juego se merece un remake como hicieron con el primero.,1669439430,true,0,0,0,true,false,false
-15700,0,0,0,0,0,76561198275469876,latam,"Ha envejecido demasiado mal.
+SteamAppID,numReviews,AuthorSteamID,NumGamesOwned,NumReviews,PlaytimeForever,PlaytimeLastTwoWeeks,PlaytimeAtReview,LastPlayed,Language,ReviewText,TimestampCreated,VotedUp,VotesUp,VotesFunny,CommentCount,SteamPurchase,ReceivedForFree,WrittenDuringEarlyAccess
+15710,1,76561198275469876,435,197,12,0,12,1656642219,latam,"Repite los errores de su antecesor. Aunque este parece un poco más interesante en cuanto a historia.
+Una lástima la jugabilidad.",1656642274,false,2,0,0,true,false,false
+15700,1,76561198275469876,435,197,280,0,280,1651519749,latam,"Ha envejecido demasiado mal.
 Los movimientos son horribles, controles de tanque básicamente.
 Demasiado prueba y error.
 No recomendado.",1656619104,false,4,0,0,true,false,false
-15620,0,0,0,0,0,76561198807323937,latam,No,1688821007,false,0,0,0,true,false,false
-15930,0,0,0,0,0,76561199072233543,latam,"beutiful graphics, music and sounds. lovely game with not challenging gameplay. bought it to replay it. a perfect good old game.",1639191134,true,0,0,0,true,false,false
-15910,0,0,0,0,0,76561198381798113,latam,"Voy a decir algo, este juego a envejecido bien, le gana a Luxor 1, literalmente si quieres pasarte un rato jugandolo lo recomiendo Bv",1659514090,true,0,0,0,true,false,false
-15750,0,0,0,0,0,76561198275469876,latam,"Este juego es algo totalmente diferente a lo que veníamos viendo en la saga de Oddworld. Es totalmente admirable como innovan y hacen encajar mecánicas totalmente diferentes con un universo ya establecido.
-Tiene buenos detalles, como cazar tu propia munición y las diversas maneras de afrontar la misma misión.
-Un juego de mundo semi-abierto que recompensa la exploración, con mapeados más grandes que sus juegos anteriores.
-Tiene vista en primera y tercera persona, siendo una más favorable para disparar y otra para el movimiento y combate cuerpo a cuerpo.
-Tiene pinceladas a rpg, como el poder hablar con npc para obtener indicaciones o ayuda.
-Puede parecer un poco repetitivo en estructura, ya que se basa en ser un cazarecompensas. Pero la variedad en cada combate es lo que lo salva.
-Sin embargo, el tramo final peca de ser muy lineal, aburrido y en ocasiones, injusto. Ir a una habitación, matar a todos, pasar a la siguiente habitación, repetir. Parece que se quedaron sin ideas o sin tiempo y tuvieron que sacar el juego en el estado en el que estaba.
-Hablando de eso, el port que hicieron a Pc es lamentable. El limitador de fotogramas y la sincronización vertical no funcionan por más que uno las active. Hay que forzarlas por programas externos.
-Nada imposible pero una verdadera lástima viendo el potencial que tiene el juego.
-De oferta, sin duda es una buena compra.",1663980549,true,1,0,0,true,false,false
-16040,0,0,0,0,0,76561198114760528,latam,Excelente juego. Super entretenido!,1591669849,true,0,0,0,true,false,false
-16450,0,0,0,0,0,76561199486251466,latam,Chingon,1692228248,true,0,0,0,true,false,false
-16465,0,0,0,0,0,76561198413708039,latam,"[h1]El hombre descontento no encuentra silla cómoda.[/h1]
+15620,3,76561198807323937,139,13,188,0,172,1689034299,latam,No,1688821007,false,0,0,0,true,false,false
+15620,3,76561198220164253,0,13,21,0,21,1478045775,latam,"nada que ver con el primer dawn of war, no vale la pena el juego. Muy pocas unidades, razas y variables de ejercito, casi seria mejor que sacaran otra expansión para el primer dawn of war y no esta clase de juegos escuetos.",1550329110,false,0,0,0,true,false,false
+15620,3,76561198877510503,20,2,50,0,50,1546098573,latam,me arepenti de la compra,1546653400,false,1,2,0,true,true,false
+15750,1,76561198822048891,237,14,67,0,67,1605145742,latam,"No te permite guardar partidas, no gastes tu dinero.",1618455754,false,0,0,0,true,false,false
+16450,4,76561198798500415,0,46,1015,0,1015,1612225604,latam,"Una vergonzosa secuela a un juego tan magistral y excelente como F.E.A.R 1. No vale ni el dolar por el que te lo quieren vender, así de malo es. Vergonzoso.",1679554368,false,0,0,0,true,false,false
+16450,4,76561198393085776,262,33,64,0,64,1655335489,latam,una verga,1656632939,false,1,0,0,true,false,false
+16450,4,76561198352262249,178,40,504,0,504,1626387600,latam,"Si te gusto el F.E.A.R. original, te encantaron sus expansiones y buscas una secuela que lleve el terror y gameplay al siguiente nivel, pues déjame decirte que vas a terminar grandemente decepcionado.
+El juego es un total downgrade si lo comparas con el original. 
 
-[i]Benjamin Franklin[/i]
-[b](1706 - 1790)[/b]
-Boston, Massachusetts, Estados Unidos.
-[u]Político, prolífico científico e inventor estadounidense, participante activo en el proceso de independencia de los Estados Unidos.[/u]",1649977435,true,3,0,0,true,false,false
-16600,0,0,0,0,0,76561197996381096,latam,"Este jueguillo no pareciera gran cosa, pero es muy entretenido, adictivo y retador.
-Muy buen juego y buenos graficos. 100% recomendable.",1292708060,true,0,0,0,true,false,false
-16730,0,0,0,0,0,76561198024676676,latam,"No inventa ni reinventa nada y su historia es solo una excusa par la acción pero es bastante entretenido y por lo menos yo no he tenido problemas técnicos, comprado en una rebaja es una buena oportunidad!",1687487257,true,2,0,0,true,false,false
-16810,0,0,0,0,0,76561198250683736,latam,"Exelente dlc, me hubiese gustado que incluyeran mas civilizaciones y que el nombre de las ciudades no sean siempre las mismas, pero me gusto",1675519058,true,0,0,0,true,false,false
-16720,0,0,0,0,0,76561198172663066,latam,"Qué se puede decir, es un juego medio pelo de sigilo, que puede tener más contras que pros pero zafa.
+Advertencia de MUCHO TEXTO
 
-* Los gráficos en general son buenos. Las animaciones y las voces están bien, hay un tarareo que hacen algunos soldados que es pegadizo.
-* La historia es bien básica (con algunos detalles interesantes) y es como de relleno porque no te impulsan a jugar el juego. SI no, que ""está ahí""
-* Los niveles son interesantes al igual que la forma de resolverlos y las habilidades se van desarrollando a medida que vas jugando.
-* La IA de los enemigos no es la gran cosa y muchas veces te descubren de la nada pero otras ni se dan cuenta que estás ahí.
-* Hay algunas misiones secundarias pero no son del todo descubribles, y eso que la mayoría de los escenarios los recorrí enteros. 
+¿El por qué? 
+Empecemos por lo que en mi opinión es lo peor: la IA de los enemigos.
+La IA de los enemigos es tontisima, la mayoría de enemigos solo se limita a correr hacia ti disparando, otros simplemente huirán y se esconderán hasta que vayas hasta a ellos para matarlos y algunos cuantos simplemente solo se quedaran parados inmóviles mirando hacía ti o hacía una esquina. 
 
-En fin, lindo juego para jugarlo una sola vez. 
+Otro punto negativo a mencionar sería el gunplay, mientras que en el F.E.A.R. original los combates eran frenéticos, llenos de enemigos, con cierto grado de dificultad, lo que los hacia muy divertidos. En este no pasa eso. Los enemigos no son muchos (excepto por la recta final de lo que hablare más adelante) y como mencione anteriormente, la mal programación de los enemigos hace que los combates se sientan demasiado fáciles, absurdos y un poco tontos. 
+Las armas se sienten sin potencia: la pistola, las 2 escopetas y la carabina lazer. 
+Las escopetas se sienten menos poderosas y mucho mas lentas que en el original, lo que hace que la mejor opción sea pasar de ellas y simplemente usar el rifle de asalto. Con la pistola, el lanzallamas y la carabina lazer pasa lo mismo, simplemente parece que les estas haciendo cosquillas en vez de tratar de asesinarlos.
 
-* Nota: El juego puede crashear cuando lo querés jugar pero se arregla desinstalando la versión actual de  Nvidia physX e instalando la versión que trae el juego en la carpeta redist.",1672709385,true,2,0,0,true,false,false
-16868,0,0,0,0,0,76561198879903490,latam,"Civilization V - Babylon es un DLC que incluye únicamente la nueva civilización de Babilonia con Nabucodonosor II como su líder. Si bien está nueva facción le agrega aun más contenido a un juego extraordinario como es el Civilization V, el precio es muy elevado para el poco contenido que trae: solo recomiendo comprarlo en una oferta o en algún pack que incluya el juego original. Además, la estética en la pantalla de líder de Nabucodonosor II me parece bastante pobre, muy oscura y deprimente, lo que hace que el líder tenga un aire de villano innecesario. Por lo demás, la civilización de Babilonia esta orientada al desarrollo científico gracias a su habilidad ""Ingenuity"", que acelera la obtención de Grandes Científicos, y trae un edificio único (Walls of Babylon) y una unidad única (Bowman).
-Solo recomiendo comprarlo a los fanáticos de la saga Civilization, de lo contrario, el contenido base del juego es más que suficiente.",1593309203,true,0,0,0,true,false,false
-16900,0,0,0,0,0,76561198841278684,latam,"Deli,🤩 pero deberían poner más modos de juego para singleplayer.",1691713895,true,1,0,0,true,false,true
-17330,0,0,0,0,0,76561198312244091,latam,"Lleno de bugs, pero muy bueno. Es como una versión más pulida del crysis 1. Aunque el guión es medio una poronga",1691349756,true,0,0,0,true,false,false
-17390,0,0,0,0,0,76561198977826605,latam,"El dia que salga otro juego como spore y aun mas si es de maxis, ese sera un gran dia",1691563398,true,0,1,0,true,false,false
-17410,0,0,0,0,0,76561199011225879,latam,Piola,1691884262,true,0,0,0,true,false,false
-17440,0,0,0,0,0,76561198240024906,latam,"Spore es un juego excelente, pese a los años a diferencia de muchos otros títulos, el concepto de Spore ha envejecido de buena manera y es innegable que pese a sus gráficos no tan destacables, la integración de su concepto en el gameplay siga siendo muy entretenido, pero realmente esta reseña negativa no radica su base en ello. El mayor problema con Spore Creepy & Cute Parts en pleno 2023 no es siquiera que el ""DLC"" cuente como un juego completamente aparte, lo cual de por sí, es un problema que denota bastante falta de cuidado por EA que decidieron no integrar esta expansión como un DLC común años después de su lanzamiento, radica en que en primer lugar, los servidores de Spore oficiales parecen estar desconectados por completo, lo que implica que ya no puedes acceder a las funcionalidades online desde steam, pero el descaro de esto está en que en el soporte oficial del juego los empleados llegan a explicar que los servidores están online o a veces en mantenimiento cuando realmente es imposible conectarse desde esta plataforma. En segundo lugar, resulta que Spore Creepy & Cute Parts tiene un error el cual puede impedir que inicies el juego si es que no tienes instalado en tu PC el juego base pese a que este ""DLC"" es un juego independiente en teoría. Recomiendo con todo el corazón Spore, es uno de los títulos más bonitos que he jugado en sus 5 etapas, hay mucho que hacer en casi todas, pero no recomiendo comprar esta expansión a menos de que estén en la disposición de tener ambos títulos instalados y de aceptar desde el vamos que por medio de steam no te vas a poder conectar vía online. También está su absurdo precio de 19.99$ que por cierto, recomiendo esperar a rebajas ya que ofrecen los 3 juegos (El principal y sus 2 DLC) por 7$ o menos.",1689905250,false,1,0,0,true,false,false
-17480,0,0,0,0,0,76561198334090347,latam,"espectacular juego de estrategia ambientado en un pos conflicto sovietico y americano con el surgimiento de una nueva potencia oriental, la cual se desperto para apoderarse y conquistar el mundo con tecnologia de punta.",1688925128,true,0,0,0,true,false,false
-17460,0,0,0,0,0,76561198114476840,latam,Disfruté mucho el juego. ¡Una gran aventura!,1667948996,true,0,0,0,true,false,false
-17470,0,0,0,0,0,76561198402312833,latam,"Un muy excelente juego. Acción, suspenso y terror.",1692399369,true,0,0,0,true,false,false
-17710,0,0,0,0,0,76561198865129005,latam,"El juego esta bien, sus mecanicas son buenas y casi originales pero lamentablemente esta muerto y nadie lo juega, tambien me gustaria que pongan un modo historia que explicaria por que los bandos estan en guerra y demas",1558486563,true,0,0,0,true,false,false
-18040,0,0,0,0,0,76561197988417915,latam,"Diablo meets Monkey Island, un muy buen hack&slash RPG  con unos dialogos que te hacen cagar de risa. Recomendado.",1291048236,true,0,0,1,true,false,false
-18050,0,0,0,0,0,76561199104723857,latam,juegaso,1672707653,true,0,0,0,true,false,false
-18300,0,0,0,0,0,76561198362089162,latam,muy entretenido pero demaciado corto.,1675181318,true,0,0,0,true,false,false
-18470,0,0,0,0,0,76561198871776943,latam,"Excelente juego de estrategia, especial para ejercitar las neuronas, buenos graficos muy entretenido, lo super recomiendo.",1684820623,true,0,0,0,true,false,false
-18500,0,0,0,0,0,76561198060206558,latam,"Voy a decir algo repetitivo, es el mejor defensa de torres que  existe. Una pena que no hayan creado muchísimos mapas, en este juego, mucho es poco, quiero más, pero no hay mas...",1687715262,true,0,0,0,true,false,false
-19000,0,0,0,0,0,76561199317626662,latam,"Lo compre por una oferta momentanea pero para jugar es muy malo, hay que estar configurando las teclas a cada rato o no responden a los comandos, supongo que es porque esta optimizado para joystick pero es algo que ya tendria que estar solucionado",1689291665,false,0,0,0,true,false,false
-19080,0,0,0,0,0,76561199012212261,latam,Está ok para costar .50 centavos de dolar.,1633554014,false,0,0,0,true,false,false
-18700,0,0,0,0,0,76561199176411415,latam,"Está entretenido, para ser un viejo tanto antiguo. Recuerdo cuando salió para la Nintendo Wii. Es novedoso para la época en la que salió, un plataformero con control casi absoluto de la gravedad.
+El plot esta ok, pero se podría resumir en: Alma anda horny
+ 
 
-Lo único que está mal es que no se puede controlar a total libertad el sentido en el que rota el mundo. En la versión wii, se podía rotar en cualquier ángulo con el Joystick, pero aquí solamente hace giros bruscos de 90 grados y a lo mucho uno de 180. Eso es lo que detesto, de ahí en fuera, es un buen título, algo escondido.",1655330516,true,0,0,0,true,false,false
-19680,0,0,0,0,0,76561198810488082,latam,Buenardo 👍,1692325343,true,0,0,0,true,false,false
-19830,0,0,0,0,0,76561198085669345,latam,excelent,1679483540,true,0,0,0,true,false,false
-19800,0,0,0,0,0,76561198134451961,latam,"Mejoró en gran medida el juego anterior y es mas dificil que matar un burro a cachetadas, hay un par de bugs como personajes bizcos en la campaña, pero esta lindo, jugalo <:",1668839949,true,0,0,0,true,false,false
+Y otra cosa que odie fue al HDSP que diseño el mapeado de teclas >:c
+El mapeado de teclas o key binding es super incomodo, osea, ¿como no vas a poner soporte para mouse con botones laterales? ¿y a quien se le ocurrió que era buena idea poner ALT izquierdo como el botón de correr? 
+¿Acaso el CSM ese tiene idea de cuantas veces presione la tecla windows por intentar correr?
+
+Ahora, debo admitir que el juego tiene unos cuantos puntos positivos, o al menos a mi me gustaron.
+Toda la segunda parte del juego: sinceramente no sientes que el juego despega o arranca sino hasta después del nivel donde entras a la escuela, todo ese nivel es muy bueno a mi parecer y casi hace que valga la pena invertir 7 horas para jugar F.E.A.R. 2 (si el juego es corto). Después de ese nivel la dificultad se incrementa un poco y la cantidad de enemigos aumenta considerablemente hasta llegar al nivel final. Toda esa trayectoria final es divertida y por breves momentos se logra sentir como el F.E.A.R. original, luego recuerdas lo incomodo que son los controles y se te pasa. 
+Otras cosas que también me gustaron fueron los 2 nuevos enemigos, ¿mutantes?, no se como llamarlos. Los que se mueven super rápido y se van corriendo en 4 patas por el suelo y las paredes me parecieron muy divertidos de combatir, también los que pueden revivir enemigos muertos me parecieron interesantes, aunque me hubiera gustado que fueran un poco más agresivos ya que lo nomas te las pasas persiguiéndolos. 
+El final me pareció bastante impactante y por eso me gusto.
+Y finalmente el DLC de Reborn es demasiado bueno, es todo lo que el juego principal debió de ser. 
+
+En conclusión: si vivo 100 años, 100 años van y chingan a su madre los desarrolladores de F.E.A.R. 2",1626646549,false,2,0,2,true,false,false
+16450,4,76561198118696564,1062,73,600,0,580,1598227487,latam,"FEAR 2 es una poronga irreparable por donde se lo vea y te lo voy a demostrar en 3 puntos básicos, los cuales están íntimamente relacionados con el FEAR original.
+1. El equipo que hizo FEAR 1 tenía un propósito claro: hacer un juego de acción basado claramente en el estilo de las películas de John Woo. Que significa esto? que a la hora de cagarte a tiros el aire se llenara de partículas de todo tipo (chispas, polvo, papeles, sangre, etc...) de modo que, combinado con la cámara lenta y luces dinámicas se convirtiera en un espectáculo visual. FEAR 2 no tiene nada de esto, y cuando lo tiene, fracasa con total éxito a la hora de implementarlo. Esto se da por varios motivos. La mayoría de los entornos son completamente estáticos sin luces dinámicas ni posibilidad de generar partículas, cuando entras en cámara lenta los enemigos brillan mas que el sol y porque al hacer necesario apuntar con mira para para poder cagarte tiros se reduce mucho el campo de visión por lo cual si hay efectos es probable que no los llegues a ver. De este modo FEAR 2 traiciona sus raíces para hacer un shooter genérico y encima malo. Pareciera que lo único que se acordaron fue de poner cámara lenta.
+2. El terror en el FEAR original era simple y efectivo. Había secuencias claramente diseñadas para la acción y otras para el terror. En FEAR 2 esto no es así. Todas las secuencias de terror quedan completamente arruinadas por 2 motivos: Hay algún mogólico que te acompaña y encima no se calla nunca por lo que caga el suspenso. La otra razón es que llenan todas las secuencias de post Processing effects. Que significa esto? que todas las secuencias de terror se llenan de distorsión, color naranja y cambios de ángulos repentinos que vez de asustarte te dan ataques de epilepsia y te agarran 9 enfermedades desconocidas por la raza humana.
+3. El gameplay es una poronga insalvable por 2 motivos. En el original la IA de los enemigos trabajaba como un escuadrón y se comportaban de forma sumamente inteligente para contrarrestar tu habilidad de poner cámara lenta. En el FEAR 2 son todos unos mogólicos que de pedo saben dónde están parados. Encima que le hacen downgrade a la IA, los ponen a combatir en entornos abiertos (la IA esta pensada par combatir en entornos cerrados tipo oficinas etc) y los hacen venir en grandes cantidades para compensar su retraso mental. Por si fuera poco los visten como si fueran parte de la película Tron: Legacy. O sea que les salen luces por todo el cuerpo. Con trajes megafuturistas que contrastan con la simplicidad y realismo del FEAR original. LA otra razón por la que el gameplay es malo es por lo chotas y malas que son las armas, tienen unos sonidos horribles, sentís que haces poco daño con las mismas y tienen todas un diseño futurista horrible y genérico.
+El que hayan cagado la escopeta debería ser considerado un crimen de lesa humanidad. Ni Hitler se animó a tanto.
+
+Bonus Round: La historia es una poronga y encima esta mal contada. En el FEAR original te vas enterando de la trama por visiones, mensajes de teléfono y lo que te va diciendo tu jefe. En FEAR 2 te ponen a leer 300 mensajes que encima la mayoría son irrelevantes y no le importan a nadie. El DLC es una cagada que dura 50 minutos",1598220666,false,0,1,1,true,false,false
+16730,5,76561198325641871,543,140,31,0,31,1653785824,latam,Graficos más feos y rotos que pisar caca descalzo,1673083050,false,0,1,0,true,false,false
+16730,5,76561198913600923,480,24,289,0,289,1657909790,latam,"Para ser honesto, este no es un muy buen juego, no es tan malo como decian, pero tampoco es muy bueno.
+
+Los principales problemas que este juego tiene son:
+
+-Enemigos muy tediosos en algunas partes
+
+-La habilidad especial que tiene tu personaje no tiene mucho uso en el juego
+
+-El juego se puede volver muy repetitivo
+
+-La parte final es tan mala que no me la pude pasar de lo tediosa que es
+
+Le pongo una review negativa porque, a pesar de que el juego no es tan malo, tampoco me parece que valga tanto la pena jugarlo.",1657910324,false,0,0,0,true,false,false
+16730,5,76561198239227526,284,8,18,0,18,1589514655,latam,Asqueroso el juego culiao malo como ctm pueden hacer una wea tan mala y no ponerla gratis no vale ni los 250 pesos que me costo,1589514923,false,0,0,0,true,false,false
+16730,5,76561198394856763,0,40,449,0,449,1563321092,latam,"Me gustaría recomendar este juego por su original argumento y su interesante historia, pero la cantidad de bugs y démas errores técnicos me impiden poder hacerlo. En resumen, una buena idea mal llevada.",1563408111,false,0,0,0,true,false,false
+16730,5,76561198347160277,353,13,25,0,25,1539621610,latam,"[h1] ¿TRUÑO LEGENDARIO? [/h1]
+
+Parecía un buen juego en el trailer e imágenes promocionales pero a la hora de jugarlo vas comprendiendo de que la cosa no es tan así. Los gráficos que tiene no son nada del otro mundo aunque cumplen si tenemos en cuenta la época en que salió. Si hablamos de la jugabilidad, que de por sí es muy torpe, se ve aún más limitada por la gran cantidad de bugs que presenta este título. Dejando de lado el hecho de que la historia es plana y está plagado de errores no es lo peor que se haya creado.",1539626769,false,1,0,0,true,false,false
+16810,1,76561198062621902,296,31,560,0,310,1675677782,latam,"Por lejos, es incomparable con el viejo Colonization. 
+Para empezar no es Colonization sino un reskin de Civilization 4, por lo que la jugabilidad es igual al segundo. 
+El viejo Colonization tiene su propio modo de jugar y estaba definitivamente mejor pulido que este, incluso para la época en que salió. Este Colonization 4 es visualmente agradable y tiene algunas cosas de Civ 4 que hacen más fácil jugar, pero no es una continuación del anterior. 
+Incluso la ambientación es distinta a causa de la música, que no trasmite las mismas sensaciones. 
+Únicamente recomendado para quienes estén acostumbrados al Civ 4 o necesitan si o si una versión actualizada del viejo. Pero Sid Meier´s Colonization todavía hay uno sólo.",1674573316,false,1,0,0,true,false,false
+16720,1,76561198273011256,2759,647,235,0,222,1565269483,latam,"[h1]Es como si mezclaras todas las mecanicas buenas y pulidas de metal gear... pero ejecutandolas mal :c[/h1]
+
+Algo triste porque este jueguito tiene mucho potencial perdido; a resumidas cuentas: buenas ideas, mal ejecutadas </3
+
+>A grandes rasgos:
+Este jueguito, inspirado en una agente secreta de la WWII nos narra su tarea titanica al ""infiltrarse"" en las trincheras nazis, lo pongo entreparentesis porque dudo mucho si infiltrarse se considere matar todo a tu paso xD, y es el problema principal del titulo, es un wannabe metal gear, que a diferencia de esté no da opciones a como ""infiltrarte"" vas de escenario en escenario picando nazis con una navaja por atras 7u7 como vil brayan, limpias el escenario de enemigos, continuas... suena bonito en teoria pero las mecanicas que utiliza estan muy mal ejecutadas, en principio los controles son muy cuadrados, el rango de vision de los enemigos es raro, es como un rectangulo gigante de 10km... puedes estar a su lado y no te ven, pero ojo que de frente a leguas si xD y tiene cosas medio ilogicas, como no poder recojer armas de tus enemigos y ""utilizar la luz"" rompes transformadores para estar en la oscuridad, pero no sirve de mucho.
+
+*Ah, y antes que todo si lo vas a jugar, o lo consideras comprar necesitas esto: https://www.nvidia.com/object/physx-9.13.0604-legacy-driver.html es un juego viejo y te crashea si o si, sin ese driver.*
+
+>Lo bueno:
+-El valor historico del jueguito (los videojuegos son cultura~♥)
+-Tiene aires de metal gear, si las mecanicas estuvieran pulidas estaria a la altura.
+-Quiere innovar: tienes un power-up que te vuelve casi invisible, e incluso leveleas a nuestra protagonista
+- Al menos puedes ocupar una pistola silenciada, con municion que encuentras en lockers, obviamente no es un shooter, y necesitas hacer puros headshots... hacer que las balas cuenten.
+
+>Lo malo:
+-Todas esas ideas e innovaciones se van al carajo al implementar controles horribles...
+-Puedes ocupar ductos para pasar, como nuestro amado snake, pero ojo que para salir ocupas otro boton, lo que lo hace medio molesto siendo un juego de ""sigilo"" en el que ocupas moverte rapido, en general es un titulo que se vuelve malo por sus pesimos controles y decisiones... como que no puedes utilizar armas de enemigos caidos en combate... sin dar algun pretexto, ok es sigilo, pero retomo mis palabras: ""que clase de sigilo es matar todo si o si?"".
+-Es un juego que ha envejecido pobremente... se ve feito, e incluso tiene algunos bugs randoms.
+
+[h1]Resumiendo:[/h1]
+Es un juego mediocre 5/10 que solo empeora por las decisiones de los desarrolladores; ponerte en modo aim?, utilizar un boton para salir de un ducto? no poder recojer armas de enemigos?, que los medikits no los puedas cargar? etc etc, tiene muchisimo potencial perdido por cuestiones asi 4/10 consideralo comprar solo si te excitan demasiado los juegos de ""sigilo"" y tus estandares son pobres... (y obviamente que este en descuento).",1565269306,false,4,1,0,true,false,false
+16900,1,76561198236525734,108,17,109,0,109,1683216010,latam,"No lo recomiendo x el hecho de que no hay gente para jugar, 1 solo sv sudamericano (br) y esta vacio. Esta bueno para hacer un par de misiones solo, pero la reseña es por el tema del online que solo anda si jugas con gente de norte america, y la gracia es jugarlo online. El juego no lo pude probar mucho pero x lo que vi un 9/10, muy lindo las modificaciones q se pueden hacer al arma, me gustaria q agreguen un grip horizontal o diagonal, el resto esta bueno",1683216209,false,0,0,0,true,false,true
+17390,16,76561198313645771,18,5,927,0,811,1690444994,latam,"Compren el juego en origin, aqui no hay servidores",1684548181,false,2,0,0,true,false,false
+17390,16,76561198329328361,264,2,8,0,8,1684454476,latam,"Los servidores estan cerrados en Steam y no tienen codigos para registrarlo en Origin, compralo allá, acá no vale la pena.",1684536452,false,1,0,0,true,false,false
+17390,16,76561198975792234,38,13,387,0,334,1673544820,latam,Es igual que el pirata,1670353086,false,0,1,0,true,false,false
+17390,16,76561198798217791,75,2,1749,0,1749,1649026643,latam,"Muy buen juego, pero no recomiendo comprarlo por steam. por que para activar algunos dlc hay que introducir el código de la clave de producto, la cual steam no puede darte a menos que compres el juego por la pagina de origin. Si alguien tiene alguna solución, que la escriba.",1664055583,false,10,0,0,true,false,false
+17390,16,76561199214280748,0,1,165,0,77,1673755325,latam,pague solo para que no me dejen iniciar secion o registrarme,1661214979,false,0,0,0,true,false,false
+17390,16,76561198309493317,228,42,2131,0,2131,1617068539,latam,mira ta fachero y ta ª,1655992431,false,1,0,0,true,false,false
+17390,16,76561199031398904,0,2,248,0,145,1643156219,latam,El juego salió malo porque lo compramos y salió malo esperamos 4 días y no funciono me pueden hacer una devolución,1638149908,false,1,2,0,true,false,false
+17390,16,76561198333862163,0,21,795,0,795,1579217941,latam,"---Spore---
+Crea tu propio Homúnculo.
+
+Si, seguro jugaste o viste a algún youtuber jugarlo, Spore es un clásico entre los juegos de creación. Un universo de criaturas que tú mismo podrás crear y evolucionar de la manera que quieras.
+
+Spore es muy simple de entender, puedes dejar volar tu creatividad con todas las posibilidades que el juego te da, junto con algunas de sus… absurdas limitaciones.
+
+Spore es un buen juego, pero tiene un gran problema, el paso del tiempo no le ayudo para nada. Spore es un juego viejo, si, esa es la verdad, sus planetas, aunque muy bonitos al comienzo, son muy reducidos y sus modelos 3D no son los mejores, los escenarios son feos, y las opciones son bastante limitadas en muchos momentos de la partida.
+
+Spore cuenta con varias “etapas”, y a mi parecer el juego decae hasta cierto punto cuando llegamos a la etapa de las aldeas, ya se convierte en un juego tipo “Age of Empires” al principio algo clásico y luego futurista, y para ser sincero el sistema no está muy bien trabajado, sobre todo en la etapa de las aldeas, la cual me pareció aburrida y lenta.
+
+Otro problema con Spore es su alto precio, entiendo que no es mucho, pero existen otros juegos que con los años bajan su precio, Spore tiene un precio algo elevado para lo viejo que es, además tiene algunos dlc que también son bastante caros de los cuales no puedo opinar pues no los he jugado.
+
+Spore tiene muchos aciertos, muchas cosas disfrutables y definitivamente te puede hacer pasar un buen rato…. Pero estamos en 2021 y para ser honesto…. No sé si puedo recomendarlo, sobre todo por ese precio, quizá si lo consigues en oferta pueda ser divertido echarle algunas horas.
+
+Por todos estos motivos es que no recomiendo Spore, y créanme que me duele, pero siempre que recomiendo algo es porque yo lo volvería a comprar y jugar, pero no aria esto con Spore. Mi recomendación… saquen Spore 2 con un mejor motor gráfico y más opciones de personalización.
+
+No recomendado 5/10 si está en oferta podría ser una buena idea.
+
+---------5/10----------",1634910638,false,1,0,4,true,false,false
+17390,16,76561198346658288,0,21,368,0,25,1659490666,latam,"El juego tiene un problema inmenso en su version de steam el cual es que no puedes iniciar sesión ergo, no puedes usar las opciones en linea que tiene el juego, lo cual te impide ver y compartir tus creaciones, que creo yo es una parte muy imortante del juego",1632270232,false,0,0,0,true,false,false
+17390,16,76561199156895515,0,178,13,0,6,1631805121,latam,No inicia secion y dice que no estoy conectado a internet,1631805086,false,9,1,0,true,false,false
+17390,16,76561198064092162,172,40,94,0,94,1589066363,latam,"Como es muy bien sabido lo basura codiciosa que es EA subieron el precio a 899 AR$ (para no decir 900, así parece más barato). Pero la joda es para ellos porque lo compré a 57 pesos. 
+
+¡Chupame esta EA!",1629655955,false,2,3,0,true,false,false
+17390,16,76561198853661504,0,42,1124,0,801,1679093180,latam,me aburre,1609080982,false,0,0,0,true,false,false
+17390,16,76561198251218236,102,13,2168,0,434,1646801180,latam,"Si, es divertido y todo pero es muy problematico 
+A la hora de registrarse debes primero de registrar la clave del producto en tu cuenta de EA o hacerte una 
+Además tiene incontables bugs que crashean el juego y hace de la experiencia algo bastante molesto
+En el modo Criatura, si mueres crashea el juego y es un bug que nunca arreglaron 
+Y en el modo tribal por algun motivo se crashea de forma aleatoria 
+Y cabe decir que no tiene guardado automatico así que si olvidaste guardar, perdiste todo tu progreso",1593890490,false,1,0,0,true,false,false
+17390,16,76561198278855850,0,3,4569,0,2163,1608607524,latam,"una mierda. no puedo guardar mi partida, tuve un problema en mi pc y se me elimino todo, trato de hacerme la cuenta de spore y no me deja siempre el mismo mensaje de que la señal esta mal pero mi señal es de lo mejor y aun asi no me deja hacerme la cuenta o ingresar a una, por lo que no puedo disfrutar del juego por que siempre se borra todo",1564615000,false,3,3,0,true,false,false
+17390,16,76561198154255094,0,1,25,0,25,1548528845,latam,Se me cierra el juego cuando me apareo o evoluciono,1548529325,false,0,3,0,true,false,false
+17390,16,76561198070048078,0,2,201,0,201,1542069127,latam,si vna a vender un juego al menos fijense que todo funcione,1542069215,false,0,0,0,true,false,false
+17410,13,76561199063234183,222,28,517,0,305,1687134370,latam,"La historia es malísima, al principio dejás las cinemáticas para ver si te engancha, pero nada queda muy claro y al final terminas saltando todas las cinemáticas porque igual no entendiste nada, y el gameplay se basa en W+Espacio+suerte para que el personaje se agarre. Porque más de la mitad de tus muertes van a ser por culpa de que el personaje no se agarró de algún lugar, aparte de ser bastante triste el hecho de que la primicia del juego es que se trata de correr y matar haciendo parkur y eso es lo que menos se ve en el juego, constantemente los escenarios del juego te traban esa experiencia fluida de parkur o hacen que el personaje no se agarre a lugares que evidentemente puede alcanzar, pero que simplemente no se puede. Aparte de eso, otra cosa molesta es que te penalizan los errores haciendo que tengas que probar diferentes cosas hasta que algo te funcione, lo cual en un juego de correr y matar, arruina la experiencia, sin mencionar que el sistema de combate está muy mal implementado, si te gusta jugar violento sacándole las armas a los enemigos y limpiando el lugar para avanzar bien, hay momentos donde el juego, sin decirte, quiere que huyas, haciendo que pierdas varias veces, y por el contrario si te gusta más correr y escapar de los enemigos, hay momentos donde el juego no te va a dejar avanzar hasta que no acabes con los enemigos. La verdad esperaba más de este juego.",1687046557,false,1,0,0,true,false,false
+17410,13,76561198127196337,316,24,338,0,338,1671231839,latam,"Un juego que para su época se veía muy bien y tenía cierta originalidad en lo del parkour, aunque las mecánicas jugables son muy toscas, muy trabadas, no hay un fluidez al 100% al jugarlo. Después de un tiempo aburre. Los combates son la peor parte del juego. 
+
+La historia es una excusa para de ir de un punto A a un B, no esta muy trabajada.
+
+Lo mejor del juego por afano es el arte gráfico y su estilo cyberpunk.
+
+Igual me es imposible recomendar este juego.",1681092361,false,0,0,0,true,false,false
+17410,13,76561199014521519,0,2,28,0,28,1672979496,latam,simplemente inicie a jugarlo y dejo de funcionar pasado el tutorial,1672979894,false,0,0,0,true,false,false
+17410,13,76561198920282685,212,88,46,0,46,1658886316,latam,Lo recordaba mejor.,1658886461,false,0,0,0,true,false,false
+17410,13,76561198826038421,201,23,264,0,264,1625619332,latam,"Cómo me gusta este juego, amigo... sin duda uno de mis favoritos. Lo jugué un montón (mucho) en la Xbox 360 allá por el 2014/2015/2016 (sí, le saqué bastante uso). 
+
+Aunque la historia sea mala y esté llena de agujeros de guión o simplemente sucedan cosas sin sentido, visualmente es hermoso, la música es muy buena e interesante, el diseño de niveles está bueno y la jugabilidad es satisfactoria. De hecho es su punto más fuerte. 
+
+[h1] ¿Por qué esto es una reseña negativa? [/h1]
+Bueno, la trolearon con lo de que no tiene logros. Me hubiese gustado platinarmelo :( . Además su precio es absurdo. Literalmente este juego es del 2008. Pero bueno, así es EA, qué se le va a ser. Si tenés muuuuchas ganas de jugarlo, entonces te diría que te lo piratees. Te estarías gastando más de 1400 pesos en este juego. Pasa que cuando me lo compré, era más barato y era una oferta que incluía a la secuela.
+
+Pero bueno Mirror's Edge va a quedar siempre en mi corazoncito.",1633316780,false,0,0,0,true,false,false
+17410,13,76561198084596418,818,40,250,0,250,1565555543,latam,"Corto, estéticamente lindo pero que no destaca en nada, su historia y personajes son pésimos, es demasiado lineal y tiene un pobre diseño de niveles.",1632095852,false,1,0,0,true,false,false
+17410,13,76561198425914107,0,16,557,0,367,1621828610,latam,"una basura injugable adentro de una bolsa clavada en un palo enterrado 90 metros bajo tierra incendiándose camino al núcleo de la tierra la peor bazofia lo más nefasto de la historia de los juegos en todo el universo
+
+si de casualidad piensan arruinarse la vida con este jueguito pateado mínimo desactiven la asistencia physx que si altabean una vez se les crashea la pc y tienen que reiniciarla manteniendo el botón de apagado, cosa que es mejor cagarla a patadas con zapatillas de plomo y le va a hacer menos daño a los componentes",1620659032,false,6,10,0,true,false,false
+17410,13,76561198878019734,211,49,511,0,511,1601692690,latam,"Sinceramente lo mejor de este juego es el parkour y todas las partes en las que lo usas, aparte de la gran estética del juego digna de un premio. Pero todos los puntos buenos se ven opacados por la tendencia de la época a ser todos shooter y en este caso no es divetido ni interesante haciéndose notar que era un punto en una lista a tachar para ser exitoso o mínimo nombrado en 2008 y por su mediocre historia. Las partes en las que el juego destaca son cuando te dejan en un ""pasillo"" (que no se siente así pero es técnicamente un pasillo) de parkour que simula una libertad pero al estar tan bien guiado y por su estética fascinante no se siente tanto. En cuanto mi gusto personal no disfruto de hacer los speedruns y no puedo hablar de su dificultad. La historia es básica y sin muchos cambios importantes que puedan hacer que te importe, con las típicas fallas de las historias de los videojuegos que no logran que te encariñes con ningun personaje que no sea el principal y hasta con ella cuesta. En cuanto al arte es tan bueno que hace parecer a todas las zonas absolutamente diferentes con ese toque futurista y colorido.  La rázon por la que no recomiendo este juego es que se que cuando mire atrás se que pensare en una anécdota de un intento de juego de parkour con gran estética pero que quiso llenar el hueco shooter para destacarse y con historia mediocre. Y ni hablar de la secuela que es una basura que se ve bien pero en un JUEGO DE PARKOUR NO PODES LIMITAR EL PARKOUR POR HABILIDADES.",1601695377,false,0,1,0,true,false,false
+17410,13,76561198810806464,124,6,562,0,562,1598923869,latam,si bien el juego es bonito y dificil en algunos aspectos tiene puntos negativos como el que la mayor parte de tiempo el personaje salta o traspasa o se bugea en paredes ademas se entiende que el juego no sea del estilo fps pero el control de las armas no tiene porque ser tan asqueroso pero para rematar y hacer que de mala calificacion al juego es el hecho de su final ya que deja muchas cosas inconclusas a mi parecer y como dije si bien no es un fps uno esperaba una batalla epica pero no obtuvimos nada de eso,1598924310,false,0,0,0,true,false,false
+17410,13,76561198097901854,175,19,113,0,113,1593251554,latam,"__________████████_____██████
+_________█░░░░░░░░██_██░░░░░░█
+________█░░░░░░░░░░░█░░░░░░░░░█
+_______█░░░░░░░███░░░█░░░░░░░░░█
+_______█░░░░███░░░███░█░░░████░█
+______█░░░██░░░░░░░░███░██░░░░██
+_____█░░░░░░░░░░░░░░░░░█░░░░░░░░███
+____█░░░░░░░░░░░░░██████░░░░░████░░█
+____█░░░░░░░░░█████░░░████░░██░░██░░█
+___██░░░░░░░███░░░░░░░░░░█░░░░░░░░███
+__█░░░░░░░░░░░░░░█████████░░█████████
+_█░░░░░░░░░░█████_████___████_█████___█
+_█░░░░░░░░░░█______█_███__█_____███_█___█
+█░░░░░░░░░░░░█___████_████____██_██████
+░░░░░░░░░░░░░█████████░░░████████░░░█
+░░░░░░░░░░░░░░░░█░░░░░█░░░░░░░░░░░░█
+░░░░░░░░░░░░░░░░░░░░██░░░░█░░░░░░██
+░░░░░░░░░░░░░░░░░░██░░░░░░░███████
+░░░░░░░░░░░░░░░░██░░░░░░░░░░█░░░░░█
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+░░░░░░░░░░░█████████░░░░░░░░░░░░░░██
+░░░░░░░░░░█▒▒▒▒▒▒▒▒███████████████▒▒█
+░░░░░░░░░█▒▒███████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█
+░░░░░░░░░█▒▒▒▒▒▒▒▒▒█████████████████
+░░░░░░░░░░████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█
+░░░░░░░░░░░░░░░░░░██████████████████
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+██░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+▓██░░░░░░░░░░░░░░░░░░░░░░░░██
+▓▓▓███░░░░░░░░░░░░░░░░░░░░█
+▓▓▓▓▓▓███░░░░░░░░░░░░░░░██
+▓▓▓▓▓▓▓▓▓███████████████▓▓█
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█
+Me aburrí muy rápido, el gameplay es muy interesante por los primeros 30 minutos, ya después no me da motivo para vivir",1598662023,false,3,0,0,true,false,false
+17410,13,76561198143865024,271,52,115,0,60,1672017835,latam,no me guto,1593285150,false,0,0,0,true,false,false
+17410,13,76561198203197040,301,50,45,0,45,1516544360,latam,Pésimo,1572192052,false,0,0,0,true,false,false
+17410,13,76561198063160421,0,36,118,0,118,1563641679,latam,Muy mal optimizado lo intente jugar y anda malisimo. Llegue hasta el tercer capitulo y alli me termino de obstinar no lo recomiendo para nada.,1563641799,false,0,0,0,true,false,false
+17440,4,76561198240024906,0,1,414,0,414,1657387710,latam,"Spore es un juego excelente, pese a los años a diferencia de muchos otros títulos, el concepto de Spore ha envejecido de buena manera y es innegable que pese a sus gráficos no tan destacables, la integración de su concepto en el gameplay siga siendo muy entretenido, pero realmente esta reseña negativa no radica su base en ello. El mayor problema con Spore Creepy & Cute Parts en pleno 2023 no es siquiera que el ""DLC"" cuente como un juego completamente aparte, lo cual de por sí, es un problema que denota bastante falta de cuidado por EA que decidieron no integrar esta expansión como un DLC común años después de su lanzamiento, radica en que en primer lugar, los servidores de Spore oficiales parecen estar desconectados por completo, lo que implica que ya no puedes acceder a las funcionalidades online desde steam, pero el descaro de esto está en que en el soporte oficial del juego los empleados llegan a explicar que los servidores están online o a veces en mantenimiento cuando realmente es imposible conectarse desde esta plataforma. En segundo lugar, resulta que Spore Creepy & Cute Parts tiene un error el cual puede impedir que inicies el juego si es que no tienes instalado en tu PC el juego base pese a que este ""DLC"" es un juego independiente en teoría. Recomiendo con todo el corazón Spore, es uno de los títulos más bonitos que he jugado en sus 5 etapas, hay mucho que hacer en casi todas, pero no recomiendo comprar esta expansión a menos de que estén en la disposición de tener ambos títulos instalados y de aceptar desde el vamos que por medio de steam no te vas a poder conectar vía online. También está su absurdo precio de 19.99$ que por cierto, recomiendo esperar a rebajas ya que ofrecen los 3 juegos (El principal y sus 2 DLC) por 7$ o menos.",1689905250,false,1,0,0,true,false,false
+17440,4,76561199237883405,0,13,11,0,11,1681606636,latam,No creo que valga la pena como DLC de paga pero esta bueno,1682448233,false,0,0,0,true,false,false
+17440,4,76561198311196670,452,186,34,0,34,1650563156,latam,5/10,1650564612,false,0,0,0,true,false,false
+17440,4,76561198371447316,166,25,155,0,155,1585353447,latam,900 pesos por unas pocas páginas de partes que nisiquiera están llenas hasta la mitad anashen't,1518205845,false,0,1,0,true,false,false
+17480,3,76561198300004013,63,19,49,0,49,1577594888,latam,"Juego culiao fome por la ctm. No puedo creer que gasté plata en esta caga, enserio, llega a ser increíble lo mierda que es. No obstante, queda aclarar que sí, fue un avance en los gráficos, pero no tenía que ser tan fome hermano como gasto plata en weas, gracias a Dios estaba en rebaja. Descarguenlo pirata.",1596844256,false,1,2,1,true,false,false
+17480,3,76561198082711233,0,4,417,0,417,1550608051,latam,no lo recomiendo esta muy culero la neta mejor deverian cambiarmelo por el red alert 2,1554592607,false,0,0,0,true,false,false
+17480,3,76561198108903816,0,2,1994,0,954,1672957523,latam,no sirve,1545098932,false,0,0,0,true,false,false
+17460,2,76561198108793382,0,4,3444,0,3444,1574611978,latam,"La historia no termina de convencer, la jugabilidad la senti limitada (los viajes para descubrir recursos eran aburridos), lo peor de todo fue los errores y problemas tecnicos que tiene cuando la quieres jugar en una PC moderna con Window 10. No lo recomendaria al dia de hoy. SI quieres jugar la saga te recomiendo que te veas un resumen de lo que pasa en esta primera parte y empieces por la segunda.",1594697992,false,0,0,0,true,false,false
+17460,2,76561198886557937,0,56,72,0,72,1551907833,latam,"La verdad me desepciono, por que todos decian que era exelente el juego pero cuando lo juego quede WTF?? es esto??
+ disparar es horrible, la interfaz tambien horrible, los dialogos son lo unico que me gusto, la verdad un asco para mi gusto el juego, menos mal que lo compre en oferta a unos 60 pesos argentinos que parcticamente no es nada, pero bueno a desinstalarlo y a tenerlo al pedo en mi biblioteca xDD",1551908467,false,1,2,2,true,false,false
+17470,11,76561198054416845,0,51,428,0,428,1688002829,latam,"No esta bien optimizado para pc, el control del mouse es un desastre.",1688155600,false,1,0,0,true,true,false
+17470,11,76561198060206558,0,395,1609,0,849,1691064674,latam,"Esta bueno, pero como no entiendo el nombre le doy pulgar abajo, se ve que ya no le dan mucha pelota los desarrolladores que ni ganas de cambiarlo tienen.",1672263021,false,0,1,0,true,false,false
+17470,11,76561198057846053,0,96,386,0,355,1684448303,latam,Tiene bugs que no permiten continuar la partida,1666884063,false,0,1,0,true,false,false
+17470,11,76561198325641871,543,140,1227,0,1165,1685388726,latam,"《死亡空间》 (2008)
+
+
+Porque sale en chino que mierda estan haciendo con Dead Space, encima ahora pasó a pesar 12GB cuando antes solo pesaba 8GB",1666079167,false,43,17,0,true,false,false
+17470,11,76561198088369265,0,6,7,0,7,1641454737,latam,Me genera ansiedad ver que esta en un ideograma que no comprendo al punto tal que lo tuve que ocultar de la biblio..,1665887432,false,2,2,0,true,false,false
+17470,11,76561198968439972,0,2,752,0,752,1650675738,latam,"EL JUEGO ES MUY BUENO, BUENISIMMO, 10 DE 10, BUENOS MOMENTOS DE ACCION, TENSION Y SOBRETODO TERROR, TIENE SU TOQUE DE DIFICULTAD. PEROOOOOOOOOOOO, POR MI PARTE, TUVE MUCHISIMOS BUGS  , ERRORES DE OPTIMIZACION, CAIDAS DE FPS, TUVE UNA MUY MALA EXPERIENCIA DE JUEGO, ME LO PASÉ CON LAGS Y BUGS, ESTA SUPER MAL OPTIMIZADO Y ESO QUE MI PC ES GAMER Y TIENE BUENOS COMPONENTES, EL 2 ME CORRE DE MARAVILLA PERO ESTE SE CAE PEDAZOS, DE TODAS MANERAS SI VES QUE TE CORRE BIEN SIN PROBLEMAS DALE AL 100%",1650893829,false,0,2,0,true,false,false
+17470,11,76561198112855373,467,7,621,0,621,1635745268,latam,"Buen título, uno que otro susto. Durante toda la partida tuvo momentos buenos como malos. Lamentablemente recuerdo más los malos:
+
+- Terrible delay al usar mouse y la única solución era desactivar el Vsync
+- Había momentos que el juego hacía soft lock por lo que no podía continuar, me pasó cuando tuve que pelear contra el necromorfo que se regeneraba en la sala de criogenía. La solución era activar el Vsync antes de entrar a la sala y desactivarlo antes de pelear
+- Uno que otro crasheo que me costó tiempo en volver a donde quedé
+- La mecánica de gravedad cero tenía sus fallas sobretodo al momento de moverme entre espacios; sí tenía suerte llegaba bien y si no, extrañamente el personaje en lugar de llegar al muro/piso y poder caminar, este se quedaba estático unos segundos y después se moría de asfixia. Morí más veces por culpa de esto que por los necromorfos
+- El ragdoll de los cadaveres se volvía loco y empezaban a revolotear por todas partes. No podía estar tranquilo porque no sabía si estaban vivos o no
+- Perdida total de inmersión por culpa de los constantes bugs ya mencionados
+- EA
+
+Después de esta reseña me toca jugar el 2 y espero que valga la pena...",1635746105,false,0,0,0,true,false,false
+17470,11,76561198088428680,0,6,1047,0,226,1610145504,latam,"Muy buen juego, pero el problema es que no se puede jugar sin desactivar la sincronización vertical. Si se desactiva desde el inicio no podrás llegar ni al primer punto de guardado, si logras llegar y la activas después, todos los cuerpos en el suelo empezaran a brincar por todas partes y empezaran a hacer demasiado ruido. Así que si crees que es muy molesto jugar con la sincronización activada entonces no te lo recomiendo.",1609864559,false,0,0,0,true,false,false
+17470,11,76561198304974825,82,25,978,0,239,1613508906,latam,"Porque le quitaron los logros, en xbox traia logros y aca se los quitan....",1603074358,false,0,0,0,true,false,false
+17470,11,76561198307979763,186,17,63,0,46,1637328519,latam,"Tenes una posibilidad que al iniciar una nueva partida y a los 5 minutos de juego, cuando adquieres el arma principal y debes romper la energia de la puerta que, cuando se abra no salga ningun monstruo, el NPC muera sin razon y no puedas avanzar por un muro invisible, quise rembolzarlo y me dieron negativo. 60 pesos tirados a la basura. (intente solucionarlo y no pude y tengo 45m de juego que se basan en los 3 intentos que hice) La primera cinematica del juego que se basa en la nave atravezando la nave que tienes que salvar no se puede saltar por lo tanto te comes 7 minutos sin jugar o en mi caso 21.",1595539793,false,1,1,0,true,false,false
+17470,11,76561198314692129,0,14,955,0,944,1630532184,latam,"Ea subio el precio, costaba menos de 200, una cosa es pasarse de lanza, otra totalmente diferente es querer extorcionar",1582033590,false,24,1,4,true,false,false
+18470,1,76561199224659025,180,12,761,0,755,1662907366,latam,"Tengo q decir q no solo es casi imposible mecánica y jugablemente (aunque me lo di vuelta) sino q lo peor es la cámara q es difícil de manejar. Además, la historia y las actuaciones son malísimas.",1654488700,false,0,0,0,true,false,false
+19000,21,76561199317626662,75,3,37,0,37,1689291332,latam,"Lo compre por una oferta momentanea pero para jugar es muy malo, hay que estar configurando las teclas a cada rato o no responden a los comandos, supongo que es porque esta optimizado para joystick pero es algo que ya tendria que estar solucionado",1689291665,false,0,0,0,true,false,false
+19000,21,76561198072312074,1016,64,85,0,85,1655680555,latam,"Es un juegazo pero lamentablemente tiene muchos problemas, se crashea etc. Deberian arreglarlo o si no lo quieren arreglar sacarlo de la tienda y no engañar a la gente.",1679140078,false,0,0,0,true,false,false
+19000,21,76561199261007040,35,3,137,0,137,1672187862,latam,"Che juego todo bugueado
+Se trata de un Silent hill que no se siente silent hill, muy meh la verdad.
+6/10
+Pero está tan bugueado que está todo injugable, a la hora del combate simplemente no puedo hacer nada (al menos en mi caso)
+Pero si
+Lo bueno es que lo encontré en oferta
+No pagaría ni 200 pesos por esta surrada de vaca toda bugueada
+
+",1677122143,false,0,0,0,true,false,false
+19000,21,76561199121356313,61,5,253,0,253,1671936017,latam,"Solo sirve para tenerlo en la biblioteca, aquí tienen el peor port de la historia, ni aunque le instalen parches se disfruta como debería, pésimo...",1671936206,false,0,0,0,true,false,false
+19000,21,76561198189100431,14,1,161,0,161,1670518910,latam,"Aún con el parche de audio y de FPS el sonido sigue siendo malo, las caídas de FPS son brutales y en general el juego va terrible. Es una completa estafa este port.",1670519017,false,0,0,0,true,false,false
+19000,21,76561198411531406,314,67,468,0,468,1668703858,latam,"Una recontra poronga, muy mal survival horror y el peor juego de la franquicia.
+Dentro de las muchas cosas que están mal en este juego, una de ellas es la versión de pc; un port deficiente, con bugs, crasheos y problemas con los saves.
+independientemente de su port, el juego es bastante mediocre; tiene un combate de mierda que no está nada pulido, las armas de fuego dejan mucho que desear y la historia es terrible, y lo único destacable es la música, Akira Yamaoka no decepciona.
+
+No lo recomiendo en lo absoluto, ya que son más los disgustos que las cosas positivas, no vale el tiempo de nadie.",1668721995,false,7,0,0,true,false,false
+19000,21,76561198445564070,0,5,856,0,152,1681240534,latam,"Este juego está más roto que mi relación, puedes solucionar algunas cosas con un parche del la web pero se siguen notando algunos fallos. Lastima que no se puedan arreglar relaciones con un parche.",1663470800,false,3,2,0,true,false,false
+19000,21,76561199149538451,0,130,160,0,83,1667770483,latam,"Un gran juego cuando tuve la oportunidad en xbox360, es un buen Silent Hill, pero en PC aun con el parche se crashea y tiene muchos errores dando una mala impresión del mismo, mejor compren un xbox360 de segunda mano y traten de conseguir el juego para consola, no se van a decepcionar.",1663109958,false,2,0,0,true,false,false
+19000,21,76561198452938919,0,3,1239,0,56,1657511936,latam,"Ni aun jugando de manera legal soluciona los bugs, me alegra averlo comprado a 2 dolares que si no me molestaría mas.
+
+Los errores mas notables fueron:
+
+-Controles que se quedan por defecto aunque los cambies
+-Crasheos
+-Pantallas de carga larguísimas
+-Un bug de los botones que hace que cualquier enemigo que te agarre te haga instakill.
+-Congelamientos del juego que tardan en volver a la normalidad
+-Hitbox raras que te impactan aunque esquives
+-Animaciones torpes que no esquivan bien haciendo que te tragues los ataques
+-Bajones de fps
+
+Al final no pude pasarlo, llegue con un jefe que se te pega rapido cuyos ataques son agarres,  eso sumado a los arreroes de arriba se traduce en:
+
+Inicia la batalla se te acerca en un segundo y aunque esquives te agarrara y hara instakill por la falla de los botones y despues esperar un largo rato hasta que cargue el checkpoint para volver a intetar y que se repita lo mismo.
+
+Esta Basura es injugable, no vale la pena ni por 2 dolares.",1656627621,false,5,1,0,true,false,false
+19000,21,76561198265500003,0,4,164,0,164,1656614378,latam,Un port lamentable para un juego tan bueno. Es deprimente cómo Konami no le dió el trabajo que este juego merecía. Espero eventualmente decidan mejorarlo.,1656614629,false,1,1,0,true,false,false
+19000,21,76561198312849566,0,1,203,0,203,1655521631,latam,"Ni porque esta en descuento, lo compren. Es más, nos deberían pagar por descargarlo xd",1655782884,false,7,3,0,true,false,false
+19000,21,76561198060879321,0,6,963,0,963,1651136135,latam,"Si eres fan de la saga Silent Hill pues ni modo, es tu deber tener que jugar este juego, pero si lo quieres jugar por diversión mejor busca otro, esta muy mal porteado a PC, crasheos constantes, se congela la pantalla por varios segundos, bug que no permite hacer daño con las armas de fuego, animaciones inexpresivas en las cinematicas (gente hablando sin mover la boca por ejemplo), la mecanica de pelea muy mala tambien, ese boton de esquivar no funciona como deberia, la historia esta bien supongo pero a mi consideracion es el peor Silent Hill que he jugado hasta el momento. y es una lastima ya que los enemigos que ponen tenian mucho potencial.",1651202278,false,3,1,0,true,false,false
+19000,21,76561198327764276,1237,542,301,0,301,1632441252,latam,"El único Silent Hill en steam que hay disponible. Y para colmo apenas funciona.
+Tuve que agregarle un dll para que no se crashee. Y gráficos bajos y 720.
+Dejó de crashearse por un momento, pero después cada rato, incluso hasta el menú.
+Yo sabía que tenía un port malísimo, aún así le di una oportunidad. Varias.
+No tiene el aspecto de sus juegos anteriores. Ni se acerca. 
+Pero son tantos los bugs y la mala optimización de este juego del 2008 que realmente no vale la pena.
+Además el precio, vos fijate lo que sale por algo que no anda. 
+Tenía unas re ganas de jugarlo, pero al final no se pudo. 
+No lo recomiendo ni regalado.",1632441466,false,55,3,0,true,false,false
+19000,21,76561198093357949,0,10,1209,0,249,1681067383,latam,"Muy bueno el juego, pero muy mal optimizado.",1628683184,false,0,0,0,true,false,false
+19000,21,76561198124736592,0,25,49,0,49,1604178169,latam,"No recomiendo comprar este juego la versión de PC es infumable, tengo un equipo de gama alta con el que ejecuto juegos actuales en calidad gráfica máxima y este juego me va entre 30 y 40 fps inestables, a veces con caídas por debajo de los 30, aun con los parches instalados, la verdad es que es injustificable esta versión, lo he comprado en una oferta pero aun así siento que he tirado mi dinero, si lo quieren jugar, esta no es la versión para hacerlo, al final me lo reembolsaron, una lastima enserio quería jugar este juego en pc, lastima que esta no será la oportunidad.",1604178621,false,0,0,0,true,false,false
+19000,21,76561198040562120,409,4,10,0,10,1604152845,latam,"-30fps fijos
+-mala resolución de texturas (800x600)
+-el audio no soporta 5.1
+-no tiene iconos de mando ps4/xbox
+-el juego se cierra si lo minimizas.
+- :)",1604155219,false,1,0,0,true,false,false
+19000,21,76561198082663341,0,6,2797,0,2797,1539746753,latam,"Hay partes a donde corre a muy pocos frames, esta mal obtimizado, la historia esta bien.",1591921040,false,0,1,0,true,false,false
+19000,21,76561198394533749,0,16,138,0,138,1580407336,latam,Se crashea cada 5 minutos...,1580407408,false,0,0,0,true,false,false
+19000,21,76561198081651548,103,19,305,0,189,1677389183,latam,"El juego es bueno por su historia, pero la versión de PC es una lastima, si de verdad tienes ganas de Jugarlo, compralo en su versión de PlayStation 3 o XBOX 360 ya que en PC tiene la peor optimización que he visto.
+
+1.- Crasheos randoms que llegan a bloquearte el acceso a windows y tienes que reiniciar el PC
+2.- Crasheos por usar resoluciónes muy altas(Ni se te ocurra ponerlo en 1080)
+3.- El juego está bloqueado a 30FPS, y aunque lo puedes cambiar directamente en el archivo de configuraciones, su mala optimización hará que baje a 7FPS en ciertas zonas sin importar tu tarjeta grafica.
+4.- A veces se queda cargando para toda la vida
+5.- El audio tiene un ""bug"" el cual hace que la mayoría de sonidos solo se escuchen a la derecha en tus audifonos o bocinas, si quieres corregirlo debes tener unos drivers de sonido especiales que sean compatibles con sonido surround 5.1 y creeme  encontrarlos no es fácil.
+6.- Preparate para freezeos de pantalla randoms, que sin importar tu PC, pueden durar hasta 1 o 2 minutos.
+
+NO RECOMIENDO COMPRARLO PARA PC, PERO SÍ PARA CONSOLA",1552804441,false,32,1,0,true,false,false
+19000,21,76561198856910280,0,18,781,0,781,1552626886,latam,"Presiento que este juego se inspiro mas en la pelicula que salio que en sus titulos anteriores.
+
+No es mal juego en si, pero te deja una rara sensacion, aparte de que a veces tenia problemas de sincronizacion del audio con las escenas cinematograficas, por no decir que a veces se me congelaba la imagen.",1552662214,false,2,0,0,true,false,false
+19000,21,76561198273011256,2759,647,309,0,282,1542244426,latam,"[h1]Este es el mejor dark souls que he jugado...[/h1]
+
+Más porque manejas al militar mamad0 de resident evil: Isaac clarke.
+Siendo uno de los titulos menos comprendidos de una franquicia de survival horror queridisima por veteranos, es un port muy feito para pc el cual ni siquiera puede llegar a la calidad de vendible... pero bueno.
+
+>A grandes rasgos: Homecoming es un silent hill que esta más basado en el gameplay, que a la ambientacion o historia bien planteada de anteriores entregas que nos dio team silent... asi que es un festival de accion/survival a la dead space, cosa que odiaron los puristas... porque aceptemoslo a nadie le gustan los cambios.
+
+>Lo bueno:
+-yay un silent hill en steam c:
+
+>Lo malo:
+-Es el ""peor"" de la franquicia >:c
+-Es un port que ni con parches (hechos por los fans, porque la compañia es incompetente para arreglar su cagad3ro)puede estar 100% funcional; te va a crashear, te va a corromper save files, te va a tiltear.
+
+[h1]Resumiendo:[/h1]
+Quieres probar este jueguito? adelante, hazlo pero en consola; no aqui ni en esta plataforma ya que este port es de los peores que he visto en mi corta travesia en stim... es un 2/10: Te va a crashear si o si, te va a dar bajones de frames, el audio esta desfasado, y las cinematicas bugeadas... es un festival del horror, pero del horror tecnico por parte de konami y su incompetencia y poco amor a franquicias verdaderamente queridas por los fans.
+Ahora que si lo que buscas es una calificacion del titulo en consola: es un solido 7/10, no es el mejor silent hill, pero el cambio de aires tampoco es pesimo, fue una entrega incompredida dado a la necesidad de innovar sin el equipo original; si eres fan de silent hill debes jugarlo y punto.",1541744660,false,10,2,0,true,false,false
+19080,1,76561199012212261,0,2,37,0,28,1633555015,latam,Está ok para costar .50 centavos de dolar.,1633554014,false,0,0,0,true,false,false
+19680,9,76561198182084141,0,7,48,0,48,1688439951,latam,"Bastante que desear con el rendimiento del juego, basta decir que mi equipo está de sobra por mucho para correr el juego y no es en caso. El juego pega tirones a 0 FPS,  30 FPS bloqueados a menos que modifiques el .ini
+La carga de texturas baja mucho los fotogramas casi a niveles injugables. 
+
+El juego es maravilloso pero evitarlo jugar en Port de PC
+
+Mi equipo:
+RTX 3060TI
+RYZEN 7500X
+16 GB RAM",1688451602,false,0,0,0,true,true,false
+19680,9,76561198352628354,163,6,282,0,282,1686846201,latam,"El juego es interesante y divertido pero la versión de PC es horrible, los fps vienen bloqueados en 30 si no editas un .ini y está mal optimizado, intenté varios fixes y aunque sirvieron en el momento en un punto determinado del juego crasheo y no siguió más. Si pueden jugarlo en consola mejor.",1686846471,false,0,0,0,true,false,false
+19680,9,76561198353075747,203,4,446,0,446,1676315551,latam,"Me gusta mucho la estética y como son los personajes en el juego, pero no soporté el gameplay, repetitivo como nunca",1681263921,false,0,0,0,true,false,false
+19680,9,76561198861079352,0,51,35,0,35,1670443306,latam,realmente una obra maestra pero me corre como las weas y eso que es un juego antiguito optimizacion mas mala que la shsuha,1671755740,false,2,0,0,true,false,false
+19680,9,76561198271421468,429,46,110,0,84,1687894132,latam,Cómo me puede correr tan mal un juego de 2011?,1667878533,false,0,1,2,true,false,false
+19680,9,76561198217347749,541,4,20,0,20,1667106226,latam,"injugable, se  crashea ni bien termina la cinematica, probe todo tipo de configuraciones y no hay caso, es un juegaso pero esta version esta rotisima, no gaste plata en este juego por que lo van a terminan rembolsando.",1667109973,false,0,0,0,true,false,false
+19680,9,76561199167290367,0,1,1290,0,635,1671330666,latam,"El juego es buenisimo, pero se crashea de prácticamente todo, Al iniciar, al mostrar una cinemática, al cargar nuevo escenario. Hubo una parte donde fue realmente injugable y ya no pude avanzar ya que se crahseaba cada  segundos. Cabe mencionar que tengo un equipo bastante sobrado para correr el juego.",1658704192,false,9,5,0,true,false,false
+19680,9,76561199191022181,0,1,305,0,169,1657986026,latam,"NO TIENE AUDIO EL JUEGO AYUDA
+",1654052592,false,2,1,0,true,false,false
+19680,9,76561198120757858,0,22,171,0,171,1420254751,latam,"Este es entretenido. Tiene muchas broncas de diseño en los niveles, y la historia podria haber sido rajado de mejor. Comienza muy fuerte pero se desinfla rapidito. Lo que lo salva es que el ambiente y el mundo esta tuanis, igual que el viejo, y el combate es entretenido. Igual, no esperen mucho.",1434042256,false,0,1,0,true,false,false

@@ -27,16 +27,16 @@ func (m *mockHTTPClient) Do(req *http.Request) (*http.Response, error) {
 func TestGetReviews(t *testing.T) {
 	MockResponse := models.ReviewResponse{
 		Success: 1,
+		ReviewSummary: models.ReviewSummary{
+			NumReviews:      50,
+			ReviewScore:     8,
+			ReviewScoreDesc: "Very Positive",
+			TotalPositive:   6488,
+			TotalNegative:   837,
+			TotalReviews:    7325,
+		},
 		Reviews: []models.Review{
 			{
-				ReviewSummary: models.ReviewSummary{
-					NumReviews:      50,
-					ReviewScore:     8,
-					ReviewScoreDesc: "Very Positive",
-					TotalPositive:   6488,
-					TotalNegative:   837,
-					TotalReviews:    7325,
-				},
 				RecommendationID: "144456675",
 				Author: models.ReviewAuthor{
 					SteamID:              "76561199263188792",
