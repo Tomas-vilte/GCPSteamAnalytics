@@ -19,8 +19,10 @@ type SteamReviewAPI struct {
 // Acepta el appID del juego como argumento y devuelve un puntero a la estructura ReviewResponse
 // que contiene la información de las reseñas, así como un posible error si ocurre.
 func (s *SteamReviewAPI) GetReviews(appID int) (*models.ReviewResponse, error) {
+	log.Printf("Obteniendo reseñas para el appID %d...", appID)
+
 	// Construir la URL de la API de reseñas de Steam
-	url := fmt.Sprintf("https://store.steampowered.com/appreviews/%d?json=1&language=latam&filter=recent&num_per_page=100&review_type=positive", appID)
+	url := fmt.Sprintf("https://store.steampowered.com/appreviews/%d?json=1&language=latam&filter=recent&num_per_page=100&review_type=negative", appID)
 
 	// Crear una nueva solicitud HTTP GET
 	req, err := http.NewRequest("GET", url, nil)
@@ -51,6 +53,7 @@ func (s *SteamReviewAPI) GetReviews(appID int) (*models.ReviewResponse, error) {
 }
 
 func (s *SteamReviewAPI) SaveReviewsToCSV(appID int, reviews *models.ReviewResponse, filePath string) error {
+	log.Printf("Guardando reseñas en el archivo CSV para el appID %d...", appID)
 	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		log.Printf("Hubo un error al abrir el archivo csv: %v", err)
@@ -116,6 +119,6 @@ func (s *SteamReviewAPI) SaveReviewsToCSV(appID int, reviews *models.ReviewRespo
 			return err
 		}
 	}
-
+	log.Printf("Reseñas guardadas en el archivo CSV para el appID %d.", appID)
 	return nil
 }
