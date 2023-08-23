@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	_ "github.com/go-sql-driver/mysql"
@@ -35,11 +34,10 @@ func main() {
 	//}
 	//fmt.Println(reviews.Reviews)
 
-	appids, err := utils.ReadAppIDsFromCSV("../data/gamesDetails.csv")
+	appids, err := utils.ReadAppIDsFromCSV("/home/tomi/GCPSteamAnalytics/data/gamesDetails.csv")
 	if err != nil {
 		log.Printf("Error al leer los appids: %v", err)
 	}
-	fmt.Println(appids)
 
 	for _, appid := range appids {
 		reviews, err := reviewAPI.GetReviews(appid)
@@ -47,6 +45,6 @@ func main() {
 			log.Printf("Error al obtener la reseña: %v", err)
 			continue
 		}
-		err = reviewAPI.SaveReviewsToCSV(appid, reviews, "../data/reviews.csv")
+		err = reviewAPI.SaveReviewsToCSV(appid, reviews, "../data/reviewsPositive.csv")
 	}
 }

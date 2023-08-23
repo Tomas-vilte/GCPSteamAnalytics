@@ -1,7 +1,7 @@
 package models
 
 type ReviewData interface {
-	GetReviews(appID int) (*ReviewResponse, error)
+	GetPositiveReviews(appID int) (*ReviewResponse, error)
 }
 
 type ReviewSummary struct {
@@ -14,8 +14,9 @@ type ReviewSummary struct {
 }
 
 type ReviewResponse struct {
-	Success int      `json:"success"`
-	Reviews []Review `json:"reviews"`
+	Success       int           `json:"success"`
+	Reviews       []Review      `json:"reviews"`
+	ReviewSummary ReviewSummary `json:"query_summary"`
 }
 
 type ReviewAuthor struct {
@@ -29,18 +30,17 @@ type ReviewAuthor struct {
 }
 
 type Review struct {
-	ReviewSummary            ReviewSummary `json:"review_summary"`
-	RecommendationID         string        `json:"recommendationid"`
-	Author                   ReviewAuthor  `json:"author"`
-	Language                 string        `json:"language"`
-	ReviewText               string        `json:"review"`
-	TimestampCreated         int           `json:"timestamp_created"`
-	TimestampUpdated         int           `json:"timestamp_updated"`
-	VotedUp                  bool          `json:"voted_up"`
-	VotesUp                  int           `json:"votes_up"`
-	VotesFunny               int           `json:"votes_funny"`
-	CommentCount             int           `json:"comment_count"`
-	SteamPurchase            bool          `json:"steam_purchase"`
-	ReceivedForFree          bool          `json:"received_for_free"`
-	WrittenDuringEarlyAccess bool          `json:"written_during_early_access"`
+	RecommendationID         string       `json:"recommendationid"`
+	Author                   ReviewAuthor `json:"author"`
+	Language                 string       `json:"language"`
+	ReviewText               string       `json:"review"`
+	TimestampCreated         int          `json:"timestamp_created"`
+	TimestampUpdated         int          `json:"timestamp_updated"`
+	VotedUp                  bool         `json:"voted_up"`
+	VotesUp                  int          `json:"votes_up"`
+	VotesFunny               int          `json:"votes_funny"`
+	CommentCount             int          `json:"comment_count"`
+	SteamPurchase            bool         `json:"steam_purchase"`
+	ReceivedForFree          bool         `json:"received_for_free"`
+	WrittenDuringEarlyAccess bool         `json:"written_during_early_access"`
 }
