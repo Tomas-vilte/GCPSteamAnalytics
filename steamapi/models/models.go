@@ -1,5 +1,7 @@
 package models
 
+import "context"
+
 // AppDetails representa los detalles de una aplicación en la tienda Steam.
 type AppDetails struct {
 	SteamAppid            int64    `json:"steam_appid"`
@@ -37,7 +39,7 @@ type AppDetailsResponse struct {
 // SteamData es una interfaz que define los métodos para interactuar con los datos de Steam.
 type SteamData interface {
 	// ProcessSteamData obtiene los detalles de las aplicaciones Steam en paralelo.
-	ProcessSteamData(appIDs []int, limit int) ([]AppDetails, error)
+	ProcessSteamData(ctx context.Context, appIDs []int, limit int) ([]AppDetails, error)
 	// ProcessAppID obtiene los detalles de una aplicación Steam específica.
 	ProcessAppID(id int) (*AppDetails, error)
 	// GetAllAppIDs obtiene todos los appIDs almacenados en la base de datos MySQL.
