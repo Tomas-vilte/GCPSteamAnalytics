@@ -125,9 +125,9 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 			}
 		}(appID, isEmptyAppID)
 
-		// Dormir por 3 segundos después de procesar cada 10 appIDs o al final
+		// Dormir por 8 segundos después de procesar cada 10 appIDs o al final
 		if i%10 == 0 || i == len(appIDs)-1 {
-			time.Sleep(3 * time.Second)
+			time.Sleep(10 * time.Second)
 		}
 	}
 
@@ -156,39 +156,52 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 	url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		log.Printf("Error al crear la solicitud HTTP: %v\n", err)
 		return nil, err
 	}
 	req.Close = true
-	response, err := s.Client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer response.Body.Close()
 
-	var responseData map[string]steamapi.AppDetailsResponse
-	err = json.NewDecoder(response.Body).Decode(&responseData)
-	if err != nil {
-		return nil, err
-	}
-
-	if responseData[strconv.Itoa(id)].Success {
-		data := responseData[strconv.Itoa(id)].Data
-		data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
-		if data.Type == "game" || data.Type == "dlc" {
-			log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
-			err = s.SaveLastProcessedAppid(id)
-			if err != nil {
-				log.Printf("Error al guardar el último appid procesado: %v\n", err)
-			}
-			return &data, nil
-		} else {
-			if err := s.AddToEmptyAppIDsTable(id); err != nil {
-				log.Printf("Error al agregar appID a la tabla empty_appids: %v\n", err)
-			}
-			log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
+	for {
+		response, err := s.Client.Do(req)
+		if err != nil {
+			log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
+			return nil, err
 		}
+
+		if response.StatusCode == http.StatusTooManyRequests {
+			log.Printf("Error 429: Demasiadas solicitudes. Esperando 1 minuto antes de reintentar...")
+			time.Sleep(1 * time.Minute)
+			continue // Reintentar la solicitud
+		}
+
+		defer response.Body.Close()
+
+		var responseData map[string]steamapi.AppDetailsResponse
+		err = json.NewDecoder(response.Body).Decode(&responseData)
+		if err != nil {
+			log.Printf("Error al decodificar la respuesta JSON: %v\n", err)
+			return nil, err
+		}
+
+		if responseData[strconv.Itoa(id)].Success {
+			data := responseData[strconv.Itoa(id)].Data
+			data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
+			if data.Type == "game" || data.Type == "dlc" {
+				log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
+				err = s.SaveLastProcessedAppid(id)
+				if err != nil {
+					log.Printf("Error al guardar el último appid procesado: %v\n", err)
+				}
+				return &data, nil
+			} else {
+				if err := s.AddToEmptyAppIDsTable(id); err != nil {
+					log.Printf("Error al agregar appID a la tabla empty_appids: %v\n", err)
+				}
+				log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
+			}
+		}
+		return nil, nil
 	}
-	return nil, nil
 }
 
 // SaveToCSV guarda los detalles de los juegos en un archivo CSV.
