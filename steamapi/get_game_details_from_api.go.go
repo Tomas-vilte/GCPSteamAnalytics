@@ -1,10 +1,12 @@
 package steamapi
 
 import (
+	"context"
 	"database/sql"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
 	"net/http"
@@ -13,8 +15,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 )
 
 const (
@@ -38,6 +38,7 @@ type SteamAPI struct {
 // Acepta una interfaz 'api' que debe cumplir con la interfaz 'SteamData' definida en models.go.
 // 'limit' es la cantidad máxima de juegos a procesar.
 func RunProcessData(api steamapi.SteamData, limit int) error {
+	ctx := context.Background()
 	// Cargar el último appID procesado.
 	lastProcessedAppID, err := api.LoadLastProcessedAppid()
 	if err != nil {
@@ -54,7 +55,7 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 	startIndex := api.GetStartIndexToProcess(lastProcessedAppID, appIDs)
 
 	// Procesar datos de Steam y obtener los detalles de los juegos.
-	data, err := api.ProcessSteamData(appIDs[startIndex:], limit)
+	data, err := api.ProcessSteamData(ctx, appIDs[startIndex:], limit)
 	if err != nil {
 		return err
 	}
@@ -71,46 +72,56 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 // ProcessSteamData procesa los datos de los juegos de Steam.
 // 'appIDs' es una lista de appIDs a procesar, 'limit' es la cantidad máxima de juegos a procesar.
 // Retorna los detalles de los juegos procesados y posibles errores de procesamiento.
-func (s *SteamAPI) ProcessSteamData(appIDs []int, limit int) ([]steamapi.AppDetails, error) {
+func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int) ([]steamapi.AppDetails, error) {
 	var wg sync.WaitGroup
 	var processedData []steamapi.AppDetails
 	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
+	processedCount := 0
 
 	for i, appID := range appIDs {
-		if len(processedData) >= limit {
+		if len(processedData) >= limit || ctx.Err() != nil {
 			break
 		}
 		wg.Add(1)
 		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
 
-		isEmptyAppID, err := s.IsEmptyAppID(appID)
-		if err != nil {
-			log.Printf("Error al verificar si el appID %d está vacío: %v\n", appID, err)
-			continue
-		}
-
-		if isEmptyAppID {
-			log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", appID)
-			continue
-		}
-
-		go func(id int) {
-			defer wg.Done()
-			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-
-			data, err := s.ProcessAppID(id)
+		select {
+		case <-ctx.Done():
+			break
+		default:
+			isEmptyAppID, err := s.IsEmptyAppID(appID)
 			if err != nil {
-				processingErrors = append(processingErrors, err)
-				return
+				log.Printf("Error al verificar si el appID %d está vacío: %v\n", appID, err)
+				continue
 			}
-			if data != nil {
-				processedData = append(processedData, *data)
+
+			if isEmptyAppID {
+				log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", appID)
+				<-semaphore // Liberar el semáforo en caso de salto
+				wg.Done()
+				continue
 			}
-		}(appID)
+
+			go func(id int) {
+				defer wg.Done()
+				defer func() { <-semaphore }() // Liberar un lugar en el semáforo
+
+				data, err := s.ProcessAppID(id)
+				if err != nil {
+					processingErrors = append(processingErrors, err)
+					return
+				}
+				if data != nil {
+					processedData = append(processedData, *data)
+					processedCount++
+					log.Printf("Elementos procesados hasta ahora: %d", processedCount)
+				}
+			}(appID)
+		}
 
 		if (i+1)%10 == 0 || i == len(appIDs)-1 {
-			time.Sleep(10 * time.Second)
+			time.Sleep(2 * time.Second)
 		}
 	}
 

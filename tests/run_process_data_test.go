@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"context"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
 	"github.com/stretchr/testify/assert"
@@ -32,8 +33,8 @@ func (m *MockSteamAPI) ProcessAppID(id int) (*models.AppDetails, error) {
 	return args.Get(0).(*models.AppDetails), args.Error(1)
 }
 
-func (m *MockSteamAPI) ProcessSteamData(appIDs []int, limit int) ([]models.AppDetails, error) {
-	args := m.Called(appIDs, limit)
+func (m *MockSteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int) ([]models.AppDetails, error) {
+	args := m.Called(ctx, appIDs, limit)
 	return args.Get(0).([]models.AppDetails), args.Error(1)
 }
 
@@ -60,7 +61,7 @@ func (m *MockSteamAPI) SaveToCSV(data []models.AppDetails, filePath string) erro
 func TestRunProcessData(t *testing.T) {
 	// Crea una instancia del mock
 	mockSteamData := new(MockSteamAPI)
-
+	ctx := context.Background()
 	// Configura el comportamiento del mock
 	lastProcessedAppID := 100
 	appIDs := []int{101, 102, 103}
@@ -71,9 +72,8 @@ func TestRunProcessData(t *testing.T) {
 	mockSteamData.On("LoadLastProcessedAppid").Return(lastProcessedAppID, nil)
 	mockSteamData.On("GetAllAppIDs", lastProcessedAppID).Return(appIDs, nil)
 	mockSteamData.On("GetStartIndexToProcess", lastProcessedAppID, appIDs).Return(startIndex)
-	mockSteamData.On("ProcessSteamData", appIDs[startIndex:], limit).Return(data, nil)
+	mockSteamData.On("ProcessSteamData", ctx, appIDs[startIndex:], limit).Return(data, nil)
 	mockSteamData.On("SaveToCSV", data, mock.AnythingOfType("string")).Return(nil)
-
 	// Llama a la función que deseas probar
 	err := steamapi.RunProcessData(mockSteamData, limit)
 
