@@ -61,7 +61,7 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 	}
 
 	// Guardar los datos procesados en un archivo CSV.
-	err = api.SaveToCSV(data, "/home/tomi/GCPSteamAnalytics/data/gamesDetails.csv")
+	err = api.SaveToCSV(data, "../data/gamesDetails.csv")
 	if err != nil {
 		return err
 	}
@@ -127,7 +127,7 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 
 		// Dormir por 8 segundos después de procesar cada 10 appIDs o al final
 		if i%10 == 0 || i == len(appIDs)-1 {
-			time.Sleep(10 * time.Second)
+			time.Sleep(6 * time.Second)
 		}
 	}
 
