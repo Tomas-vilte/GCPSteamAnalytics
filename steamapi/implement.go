@@ -1,6 +1,9 @@
 package steamapi
 
-import "strings"
+import (
+	"strings"
+	"sync"
+)
 
 // GetAllAppIDs obtiene todos los appIDs almacenados en la base de datos MySQL
 // que son mayores que el último appID procesado.
@@ -48,8 +51,8 @@ func (s *SteamAPI) SaveLastProcessedAppid(lastProcessedAppid int) error {
 func (s *SteamAPI) AreEmptyAppIDs(appIDs []int) (map[int]bool, error) {
 	query := "SELECT appid FROM empty_appids WHERE appid IN (?)"
 
-	batchSize := 100 // Número de IDs por lote
-	emptyAppIDs := make(map[int]bool)
+	batchSize := 300
+	emptyAppIDs := new(sync.Map)
 
 	for i := 0; i < len(appIDs); i += batchSize {
 		end := i + batchSize
@@ -71,7 +74,6 @@ func (s *SteamAPI) AreEmptyAppIDs(appIDs []int) (map[int]bool, error) {
 		if err != nil {
 			return nil, err
 		}
-		defer rows.Close()
 
 		for rows.Next() {
 			var appID int
@@ -79,11 +81,19 @@ func (s *SteamAPI) AreEmptyAppIDs(appIDs []int) (map[int]bool, error) {
 			if err != nil {
 				return nil, err
 			}
-			emptyAppIDs[appID] = true
+			emptyAppIDs.Store(appID, true)
 		}
+
+		rows.Close() // Cierra las filas en cada iteración
 	}
 
-	return emptyAppIDs, nil
+	resultMap := make(map[int]bool)
+	emptyAppIDs.Range(func(key, value interface{}) bool {
+		resultMap[key.(int)] = value.(bool)
+		return true
+	})
+
+	return resultMap, nil
 }
 
 func (s *SteamAPI) AddToEmptyAppIDsTable(appID int) error {
