@@ -39,20 +39,13 @@ type SteamAPI struct {
 // 'limit' es la cantidad máxima de juegos a procesar.
 func RunProcessData(api steamapi.SteamData, limit int) error {
 	ctx := context.Background()
-	// Cargar el último appID procesado.
-	lastProcessedAppID, err := api.LoadLastProcessedAppid()
+
+	appIDs, err := api.GetAllAppIDs(limit)
 	if err != nil {
 		return err
 	}
-	// Cargar SteamAppIDs previamente procesados
-	appIDs, err := api.GetAllAppIDs(lastProcessedAppID)
-	if err != nil {
-		return err
-	}
-	// Obtener el indice de inicio para procesar los appIDs
-	startIndex := api.GetStartIndexToProcess(lastProcessedAppID, appIDs)
 	// Procesar datos de Steam y obtener los detalles de los juegos.
-	data, err := api.ProcessSteamData(ctx, appIDs[startIndex:], limit)
+	data, err := api.ProcessSteamData(ctx, appIDs, limit)
 	if err != nil {
 		return err
 	}
@@ -75,11 +68,7 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
 	processedCount := 0
-	// Obtener un mapa de IDs de aplicaciones vacías utilizando la función AreEmptyAppIDs
-	emptyAppIDsMap, err := s.AreEmptyAppIDs(appIDs)
-	if err != nil {
-		return nil, err
-	}
+
 	// Capturar el error de cancelación del contexto
 	ctxErr := ctx.Err()
 	// Procesar los IDs de aplicaciones
@@ -88,17 +77,12 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 			break
 		}
 		wg.Add(1)
-		semaphore <- struct{}{}               // Adquirir un lugar en el semáforo
-		isEmptyAppID := emptyAppIDsMap[appID] // Obtener el valor del mapa
+		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
 		// Procesar cada appID en una gorutina separada
-		go func(id int, isEmpty bool) {
+		go func(id int) {
 			defer wg.Done()
 			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-			// Saltar si el appID está en la tabla de IDs vacíos
-			if isEmpty {
-				log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", id)
-				return
-			}
+
 			// Procesar los detalles de la aplicación utilizando la función ProcessAppID
 			data, err := s.ProcessAppID(id)
 			if err != nil {
@@ -111,7 +95,7 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 				processedCount++
 				log.Printf("Elementos procesados hasta ahora: %d", processedCount)
 			}
-		}(appID, isEmptyAppID)
+		}(appID)
 
 		// Dormir por 8 segundos después de procesar cada 10 appIDs o al final
 		if i%10 == 0 || i == len(appIDs)-1 {
@@ -169,13 +153,13 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 			data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
 			if data.Type == "game" || data.Type == "dlc" {
 				log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
-				err = s.UpdateAppStatus(id, "processed", true) // Actualizar estado y isValid en la base de datos
+				err = s.UpdateAppStatus(id, true) // Actualizar estado y isValid en la base de datos
 				if err != nil {
 					log.Printf("Error al actualizar el estado del appID: %v\n", err)
 				}
 				return &data, nil
 			} else {
-				if err := s.UpdateAppStatus(id, "processed", false); err != nil {
+				if err := s.UpdateAppStatus(id, false); err != nil {
 					log.Printf("Error al actualizar el estado del appID: %v\n", err)
 				}
 				log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)

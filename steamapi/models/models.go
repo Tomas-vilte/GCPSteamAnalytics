@@ -50,31 +50,12 @@ type SteamData interface {
 
 	// GetAllAppIDs obtiene todos los appIDs almacenados en la base de datos MySQL.
 	// Devuelve una lista de IDs de aplicaciones y un posible error en caso de fallo.
-	GetAllAppIDs(lastProcessedAppID int) ([]int, error)
+	GetAllAppIDs(limit int) ([]int, error)
 
-	// LoadLastProcessedAppid carga el último appID procesado de la base de datos.
-	// Devuelve el último appID procesado y un posible error en caso de fallo.
-	LoadLastProcessedAppid() (int, error)
-
-	UpdateAppStatus(id int, status string, isValid bool) error
+	UpdateAppStatus(id int, isValid bool) error
 
 	// SaveToCSV guarda los detalles de las aplicaciones en un archivo CSV.
 	// 'data' es una lista de AppDetails que se guardarán en el archivo especificado por 'filePath'.
 	// Devuelve un posible error en caso de fallo al guardar los datos en el archivo.
 	SaveToCSV(data []AppDetails, filePath string) error
-
-	// AreEmptyAppIDs verifica si los appIDs dados están presentes en la tabla empty_appids.
-	// Devuelve un mapa de IDs de aplicaciones vacías junto con un valor booleano que indica si están vacías.
-	// 'appIDs' es una lista de IDs de aplicaciones para verificar.
-	AreEmptyAppIDs(appIDs []int) (map[int]bool, error)
-
-	// AddToEmptyAppIDsTable agrega un appID a la tabla empty_appids en la base de datos.
-	// 'appID' es el ID de la aplicación que se agregará a la tabla.
-	// Devuelve un posible error en caso de fallo en la operación.
-	AddToEmptyAppIDsTable(appID int) error
-
-	// GetStartIndexToProcess devuelve el índice de inicio para procesar los appIDs.
-	// Utiliza el 'lastProcessedAppID' y la lista de 'appIDs' para determinar el punto
-	// de inicio para evitar procesar IDs que ya han sido procesados.
-	GetStartIndexToProcess(lastProcessedAppID int, appIDs []int) int
 }

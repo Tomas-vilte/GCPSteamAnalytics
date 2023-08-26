@@ -23,11 +23,18 @@ type APIResponse struct {
 	} `json:"applist"`
 }
 
+type status string
+
+const (
+	PENDING   status = "PENDING"
+	PROCESSED status = "PROCESSED"
+)
+
 // Item representa cada elemento del array "store_items".
 type Item struct {
 	Appid     int64  `json:"appid"`
 	Name      string `json:"name"`
-	Status    string
+	Status    status
 	IsValid   bool
 	CreatedAt time.Time
 	UpdateAt  time.Time
@@ -60,10 +67,9 @@ func (r *RealDataFetcher) GetData() ([]Item, error) {
 			item := Item{
 				Appid:     app.Appid,
 				Name:      app.Name,
-				Status:    "Pending",
+				Status:    PENDING,
 				IsValid:   false,
 				CreatedAt: time.Now(),
-				UpdateAt:  time.Now(),
 			}
 			filteredApps = append(filteredApps, item)
 		}
