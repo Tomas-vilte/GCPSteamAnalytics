@@ -44,16 +44,13 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 	if err != nil {
 		return err
 	}
-
 	// Cargar SteamAppIDs previamente procesados
 	appIDs, err := api.GetAllAppIDs(lastProcessedAppID)
 	if err != nil {
 		return err
 	}
-
 	// Obtener el indice de inicio para procesar los appIDs
 	startIndex := api.GetStartIndexToProcess(lastProcessedAppID, appIDs)
-
 	// Procesar datos de Steam y obtener los detalles de los juegos.
 	data, err := api.ProcessSteamData(ctx, appIDs[startIndex:], limit)
 	if err != nil {
@@ -65,7 +62,6 @@ func RunProcessData(api steamapi.SteamData, limit int) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -79,38 +75,30 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
 	processedCount := 0
-
 	// Obtener un mapa de IDs de aplicaciones vacías utilizando la función AreEmptyAppIDs
 	emptyAppIDsMap, err := s.AreEmptyAppIDs(appIDs)
 	if err != nil {
 		return nil, err
 	}
-
 	// Capturar el error de cancelación del contexto
 	ctxErr := ctx.Err()
-
 	// Procesar los IDs de aplicaciones
 	for i, appID := range appIDs {
 		if len(processedData) >= limit || ctxErr != nil {
 			break
 		}
-
 		wg.Add(1)
-		semaphore <- struct{}{} // Adquirir un lugar en el semáforo
-
+		semaphore <- struct{}{}               // Adquirir un lugar en el semáforo
 		isEmptyAppID := emptyAppIDsMap[appID] // Obtener el valor del mapa
-
 		// Procesar cada appID en una gorutina separada
 		go func(id int, isEmpty bool) {
 			defer wg.Done()
 			defer func() { <-semaphore }() // Liberar un lugar en el semáforo
-
 			// Saltar si el appID está en la tabla de IDs vacíos
 			if isEmpty {
 				log.Printf("Saltando appID %d porque está en la tabla empty_appids\n", id)
 				return
 			}
-
 			// Procesar los detalles de la aplicación utilizando la función ProcessAppID
 			data, err := s.ProcessAppID(id)
 			if err != nil {
@@ -127,13 +115,12 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 
 		// Dormir por 8 segundos después de procesar cada 10 appIDs o al final
 		if i%10 == 0 || i == len(appIDs)-1 {
-			time.Sleep(6 * time.Second)
+			time.Sleep(10 * time.Second)
 		}
 	}
 
 	// Esperar a que todas las gorutinas terminen
 	wg.Wait()
-
 	// Manejar errores de procesamiento de manera más detallada
 	if len(processingErrors) > 0 {
 		errorDetails := make([]string, len(processingErrors))
@@ -143,7 +130,6 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 		log.Printf("Proceso de Steam completado con %d errores:\n%s\n", len(processingErrors), strings.Join(errorDetails, "\n"))
 		return nil, processingErrors[0]
 	}
-
 	// Registro de finalización del proceso
 	log.Printf("Proceso de Steam completado. Juegos insertados: %d", len(processedData))
 	return processedData, nil
@@ -160,29 +146,24 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 		return nil, err
 	}
 	req.Close = true
-
 	for {
 		response, err := s.Client.Do(req)
 		if err != nil {
 			log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
 			return nil, err
 		}
-
 		if response.StatusCode == http.StatusTooManyRequests {
 			log.Printf("Error 429: Demasiadas solicitudes. Esperando 1 minuto antes de reintentar...")
 			time.Sleep(1 * time.Minute)
 			continue // Reintentar la solicitud
 		}
-
 		defer response.Body.Close()
-
 		var responseData map[string]steamapi.AppDetailsResponse
 		err = json.NewDecoder(response.Body).Decode(&responseData)
 		if err != nil {
 			log.Printf("Error al decodificar la respuesta JSON: %v\n", err)
 			return nil, err
 		}
-
 		if responseData[strconv.Itoa(id)].Success {
 			data := responseData[strconv.Itoa(id)].Data
 			data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
@@ -212,16 +193,13 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 	if err != nil {
 		return err
 	}
-
 	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
-
 	// Verificar si el archivo está vacío
 	fileInfo, _ := file.Stat()
 	if fileInfo.Size() == 0 {
@@ -250,7 +228,6 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 			return err
 		}
 	}
-
 	for _, app := range data {
 		if _, exists := existingData[int(app.SteamAppid)]; !exists {
 			record := []string{
@@ -277,11 +254,9 @@ func (s *SteamAPI) SaveToCSV(data []steamapi.AppDetails, filePath string) error 
 			if err := writer.Write(record); err != nil {
 				return err
 			}
-
 			// Agregar el appID al mapa de datos existentes
 			existingData[int(app.SteamAppid)] = true
 		}
 	}
-
 	return nil
 }
