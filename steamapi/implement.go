@@ -38,10 +38,9 @@ func (s *SteamAPI) LoadLastProcessedAppid() (int, error) {
 	return lastProcessedAppid, nil
 }
 
-// SaveLastProcessedAppid guarda el último appID procesado en la tabla state_table.
-func (s *SteamAPI) SaveLastProcessedAppid(lastProcessedAppid int) error {
-	query := "UPDATE state_table SET last_appid = ?"
-	_, err := s.DB.Exec(query, lastProcessedAppid)
+func (s *SteamAPI) UpdateAppStatus(id int, status string, isValid bool) error {
+	query := "UPDATE games SET status = ?, is_valid = ? WHERE app_id = ?"
+	_, err := s.DB.Exec(query, status, isValid, id)
 	if err != nil {
 		return err
 	}
@@ -94,12 +93,6 @@ func (s *SteamAPI) AreEmptyAppIDs(appIDs []int) (map[int]bool, error) {
 	})
 
 	return resultMap, nil
-}
-
-func (s *SteamAPI) AddToEmptyAppIDsTable(appID int) error {
-	query := "INSERT INTO empty_appids (appid) VALUES (?)"
-	_, err := s.DB.Exec(query, appID)
-	return err
 }
 
 func (s *SteamAPI) GetStartIndexToProcess(lastProcessedAppID int, appIDs []int) int {

@@ -169,14 +169,14 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 			data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
 			if data.Type == "game" || data.Type == "dlc" {
 				log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
-				err = s.SaveLastProcessedAppid(id)
+				err = s.UpdateAppStatus(id, "processed", true) // Actualizar estado y isValid en la base de datos
 				if err != nil {
-					log.Printf("Error al guardar el último appid procesado: %v\n", err)
+					log.Printf("Error al actualizar el estado del appID: %v\n", err)
 				}
 				return &data, nil
 			} else {
-				if err := s.AddToEmptyAppIDsTable(id); err != nil {
-					log.Printf("Error al agregar appID a la tabla empty_appids: %v\n", err)
+				if err := s.UpdateAppStatus(id, "processed", false); err != nil {
+					log.Printf("Error al actualizar el estado del appID: %v\n", err)
 				}
 				log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
 			}
