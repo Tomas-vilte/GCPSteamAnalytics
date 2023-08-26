@@ -46,7 +46,7 @@ type SteamData interface {
 	// ProcessAppID obtiene los detalles de una aplicación Steam específica.
 	// Devuelve un puntero a AppDetails que contiene los detalles de la aplicación
 	// correspondiente al ID proporcionado 'id'. Si hay un error, se devuelve junto con nil.
-	ProcessAppID(id int) (*AppDetails, error)
+	ProcessAppID(id int64) (*AppDetails, error)
 
 	// GetAllAppIDs obtiene todos los appIDs almacenados en la base de datos MySQL.
 	// Devuelve una lista de IDs de aplicaciones y un posible error en caso de fallo.

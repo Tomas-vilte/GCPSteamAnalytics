@@ -122,7 +122,7 @@ func (s *SteamAPI) ProcessSteamData(ctx context.Context, appIDs []int, limit int
 // ProcessAppID procesa un appID específico y devuelve sus detalles si es un juego válido.
 // 'id' es el appID a procesar.
 // Retorna los detalles del juego y un posible error si ocurre.
-func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
+func (s *SteamAPI) ProcessAppID(id int64) (*steamapi.AppDetails, error) {
 	url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -130,43 +130,22 @@ func (s *SteamAPI) ProcessAppID(id int) (*steamapi.AppDetails, error) {
 		return nil, err
 	}
 	req.Close = true
-	for {
-		response, err := s.Client.Do(req)
-		if err != nil {
-			log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
-			return nil, err
-		}
-		if response.StatusCode == http.StatusTooManyRequests {
-			log.Printf("Error 429: Demasiadas solicitudes. Esperando 1 minuto antes de reintentar...")
-			time.Sleep(1 * time.Minute)
-			continue // Reintentar la solicitud
-		}
-		defer response.Body.Close()
-		var responseData map[string]steamapi.AppDetailsResponse
-		err = json.NewDecoder(response.Body).Decode(&responseData)
-		if err != nil {
-			log.Printf("Error al decodificar la respuesta JSON: %v\n", err)
-			return nil, err
-		}
-		if responseData[strconv.Itoa(id)].Success {
-			data := responseData[strconv.Itoa(id)].Data
-			data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
-			if data.Type == "game" || data.Type == "dlc" {
-				log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
-				err = s.UpdateAppStatus(id, true) // Actualizar estado y isValid en la base de datos
-				if err != nil {
-					log.Printf("Error al actualizar el estado del appID: %v\n", err)
-				}
-				return &data, nil
-			} else {
-				if err := s.UpdateAppStatus(id, false); err != nil {
-					log.Printf("Error al actualizar el estado del appID: %v\n", err)
-				}
-				log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
-			}
-		}
-		return nil, nil
+
+	response, err := s.Client.Do(req)
+	if err != nil {
+		log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
+		return nil, err
 	}
+
+	defer response.Body.Close()
+	var responseData map[string]steamapi.AppDetailsResponse
+	err = json.NewDecoder(response.Body).Decode(&responseData)
+	if err != nil {
+		log.Printf("Error al decodificar la respuesta JSON: %v\n", err)
+		return nil, err
+	}
+
+	return nil, nil
 }
 
 // SaveToCSV guarda los detalles de los juegos en un archivo CSV.
