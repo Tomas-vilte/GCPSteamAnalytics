@@ -5,6 +5,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"time"
 )
 
 // DataFetcher representa la interfaz para obtener datos.
@@ -24,8 +25,12 @@ type APIResponse struct {
 
 // Item representa cada elemento del array "store_items".
 type Item struct {
-	Appid int64  `json:"appid"`
-	Name  string `json:"name"`
+	Appid     int64  `json:"appid"`
+	Name      string `json:"name"`
+	Status    string
+	IsValid   bool
+	CreatedAt time.Time
+	UpdateAt  time.Time
 }
 
 // GetData realiza una solicitud HTTP GET al endpoint de Steam para obtener los datos.
@@ -52,7 +57,15 @@ func (r *RealDataFetcher) GetData() ([]Item, error) {
 	var filteredApps []Item
 	for _, app := range apiResponse.Applist.Apps {
 		if app.Name != "" {
-			filteredApps = append(filteredApps, app)
+			item := Item{
+				Appid:     app.Appid,
+				Name:      app.Name,
+				Status:    "Pending",
+				IsValid:   false,
+				CreatedAt: time.Now(),
+				UpdateAt:  time.Now(),
+			}
+			filteredApps = append(filteredApps, item)
 		}
 	}
 
