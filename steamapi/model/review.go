@@ -1,4 +1,4 @@
-package models
+package model
 
 type ReviewData interface {
 	GetPositiveReviews(appID int) (*ReviewResponse, error)

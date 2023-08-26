@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/stretchr/testify/mock"
 	"testing"
 )
@@ -11,15 +11,15 @@ type MockSteamData struct {
 	mock.Mock
 }
 
-func (m *MockSteamData) ProcessSteamData(appIDs []int, limit int) ([]*models.AppDetails, error) {
+func (m *MockSteamData) ProcessSteamData(appIDs []int, limit int) ([]*model.AppDetails, error) {
 	args := m.Called(appIDs, limit)
-	return args.Get(0).([]*models.AppDetails), args.Error(1)
+	return args.Get(0).([]*model.AppDetails), args.Error(1)
 }
 
 func TestProcessSteamData(t *testing.T) {
 	// Creamos una instancia simulada de SteamData
 	mockData := &MockSteamData{}
-	expectedDetails := []*models.AppDetails{
+	expectedDetails := []*model.AppDetails{
 		{
 			SteamAppid:  123,
 			Description: "Example description 1",
