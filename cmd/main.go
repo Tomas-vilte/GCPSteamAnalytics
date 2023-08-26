@@ -2,13 +2,18 @@ package main
 
 import (
 	"context"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"net/http"
 )
 
 func main() {
-	gameProcessor := service.NewGameProcessor(nil, nil)
+	storage := persistence.NewStorage()
+	steamClient := service.NewSteamClient(http.Client{})
+	gameProcessor := service.NewGameProcessor(storage, steamClient)
+
 	err := gameProcessor.RunProcessData(context.Background(), 20)
 
 	if err != nil {

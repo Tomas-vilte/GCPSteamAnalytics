@@ -15,16 +15,18 @@ const (
 	cc       = "AR"
 )
 
-type HTTPClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
-
 type SteamClient interface {
 	GetAppDetails(id int64) (*steamapi.AppDetails, error)
 }
 
-type steamAPI struct {
-	Client HTTPClient
+func NewSteamClient(client http.Client) SteamClient {
+	return &steamClient{
+		client: client,
+	}
+}
+
+type steamClient struct {
+	client http.Client
 }
 
 //// ProcessSteamData realiza el procesamiento paralelo de los detalles de las aplicaciones Steam.
@@ -91,7 +93,7 @@ type steamAPI struct {
 // ProcessAppID procesa un appID específico y devuelve sus detalles si es un juego válido.
 // 'id' es el appID a procesar.
 // Retorna los detalles del juego y un posible error si ocurre.
-func (s *steamAPI) GetAppDetails(id int64) (*steamapi.AppDetails, error) {
+func (s *steamClient) GetAppDetails(id int64) (*steamapi.AppDetails, error) {
 	url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -100,7 +102,7 @@ func (s *steamAPI) GetAppDetails(id int64) (*steamapi.AppDetails, error) {
 	}
 	req.Close = true
 
-	response, err := s.Client.Do(req)
+	response, err := s.client.Do(req)
 	if err != nil {
 		log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
 		return nil, err

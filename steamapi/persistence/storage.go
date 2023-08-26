@@ -10,6 +10,10 @@ type Storage interface {
 	Update(item handlers.Item) error
 }
 
+func NewStorage() Storage {
+	return &storage{}
+}
+
 type storage struct {
 }
 
