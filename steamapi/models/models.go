@@ -56,10 +56,7 @@ type SteamData interface {
 	// Devuelve el último appID procesado y un posible error en caso de fallo.
 	LoadLastProcessedAppid() (int, error)
 
-	// SaveLastProcessedAppid guarda el último appID procesado en la base de datos.
-	// 'lastProcessedAppid' es el último appID que se ha procesado y se debe almacenar.
-	// Devuelve un posible error en caso de fallo en la operación.
-	SaveLastProcessedAppid(lastProcessedAppid int) error
+	UpdateAppStatus(id int, status string, isValid bool) error
 
 	// SaveToCSV guarda los detalles de las aplicaciones en un archivo CSV.
 	// 'data' es una lista de AppDetails que se guardarán en el archivo especificado por 'filePath'.
