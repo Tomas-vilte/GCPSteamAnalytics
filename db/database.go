@@ -80,12 +80,12 @@ func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
 		return nil
 	}
 
-	// Creamos la consulta para la insercion en lotes
-	query := "INSERT INTO games (appid, name) VALUES "
+	// Creamos la consulta para la inserción en lotes
+	query := "INSERT INTO game (app_id, name, status, valid, created_at, updated_at) VALUES "
 	var vals []interface{}
 	for i, item := range items {
-		query += "(?, ?)"
-		vals = append(vals, item.Appid, item.Name)
+		query += "(?, ?, ?, ?, ?, ?)"
+		vals = append(vals, item.Appid, item.Name, item.Status, item.IsValid, item.CreatedAt, item.UpdateAt)
 		if i < len(items)-1 {
 			query += ", "
 		}
