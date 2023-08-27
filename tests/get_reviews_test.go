@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"io"
@@ -25,9 +25,9 @@ func (m *mockHTTPClient) Do(req *http.Request) (*http.Response, error) {
 }
 
 func TestGetReviews(t *testing.T) {
-	MockResponse := models.ReviewResponse{
+	MockResponse := model.ReviewResponse{
 		Success: 1,
-		ReviewSummary: models.ReviewSummary{
+		ReviewSummary: model.ReviewSummary{
 			NumReviews:      50,
 			ReviewScore:     8,
 			ReviewScoreDesc: "Very Positive",
@@ -35,10 +35,10 @@ func TestGetReviews(t *testing.T) {
 			TotalNegative:   837,
 			TotalReviews:    7325,
 		},
-		Reviews: []models.Review{
+		Reviews: []model.Review{
 			{
 				RecommendationID: "144456675",
-				Author: models.ReviewAuthor{
+				Author: model.ReviewAuthor{
 					SteamID:              "76561199263188792",
 					NumGamesOwned:        21,
 					NumReviews:           1,

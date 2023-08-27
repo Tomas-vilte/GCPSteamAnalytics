@@ -4,7 +4,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"log"
 	"net/http"
 	"os"
@@ -18,7 +18,7 @@ type SteamReviewAPI struct {
 // GetReviews GetPositiveReviews GetReviews obtiene las reseñas de un juego específico utilizando su appID.
 // Acepta el appID del juego como argumento y devuelve un puntero a la estructura ReviewResponse
 // que contiene la información de las reseñas, así como un posible error si ocurre.
-func (s *SteamReviewAPI) GetReviews(appID int) (*models.ReviewResponse, error) {
+func (s *SteamReviewAPI) GetReviews(appID int) (*model.ReviewResponse, error) {
 	log.Printf("Obteniendo reseñas para el appID %d...", appID)
 
 	// Construir la URL de la API de reseñas de Steam
@@ -41,7 +41,7 @@ func (s *SteamReviewAPI) GetReviews(appID int) (*models.ReviewResponse, error) {
 	defer response.Body.Close()
 
 	// Decodificar la respuesta JSON en la estructura ReviewResponse
-	var reviewResponse models.ReviewResponse
+	var reviewResponse model.ReviewResponse
 	err = json.NewDecoder(response.Body).Decode(&reviewResponse)
 	if err != nil {
 		log.Printf("Error a decodificar la respuesta: %v\n", err)
@@ -52,7 +52,7 @@ func (s *SteamReviewAPI) GetReviews(appID int) (*models.ReviewResponse, error) {
 	return &reviewResponse, nil
 }
 
-func (s *SteamReviewAPI) SaveReviewsToCSV(appID int, reviews *models.ReviewResponse, filePath string) error {
+func (s *SteamReviewAPI) SaveReviewsToCSV(appID int, reviews *model.ReviewResponse, filePath string) error {
 	log.Printf("Guardando reseñas en el archivo CSV para el appID %d...", appID)
 	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {

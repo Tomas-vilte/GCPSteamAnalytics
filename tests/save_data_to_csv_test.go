@@ -3,7 +3,7 @@ package tests
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	_ "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/models"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -19,7 +19,7 @@ func TestSaveToCSV(t *testing.T) {
 
 	tempFilePath := filepath.Join(tempDir, "test.csv")
 
-	testData := []models.AppDetails{
+	testData := []model.AppDetails{
 		{
 			SteamAppid:  123,
 			Description: "Example description 1",

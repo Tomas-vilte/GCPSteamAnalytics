@@ -50,7 +50,7 @@ func TestProcessAppID(t *testing.T) {
 	mockClient.On("Do", mock.Anything).Return(expectedResponse, nil)
 
 	// Llama a la función que deseas probar
-	appDetails, err := api.ProcessAppID(10)
+	appDetails, err := api.GetAppDetails(10)
 
 	// Verifica que no haya error
 	assert.NoError(t, err)
@@ -89,7 +89,7 @@ func TestProcessAppID_UpdateLastProcessedAppID(t *testing.T) {
 	mockClient.On("Do", mock.Anything).Return(expectedResponse, nil)
 
 	// Llama a la función que deseas probar
-	appDetails, err := api.ProcessAppID(10)
+	appDetails, err := api.GetAppDetails(10)
 
 	// Verifica que no haya error
 	assert.NoError(t, err)
