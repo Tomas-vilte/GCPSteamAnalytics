@@ -2,9 +2,16 @@ package service
 
 import (
 	"context"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"encoding/csv"
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+	"sync"
 )
 
 type gameProcessor struct {
@@ -26,37 +33,113 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 	}
 
 	gamesDetails, err := sv.getGamesFromAPI(ctx, games)
-	print(gamesDetails)
+	if err != nil {
+		return err
+	}
+
+	dataProcessed, err := sv.processResponse(gamesDetails, games)
+	if err != nil {
+		return err
+	}
+
+	err = sv.saveToCSV(dataProcessed)
+	if err != nil {
+		return err
+	}
+
 	return err
 
 }
 
-func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []handlers.Item) ([]steamapi.AppDetails, error) {
-	//var wg sync.WaitGroup
-	//var processedData []steamapi.AppDetails
-	//var processingErrors []error
-	//semaphore := make(chan struct{}, 10)
-	//processedCount := 0
-	//
-	//for _, id := range getIds(items) {
-	//	wg.Add(1)
-	//	semaphore <- struct{}{}
-	//	appId := id
-	//
-	//	go func(id int64) {
-	//		defer func() {
-	//			wg.Done()
-	//			<-semaphore
-	//		}()
-	//
-	//		sv.steamAPI.GetAppDetails(id)
-	//	}(appId)
-	//}
+func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []entity.Item) ([]steamapi.AppDetailsResponse, error) {
+	var wg sync.WaitGroup
+	var processingErrors []error
+	semaphore := make(chan struct{}, 10)
+	processedCount := 0
+	var responseData []steamapi.AppDetailsResponse
 
-	return nil, nil
+	for _, id := range getIds(items) {
+		wg.Add(1)
+		semaphore <- struct{}{}
+		appId := id
+
+		go func(id int64) {
+			defer func() {
+				wg.Done()
+				<-semaphore
+			}()
+
+			response, err := sv.steamClient.GetAppDetails(id)
+			if err != nil {
+				processingErrors = append(processingErrors, err)
+				log.Printf("Error al procesar appID %d: %v\n", id, err)
+				return
+			}
+
+			if response != nil && response.Success {
+				log.Printf("Response for appID %d: %+v\n", id, response)
+				responseData = append(responseData, *response)
+				processedCount++
+			}
+			log.Printf("Elementos procesados hasta ahora: %d", processedCount)
+		}(appId)
+	}
+
+	return responseData, nil
 }
 
-func getIds(items []handlers.Item) []int64 {
+func (sv *gameProcessor) processResponse(responseData []steamapi.AppDetailsResponse, games []entity.Item) ([]steamapi.AppDetails, error) {
+	var appDetails []steamapi.AppDetails
+
+	for _, response := range responseData {
+		data := response.Data
+		appId := data.SteamAppid
+
+		if response.Success {
+			data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
+
+			if data.Type == "game" || data.Type == "dlc" {
+				if err := sv.updateData(games, appId, true); err != nil {
+					log.Printf("Error al actualizar el estado del appID: %v\n", err)
+					return nil, err
+				}
+				appDetails = append(appDetails, data)
+			}
+		} else {
+			if err := sv.updateData(games, appId, false); err != nil {
+				log.Printf("Error al actualizar el estado del appID: %v\n", err)
+				return nil, err
+			}
+		}
+	}
+	return appDetails, nil
+}
+
+func (sv *gameProcessor) updateData(games []entity.Item, id int64, isValid bool) error {
+	findItem := func(games []entity.Item, id int64) entity.Item {
+		for _, game := range games {
+			if game.Appid == id {
+				return game
+			}
+		}
+		return entity.Item{}
+	}
+	itemFound := findItem(games, id)
+	itemFound.IsValid = isValid
+	log.Printf("Insertando juego/appID: %s/%d\n", itemFound.Name, id)
+	return sv.storage.Update(itemFound)
+}
+
+func findItemFrom(games []entity.Item, id int64) entity.Item {
+	for _, game := range games {
+		if game.Appid == id {
+			return game
+		}
+	}
+	return entity.Item{}
+}
+
+func getIds(items []entity.Item) []int64 {
 	var apps []int64
 
 	for _, game := range items {
@@ -66,39 +149,76 @@ func getIds(items []handlers.Item) []int64 {
 
 }
 
-//func (sv *gameProcessor) UNAME(id int64, isValid bool) (*steamapi.AppDetailsResponse, error) {
-//	appDetailsResponse, err := sv.steamAPI.GetAppDetails(id)
-//	if err != nil {
-//		// Manejar el error de la llamada API
-//		return nil, err
-//	}
-//	if appDetailsResponse. {
-//		// La respuesta de la API fue exitosa, puedes acceder a los datos
-//		data := appDetailsResponse.Data
-//		data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
-//
-//		if data.Type == "game" || data.Type == "dlc" {
-//			log.Printf("Insertando juego/appID: %s/%d\n", data.Name, id)
-//			err = sv.storage.Update(handlers.Item{Appid: id, IsValid: true})
-//			if err != nil {
-//				log.Printf("Error al actualizar el estado del appID: %v\n", err)
-//			}
-//			return &data, nil
-//		} else {
-//			err := sv.storage.Update(handlers.Item{Appid: id, IsValid: false})
-//			if err != nil {
-//				log.Printf("Error al actualizar el estado del appID: %v\n", err)
-//			}
-//			log.Printf("No insertado (tipo no válido:%s) / appID: %d\n", data.Type, id)
-//		}
-//	} else {
-//		// La respuesta de la API no fue exitosa, maneja el caso aquí
-//		log.Printf("Llamada a API no exitosa para appID: %d\n", id)
-//	}
-//
-//	return nil, nil
-//}
-//
-//func (sv *gameProcessor) saveToCSV(data []steamapi.AppDetails, filePath string) error {
-//
-//}
+func (sv *gameProcessor) saveToCSV(data []steamapi.AppDetails) error {
+	filePath := "/home/tomi/GCPSteamAnalytics/data/gamesDetails.csv"
+	existingData, err := utils.LoadExistingData(filePath)
+	if err != nil {
+		return err
+	}
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+	// Verificar si el archivo está vacío
+	fileInfo, _ := file.Stat()
+	if fileInfo.Size() == 0 {
+		header := []string{
+			"SteamAppid",
+			"Description",
+			"Type",
+			"Name",
+			"Publishers",
+			"Developers",
+			"isFree",
+			"InterfaceLanguages",
+			"FullAudioLanguages",
+			"SubtitlesLanguages",
+			"Windows",
+			"Mac",
+			"Linux",
+			"Date",
+			"ComingSoon",
+			"Currency",
+			"DiscountPercent",
+			"InitialFormatted",
+			"FinalFormatted",
+		}
+		if err := writer.Write(header); err != nil {
+			return err
+		}
+	}
+	for _, app := range data {
+		if _, exists := existingData[int(app.SteamAppid)]; !exists {
+			record := []string{
+				strconv.Itoa(int(app.SteamAppid)),
+				app.Description,
+				app.Type,
+				app.Name,
+				strings.Join(app.Publishers, ", "),
+				strings.Join(app.Developers, ", "),
+				strconv.FormatBool(app.IsFree),
+				utils.GetSupportedLanguagesString(app.SupportedLanguages["interface"]),
+				utils.GetSupportedLanguagesString(app.SupportedLanguages["full_audio"]),
+				utils.GetSupportedLanguagesString(app.SupportedLanguages["subtitles"]),
+				strconv.FormatBool(app.Platforms.Windows),
+				strconv.FormatBool(app.Platforms.Mac),
+				strconv.FormatBool(app.Platforms.Linux),
+				app.ReleaseDate.Date,
+				strconv.FormatBool(app.ReleaseDate.ComingSoon),
+				app.PriceOverview.Currency,
+				strconv.Itoa(int(app.PriceOverview.DiscountPercent)),
+				utils.FormatInitial(float64(app.PriceOverview.Initial) / 100),
+				app.PriceOverview.FinalFormatted,
+			}
+			if err := writer.Write(record); err != nil {
+				return err
+			}
+			// Agregar el appID al mapa de datos existentes
+			existingData[int(app.SteamAppid)] = true
+		}
+	}
+	return nil
+}

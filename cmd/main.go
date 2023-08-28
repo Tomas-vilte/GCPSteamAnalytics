@@ -14,7 +14,7 @@ func main() {
 	steamClient := service.NewSteamClient(http.Client{})
 	gameProcessor := service.NewGameProcessor(storage, steamClient)
 
-	err := gameProcessor.RunProcessData(context.Background(), 20)
+	err := gameProcessor.RunProcessData(context.Background(), 30)
 
 	if err != nil {
 		log.Printf("Hubo un error: %v", err)
