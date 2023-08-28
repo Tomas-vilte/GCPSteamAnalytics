@@ -1,16 +1,17 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"log"
 	"net/http"
-	"time"
 )
 
 // DataFetcher representa la interfaz para obtener datos.
 type DataFetcher interface {
-	GetData() ([]Item, error)
+	GetData() ([]entity.Item, error)
 }
 
 // RealDataFetcher implementa DataFetcher para obtener datos reales de la API.
@@ -19,30 +20,13 @@ type RealDataFetcher struct{}
 // APIResponse representa la estructura del JSON devuelto por la API.
 type APIResponse struct {
 	Applist struct {
-		Apps []Item `json:"apps"`
+		Apps []entity.Item `json:"apps"`
 	} `json:"applist"`
-}
-
-type status string
-
-const (
-	PENDING   status = "PENDING"
-	PROCESSED status = "PROCESSED"
-)
-
-// Item representa cada elemento del array "store_items".
-type Item struct {
-	Appid     int64  `json:"appid"`
-	Name      string `json:"name"`
-	Status    status
-	IsValid   bool
-	CreatedAt time.Time
-	UpdateAt  time.Time
 }
 
 // GetData realiza una solicitud HTTP GET al endpoint de Steam para obtener los datos.
 // Retorna una lista de elementos (Item) y un error en caso de que la solicitud falle o el JSON no pueda ser decodificado.
-func (r *RealDataFetcher) GetData() ([]Item, error) {
+func (r *RealDataFetcher) GetData() ([]entity.Item, error) {
 	// Realizar la solicitud HTTP GET a la API para obtener los datos.
 	response, err := http.Get("https://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=1A059D89640D054BB20FF254FB529E14&format=json")
 	if err != nil {
@@ -61,15 +45,15 @@ func (r *RealDataFetcher) GetData() ([]Item, error) {
 	}
 
 	// Quitamos valores vacios de la columna name
-	var filteredApps []Item
+	var filteredApps []entity.Item
 	for _, app := range apiResponse.Applist.Apps {
 		if app.Name != "" {
-			item := Item{
+			item := entity.Item{
 				Appid:     app.Appid,
 				Name:      app.Name,
-				Status:    PENDING,
+				Status:    entity.PENDING,
 				IsValid:   false,
-				CreatedAt: time.Now(),
+				CreatedAt: &sql.NullTime{},
 			}
 			filteredApps = append(filteredApps, item)
 		}

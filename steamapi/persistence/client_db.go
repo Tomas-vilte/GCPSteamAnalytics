@@ -18,7 +18,7 @@ func GetDB() *sql.DB {
 }
 
 func createClient() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics")
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
