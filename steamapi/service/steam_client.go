@@ -16,7 +16,7 @@ const (
 )
 
 type SteamClient interface {
-	GetAppDetails(id int64) (*steamapi.AppDetailsResponse, error)
+	GetAppDetails(id int) (map[string]steamapi.AppDetailsResponse, error)
 }
 
 func NewSteamClient(client http.Client) SteamClient {
@@ -29,28 +29,27 @@ type steamClient struct {
 	client http.Client
 }
 
-func (s *steamClient) GetAppDetails(id int64) (*steamapi.AppDetailsResponse, error) {
+func (s *steamClient) GetAppDetails(id int) (map[string]steamapi.AppDetailsResponse, error) {
 	url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Printf("Error al crear la solicitud HTTP: %v\n", err)
 		return nil, err
 	}
-	req.Close = true
 
+	req.Close = true
 	response, err := s.client.Do(req)
 	if err != nil {
 		log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
 		return nil, err
 	}
-
 	defer response.Body.Close()
-	var responseData steamapi.AppDetailsResponse
+	var responseData map[string]steamapi.AppDetailsResponse
 	err = json.NewDecoder(response.Body).Decode(&responseData)
 	if err != nil {
 		log.Printf("Error al decodificar la respuesta JSON: %v\n", err)
 		return nil, err
 	}
 
-	return &responseData, nil
+	return responseData, nil
 }
