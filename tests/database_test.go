@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"github.com/Tomas-vilte/GCPSteamAnalytics/db/mocks"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/tests/mocks"
 	"testing"
 )
 

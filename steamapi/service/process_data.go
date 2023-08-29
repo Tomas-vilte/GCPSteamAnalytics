@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
@@ -52,11 +53,11 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 
 }
 
-func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []entity.Item) ([]map[string]steamapi.AppDetailsResponse, error) {
+func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []entity.Item) ([][]byte, error) {
 	var wg sync.WaitGroup
 	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
-	var responseData []map[string]steamapi.AppDetailsResponse
+	var responseData [][]byte
 
 	for _, appId := range getIds(items) {
 		wg.Add(1)
@@ -94,11 +95,17 @@ func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []entity.Ite
 	return responseData, nil
 }
 
-func (sv *gameProcessor) processResponse(responseData []map[string]steamapi.AppDetailsResponse, games []entity.Item) ([]steamapi.AppDetails, error) {
+func (sv *gameProcessor) processResponse(responseData [][]byte, games []entity.Item) ([]steamapi.AppDetails, error) {
 	var appDetails []steamapi.AppDetails
 	logCounter := 1
 
-	for _, responseMap := range responseData {
+	for _, responseBytes := range responseData {
+		var responseMap map[string]steamapi.AppDetailsResponse
+		if err := json.Unmarshal(responseBytes, &responseMap); err != nil {
+			log.Printf("Error al decodificar JSON de la respuesta: %v\n", err)
+			continue
+		}
+
 		for appIDStr, response := range responseMap {
 			data := response.Data
 			appID, err := strconv.Atoi(appIDStr)
