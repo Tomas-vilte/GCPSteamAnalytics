@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
@@ -9,14 +10,13 @@ import (
 )
 
 func main() {
-	//storage := persistence.NewStorage()
+	storage := persistence.NewStorage()
 	steamClient := service.NewSteamClient(http.Client{})
-	//gameProcessor := service.NewGameProcessor(storage, steamClient)
-	data, err := steamClient.GetAppDetails(730)
-
+	gameProcessor := service.NewGameProcessor(storage, steamClient)
+	err := gameProcessor.RunProcessData(context.Background(), 5)
 	if err != nil {
 		log.Printf("Hubo un error: %v", err)
 		return
 	}
-	fmt.Println(data)
+
 }

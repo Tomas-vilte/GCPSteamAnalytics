@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	"log"
 	"time"
 )
 
@@ -43,7 +44,9 @@ func (s storage) Update(item entity.Item) error {
 	query := "UPDATE game SET status = ?, valid = ?, updated_at = ? WHERE app_id = ?"
 	_, err := GetDB().Exec(query, entity.PROCESSED, item.IsValid, time.Now(), item.Appid)
 	if err != nil {
+		log.Printf("Error al actualizar el estado del juego con appID %d: %v\n", item.Appid, err)
 		return err
 	}
+	log.Printf("Estado actualizado del juego con appID %d\n", item.Appid)
 	return nil
 }
