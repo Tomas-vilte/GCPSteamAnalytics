@@ -2,8 +2,8 @@ package tests
 
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers/mocks"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/tests/mocks"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

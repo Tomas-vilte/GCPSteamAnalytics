@@ -1,9 +1,8 @@
 package service
 
 import (
-	"encoding/json"
 	"fmt"
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
+	"io"
 	"log"
 	"net/http"
 )
@@ -15,28 +14,31 @@ const (
 	cc       = "AR"
 )
 
-type SteamClient interface {
-	GetAppDetails(id int) (map[string]steamapi.AppDetailsResponse, error)
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
 }
 
-func NewSteamClient(client http.Client) *steamClient {
+type SteamClient interface {
+	GetAppDetails(id int) ([]byte, error)
+}
+
+type steamClient struct {
+	client HTTPClient
+}
+
+func NewSteamClient(client HTTPClient) *steamClient {
 	return &steamClient{
 		client: client,
 	}
 }
 
-type steamClient struct {
-	client http.Client
-}
-
-func (s *steamClient) GetAppDetails(id int) (map[string]steamapi.AppDetailsResponse, error) {
+func (s *steamClient) GetAppDetails(id int) ([]byte, error) {
 	url := fmt.Sprintf("%s?l=%s&appids=%d&key=%s&cc=%s", baseURL, language, id, apiKey, cc)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Printf("Error al crear la solicitud HTTP: %v\n", err)
 		return nil, err
 	}
-
 	req.Close = true
 	response, err := s.client.Do(req)
 	if err != nil {
@@ -45,12 +47,10 @@ func (s *steamClient) GetAppDetails(id int) (map[string]steamapi.AppDetailsRespo
 	}
 	defer response.Body.Close()
 
-	var responseData map[string]steamapi.AppDetailsResponse
-	err = json.NewDecoder(response.Body).Decode(&responseData)
+	responseData, err := io.ReadAll(response.Body)
 	if err != nil {
-		log.Printf("Error al decodificar la respuesta JSON: %v\n", err)
+		log.Printf("Error al leer la respuesta HTTP: %v\n", err)
 		return nil, err
 	}
-
 	return responseData, nil
 }
