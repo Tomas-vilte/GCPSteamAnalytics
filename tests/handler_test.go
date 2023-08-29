@@ -3,6 +3,7 @@ package tests
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers/mocks"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -11,8 +12,8 @@ import (
 type MockDataFetcher struct{}
 
 // GetData simula la obtención de datos y retorna datos simulados para tus pruebas.
-func (m *MockDataFetcher) GetData() ([]handlers.Item, error) {
-	mockItems := []handlers.Item{
+func (m *MockDataFetcher) GetData() ([]entity.Item, error) {
+	mockItems := []entity.Item{
 		{Appid: 1, Name: "Item 1"},
 		{Appid: 2, Name: "Item 2"},
 	}
@@ -20,7 +21,7 @@ func (m *MockDataFetcher) GetData() ([]handlers.Item, error) {
 }
 
 // GetDataWithError simula un error al obtener datos y retorna un error personalizado.
-func (m *MockDataFetcher) GetDataWithError() ([]handlers.Item, error) {
+func (m *MockDataFetcher) GetDataWithError() ([]entity.Item, error) {
 	return nil, handlers.ErrDataFetch
 }
 
@@ -38,7 +39,7 @@ func TestGetDataWithMock(t *testing.T) {
 	}
 
 	// Asegúrate de que se obtuvieron los elementos simulados correctamente.
-	expectedItems := []handlers.Item{
+	expectedItems := []entity.Item{
 		{Appid: 1, Name: "Item 1"},
 		{Appid: 2, Name: "Item 2"},
 	}
@@ -91,7 +92,7 @@ func TestInsertData_Success(t *testing.T) {
 	mockDB.Connected = true
 
 	// Datos de prueba que devolverá el mock del DataFetcher
-	items := []handlers.Item{
+	items := []entity.Item{
 		{Appid: 1, Name: "Juego 1"},
 		{Appid: 2, Name: "Juego 2"},
 	}

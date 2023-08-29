@@ -19,7 +19,7 @@ type SteamClient interface {
 	GetAppDetails(id int) (map[string]steamapi.AppDetailsResponse, error)
 }
 
-func NewSteamClient(client http.Client) SteamClient {
+func NewSteamClient(client http.Client) *steamClient {
 	return &steamClient{
 		client: client,
 	}

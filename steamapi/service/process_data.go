@@ -48,7 +48,7 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 		return err
 	}
 
-	return nil
+	return err
 
 }
 
@@ -68,18 +68,28 @@ func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []entity.Ite
 				<-semaphore
 			}()
 
-			response, err := sv.steamClient.GetAppDetails(int(id))
-			if err != nil {
-				processingErrors = append(processingErrors, err)
-				log.Printf("Error al procesar appID %d: %v\n", id, err)
+			select {
+			case <-ctx.Done():
 				return
-			}
+			default:
+				response, err := sv.steamClient.GetAppDetails(int(id))
+				if err != nil {
+					processingErrors = append(processingErrors, err)
+					log.Printf("Error al procesar appID %d: %v\n", id, err)
+					return
+				}
 
-			if response != nil {
-				responseData = append(responseData, response)
+				if response != nil {
+					responseData = append(responseData, response)
+				}
 			}
 		}(appId)
 	}
+
+	if len(processingErrors) > 0 {
+		return nil, fmt.Errorf("ocurrio un error durante los api calls")
+	}
+
 	wg.Wait()
 	return responseData, nil
 }

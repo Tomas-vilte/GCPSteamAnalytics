@@ -12,7 +12,7 @@ import (
 )
 
 type SteamReviewAPI struct {
-	Client HTTPClient
+	client http.Client
 }
 
 // GetReviews GetPositiveReviews GetReviews obtiene las reseñas de un juego específico utilizando su appID.
@@ -33,7 +33,7 @@ func (s *SteamReviewAPI) GetReviews(appID int) (*model.ReviewResponse, error) {
 	req.Close = true
 
 	// Enviar la solicitud y obtener la respuesta
-	response, err := s.Client.Do(req)
+	response, err := s.client.Do(req)
 	if err != nil {
 		log.Printf("Error al realizar la solicitud HTTP: %v\n", err)
 		return nil, err
