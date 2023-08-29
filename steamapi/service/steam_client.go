@@ -44,6 +44,7 @@ func (s *steamClient) GetAppDetails(id int) (map[string]steamapi.AppDetailsRespo
 		return nil, err
 	}
 	defer response.Body.Close()
+
 	var responseData map[string]steamapi.AppDetailsResponse
 	err = json.NewDecoder(response.Body).Decode(&responseData)
 	if err != nil {
