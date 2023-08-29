@@ -2,15 +2,14 @@ package mocks
 
 import (
 	"errors"
-
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 )
 
 type MockDatabase struct {
 	Connected     bool
-	ShouldFail    bool            // Nuevo campo para indicar si debe simular un error
-	InsertedItems []handlers.Item // Nuevo campo para almacenar los items insertados en el mock
-	ShouldInsert  bool            // Nuevo campo para indicar si debe simular una inserción exitosa o fallida
+	ShouldFail    bool          // Nuevo campo para indicar si debe simular un error
+	InsertedItems []entity.Item // Nuevo campo para almacenar los items insertados en el mock
+	ShouldInsert  bool          // Nuevo campo para indicar si debe simular una inserción exitosa o fallida
 }
 
 func (m *MockDatabase) Connect() error {
@@ -30,7 +29,7 @@ func (m *MockDatabase) Close() error {
 }
 
 // InsertBatchData Implementar la función InsertBatchData para el mock
-func (m *MockDatabase) InsertBatchData(items []handlers.Item) error {
+func (m *MockDatabase) InsertBatchData(items []entity.Item) error {
 	if m.ShouldFail {
 		return errors.New("error de inserción simulado")
 	}
@@ -39,13 +38,13 @@ func (m *MockDatabase) InsertBatchData(items []handlers.Item) error {
 	if m.ShouldInsert {
 		m.InsertedItems = append(m.InsertedItems, items...)
 	} else {
-		m.InsertedItems = []handlers.Item{} // Simular una inserción fallida eliminando los items insertados
+		m.InsertedItems = []entity.Item{} // Simular una inserción fallida eliminando los items insertados
 	}
 
 	return nil
 }
 
 // GetInsertedItems Función de ayuda para obtener los items insertados en el mock
-func (m *MockDatabase) GetInsertedItems() []handlers.Item {
+func (m *MockDatabase) GetInsertedItems() []entity.Item {
 	return m.InsertedItems
 }

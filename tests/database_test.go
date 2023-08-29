@@ -2,7 +2,7 @@ package tests
 
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/db/mocks"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"testing"
 )
 
@@ -63,10 +63,9 @@ func TestInsertBatchData_Success(t *testing.T) {
 	mockDB.Connect()
 
 	// Datos de prueba para insertar en lotes
-	items := []handlers.Item{
+	items := []entity.Item{
 		{Appid: 1, Name: "Juego 1"},
 		{Appid: 2, Name: "Juego 2"},
-		// Agregar más items según sea necesario
 	}
 
 	// Configura el mock para simular una inserción exitosa

@@ -3,6 +3,7 @@ package mocks
 import (
 	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -12,11 +13,11 @@ type MockDatabase struct {
 	ShouldInsert bool // Nuevo campo para indicar si debe simular una inserción exitosa o fallida
 
 	// Nuevo campo para almacenar los items insertados en el mock
-	InsertedItems []handlers.Item
+	InsertedItems []entity.Item
 }
 
 // InsertBatchData Implementar la función InsertBatchData para el mock
-func (m *MockDatabase) InsertBatchData(items []handlers.Item) error {
+func (m *MockDatabase) InsertBatchData(items []entity.Item) error {
 	if m.ShouldFail {
 		return errors.New("error de inserción simulado")
 	}
@@ -25,7 +26,7 @@ func (m *MockDatabase) InsertBatchData(items []handlers.Item) error {
 	if m.ShouldInsert {
 		m.InsertedItems = append(m.InsertedItems, items...)
 	} else {
-		m.InsertedItems = []handlers.Item{} // Simular una inserción fallida eliminando los items insertados
+		m.InsertedItems = []entity.Item{} // Simular una inserción fallida eliminando los items insertados
 	}
 
 	return nil
@@ -35,14 +36,14 @@ type MockDataFetcher struct {
 	mock.Mock
 }
 
-func (m *MockDataFetcher) GetData() ([]handlers.Item, error) {
+func (m *MockDataFetcher) GetData() ([]entity.Item, error) {
 	// Utiliza la biblioteca de mocks para configurar el comportamiento del método GetData
 	args := m.Called()
-	return args.Get(0).([]handlers.Item), args.Error(1)
+	return args.Get(0).([]entity.Item), args.Error(1)
 }
 
 // Función de ayuda para obtener los items insertados en el mock
-func (m *MockDatabase) GetInsertedItems() []handlers.Item {
+func (m *MockDatabase) GetInsertedItems() []entity.Item {
 	return m.InsertedItems
 }
 

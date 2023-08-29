@@ -3,9 +3,10 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
+
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const batchSize = 1000
@@ -13,8 +14,8 @@ const batchSize = 1000
 type Database interface {
 	Connect() error
 	Close() error
-	InsertBatch(items []handlers.Item) error
-	InsertBatchData(items []handlers.Item) error
+	InsertBatch(items []entity.Item) error
+	InsertBatchData(items []entity.Item) error
 }
 
 type MySQLDatabase struct {
@@ -46,7 +47,7 @@ func (m *MySQLDatabase) Close() error {
 // InsertBatch realiza la inserción de datos en la base de datos por lotes.
 // Divide los datos ingresados en lotes más pequeñas y llama a la función InsertBatchData para cada lote.
 // Si ocurre algún problema durante la inserción en lotes, la función devuelve un error.
-func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
+func (m *MySQLDatabase) InsertBatch(items []entity.Item) error {
 	// Dividimos los datos en lotes
 	numItems := len(items)
 	numBatches := (numItems + batchSize - 1) / batchSize
@@ -75,7 +76,7 @@ func (m *MySQLDatabase) InsertBatch(items []handlers.Item) error {
 // La función recibe una lista de elementos (items) y construye una consulta SQL para insertarlos en la tabla "games".
 // Utiliza marcadores de posición (?) para evitar inyecciones de SQL y luego ejecuta la consulta en la base de datos.
 // Los valores de los elementos se proporcionan como argumentos para la consulta utilizando el operador "..." para desempaquetar el slice de valores.
-func (m *MySQLDatabase) InsertBatchData(items []handlers.Item) error {
+func (m *MySQLDatabase) InsertBatchData(items []entity.Item) error {
 	if len(items) == 0 {
 		return nil
 	}
