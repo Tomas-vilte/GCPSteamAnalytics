@@ -25,7 +25,7 @@ func TestSteamClient_GetAppDetails_Success(t *testing.T) {
 			}
 		}
 	}`
-	mockHTTPClient := new(mocks.MockHTTPClient)
+	mockHTTPClient := new(mocks.MockSteamClient)
 	mockHTTPClient.On("Do", mock.Anything).Return(
 		&http.Response{
 			StatusCode: http.StatusOK,
@@ -47,7 +47,7 @@ func TestSteamClient_GetAppDetails_Success(t *testing.T) {
 }
 
 func TestSteamClient_GetAppDetails_ErrorRequest(t *testing.T) {
-	mockHTTPClient := new(mocks.MockHTTPClient)
+	mockHTTPClient := new(mocks.MockSteamClient)
 	mockHTTPClient.On("Do", mock.Anything).Return(
 		nil,
 		errors.New("error making request"),

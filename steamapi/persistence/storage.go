@@ -1,7 +1,6 @@
 package persistence
 
 import (
-	"database/sql"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"log"
 	"time"
@@ -12,15 +11,11 @@ type StorageDB interface {
 	Update(item entity.Item) error
 }
 
-func NewStorage(db *sql.DB) StorageDB {
-	return &storage{
-		db: db,
-	}
+func NewStorage() StorageDB {
+	return &storage{}
 }
 
-type storage struct {
-	db *sql.DB
-}
+type storage struct{}
 
 func (s storage) GetAllFrom(limit int) ([]entity.Item, error) {
 	query := "SELECT app_id, name, status, valid, created_at, updated_at FROM game WHERE status = 'PENDING' AND valid = false ORDER BY id LIMIT ?"
