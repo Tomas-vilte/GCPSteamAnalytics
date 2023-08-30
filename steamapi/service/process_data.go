@@ -5,23 +5,24 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
+
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 )
 
 type gameProcessor struct {
-	storage     persistence.Storage
+	storage     persistence.StorageDB
 	steamClient SteamClient
 }
 
-func NewGameProcessor(storage persistence.Storage, steamClient SteamClient) *gameProcessor {
+func NewGameProcessor(storage persistence.StorageDB, steamClient SteamClient) *gameProcessor {
 	return &gameProcessor{
 		storage:     storage,
 		steamClient: steamClient,
