@@ -35,7 +35,7 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 		return err
 	}
 
-	gamesDetails, err := sv.getGamesFromAPI(ctx, games)
+	gamesDetails, err := sv.GetGamesFromAPI(ctx, games)
 	if err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 
 }
 
-func (sv *gameProcessor) getGamesFromAPI(ctx context.Context, items []entity.Item) ([][]byte, error) {
+func (sv *gameProcessor) GetGamesFromAPI(ctx context.Context, items []entity.Item) ([][]byte, error) {
 	var wg sync.WaitGroup
 	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
