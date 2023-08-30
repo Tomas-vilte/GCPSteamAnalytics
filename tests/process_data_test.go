@@ -95,3 +95,23 @@ func TestGameProcessor_ProcessResponse(t *testing.T) {
 	mockStorage.AssertExpectations(t)
 	mockSteamClient.AssertExpectations(t)
 }
+
+func TestGameProcessor_UpdateData(t *testing.T) {
+	games := []entity.Item{
+		{Appid: 730, IsValid: false},
+	}
+	id := int64(730)
+	isValid := true
+
+	storageMock := &mocks.MockStorage{}
+	storageMock.On("Update", mock.Anything).Return(nil)
+
+	processor := service.NewGameProcessor(storageMock, nil)
+
+	err := processor.UpdateData(games, id, isValid)
+
+	assert.NoError(t, err, "Se esperaba que no haya error")
+	updatedGame := games[0]
+	assert.True(t, updatedGame.IsValid, "El estado del juego no se actualizó correctamente")
+	storageMock.AssertCalled(t, "Update", updatedGame)
+}

@@ -123,7 +123,7 @@ func (sv *gameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 				log.Printf("[%d] No insertado (tipo no válido: %s) / appID: %d\n", logCounter, data.Type, appID)
 			}
 
-			err = sv.updateData(games, int64(appID), response.Success)
+			err = sv.UpdateData(games, int64(appID), response.Success)
 			if err != nil {
 				log.Printf("[%d] Error al actualizar el estado del appID: %v\n", logCounter, err)
 				return nil, err
@@ -138,7 +138,7 @@ func (sv *gameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 	return appDetails, nil
 }
 
-func (sv *gameProcessor) updateData(games []entity.Item, id int64, isValid bool) error {
+func (sv *gameProcessor) UpdateData(games []entity.Item, id int64, isValid bool) error {
 	findItem := func(games []entity.Item, id int64) *entity.Item {
 		for i := range games {
 			if games[i].Appid == id {
