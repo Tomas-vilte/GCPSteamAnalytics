@@ -40,7 +40,7 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 		return err
 	}
 
-	dataProcessed, err := sv.processResponse(gamesDetails, games)
+	dataProcessed, err := sv.ProcessResponse(gamesDetails, games)
 	if err != nil {
 		return err
 	}
@@ -96,7 +96,7 @@ func (sv *gameProcessor) GetGamesFromAPI(ctx context.Context, items []entity.Ite
 	return responseData, nil
 }
 
-func (sv *gameProcessor) processResponse(responseData [][]byte, games []entity.Item) ([]steamapi.AppDetails, error) {
+func (sv *gameProcessor) ProcessResponse(responseData [][]byte, games []entity.Item) ([]steamapi.AppDetails, error) {
 	var appDetails []steamapi.AppDetails
 	logCounter := 1
 
@@ -117,12 +117,13 @@ func (sv *gameProcessor) processResponse(responseData [][]byte, games []entity.I
 
 			if response.Success && (data.Type == "game" || data.Type == "dlc") {
 				log.Printf("[%d] Insertando juego/appID: %s/%d\n", logCounter, data.Name, appID)
+				data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
 				appDetails = append(appDetails, data)
 			} else {
 				log.Printf("[%d] No insertado (tipo no válido: %s) / appID: %d\n", logCounter, data.Type, appID)
 			}
 
-			err = sv.updateData(games, int64(appID), response.Success)
+			err = sv.UpdateData(games, int64(appID), response.Success)
 			if err != nil {
 				log.Printf("[%d] Error al actualizar el estado del appID: %v\n", logCounter, err)
 				return nil, err
@@ -137,7 +138,7 @@ func (sv *gameProcessor) processResponse(responseData [][]byte, games []entity.I
 	return appDetails, nil
 }
 
-func (sv *gameProcessor) updateData(games []entity.Item, id int64, isValid bool) error {
+func (sv *gameProcessor) UpdateData(games []entity.Item, id int64, isValid bool) error {
 	findItem := func(games []entity.Item, id int64) *entity.Item {
 		for i := range games {
 			if games[i].Appid == id {
