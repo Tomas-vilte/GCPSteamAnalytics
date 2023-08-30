@@ -1,21 +1,25 @@
 package persistence
 
 import (
+	"database/sql"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"log"
 	"time"
 )
 
-type Storage interface {
+type StorageDB interface {
 	GetAllFrom(limit int) ([]entity.Item, error)
 	Update(item entity.Item) error
 }
 
-func NewStorage() Storage {
-	return &storage{}
+func NewStorage(db *sql.DB) StorageDB {
+	return &storage{
+		db: db,
+	}
 }
 
 type storage struct {
+	db *sql.DB
 }
 
 func (s storage) GetAllFrom(limit int) ([]entity.Item, error) {
@@ -28,13 +32,13 @@ func (s storage) GetAllFrom(limit int) ([]entity.Item, error) {
 
 	var entities []entity.Item
 	for rows.Next() {
-		entity := entity.Item{}
-		err := rows.Scan(&entity.Appid, &entity.Name, &entity.Status, &entity.IsValid, &entity.CreatedAt, &entity.UpdatedAt)
+		item := entity.Item{}
+		err := rows.Scan(&item.Appid, &item.Name, &item.Status, &item.IsValid, &item.CreatedAt, &item.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
 
-		entities = append(entities, entity)
+		entities = append(entities, item)
 	}
 
 	return entities, nil
