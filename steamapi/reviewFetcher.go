@@ -15,7 +15,7 @@ type SteamReviewAPI struct {
 	client http.Client
 }
 
-// GetReviews GetPositiveReviews GetReviews obtiene las reseñas de un juego específico utilizando su appID.
+// GetReviews obtiene las reseñas de un juego específico utilizando su appID.
 // Acepta el appID del juego como argumento y devuelve un puntero a la estructura ReviewResponse
 // que contiene la información de las reseñas, así como un posible error si ocurre.
 func (s *SteamReviewAPI) GetReviews(appID int) (*model.ReviewResponse, error) {
