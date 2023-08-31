@@ -17,19 +17,19 @@ import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 )
 
-type gameProcessor struct {
+type GameProcessor struct {
 	storage     persistence.StorageDB
 	steamClient SteamClient
 }
 
-func NewGameProcessor(storage persistence.StorageDB, steamClient SteamClient) *gameProcessor {
-	return &gameProcessor{
+func NewGameProcessor(storage persistence.StorageDB, steamClient SteamClient) *GameProcessor {
+	return &GameProcessor{
 		storage:     storage,
 		steamClient: steamClient,
 	}
 }
 
-func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
+func (sv *GameProcessor) RunProcessData(ctx context.Context, limit int) error {
 	games, err := sv.storage.GetAllFrom(limit)
 	if err != nil {
 		return err
@@ -54,7 +54,7 @@ func (sv *gameProcessor) RunProcessData(ctx context.Context, limit int) error {
 
 }
 
-func (sv *gameProcessor) GetGamesFromAPI(ctx context.Context, items []entity.Item) ([][]byte, error) {
+func (sv *GameProcessor) GetGamesFromAPI(ctx context.Context, items []entity.Item) ([][]byte, error) {
 	var wg sync.WaitGroup
 	var processingErrors []error
 	semaphore := make(chan struct{}, 10)
@@ -96,7 +96,7 @@ func (sv *gameProcessor) GetGamesFromAPI(ctx context.Context, items []entity.Ite
 	return responseData, nil
 }
 
-func (sv *gameProcessor) ProcessResponse(responseData [][]byte, games []entity.Item) ([]steamapi.AppDetails, error) {
+func (sv *GameProcessor) ProcessResponse(responseData [][]byte, games []entity.Item) ([]steamapi.AppDetails, error) {
 	var appDetails []steamapi.AppDetails
 	logCounter := 1
 
@@ -138,7 +138,7 @@ func (sv *gameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 	return appDetails, nil
 }
 
-func (sv *gameProcessor) UpdateData(games []entity.Item, id int64, isValid bool) error {
+func (sv *GameProcessor) UpdateData(games []entity.Item, id int64, isValid bool) error {
 	findItem := func(games []entity.Item, id int64) *entity.Item {
 		for i := range games {
 			if games[i].Appid == id {
@@ -173,7 +173,7 @@ func getIds(items []entity.Item) []int64 {
 
 }
 
-func (sv *gameProcessor) saveToCSV(data []steamapi.AppDetails) error {
+func (sv *GameProcessor) saveToCSV(data []steamapi.AppDetails) error {
 	filePath := "/home/tomi/GCPSteamAnalytics/data/gamesDetails.csv"
 	existingData, err := utils.LoadExistingData(filePath)
 	if err != nil {
