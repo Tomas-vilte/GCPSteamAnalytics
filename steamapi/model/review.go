@@ -5,18 +5,13 @@ type ReviewData interface {
 }
 
 type ReviewSummary struct {
-	NumReviews      int    `json:"num_reviews"`
-	ReviewScore     int    `json:"review_score"`
-	ReviewScoreDesc string `json:"review_score_desc"`
-	TotalPositive   int    `json:"total_positive"`
-	TotalNegative   int    `json:"total_negative"`
-	TotalReviews    int    `json:"total_reviews"`
+	NumReviews int `json:"num_reviews"`
 }
 
 type ReviewResponse struct {
+	ReviewSummary ReviewSummary `json:"query_summary"`
 	Success       int           `json:"success"`
 	Reviews       []Review      `json:"reviews"`
-	ReviewSummary ReviewSummary `json:"query_summary"`
 }
 
 type ReviewAuthor struct {

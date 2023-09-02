@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,7 @@ func StartServer() {
 func createApp() controller.ProcessController {
 	storage := persistence.NewStorage()
 	steamClient := service.NewSteamClient(&http.Client{})
+	steamReview := steamapi.NewSteamReviewAPI(&http.Client{})
 	sv := service.NewGameProcessor(storage, steamClient)
-	return controller.NewProcessController(sv)
+	return controller.NewProcessController(sv, steamReview)
 }
