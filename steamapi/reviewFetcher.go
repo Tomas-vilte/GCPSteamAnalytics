@@ -11,18 +11,27 @@ import (
 	"strconv"
 )
 
+type ReviewsClient interface {
+	GetReviews(appID int, typeReview string) (*model.ReviewResponse, error)
+	SaveReviewsToCSV(appID int, reviews *model.ReviewResponse, filePath string) error
+}
+
 type SteamReviewAPI struct {
 	client http.Client
+}
+
+func NewSteamReviewAPI(client *http.Client) *SteamReviewAPI {
+	return &SteamReviewAPI{client: *client}
 }
 
 // GetReviews obtiene las reseñas de un juego específico utilizando su appID.
 // Acepta el appID del juego como argumento y devuelve un puntero a la estructura ReviewResponse
 // que contiene la información de las reseñas, así como un posible error si ocurre.
-func (s *SteamReviewAPI) GetReviews(appID int) (*model.ReviewResponse, error) {
+func (s *SteamReviewAPI) GetReviews(appID int, typeReview string) (*model.ReviewResponse, error) {
 	log.Printf("Obteniendo reseñas para el appID %d...", appID)
 
 	// Construir la URL de la API de reseñas de Steam
-	url := fmt.Sprintf("https://store.steampowered.com/appreviews/%d?json=1&language=latam&filter=recent&num_per_page=100&review_type=negative", appID)
+	url := fmt.Sprintf("https://store.steampowered.com/appreviews/%d?json=1&language=latam&filter=recent&num_per_page=30&review_type=%s", appID, typeReview)
 
 	// Crear una nueva solicitud HTTP GET
 	req, err := http.NewRequest("GET", url, nil)

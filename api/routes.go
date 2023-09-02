@@ -7,6 +7,7 @@ import (
 
 func MapRoutes(r *gin.Engine, app controller.ProcessController) {
 	r.POST("/processGames", app.Process)
+	r.GET("/reviews", app.GetReviews)
 }
 
 func SetupRoutes(r *gin.Engine, app controller.ProcessController) {
