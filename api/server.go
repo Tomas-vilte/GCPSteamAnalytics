@@ -2,7 +2,6 @@ package api
 
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
@@ -26,6 +25,6 @@ func createApp() controller.ProcessController {
 }
 
 func createReviewController() controller.ReviewController {
-	sv := steamapi.NewSteamReviewAPI(&http.Client{})
+	sv := service.NewSteamReviewAPI(&http.Client{})
 	return controller.NewReviewController(sv)
 }

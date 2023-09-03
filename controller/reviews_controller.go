@@ -2,7 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -14,10 +14,10 @@ type ReviewController interface {
 }
 
 type reviewController struct {
-	reviewAPI steamapi.ReviewsClient
+	reviewAPI service.ReviewsClient
 }
 
-func NewReviewController(api steamapi.ReviewsClient) ReviewController {
+func NewReviewController(api service.ReviewsClient) ReviewController {
 	return &reviewController{
 		reviewAPI: api,
 	}
