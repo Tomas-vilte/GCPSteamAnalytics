@@ -1,4 +1,4 @@
-package steamapi
+package service
 
 import (
 	"encoding/csv"
