@@ -12,7 +12,7 @@ import (
 )
 
 type ReviewsClient interface {
-	GetReviews(appID int, typeReview string) (*model.ReviewResponse, error)
+	FetchReviews(appID int, typeReview string) (*model.ReviewResponse, error)
 	SaveReviewsToCSV(appID int, reviews *model.ReviewResponse, filePath string) error
 }
 
@@ -24,10 +24,10 @@ func NewSteamReviewAPI(client *http.Client) *SteamReviewAPI {
 	return &SteamReviewAPI{client: *client}
 }
 
-// GetReviews obtiene las reseñas de un juego específico utilizando su appID.
+// FetchReviews obtiene las reseñas de un juego específico utilizando su appID.
 // Acepta el appID del juego como argumento y devuelve un puntero a la estructura ReviewResponse
 // que contiene la información de las reseñas, así como un posible error si ocurre.
-func (s *SteamReviewAPI) GetReviews(appID int, typeReview string) (*model.ReviewResponse, error) {
+func (s *SteamReviewAPI) FetchReviews(appID int, typeReview string) (*model.ReviewResponse, error) {
 	log.Printf("Obteniendo reseñas para el appID %d...", appID)
 
 	// Construir la URL de la API de reseñas de Steam

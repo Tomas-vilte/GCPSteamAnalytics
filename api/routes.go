@@ -5,11 +5,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func MapRoutes(r *gin.Engine, app controller.ProcessController) {
+func MapRoutes(r *gin.Engine, app controller.ProcessController, reviewCtrl controller.ReviewController) {
 	r.POST("/processGames", app.Process)
-	r.GET("/reviews", app.GetReviews)
+	r.POST("/fetchReviews", reviewCtrl.FetchReviews)
 }
 
-func SetupRoutes(r *gin.Engine, app controller.ProcessController) {
-	MapRoutes(r, app)
+func SetupRoutes(r *gin.Engine, app controller.ProcessController, reviewCtrl controller.ReviewController) {
+	MapRoutes(r, app, reviewCtrl)
 }

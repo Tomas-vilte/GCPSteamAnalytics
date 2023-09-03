@@ -12,7 +12,8 @@ import (
 func StartServer() {
 	r := gin.Default()
 	app := createApp()
-	SetupRoutes(r, app)
+	reviewCtrl := createReviewController()
+	SetupRoutes(r, app, reviewCtrl)
 
 	r.Run("localhost:8080")
 }
@@ -20,7 +21,11 @@ func StartServer() {
 func createApp() controller.ProcessController {
 	storage := persistence.NewStorage()
 	steamClient := service.NewSteamClient(&http.Client{})
-	steamReview := steamapi.NewSteamReviewAPI(&http.Client{})
 	sv := service.NewGameProcessor(storage, steamClient)
-	return controller.NewProcessController(sv, steamReview)
+	return controller.NewProcessController(sv)
+}
+
+func createReviewController() controller.ReviewController {
+	sv := steamapi.NewSteamReviewAPI(&http.Client{})
+	return controller.NewReviewController(sv)
 }
