@@ -3,13 +3,14 @@ package tests
 import (
 	"context"
 	"database/sql"
+	"testing"
+	"time"
+
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/tests/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"testing"
-	"time"
 )
 
 func TestGameProcessor_GetGamesFromAPI(t *testing.T) {
@@ -84,7 +85,7 @@ func TestGameProcessor_ProcessResponse(t *testing.T) {
 			Name:      "Counter-Strike: Global Offensive",
 			Status:    "PENDING",
 			IsValid:   false,
-			CreatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
+			CreatedAt: &time.Time{},
 			UpdatedAt: &sql.NullTime{Time: time.Now(), Valid: true}},
 	}
 

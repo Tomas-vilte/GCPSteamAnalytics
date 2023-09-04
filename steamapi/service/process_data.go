@@ -2,13 +2,10 @@ package service
 
 import (
 	"context"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
-	"strings"
 	"sync"
 
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
@@ -45,7 +42,7 @@ func (sv *GameProcessor) RunProcessData(ctx context.Context, limit int) error {
 		return err
 	}
 
-	err = sv.saveToCSV(dataProcessed)
+	err = sv.storage.SaveGameDetails(dataProcessed)
 	if err != nil {
 		return err
 	}
@@ -171,78 +168,4 @@ func getIds(items []entity.Item) []int64 {
 	}
 	return apps
 
-}
-
-func (sv *GameProcessor) saveToCSV(data []steamapi.AppDetails) error {
-	filePath := "/home/tomi/GCPSteamAnalytics/data/gamesDetails.csv"
-	existingData, err := utils.LoadExistingData(filePath)
-	if err != nil {
-		return err
-	}
-	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-	// Verificar si el archivo está vacío
-	fileInfo, _ := file.Stat()
-	if fileInfo.Size() == 0 {
-		header := []string{
-			"SteamAppid",
-			"Description",
-			"Type",
-			"Name",
-			"Publishers",
-			"Developers",
-			"isFree",
-			"InterfaceLanguages",
-			"FullAudioLanguages",
-			"SubtitlesLanguages",
-			"Windows",
-			"Mac",
-			"Linux",
-			"Date",
-			"ComingSoon",
-			"Currency",
-			"DiscountPercent",
-			"InitialFormatted",
-			"FinalFormatted",
-		}
-		if err := writer.Write(header); err != nil {
-			return err
-		}
-	}
-	for _, app := range data {
-		if _, exists := existingData[int(app.SteamAppid)]; !exists {
-			record := []string{
-				strconv.Itoa(int(app.SteamAppid)),
-				app.Description,
-				app.Type,
-				app.Name,
-				strings.Join(app.Publishers, ", "),
-				strings.Join(app.Developers, ", "),
-				strconv.FormatBool(app.IsFree),
-				utils.GetSupportedLanguagesString(app.SupportedLanguages["interface"]),
-				utils.GetSupportedLanguagesString(app.SupportedLanguages["full_audio"]),
-				utils.GetSupportedLanguagesString(app.SupportedLanguages["subtitles"]),
-				strconv.FormatBool(app.Platforms.Windows),
-				strconv.FormatBool(app.Platforms.Mac),
-				strconv.FormatBool(app.Platforms.Linux),
-				app.ReleaseDate.Date,
-				strconv.FormatBool(app.ReleaseDate.ComingSoon),
-				app.PriceOverview.Currency,
-				strconv.Itoa(int(app.PriceOverview.DiscountPercent)),
-				utils.FormatInitial(float64(app.PriceOverview.Initial) / 100),
-				app.PriceOverview.FinalFormatted,
-			}
-			if err := writer.Write(record); err != nil {
-				return err
-			}
-			// Agregar el appID al mapa de datos existentes
-			existingData[int(app.SteamAppid)] = true
-		}
-	}
-	return nil
 }

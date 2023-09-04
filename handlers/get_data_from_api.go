@@ -1,12 +1,13 @@
 package handlers
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"log"
 	"net/http"
+	"time"
+
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 )
 
 // DataFetcher representa la interfaz para obtener datos.
@@ -48,12 +49,13 @@ func (r *RealDataFetcher) GetData() ([]entity.Item, error) {
 	var filteredApps []entity.Item
 	for _, app := range apiResponse.Applist.Apps {
 		if app.Name != "" {
+			currentTime := time.Now()
 			item := entity.Item{
 				Appid:     app.Appid,
 				Name:      app.Name,
 				Status:    entity.PENDING,
 				IsValid:   false,
-				CreatedAt: &sql.NullTime{},
+				CreatedAt: &currentTime,
 			}
 			filteredApps = append(filteredApps, item)
 		}

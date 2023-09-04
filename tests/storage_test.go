@@ -3,13 +3,14 @@ package tests
 import (
 	"database/sql"
 	"errors"
+	"testing"
+	"time"
+
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/tests/mocks"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"testing"
-	"time"
 )
 
 func TestStorage_GetAllFrom_Success(t *testing.T) {
@@ -19,7 +20,7 @@ func TestStorage_GetAllFrom_Success(t *testing.T) {
 			Name:      "Test Game",
 			Status:    "PENDING",
 			IsValid:   false,
-			CreatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
+			CreatedAt: &time.Time{},
 			UpdatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
 		},
 	}
@@ -67,7 +68,7 @@ func TestStorage_Update_Success(t *testing.T) {
 		Name:      "Test Game",
 		Status:    "PENDING",
 		IsValid:   false,
-		CreatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
+		CreatedAt: &time.Time{},
 		UpdatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
 	}
 
@@ -90,7 +91,7 @@ func TestStorage_Update_Error(t *testing.T) {
 		Name:      "Test Game",
 		Status:    "PENDING",
 		IsValid:   false,
-		CreatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
+		CreatedAt: &time.Time{},
 		UpdatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
 	}
 
@@ -114,7 +115,7 @@ func TestStorage_Update_ItemNotFound(t *testing.T) {
 		Name:      "Test Game",
 		Status:    "PENDING",
 		IsValid:   false,
-		CreatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
+		CreatedAt: &time.Time{},
 		UpdatedAt: &sql.NullTime{Time: time.Now(), Valid: true},
 	}
 
