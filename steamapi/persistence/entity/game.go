@@ -1,6 +1,9 @@
 package entity
 
-import "database/sql"
+import (
+	"database/sql"
+	"time"
+)
 
 type status string
 
@@ -10,10 +13,10 @@ const (
 )
 
 type Item struct {
-	Appid     int64         `json:"app_id"`
+	Appid     int64         `json:"appid"`
 	Name      string        `json:"name"`
 	Status    status        `json:"status"`
 	IsValid   bool          `json:"valid"`
-	CreatedAt *sql.NullTime `json:"created_at"`
+	CreatedAt *time.Time    `json:"created_at"`
 	UpdatedAt *sql.NullTime `json:"updated_at,omitempty"`
 }
