@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type CacheClient interface {
+type RedisClient interface {
 	Get(key string) (string, error)
 	Set(key string, value string) error
 }
@@ -17,7 +17,7 @@ type redisCache struct {
 	expiration time.Duration
 }
 
-func NewRedisCacheClient(host string, db int, exp time.Duration) CacheClient {
+func NewRedisCacheClient(host string, db int, exp time.Duration) RedisClient {
 	return &redisCache{
 		host:       host,
 		db:         db,
@@ -36,10 +36,11 @@ func (cache *redisCache) getClient() *redis.Client {
 func (cache *redisCache) Get(key string) (string, error) {
 	ctx := context.Background()
 	value, err := cache.getClient().Get(ctx, key).Result()
-	if err == redis.Nil {
-		// La clave no existe en la caché
-		return "", err
-	} else if err != nil {
+	if err != nil {
+		if err == redis.Nil {
+			// La clave no existe en la caché
+			return "", err
+		}
 		// Se produjo un error al obtener el valor
 		return "", err
 	}

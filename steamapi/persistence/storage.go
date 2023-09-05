@@ -1,6 +1,7 @@
 package persistence
 
 import (
+	"database/sql"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
@@ -13,6 +14,7 @@ type StorageDB interface {
 	GetAllFrom(limit int) ([]entity.Item, error)
 	Update(item entity.Item) error
 	SaveGameDetails(dataProcessed []model.AppDetails) error
+	GetGameDetails(id int) (*GameDetails, error)
 }
 
 func NewStorage() StorageDB {
@@ -128,4 +130,94 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	}
 
 	return nil
+}
+
+type GameDetails struct {
+	AppID              int    `json:"app_id"`
+	Description        string `json:"description"`
+	Type               string `json:"type"`
+	Name               string `json:"name"`
+	Publishers         string `json:"publishers"`
+	Developers         string `json:"developers"`
+	IsFree             bool   `json:"is_free"`
+	InterfaceLanguages string `json:"interface_languages"`
+	FullAudioLanguages string `json:"full_audio_languages"`
+	SubtitlesLanguages string `json:"subtitles_languages"`
+	Windows            bool   `json:"windows"`
+	Mac                bool   `json:"mac"`
+	Linux              bool   `json:"linux"`
+	ReleaseDate        struct {
+		Date       string `json:"date"`
+		ComingSoon bool   `json:"coming_soon"`
+	} `json:"release_date"`
+	Currency         string `json:"currency"`
+	DiscountPercent  int    `json:"discount_percent"`
+	InitialFormatted string `json:"initial_formatted"`
+	FinalFormatted   string `json:"final_formatted"`
+}
+
+func (s storage) GetGameDetails(gameID int) (*GameDetails, error) {
+	// Consulta SQL para obtener los detalles del juego por su ID.
+	query := `
+       SELECT
+           app_id,
+           description,
+           type,
+           name,
+           publishers,
+           developers,
+           is_free,
+       	interface_languages,
+       	fullAudio_languages,
+       	subtitles_languages,
+       	windows,
+       	mac,
+       	linux,
+           release_date,
+           coming_soon,
+           currency,
+           discount_percent,
+           initial_formatted,
+           final_formatted
+       FROM
+           games_details
+       WHERE
+           app_id = ?
+   `
+
+	// Ejecutar la consulta SQL y escanear los resultados en una estructura AppDetails.
+	var gameDetails GameDetails
+	err := GetDB().QueryRow(query, gameID).Scan(
+		&gameDetails.AppID,
+		&gameDetails.Description,
+		&gameDetails.Type,
+		&gameDetails.Name,
+		&gameDetails.Publishers,
+		&gameDetails.Developers,
+		&gameDetails.IsFree,
+		&gameDetails.InterfaceLanguages,
+		&gameDetails.FullAudioLanguages,
+		&gameDetails.SubtitlesLanguages,
+		&gameDetails.Windows,
+		&gameDetails.Mac,
+		&gameDetails.Linux,
+		&gameDetails.ReleaseDate.Date,
+		&gameDetails.ReleaseDate.ComingSoon,
+		&gameDetails.Currency,
+		&gameDetails.DiscountPercent,
+		&gameDetails.InitialFormatted,
+		&gameDetails.FinalFormatted,
+	)
+
+	if err != nil {
+		log.Printf("error: %v", err)
+		if err == sql.ErrNoRows {
+			log.Printf("error: %v", err)
+			return nil, nil // No se encontraron detalles del juego en la base de datos.
+		}
+		log.Printf("error: %v", err)
+		return nil, err // Ocurrió un error diferente al ejecutar la consulta SQL.
+	}
+
+	return &gameDetails, nil
 }

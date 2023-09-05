@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
@@ -12,7 +13,8 @@ func StartServer() {
 	r := gin.Default()
 	app := createApp()
 	reviewCtrl := createReviewController()
-	SetupRoutes(r, app, reviewCtrl)
+	getGame := createGameDetails()
+	SetupRoutes(r, app, reviewCtrl, getGame)
 
 	r.Run("localhost:8080")
 }
@@ -27,4 +29,12 @@ func createApp() controller.ProcessController {
 func createReviewController() controller.ReviewController {
 	sv := service.NewSteamReviewAPI(&http.Client{})
 	return controller.NewReviewController(sv)
+}
+
+func createGameDetails() controller.GameController {
+	steamClient := service.NewSteamClient(&http.Client{})
+	redisClient := cache.NewRedisCacheClient("localhost:6379", 1, 10)
+	storage := persistence.NewStorage()
+	return controller.NewGameController(steamClient, redisClient, storage)
+
 }
