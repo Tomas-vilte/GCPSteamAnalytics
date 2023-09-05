@@ -9,4 +9,7 @@ import (
 func main() {
 	log.Printf("App started!")
 	api.StartServer()
+
+	//test := persistence.NewStorage()
+	//fmt.Println(test.GetGameDetails(10))
 }
