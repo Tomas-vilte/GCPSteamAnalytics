@@ -3,7 +3,6 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
@@ -40,14 +39,13 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 		if err != redis.Nil {
 			// Ocurrió un error diferente al intentar obtener datos de Redis.
 			ctx.JSON(500, gin.H{
-				"error": fmt.Sprintf("Error al obtener detalles del juego desde Redis: %v", err),
+				"Error al obtener detalles del juego desde Redis:": err.Error(),
 			})
 			return
 		}
 
 		// Si el juego no esta en la cache, lo buscamos en la bd
 		dbDetails, err := gc.dbClient.GetGameDetails(gameint)
-		fmt.Println(dbDetails)
 		if err != nil {
 			if err == sql.ErrNoRows {
 				// Si no esta en la bd, hacemos un api call a la api de steam
@@ -67,7 +65,7 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 				if err != nil {
 					// Ocurrió un error al intentar guardar en caché los detalles de la API.
 					ctx.JSON(500, gin.H{
-						"error": fmt.Sprintf("Error al guardar detalles del juego en caché: %v", err),
+						"Error al guardar detalles del juego en caché:": err.Error(),
 					})
 					return
 				}
@@ -79,14 +77,14 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 
 			// Ocurrió un error diferente al intentar obtener datos de la base de datos.
 			ctx.JSON(500, gin.H{
-				"error": fmt.Sprintf("Error al obtener detalles del juego desde la base de datos: %v", err),
+				"Error al obtener detalles del juego desde la base de datos:": err.Error(),
 			})
 			return
 		}
 		jsonData, err := json.Marshal(dbDetails)
 		if err != nil {
 			ctx.JSON(500, gin.H{
-				"error": fmt.Sprintf("Error al serializar detalles del juego: %v", err),
+				"Error al serializar detalles del juego:": err.Error(),
 			})
 			return
 		}
@@ -96,7 +94,7 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 		if err != nil {
 			// Ocurrió un error al intentar guardar en caché los detalles de la base de datos.
 			ctx.JSON(500, gin.H{
-				"error": fmt.Sprintf("Error al guardar detalles del juego en caché: %v", err),
+				"Error al guardar detalles del juego en caché": err.Error(),
 			})
 			return
 		}
