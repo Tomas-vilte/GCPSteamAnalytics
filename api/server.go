@@ -36,6 +36,7 @@ func createGameDetails() controller.GameController {
 	steamClient := service.NewSteamClient(&http.Client{})
 	redisClient := cache.NewRedisCacheClient("localhost:6379", 1)
 	storage := persistence.NewStorage()
-	return controller.NewGameController(steamClient, redisClient, storage)
+	sv := service.NewGameProcessor(storage, steamClient)
+	return controller.NewGameController(steamClient, redisClient, storage, *sv)
 
 }

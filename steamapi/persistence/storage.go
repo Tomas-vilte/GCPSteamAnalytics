@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"database/sql"
+	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
@@ -15,6 +16,7 @@ type StorageDB interface {
 	Update(item entity.Item) error
 	SaveGameDetails(dataProcessed []model.AppDetails) error
 	GetGameDetails(id int) (*entity.GameDetails, error)
+	GetAllByAppID(appID int) ([]entity.Item, error)
 }
 
 func NewStorage() StorageDB {
@@ -26,6 +28,28 @@ type storage struct{}
 func (s storage) GetAllFrom(limit int) ([]entity.Item, error) {
 	query := "SELECT app_id, name, status, valid, created_at, updated_at FROM game WHERE status = 'PENDING' AND valid = false ORDER BY id LIMIT ?"
 	rows, err := GetDB().Query(query, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var entities []entity.Item
+	for rows.Next() {
+		item := entity.Item{}
+		err := rows.Scan(&item.Appid, &item.Name, &item.Status, &item.IsValid, &item.CreatedAt, &item.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		entities = append(entities, item)
+	}
+
+	return entities, nil
+}
+
+func (s storage) GetAllByAppID(appID int) ([]entity.Item, error) {
+	query := "SELECT app_id, name, status, valid, created_at, updated_at FROM game WHERE app_id = ?"
+	rows, err := GetDB().Query(query, appID)
 	if err != nil {
 		return nil, err
 	}
@@ -158,8 +182,8 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	var gameDetails entity.GameDetails
 	err := GetDB().QueryRowx(query, gameID).StructScan(&gameDetails)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, nil
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, err
 		}
 		return nil, err
 	}
