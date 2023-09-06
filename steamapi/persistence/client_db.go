@@ -1,14 +1,16 @@
 package persistence
 
 import (
-	"database/sql"
+	"github.com/jmoiron/sqlx"
 	"sync"
 )
 
-var doOnce sync.Once
-var db *sql.DB
+var (
+	db     *sqlx.DB
+	doOnce sync.Once
+)
 
-func GetDB() *sql.DB {
+func GetDB() *sqlx.DB {
 	doOnce.Do(func() {
 		if db == nil {
 			db = createClient()
@@ -17,8 +19,8 @@ func GetDB() *sql.DB {
 	return db
 }
 
-func createClient() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
+func createClient() *sqlx.DB {
+	db, err := sqlx.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
