@@ -46,12 +46,32 @@ func (s storage) GetAllFrom(limit int) ([]entity.Item, error) {
 }
 
 func (s storage) Update(item entity.Item) error {
+	// Verificar si el juego existe en la tabla game.
+	var count int
+	err := GetDB().QueryRow("SELECT COUNT(*) FROM game WHERE app_id = ?", item.Appid).Scan(&count)
+	if err != nil {
+		log.Printf("Error al verificar si el juego existe: %v\n", err)
+		return err
+	}
+
+	if count == 0 {
+		// El juego no existe en la tabla game, así que agrégalo primero.
+		_, err := GetDB().Exec("INSERT INTO game (app_id, name, status, valid, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+			item.Appid, item.Name, entity.PROCESSED, item.IsValid, time.Now(), time.Now())
+		if err != nil {
+			log.Printf("Error al insertar el juego en la tabla game: %v\n", err)
+			return err
+		}
+	}
+
+	// Luego, realizar la actualización.
 	query := "UPDATE game SET status = ?, valid = ?, updated_at = ? WHERE app_id = ?"
-	_, err := GetDB().Exec(query, entity.PROCESSED, item.IsValid, time.Now(), item.Appid)
+	_, err = GetDB().Exec(query, entity.PROCESSED, item.IsValid, time.Now(), item.Appid)
 	if err != nil {
 		log.Printf("Error al actualizar el estado del juego con appID %d: %v\n", item.Appid, err)
 		return err
 	}
+
 	log.Printf("Estado actualizado del juego con appID %d\n", item.Appid)
 	return nil
 }
@@ -133,70 +153,15 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 }
 
 func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
-	// Consulta SQL para obtener los detalles del juego por su ID.
-	query := `
-       SELECT
-           app_id,
-           description,
-           type,
-           name,
-           publishers,
-           developers,
-           is_free,
-    	interface_languages,
-       	fullAudio_languages,
-       	subtitles_languages,
-       	windows,
-       	mac,
-       	linux,
-           release_date,
-           coming_soon,
-           currency,
-           discount_percent,
-           initial_formatted,
-           final_formatted
-       FROM
-           games_details
-       WHERE
-           app_id = ?
-   `
+	query := `SELECT * FROM games_details WHERE app_id = ?`
 
-	// Ejecutar la consulta SQL y escanear los resultados en una estructura AppDetails.
 	var gameDetails entity.GameDetails
-	var interfaceLanguages, fullAudioLanguages, subtitlesLanguages string
-	err := GetDB().QueryRow(query, gameID).Scan(
-		&gameDetails.AppID,
-		&gameDetails.Description,
-		&gameDetails.Type,
-		&gameDetails.Name,
-		&gameDetails.Publishers,
-		&gameDetails.Developers,
-		&gameDetails.IsFree,
-		&interfaceLanguages,
-		&fullAudioLanguages,
-		&subtitlesLanguages,
-		&gameDetails.Platforms.Windows,
-		&gameDetails.Platforms.Mac,
-		&gameDetails.Platforms.Linux,
-		&gameDetails.ReleaseDate.Date,
-		&gameDetails.ReleaseDate.ComingSoon,
-		&gameDetails.Price.Currency,
-		&gameDetails.Price.DiscountPercent,
-		&gameDetails.Price.InitialFormatted,
-		&gameDetails.Price.FinalFormatted,
-	)
-	gameDetails.SupportLanguages.InterfaceLanguages = strings.Split(interfaceLanguages, ",")
-	gameDetails.SupportLanguages.FullAudioLanguages = strings.Split(fullAudioLanguages, ",")
-	gameDetails.SupportLanguages.SubtitlesLanguages = strings.Split(subtitlesLanguages, ",")
-
+	err := GetDB().QueryRowx(query, gameID).StructScan(&gameDetails)
 	if err != nil {
-		log.Printf("error: %v", err)
 		if err == sql.ErrNoRows {
-			log.Printf("error: %v", err)
-			return nil, nil // No se encontraron detalles del juego en la base de datos.
+			return nil, nil
 		}
-		log.Printf("error: %v", err)
-		return nil, err // Ocurrió un error diferente al ejecutar la consulta SQL.
+		return nil, err
 	}
 
 	return &gameDetails, nil
