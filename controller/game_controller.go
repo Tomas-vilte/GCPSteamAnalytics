@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
-	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
@@ -32,26 +31,6 @@ func NewGameController(steamService service.SteamClient, redisClient cache.Redis
 		gameProcesor: gameProcesor,
 		redisClient:  redisClient,
 	}
-}
-
-func ProcessGameDetailsResponse(responseData []byte) ([]steamapi.AppDetails, error) {
-	// Define una estructura que coincida con la respuesta de la API Steam.
-	var response map[string]steamapi.AppDetailsResponse
-
-	// Decodifica la respuesta JSON en la estructura.
-	if err := json.Unmarshal(responseData, &response); err != nil {
-		return nil, err
-	}
-
-	// Inicializa un slice de AppDetails para almacenar los detalles del juego.
-	var gameDetails []steamapi.AppDetails
-
-	// Itera a través de los datos de la respuesta y agrega cada juego a gameDetails.
-	for _, appDetailsResponse := range response {
-		gameDetails = append(gameDetails, appDetailsResponse.Data)
-	}
-
-	return gameDetails, nil
 }
 
 func (gc *gameController) GetGameDetails(ctx *gin.Context) {
@@ -145,4 +124,15 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 
 	// Los detalles del juego se encontraron en caché.
 	ctx.JSON(200, cachedDetails)
+}
+
+func (gc *gameController) getCachedGameDetails(gameID int) (interface{}, error) {
+	cachedDetails, err := gc.redisClient.Get(strconv.Itoa(gameID))
+	if err != nil && err != redis.Nil {
+		return nil, err
+	}
+	if err == redis.Nil {
+		return nil, nil
+	}
+	return cachedDetails, nil
 }
