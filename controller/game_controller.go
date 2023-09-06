@@ -181,8 +181,22 @@ func (gc *gameController) processDetails(apiDetails []byte, games []entity.Item)
 	return responseData, nil
 }
 
+func encodeToJSON(data interface{}) ([]byte, error) {
+	encodedData, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+	return encodedData, nil
+}
+
 func (gc *gameController) saveToCache(gameID string, data []byte) error {
-	err := gc.redisClient.Set(gameID, string(data))
+	// Codifica los detalles en formato JSON.
+	encodedData, err := encodeToJSON(data)
+	if err != nil {
+		return err
+	}
+
+	err = gc.redisClient.Set(gameID, string(encodedData))
 	if err != nil {
 		return err
 	}
