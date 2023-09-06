@@ -180,3 +180,11 @@ func (gc *gameController) processDetails(apiDetails []byte, games []entity.Item)
 
 	return responseData, nil
 }
+
+func (gc *gameController) saveToCache(gameID string, data []byte) error {
+	err := gc.redisClient.Set(gameID, string(data))
+	if err != nil {
+		return err
+	}
+	return nil
+}
