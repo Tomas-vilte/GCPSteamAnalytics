@@ -136,3 +136,14 @@ func (gc *gameController) getCachedGameDetails(gameID int) (interface{}, error) 
 	}
 	return cachedDetails, nil
 }
+
+func (gc *gameController) getDBGameDetails(gameID int) (interface{}, error) {
+	dbDetails, err := gc.dbClient.GetGameDetails(gameID)
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return nil, err
+	}
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, err
+	}
+	return dbDetails, nil
+}
