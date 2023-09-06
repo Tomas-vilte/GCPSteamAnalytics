@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -156,4 +157,14 @@ func (gc *gameController) fetchAPIDetails(gameint int) ([]byte, error) {
 	}
 
 	return apiDetails, nil
+}
+
+func (gc *gameController) fetchDBDetails(gameint int) ([]entity.Item, error) {
+	// Obtener los detalles de los juegos de la base de datos.
+	games, err := gc.dbClient.GetAllByAppID(gameint)
+	if err != nil {
+		return nil, err
+	}
+
+	return games, nil
 }
