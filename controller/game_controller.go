@@ -18,18 +18,18 @@ type GameController interface {
 }
 
 type gameController struct {
-	steamService service.SteamClient
-	redisClient  cache.RedisClient
-	gameProcesor service.GameProcessor
-	dbClient     persistence.StorageDB
+	steamService  service.SteamClient
+	redisClient   cache.RedisClient
+	gameProcessor service.GameProcessor
+	dbClient      persistence.StorageDB
 }
 
-func NewGameController(steamService service.SteamClient, redisClient cache.RedisClient, db persistence.StorageDB, gameProcesor service.GameProcessor) GameController {
+func NewGameController(steamService service.SteamClient, redisClient cache.RedisClient, db persistence.StorageDB, gameProcessor service.GameProcessor) GameController {
 	return &gameController{
-		steamService: steamService,
-		dbClient:     db,
-		gameProcesor: gameProcesor,
-		redisClient:  redisClient,
+		steamService:  steamService,
+		dbClient:      db,
+		gameProcessor: gameProcessor,
+		redisClient:   redisClient,
 	}
 }
 
@@ -55,7 +55,7 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 					}
 					apiDetailsSlice := [][]byte{apiDetails}
 					games, err := gc.dbClient.GetAllByAppID(gameint)
-					responseData, err := gc.gameProcesor.ProcessResponse(apiDetailsSlice, games)
+					responseData, err := gc.gameProcessor.ProcessResponse(apiDetailsSlice, games)
 					if err != nil {
 						log.Printf("error: %v", err)
 					}
@@ -146,4 +146,14 @@ func (gc *gameController) getDBGameDetails(gameID int) (interface{}, error) {
 		return nil, err
 	}
 	return dbDetails, nil
+}
+
+func (gc *gameController) fetchAPIDetails(gameint int) ([]byte, error) {
+	// Obtener los detalles del juego de la API de Steam.
+	apiDetails, err := gc.steamService.GetAppDetails(gameint)
+	if err != nil {
+		return nil, err
+	}
+
+	return apiDetails, nil
 }
