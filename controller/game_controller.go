@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
@@ -167,4 +168,15 @@ func (gc *gameController) fetchDBDetails(gameint int) ([]entity.Item, error) {
 	}
 
 	return games, nil
+}
+
+func (gc *gameController) processDetails(apiDetails []byte, games []entity.Item) ([]steamapi.AppDetails, error) {
+	// Procesar los detalles de la API y los detalles de los juegos de la base de datos.
+	apiDetailsSlice := [][]byte{apiDetails}
+	responseData, err := gc.gameProcessor.ProcessResponse(apiDetailsSlice, games)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseData, nil
 }
