@@ -10,6 +10,7 @@ import (
 )
 
 func StartServer() {
+	gin.SetMode(gin.DebugMode)
 	r := gin.Default()
 	app := createApp()
 	reviewCtrl := createReviewController()

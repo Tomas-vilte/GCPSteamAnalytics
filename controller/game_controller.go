@@ -31,7 +31,7 @@ func NewGameController(steamService service.SteamClient, redisClient cache.Redis
 }
 
 func (gc *gameController) GetGameDetails(ctx *gin.Context) {
-	gameID := ctx.Param("id")
+	gameID := ctx.Param("appid")
 	gameint, _ := strconv.Atoi(gameID)
 
 	// Consultar Redis para ver si los detalles del juego están en caché.
@@ -46,17 +46,18 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 		}
 
 		// Si el juego no esta en la cache, lo buscamos en la bd
-		dbDetails, err := gc.dbClient.GetGameDetails(10)
+		dbDetails, err := gc.dbClient.GetGameDetails(gameint)
 		fmt.Println(dbDetails)
 		if err != nil {
 			if err == sql.ErrNoRows {
 				// Si no esta en la bd, hacemos un api call a la api de steam
 				apiDetails, err := gc.steamService.GetAppDetails(gameint)
-				fmt.Println("SEXOOOOOOOOOOOOOOOOOO", apiDetails)
+
 				if err != nil {
 					// Ocurrió un error al intentar obtener datos de la API.
 					ctx.JSON(500, gin.H{
-						"error": fmt.Sprintf("Error al obtener detalles del juego desde la API: %v", err),
+						//fmt.Sprintf("Error al obtener detalles del juego desde la API: %v", err),
+						"Error al obtener detalles del juego desde la API": err.Error(),
 					})
 					return
 				}
@@ -104,7 +105,6 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 		ctx.JSON(200, dbDetails)
 		return
 	}
-
 	// Los detalles del juego se encontraron en caché.
 	ctx.JSON(200, cachedDetails)
 }

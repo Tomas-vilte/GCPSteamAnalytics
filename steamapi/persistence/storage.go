@@ -14,7 +14,7 @@ type StorageDB interface {
 	GetAllFrom(limit int) ([]entity.Item, error)
 	Update(item entity.Item) error
 	SaveGameDetails(dataProcessed []model.AppDetails) error
-	GetGameDetails(id int) (*GameDetails, error)
+	GetGameDetails(id int) (*entity.GameDetails, error)
 }
 
 func NewStorage() StorageDB {
@@ -132,31 +132,7 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	return nil
 }
 
-type GameDetails struct {
-	AppID              int    `json:"app_id"`
-	Description        string `json:"description"`
-	Type               string `json:"type"`
-	Name               string `json:"name"`
-	Publishers         string `json:"publishers"`
-	Developers         string `json:"developers"`
-	IsFree             bool   `json:"is_free"`
-	InterfaceLanguages string `json:"interface_languages"`
-	FullAudioLanguages string `json:"full_audio_languages"`
-	SubtitlesLanguages string `json:"subtitles_languages"`
-	Windows            bool   `json:"windows"`
-	Mac                bool   `json:"mac"`
-	Linux              bool   `json:"linux"`
-	ReleaseDate        struct {
-		Date       string `json:"date"`
-		ComingSoon bool   `json:"coming_soon"`
-	} `json:"release_date"`
-	Currency         string `json:"currency"`
-	DiscountPercent  int    `json:"discount_percent"`
-	InitialFormatted string `json:"initial_formatted"`
-	FinalFormatted   string `json:"final_formatted"`
-}
-
-func (s storage) GetGameDetails(gameID int) (*GameDetails, error) {
+func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	// Consulta SQL para obtener los detalles del juego por su ID.
 	query := `
        SELECT
@@ -167,7 +143,7 @@ func (s storage) GetGameDetails(gameID int) (*GameDetails, error) {
            publishers,
            developers,
            is_free,
-       	interface_languages,
+    	interface_languages,
        	fullAudio_languages,
        	subtitles_languages,
        	windows,
@@ -186,7 +162,8 @@ func (s storage) GetGameDetails(gameID int) (*GameDetails, error) {
    `
 
 	// Ejecutar la consulta SQL y escanear los resultados en una estructura AppDetails.
-	var gameDetails GameDetails
+	var gameDetails entity.GameDetails
+	var interfaceLanguages, fullAudioLanguages, subtitlesLanguages string
 	err := GetDB().QueryRow(query, gameID).Scan(
 		&gameDetails.AppID,
 		&gameDetails.Description,
@@ -195,19 +172,22 @@ func (s storage) GetGameDetails(gameID int) (*GameDetails, error) {
 		&gameDetails.Publishers,
 		&gameDetails.Developers,
 		&gameDetails.IsFree,
-		&gameDetails.InterfaceLanguages,
-		&gameDetails.FullAudioLanguages,
-		&gameDetails.SubtitlesLanguages,
-		&gameDetails.Windows,
-		&gameDetails.Mac,
-		&gameDetails.Linux,
+		&interfaceLanguages,
+		&fullAudioLanguages,
+		&subtitlesLanguages,
+		&gameDetails.Platforms.Windows,
+		&gameDetails.Platforms.Mac,
+		&gameDetails.Platforms.Linux,
 		&gameDetails.ReleaseDate.Date,
 		&gameDetails.ReleaseDate.ComingSoon,
-		&gameDetails.Currency,
-		&gameDetails.DiscountPercent,
-		&gameDetails.InitialFormatted,
-		&gameDetails.FinalFormatted,
+		&gameDetails.Price.Currency,
+		&gameDetails.Price.DiscountPercent,
+		&gameDetails.Price.InitialFormatted,
+		&gameDetails.Price.FinalFormatted,
 	)
+	gameDetails.SupportLanguages.InterfaceLanguages = strings.Split(interfaceLanguages, ",")
+	gameDetails.SupportLanguages.FullAudioLanguages = strings.Split(fullAudioLanguages, ",")
+	gameDetails.SupportLanguages.SubtitlesLanguages = strings.Split(subtitlesLanguages, ",")
 
 	if err != nil {
 		log.Printf("error: %v", err)

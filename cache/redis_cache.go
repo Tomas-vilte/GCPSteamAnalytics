@@ -2,12 +2,15 @@ package cache
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/redis/go-redis/v9"
+	"log"
 	"time"
 )
 
 type RedisClient interface {
-	Get(key string) (string, error)
+	Get(key string) (*entity.GameDetails, error)
 	Set(key string, value string) error
 }
 
@@ -21,7 +24,7 @@ func NewRedisCacheClient(host string, db int, exp time.Duration) RedisClient {
 	return &redisCache{
 		host:       host,
 		db:         db,
-		expiration: exp,
+		expiration: time.Duration(exp.Seconds()),
 	}
 }
 
@@ -33,24 +36,32 @@ func (cache *redisCache) getClient() *redis.Client {
 	})
 }
 
-func (cache *redisCache) Get(key string) (string, error) {
+func (cache *redisCache) Get(key string) (*entity.GameDetails, error) {
 	ctx := context.Background()
 	value, err := cache.getClient().Get(ctx, key).Result()
 	if err != nil {
 		if err == redis.Nil {
 			// La clave no existe en la caché
-			return "", err
+			return nil, err
 		}
 		// Se produjo un error al obtener el valor
-		return "", err
+		return nil, err
 	}
-	return value, nil
+
+	// Ahora, convierte la cadena JSON en un objeto JSON parseado.
+	var gameDetails entity.GameDetails
+	if err := json.Unmarshal([]byte(value), &gameDetails); err != nil {
+		return nil, err
+	}
+
+	return &gameDetails, nil
 }
 
 func (cache *redisCache) Set(key string, value string) error {
 	ctx := context.Background()
 	err := cache.getClient().Set(ctx, key, value, cache.expiration).Err()
 	if err != nil {
+		log.Printf("Error3: %v", err)
 		return err
 	}
 	return nil
