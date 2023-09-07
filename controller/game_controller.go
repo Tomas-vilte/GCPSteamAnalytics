@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -18,18 +20,18 @@ type GameController interface {
 }
 
 type gameController struct {
-	steamService service.SteamClient
-	redisClient  cache.RedisClient
-	gameProcesor service.GameProcessor
-	dbClient     persistence.StorageDB
+	steamService  service.SteamClient
+	redisClient   cache.RedisClient
+	gameProcessor service.GameProcessor
+	dbClient      persistence.StorageDB
 }
 
-func NewGameController(steamService service.SteamClient, redisClient cache.RedisClient, db persistence.StorageDB, gameProcesor service.GameProcessor) GameController {
+func NewGameController(steamService service.SteamClient, redisClient cache.RedisClient, db persistence.StorageDB, gameProcessor service.GameProcessor) GameController {
 	return &gameController{
-		steamService: steamService,
-		dbClient:     db,
-		gameProcesor: gameProcesor,
-		redisClient:  redisClient,
+		steamService:  steamService,
+		dbClient:      db,
+		gameProcessor: gameProcessor,
+		redisClient:   redisClient,
 	}
 }
 
@@ -55,7 +57,7 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 					}
 					apiDetailsSlice := [][]byte{apiDetails}
 					games, err := gc.dbClient.GetAllByAppID(gameint)
-					responseData, err := gc.gameProcesor.ProcessResponse(apiDetailsSlice, games)
+					responseData, err := gc.gameProcessor.ProcessResponse(apiDetailsSlice, games)
 					if err != nil {
 						log.Printf("error: %v", err)
 					}
@@ -146,4 +148,57 @@ func (gc *gameController) getDBGameDetails(gameID int) (interface{}, error) {
 		return nil, err
 	}
 	return dbDetails, nil
+}
+
+func (gc *gameController) fetchAPIDetails(gameint int) ([]byte, error) {
+	// Obtener los detalles del juego de la API de Steam.
+	apiDetails, err := gc.steamService.GetAppDetails(gameint)
+	if err != nil {
+		return nil, err
+	}
+
+	return apiDetails, nil
+}
+
+func (gc *gameController) fetchDBDetails(gameint int) ([]entity.Item, error) {
+	// Obtener los detalles de los juegos de la base de datos.
+	games, err := gc.dbClient.GetAllByAppID(gameint)
+	if err != nil {
+		return nil, err
+	}
+
+	return games, nil
+}
+
+func (gc *gameController) processDetails(apiDetails []byte, games []entity.Item) ([]steamapi.AppDetails, error) {
+	// Procesar los detalles de la API y los detalles de los juegos de la base de datos.
+	apiDetailsSlice := [][]byte{apiDetails}
+	responseData, err := gc.gameProcessor.ProcessResponse(apiDetailsSlice, games)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseData, nil
+}
+
+func encodeToJSON(data interface{}) ([]byte, error) {
+	encodedData, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+	return encodedData, nil
+}
+
+func (gc *gameController) saveToCache(gameID string, data []byte) error {
+	// Codifica los detalles en formato JSON.
+	encodedData, err := encodeToJSON(data)
+	if err != nil {
+		return err
+	}
+
+	err = gc.redisClient.Set(gameID, string(encodedData))
+	if err != nil {
+		return err
+	}
+	return nil
 }
