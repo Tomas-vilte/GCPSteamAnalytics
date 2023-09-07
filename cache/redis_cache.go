@@ -54,13 +54,13 @@ func (cache *redisCache) Get(key string) (*entity.GameDetails, error) {
 		log.Printf("Error al analizar JSON de la clave %s: %v", key, err)
 		return nil, err
 	}
-
+	log.Println(value)
 	return &gameDetails, nil
 }
 
 func (cache *redisCache) Set(key string, value string) error {
 	ctx := context.Background()
-	err := cache.getClient().Set(ctx, key, value, 10*time.Second).Err()
+	err := cache.getClient().Set(ctx, key, value, 1*time.Minute).Err()
 	if err != nil {
 		log.Printf("Error al establecer la clave %s en la caché: %v", key, err)
 		return err
