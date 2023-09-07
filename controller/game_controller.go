@@ -40,106 +40,102 @@ func (gc *gameController) GetGameDetails(ctx *gin.Context) {
 	gameint, _ := strconv.Atoi(gameID)
 
 	// Consultar Redis para ver si los detalles del juego están en caché.
-	cachedDetails, err := gc.redisClient.Get(gameID)
+	cachedDetails, err := gc.getCachedGameDetails(gameint)
 	if err != nil {
-		if err == redis.Nil {
-			// El juego no está en caché, intentamos obtenerlo de la base de datos.
-			dbDetails, err := gc.dbClient.GetGameDetails(gameint)
-			if err != nil {
-				if errors.Is(err, sql.ErrNoRows) {
-					// El juego no está en la base de datos, lo buscamos en la API de Steam.
-					apiDetails, err := gc.steamService.GetAppDetails(gameint)
-					if err != nil {
-						ctx.JSON(500, gin.H{
-							"Error al obtener detalles del juego desde la API": err.Error(),
-						})
-						return
-					}
-					apiDetailsSlice := [][]byte{apiDetails}
-					games, err := gc.dbClient.GetAllByAppID(gameint)
-					responseData, err := gc.gameProcessor.ProcessResponse(apiDetailsSlice, games)
-					if err != nil {
-						log.Printf("error: %v", err)
-					}
-
-					err = gc.dbClient.SaveGameDetails(responseData)
-					if err != nil {
-						log.Printf("error: %v", err)
-					}
-
-					// Guardar los detalles obtenidos de la API en caché.
-					apiDetailsJSON, err := json.Marshal(responseData)
-					if err != nil {
-						ctx.JSON(500, gin.H{
-							"Error al serializar detalles del juego desde la API": err.Error(),
-						})
-						return
-					}
-					err = gc.redisClient.Set(gameID, string(apiDetailsJSON))
-					if err != nil {
-						ctx.JSON(500, gin.H{
-							"Error al guardar detalles del juego en caché desde la API": err.Error(),
-						})
-						return
-					}
-
-					// Responder con los detalles obtenidos de la API.
-					ctx.JSON(200, responseData)
-					return
-				}
-
-				// Ocurrió un error diferente al intentar obtener datos de la base de datos.
-				ctx.JSON(500, gin.H{
-					"Error al obtener detalles del juego desde la base de datos": err.Error(),
-				})
-				return
-			}
-
-			// Los detalles del juego se encontraron en la base de datos.
-			// Guardarlos en caché para futuras consultas.
-			dbDetailsJSON, err := json.Marshal(dbDetails)
-			if err != nil {
-				ctx.JSON(500, gin.H{
-					"Error al serializar detalles del juego desde la base de datos": err.Error(),
-				})
-				return
-			}
-			err = gc.redisClient.Set(gameID, string(dbDetailsJSON))
-			if err != nil {
-				ctx.JSON(500, gin.H{
-					"Error al guardar detalles del juego en caché desde la base de datos": err.Error(),
-				})
-				return
-			}
-
-			// Responder con los detalles obtenidos de la base de datos.
-			ctx.JSON(200, dbDetails)
-			return
-		}
-
-		// Ocurrió un error diferente al intentar obtener datos de Redis.
 		ctx.JSON(500, gin.H{
-			"Error al obtener detalles del juego desde Redis": err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
 
-	// Los detalles del juego se encontraron en caché.
-	ctx.JSON(200, cachedDetails)
+	if cachedDetails != nil {
+		// Si los detalles están en caché, responder con los detalles en caché.
+		ctx.JSON(200, cachedDetails)
+		return
+	}
+
+	// Intentar obtener los detalles de la base de datos.
+	dbDetails, dbErr := gc.getDBGameDetails(gameint)
+	if dbErr != nil {
+		if errors.Is(dbErr, sql.ErrNoRows) {
+			// Si no se encontraron detalles en la base de datos, devolver un código de estado 404.
+			ctx.JSON(404, gin.H{
+				"message": "Juego no encontrado en la base de datos",
+			})
+			return
+		}
+		// Manejar otros errores de la base de datos.
+		ctx.JSON(500, gin.H{
+			"error": dbErr.Error(),
+		})
+		return
+	}
+
+	if dbDetails != nil {
+		// Si los detalles están en la base de datos, responder con los detalles de la base de datos.
+		ctx.JSON(200, dbDetails)
+		// Guardar los detalles obtenidos de la base de datos en caché.
+		err := gc.saveToCache(gameID, dbDetails)
+		if err != nil {
+			// Manejar errores si ocurren durante el almacenamiento en caché.
+			log.Printf("Error al guardar detalles del juego en caché: %v", err)
+		}
+		return
+	}
+
+	// Si no se encontraron detalles en la base de datos, obtenerlos y procesarlos.
+	responseData, err := gc.fetchAndProcessGameDetails(gameint)
+	if err != nil {
+		// Manejar errores si ocurren durante la obtención y procesamiento.
+		ctx.JSON(500, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	err = gc.dbClient.SaveGameDetails(responseData)
+	if err != nil {
+		// Manejar errores si ocurren durante el almacenamiento en la base de datos.
+		log.Printf("Error al guardar detalles del juego en la base de datos: %v", err)
+		// Puedes devolver un código de estado 500 aquí si lo deseas.
+	}
+
+	// Responder con los detalles obtenidos y procesados.
+	ctx.JSON(200, responseData)
 }
 
-func (gc *gameController) getCachedGameDetails(gameID int) (interface{}, error) {
-	cachedDetails, err := gc.redisClient.Get(strconv.Itoa(gameID))
-	if err != nil && err != redis.Nil {
+func (gc *gameController) fetchAndProcessGameDetails(gameint int) ([]steamapi.AppDetails, error) {
+	// Obtener los detalles del juego de la API de Steam.
+	apiDetails, err := gc.fetchAPIDetails(gameint)
+	if err != nil {
 		return nil, err
 	}
-	if err == redis.Nil {
-		return nil, nil
+
+	// Obtener los detalles de los juegos de la base de datos.
+	games, err := gc.fetchDBDetails(gameint)
+	if err != nil {
+		return nil, err
 	}
+
+	// Procesar los detalles de la API y los detalles de los juegos de la base de datos.
+	responseData, err := gc.processDetails(apiDetails, games)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseData, nil
+}
+
+func (gc *gameController) getCachedGameDetails(gameID int) (*entity.GameDetails, error) {
+	cachedDetails, err := gc.redisClient.Get(strconv.Itoa(gameID))
+	if err != nil && err != redis.Nil {
+		return cachedDetails, err
+	}
+
 	return cachedDetails, nil
 }
 
-func (gc *gameController) getDBGameDetails(gameID int) (interface{}, error) {
+func (gc *gameController) getDBGameDetails(gameID int) (*entity.GameDetails, error) {
 	dbDetails, err := gc.dbClient.GetGameDetails(gameID)
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return nil, err
@@ -177,28 +173,30 @@ func (gc *gameController) processDetails(apiDetails []byte, games []entity.Item)
 	if err != nil {
 		return nil, err
 	}
-
 	return responseData, nil
 }
 
 func encodeToJSON(data interface{}) ([]byte, error) {
 	encodedData, err := json.Marshal(data)
 	if err != nil {
-		return nil, err
+		return encodedData, err
 	}
 	return encodedData, nil
 }
 
-func (gc *gameController) saveToCache(gameID string, data []byte) error {
+func (gc *gameController) saveToCache(gameID string, data interface{}) error {
 	// Codifica los detalles en formato JSON.
 	encodedData, err := encodeToJSON(data)
 	if err != nil {
+		log.Printf("err: %v\n", err)
 		return err
 	}
 
+	// Guarda los detalles en caché utilizando Redis.
 	err = gc.redisClient.Set(gameID, string(encodedData))
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
