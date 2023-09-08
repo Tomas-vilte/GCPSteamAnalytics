@@ -15,7 +15,7 @@ func (l *LanguageArray) Scan(src interface{}) error {
 	}
 
 	// Divide los bytes en cadenas usando una coma como delimitador.
-	languages := strings.Split(string(bytes), ",")
+	languages := strings.Split(string(bytes), ", ")
 
 	// Asigna el resultado a la variable.
 	*l = languages
@@ -48,39 +48,16 @@ type Price struct {
 }
 
 type GameDetails struct {
-	ID               int    `json:"id" db:"id"`
-	AppID            int    `json:"app_id" db:"app_id"`
-	Description      string `json:"description" db:"description"`
-	Type             string `json:"type" db:"type"`
-	Name             string `json:"name" db:"name"`
-	Publishers       string `json:"publishers" db:"publishers"`
-	Developers       string `json:"developers" db:"developers"`
-	IsFree           bool   `json:"is_free" db:"is_free"`
+	ID               int           `json:"id" db:"id"`
+	AppID            int           `json:"app_id" db:"app_id"`
+	Description      string        `json:"description" db:"description"`
+	Type             string        `json:"type" db:"type"`
+	Name             string        `json:"name" db:"name"`
+	Publishers       LanguageArray `json:"publishers" db:"publishers"`
+	Developers       LanguageArray `json:"developers" db:"developers"`
+	IsFree           bool          `json:"is_free" db:"is_free"`
 	SupportLanguages `json:"support_languages"`
 	Platforms        `json:"platforms"`
 	ReleaseDate      `json:"release_date"`
 	Price            `json:"price"`
 }
-
-//type GameDetails struct {
-//	ID                 int    `db:"id"`
-//	AppID              int    `db:"app_id"`
-//	Description        string `db:"description"`
-//	Type               string `db:"type"`
-//	Name               string `db:"name"`
-//	Publishers         string `db:"publishers"`
-//	Developers         string `db:"developers"`
-//	IsFree             bool   `db:"is_free"`
-//	InterfaceLanguages string `db:"interface_languages"`
-//	FullAudioLanguages string `db:"fullAudio_languages"`
-//	SubtitlesLanguages string `db:"subtitles_languages"`
-//	Windows            bool   `db:"windows"`
-//	Mac                bool   `db:"mac"`
-//	Linux              bool   `db:"linux"`
-//	ReleaseDate        string `db:"release_date"`
-//	ComingSoon         bool   `db:"coming_soon"`
-//	Currency           string `db:"currency"`
-//	DiscountPercent    int    `db:"discount_percent"`
-//	InitialFormatted   string `db:"initial_formatted"`
-//	FinalFormatted     string `db:"final_formatted"`
-//}

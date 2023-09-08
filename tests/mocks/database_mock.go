@@ -2,6 +2,7 @@ package mocks
 
 import (
 	"errors"
+
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 )
 
