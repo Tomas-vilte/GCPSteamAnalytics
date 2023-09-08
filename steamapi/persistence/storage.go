@@ -17,6 +17,7 @@ type StorageDB interface {
 	SaveGameDetails(dataProcessed []model.AppDetails) error
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
+	GetAllGames() ([]entity.GameDetails, error)
 }
 
 func NewStorage() StorageDB {
@@ -189,4 +190,17 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	}
 
 	return &gameDetails, nil
+}
+
+func (s storage) GetAllGames() ([]entity.GameDetails, error) {
+	query := `SELECT * FROM games_details`
+	var gameDetails []entity.GameDetails
+	err := GetDB().Select(&gameDetails, query)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, err
+		}
+		return nil, err
+	}
+	return gameDetails, err
 }
