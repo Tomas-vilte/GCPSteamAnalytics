@@ -62,7 +62,7 @@ func (cache *redisCache) Get(key string) (*entity.GameDetails, error) {
 
 func (cache *redisCache) Set(key string, value string) error {
 	ctx := context.Background()
-	err := cache.getClient().Set(ctx, key, value, 2*time.Second).Err()
+	err := cache.getClient().Set(ctx, key, value, 2*time.Minute).Err()
 	if err != nil {
 		log.Printf("Error al establecer la clave %s en la caché: %v", key, err)
 		return err

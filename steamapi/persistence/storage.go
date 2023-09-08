@@ -17,7 +17,7 @@ type StorageDB interface {
 	SaveGameDetails(dataProcessed []model.AppDetails) error
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
-	GetAllGames() ([]entity.GameDetails, error)
+	GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails, int, error)
 }
 
 func NewStorage() StorageDB {
@@ -192,15 +192,32 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	return &gameDetails, nil
 }
 
-func (s storage) GetAllGames() ([]entity.GameDetails, error) {
-	query := `SELECT * FROM games_details`
-	var gameDetails []entity.GameDetails
-	err := GetDB().Select(&gameDetails, query)
+func (s storage) GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails, int, error) {
+	var games []entity.GameDetails
+
+	query := "SELECT * FROM games_details LIMIT ?, ?"
+	err := GetDB().Select(&games, query, startIndex, pageSize)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, err
-		}
-		return nil, err
+		log.Printf("Error al obtener los datos: %v\n", err)
+		return nil, 0, err
 	}
-	return gameDetails, err
+
+	totalItems, err := getTotalGamesCount()
+	if err != nil {
+		log.Printf("Error al obtener el total: %v\n", err)
+		return nil, 0, err
+	}
+
+	return games, totalItems, nil
+}
+
+func getTotalGamesCount() (int, error) {
+	var totalItems int
+	query := "SELECT COUNT(*) FROM games_details"
+	err := GetDB().Get(&totalItems, query)
+	if err != nil {
+		log.Printf("Hubo un error al obtener el total de los datos: %v\n", err)
+		return 0, err
+	}
+	return totalItems, nil
 }
