@@ -17,6 +17,7 @@ import (
 
 type GameController interface {
 	GetGameDetailsByID(ctx *gin.Context)
+	GetGames(c *gin.Context)
 }
 
 type GameControllers struct {

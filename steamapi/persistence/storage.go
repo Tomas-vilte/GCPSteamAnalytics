@@ -195,7 +195,7 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 func (s storage) GetAllGames() ([]entity.GameDetails, error) {
 	query := `SELECT * FROM games_details`
 	var gameDetails []entity.GameDetails
-	err := GetDB().QueryRowx(query).StructScan(&gameDetails)
+	err := GetDB().Select(&gameDetails, query)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, err

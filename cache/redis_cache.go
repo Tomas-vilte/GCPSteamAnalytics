@@ -3,6 +3,7 @@ package cache
 import (
 	"context"
 	"encoding/json"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/redis/go-redis/v9"
 	"log"
@@ -12,6 +13,7 @@ import (
 type RedisClient interface {
 	Get(key string) (*entity.GameDetails, error)
 	Set(key string, value string) error
+	GetGames(key string) (*steamapi.PaginatedResponse, error)
 }
 
 type redisCache struct {
@@ -60,11 +62,30 @@ func (cache *redisCache) Get(key string) (*entity.GameDetails, error) {
 
 func (cache *redisCache) Set(key string, value string) error {
 	ctx := context.Background()
-	err := cache.getClient().Set(ctx, key, value, 10*time.Second).Err()
+	err := cache.getClient().Set(ctx, key, value, 2*time.Second).Err()
 	if err != nil {
 		log.Printf("Error al establecer la clave %s en la caché: %v", key, err)
 		return err
 	}
 	log.Printf("La clave %s se ha establecido en la caché con éxito.", key)
 	return nil
+}
+
+func (cache *redisCache) GetGames(key string) (*steamapi.PaginatedResponse, error) {
+	ctx := context.Background()
+	value, err := cache.getClient().Get(ctx, key).Result()
+	if err != nil {
+		if err == redis.Nil {
+			return nil, err
+		}
+		return nil, err
+	}
+
+	// Deserializa el valor de la caché en la estructura correspondiente.
+	var response steamapi.PaginatedResponse
+	if err := json.Unmarshal([]byte(value), &response); err != nil {
+		return nil, err
+	}
+
+	return &response, nil
 }

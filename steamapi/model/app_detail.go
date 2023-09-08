@@ -1,5 +1,7 @@
 package model
 
+import "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+
 // AppDetails representa los detalles de una aplicación en la tienda Steam.
 type AppDetails struct {
 	SteamAppid            int64    `json:"steam_appid"`
@@ -32,4 +34,9 @@ type AppDetails struct {
 type AppDetailsResponse struct {
 	Success bool       `json:"success"`
 	Data    AppDetails `json:"data"`
+}
+
+type PaginatedResponse struct {
+	Metadata map[string]interface{} `json:"metadata"`
+	Games    []entity.GameDetails   `json:"games"`
 }
