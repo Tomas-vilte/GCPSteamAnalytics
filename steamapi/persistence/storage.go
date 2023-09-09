@@ -188,7 +188,6 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 		}
 		return nil, err
 	}
-
 	return &gameDetails, nil
 }
 
@@ -207,7 +206,6 @@ func (s storage) GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails,
 		log.Printf("Error al obtener el total: %v\n", err)
 		return nil, 0, err
 	}
-
 	return games, totalItems, nil
 }
 
