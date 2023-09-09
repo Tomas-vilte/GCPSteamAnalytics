@@ -2,12 +2,21 @@ package model
 
 import "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 
+type Genre struct {
+	ID          string `json:"id"`
+	Description string `json:"description"`
+}
+
 // AppDetails representa los detalles de una aplicación en la tienda Steam.
 type AppDetails struct {
-	SteamAppid            int64    `json:"steam_appid"`
-	Type                  string   `json:"type"`
-	Name                  string   `json:"name"`
-	Description           string   `json:"short_description"`
+	SteamAppid  int64  `json:"steam_appid"`
+	Type        string `json:"type"`
+	Name        string `json:"name"`
+	Description string `json:"short_description"`
+	Fullgame    struct {
+		AppID string `json:"appid"`
+		Name  string `json:"name"`
+	} `json:"fullgame"`
 	Developers            []string `json:"developers"`
 	Publishers            []string `json:"publishers"`
 	IsFree                bool     `json:"is_free"`
@@ -22,6 +31,7 @@ type AppDetails struct {
 		Mac     bool `json:"mac"`
 		Linux   bool `json:"linux"`
 	} `json:"platforms"`
+	Genres        []Genre `json:"genres"`
 	PriceOverview struct {
 		Currency        string `json:"currency"`
 		DiscountPercent int64  `json:"discount_percent"`
