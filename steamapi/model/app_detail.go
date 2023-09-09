@@ -33,10 +33,12 @@ type AppDetails struct {
 	} `json:"platforms"`
 	Genres        []Genre `json:"genres"`
 	PriceOverview struct {
-		Currency        string `json:"currency"`
-		DiscountPercent int64  `json:"discount_percent"`
-		Initial         int64  `json:"initial"`
-		FinalFormatted  string `json:"final_formatted"`
+		Currency         string `json:"currency"`
+		Initial          int64  `json:"initial"`
+		Final            int64  `json:"final"`
+		DiscountPercent  int64  `json:"discount_percent"`
+		InitialFormatted string `json:"initial_formatted"`
+		FinalFormatted   string `json:"final_formatted"`
 	} `json:"price_overview"`
 }
 
