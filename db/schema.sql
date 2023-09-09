@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS games_details (
     release_date TEXT,
     coming_soon BOOLEAN,
     currency TEXT,
+    initial FLOAT,
+    final FLOAT,
     discount_percent INT,
     initial_formatted TEXT,
     final_formatted TEXT
