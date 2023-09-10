@@ -108,6 +108,8 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
                 app_id, 
                 name, 
                 description, 
+                fullgame_app_id,
+                fullgame_name,
                 type, 
                 publishers, 
                 developers, 
@@ -118,17 +120,23 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
                 windows, 
                 mac, 
                 linux, 
+                genre_id,
+                type_genre,
                 release_date, 
                 coming_soon, 
-                currency, 
+                currency,
+                initial_price,
+                final_price,
                 discount_percent, 
-                initial_formatted, 
-                final_formatted
+                formatted_initial_price, 
+                formatted_final_price
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 name = VALUES(name),
                 description = VALUES(description),
+                fullgame_app_id = VALUES(fullgame_app_id),
+                fullgame_name = VALUES(fullgame_name),
                 type = VALUES(type),
                 publishers = VALUES(publishers),
                 developers = VALUES(developers),
@@ -139,12 +147,16 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
                 windows = VALUES(windows),
                 mac = VALUES(mac),
                 linux = VALUES(linux),
+				genre_id = VALUES(genre_id),
+				type_genre = VALUES(type_genre),
                 release_date = VALUES(release_date),
                 coming_soon = VALUES(coming_soon),
                 currency = VALUES(currency),
+            	initial_price = VALUES(initial_price),
+            	final_price = VALUES(final_price),
                 discount_percent = VALUES(discount_percent),
-                initial_formatted = VALUES(initial_formatted),
-                final_formatted = VALUES(final_formatted)
+                formatted_initial_price = VALUES(formatted_initial_price),
+                formatted_final_price = VALUES(formatted_final_price)
         `
 		_, err := GetDB().Exec(
 			query,
