@@ -37,11 +37,11 @@ CREATE TABLE IF NOT EXISTS games_details (
     release_date TEXT,
     coming_soon BOOLEAN,
     currency TEXT,
-    initial FLOAT,
-    final FLOAT,
+    initial_price FLOAT,
+    final_price FLOAT,
     discount_percent INT,
-    initial_formatted TEXT,
-    final_formatted TEXT
+    formatted_initial_price TEXT,
+    formatted_final_price TEXT
 );
 
 CREATE INDEX idx_appid ON games_details (app_id);
