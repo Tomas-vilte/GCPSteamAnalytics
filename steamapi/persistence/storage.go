@@ -162,7 +162,7 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	            formatted_initial_price = VALUES(formatted_initial_price),
 	            formatted_final_price = VALUES(formatted_final_price)
 	       `
-		_, err := GetDB().Exec(
+		_, err := GetDB().Query(
 			query,
 			appDetail.SteamAppid,
 			appDetail.Name,

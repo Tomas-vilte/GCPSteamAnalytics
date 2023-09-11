@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"database/sql"
 	"errors"
 	"strings"
 )
@@ -40,17 +41,30 @@ type ReleaseDate struct {
 	ComingSoon bool   `json:"coming_soon" db:"coming_soon"`
 }
 
+type FullGame struct {
+	FullGameAppID sql.NullInt64  `json:"appid" db:"fullgame_app_id"`
+	FullGameName  sql.NullString `json:"fullgame_name" db:"fullgame_name"`
+}
+
+type Genre struct {
+	GenreID   sql.NullString `json:"genre_id" db:"genre_id"`
+	TypeGenre sql.NullString `json:"type_genre" db:"type_genre"`
+}
+
 type Price struct {
-	Currency         string `json:"currency" db:"currency"`
-	DiscountPercent  int    `json:"discount_percent" db:"discount_percent"`
-	InitialFormatted string `json:"initial_formatted" db:"initial_formatted"`
-	FinalFormatted   string `json:"final_formatted" db:"final_formatted"`
+	Currency              string          `json:"currency" db:"currency"`
+	InitialPrice          sql.NullFloat64 `json:"initial_price" db:"initial_price"`
+	FinalPrice            sql.NullFloat64 `json:"final_price" db:"final_price"`
+	DiscountPercent       int             `json:"discount_percent" db:"discount_percent"`
+	FormattedInitialPrice sql.NullString  `json:"formatted_initial_price" db:"formatted_initial_price"`
+	FormattedFinalPrice   sql.NullString  `json:"formatted_final_price" db:"formatted_final_price"`
 }
 
 type GameDetails struct {
-	ID               int           `json:"id" db:"id"`
-	AppID            int           `json:"app_id" db:"app_id"`
-	Description      string        `json:"description" db:"description"`
+	ID               int    `json:"id" db:"id"`
+	AppID            int    `json:"app_id" db:"app_id"`
+	Description      string `json:"description" db:"description"`
+	FullGame         `json:"fullgame"`
 	Type             string        `json:"type" db:"type"`
 	Name             string        `json:"name" db:"name"`
 	Publishers       LanguageArray `json:"publishers" db:"publishers"`
@@ -58,6 +72,7 @@ type GameDetails struct {
 	IsFree           bool          `json:"is_free" db:"is_free"`
 	SupportLanguages `json:"support_languages"`
 	Platforms        `json:"platforms"`
+	Genre            `json:"genre"`
 	ReleaseDate      `json:"release_date"`
 	Price            `json:"price"`
 }
