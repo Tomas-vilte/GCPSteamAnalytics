@@ -7,6 +7,7 @@ import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -103,66 +104,71 @@ func (s storage) Update(item entity.Item) error {
 
 func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	for _, appDetail := range dataProcessed {
+		fullGameAppID, _ := strconv.Atoi(appDetail.Fullgame.AppID)
+		initialPrice, _ := strconv.ParseFloat(strconv.FormatInt(appDetail.PriceOverview.Initial, 10), 64)
+		initialFinal, _ := strconv.ParseFloat(strconv.FormatInt(appDetail.PriceOverview.Final, 10), 64)
 		query := `
-            INSERT INTO games_details (
-                app_id, 
-                name, 
-                description, 
-                fullgame_app_id,
-                fullgame_name,
-                type, 
-                publishers, 
-                developers, 
-                is_free, 
-                interface_languages, 
-                fullAudio_languages, 
-                subtitles_languages, 
-                windows, 
-                mac, 
-                linux, 
-                genre_id,
-                type_genre,
-                release_date, 
-                coming_soon, 
-                currency,
-                initial_price,
-                final_price,
-                discount_percent, 
-                formatted_initial_price, 
-                formatted_final_price
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                name = VALUES(name),
-                description = VALUES(description),
-                fullgame_app_id = VALUES(fullgame_app_id),
-                fullgame_name = VALUES(fullgame_name),
-                type = VALUES(type),
-                publishers = VALUES(publishers),
-                developers = VALUES(developers),
-                is_free = VALUES(is_free),
-                interface_languages = VALUES(interface_languages),
-                fullAudio_languages = VALUES(fullAudio_languages),
-                subtitles_languages = VALUES(subtitles_languages),
-                windows = VALUES(windows),
-                mac = VALUES(mac),
-                linux = VALUES(linux),
+	           INSERT INTO games_details (
+	               app_id,
+	               name,
+	               description,
+	               fullgame_app_id,
+	               fullgame_name,
+	               type,
+	               publishers,
+	               developers,
+	               is_free,
+	               interface_languages,
+	               fullAudio_languages,
+	               subtitles_languages,
+	               windows,
+	               mac,
+	               linux,
+	               genre_id,
+	               type_genre,
+	               release_date,
+	               coming_soon,
+	               currency,
+	               initial_price,
+	               final_price,
+	               discount_percent,
+	               formatted_initial_price,
+	               formatted_final_price
+	           )
+	           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	           ON DUPLICATE KEY UPDATE
+	            name = VALUES(name),
+	            description = VALUES(description),
+	            fullgame_app_id = VALUES(fullgame_app_id),
+	            fullgame_name = VALUES(fullgame_name),
+	            type = VALUES(type),
+	            publishers = VALUES(publishers),
+	            developers = VALUES(developers),
+	            is_free = VALUES(is_free),
+	            interface_languages = VALUES(interface_languages),
+	            fullAudio_languages = VALUES(fullAudio_languages),
+	            subtitles_languages = VALUES(subtitles_languages),
+	            windows = VALUES(windows),
+	            mac = VALUES(mac),
+	            linux = VALUES(linux),
 				genre_id = VALUES(genre_id),
 				type_genre = VALUES(type_genre),
-                release_date = VALUES(release_date),
-                coming_soon = VALUES(coming_soon),
-                currency = VALUES(currency),
-            	initial_price = VALUES(initial_price),
-            	final_price = VALUES(final_price),
-                discount_percent = VALUES(discount_percent),
-                formatted_initial_price = VALUES(formatted_initial_price),
-                formatted_final_price = VALUES(formatted_final_price)
-        `
+	            release_date = VALUES(release_date),
+	            coming_soon = VALUES(coming_soon),
+	            currency = VALUES(currency),
+	           	initial_price = VALUES(initial_price),
+	           	final_price = VALUES(final_price),
+	        	discount_percent = VALUES(discount_percent),
+	            formatted_initial_price = VALUES(formatted_initial_price),
+	            formatted_final_price = VALUES(formatted_final_price)
+	       `
 		_, err := GetDB().Exec(
 			query,
 			appDetail.SteamAppid,
 			appDetail.Name,
 			appDetail.Description,
+			fullGameAppID,
+			appDetail.Fullgame.Name,
 			appDetail.Type,
 			strings.Join(appDetail.Publishers, ", "),
 			strings.Join(appDetail.Developers, ", "),
@@ -173,11 +179,15 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 			appDetail.Platforms.Windows,
 			appDetail.Platforms.Mac,
 			appDetail.Platforms.Linux,
+			strings.Join(getGenreIDs(appDetail.Genres), ", "),
+			strings.Join(getGenreTypes(appDetail.Genres), ", "),
 			appDetail.ReleaseDate.Date,
 			appDetail.ReleaseDate.ComingSoon,
 			appDetail.PriceOverview.Currency,
+			initialPrice,
+			initialFinal,
 			appDetail.PriceOverview.DiscountPercent,
-			appDetail.PriceOverview.Initial,
+			appDetail.PriceOverview.InitialFormatted,
 			appDetail.PriceOverview.FinalFormatted,
 		)
 		if err != nil {
@@ -187,6 +197,22 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	}
 
 	return nil
+}
+
+func getGenreIDs(genres []model.Genre) []string {
+	genreIDs := make([]string, len(genres))
+	for i, genre := range genres {
+		genreIDs[i] = genre.ID
+	}
+	return genreIDs
+}
+
+func getGenreTypes(genres []model.Genre) []string {
+	genreTypes := make([]string, len(genres))
+	for i, genre := range genres {
+		genreTypes[i] = genre.Description
+	}
+	return genreTypes
 }
 
 func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
