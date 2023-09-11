@@ -18,11 +18,11 @@ CREATE INDEX idx_appid ON game (app_id);
 CREATE TABLE IF NOT EXISTS games_details (
     id SERIAL PRIMARY KEY,
     app_id INT UNIQUE,
+    name TEXT,
     description TEXT,
     fullgame_app_id INT,
     fullgame_name TEXT,
     type TEXT,
-    name TEXT,
     publishers TEXT, 
     developers TEXT, 
     is_free BOOLEAN,
