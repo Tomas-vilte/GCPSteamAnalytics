@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"database/sql"
 	"errors"
 	"strings"
 )
@@ -42,22 +41,22 @@ type ReleaseDate struct {
 }
 
 type FullGame struct {
-	FullGameAppID sql.NullInt64  `json:"appid" db:"fullgame_app_id"`
-	FullGameName  sql.NullString `json:"fullgame_name" db:"fullgame_name"`
+	FullGameAppID int64  `json:"appid" db:"fullgame_app_id"`
+	FullGameName  string `json:"fullgame_name" db:"fullgame_name"`
 }
 
 type Genre struct {
-	GenreID   sql.NullString `json:"genre_id" db:"genre_id"`
-	TypeGenre sql.NullString `json:"type_genre" db:"type_genre"`
+	GenreID   string `json:"genre_id" db:"genre_id"`
+	TypeGenre string `json:"type_genre" db:"type_genre"`
 }
 
 type Price struct {
-	Currency              string          `json:"currency" db:"currency"`
-	InitialPrice          sql.NullFloat64 `json:"initial_price" db:"initial_price"`
-	FinalPrice            sql.NullFloat64 `json:"final_price" db:"final_price"`
-	DiscountPercent       int             `json:"discount_percent" db:"discount_percent"`
-	FormattedInitialPrice sql.NullString  `json:"formatted_initial_price" db:"formatted_initial_price"`
-	FormattedFinalPrice   sql.NullString  `json:"formatted_final_price" db:"formatted_final_price"`
+	Currency              *string  `json:"currency" db:"currency"`
+	InitialPrice          *float64 `json:"initial_price" db:"initial_price"`
+	FinalPrice            *float64 `json:"final_price" db:"final_price"`
+	DiscountPercent       *int     `json:"discount_percent" db:"discount_percent"`
+	FormattedInitialPrice *string  `json:"formatted_initial_price" db:"formatted_initial_price"`
+	FormattedFinalPrice   *string  `json:"formatted_final_price" db:"formatted_final_price"`
 }
 
 type GameDetails struct {

@@ -14,7 +14,16 @@ CREATE TABLE IF NOT EXISTS game (
 -- Crear un índice en el campo app_id de la tabla game
 CREATE INDEX idx_appid ON game (app_id);
 
--- Crear la tabla games_details
+
+
+-- Crear la tabla genres
+CREATE TABLE IF NOT EXISTS genres (
+    id SERIAL PRIMARY KEY,
+    genre_id INT,
+    description TEXT
+);
+
+-- Crear la tabla games_details si aún no existe
 CREATE TABLE IF NOT EXISTS games_details (
     id SERIAL PRIMARY KEY,
     app_id INT UNIQUE,
@@ -32,8 +41,7 @@ CREATE TABLE IF NOT EXISTS games_details (
     windows BOOLEAN,
     mac BOOLEAN,
     linux BOOLEAN,
-    genre_id INT,
-    type_genre TEXT,
+    genre_id INT REFERENCES genres(id)
     release_date TEXT,
     coming_soon BOOLEAN,
     currency TEXT,
@@ -41,7 +49,7 @@ CREATE TABLE IF NOT EXISTS games_details (
     final_price FLOAT,
     discount_percent INT,
     formatted_initial_price TEXT,
-    formatted_final_price TEXT
+    formatted_final_price TEXT,
 );
 
 CREATE INDEX idx_appid ON games_details (app_id);
