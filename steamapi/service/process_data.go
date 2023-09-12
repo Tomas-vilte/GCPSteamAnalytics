@@ -42,13 +42,6 @@ func (sv *GameProcessor) RunProcessData(ctx context.Context, limit int) error {
 		return err
 	}
 
-	genres := extractGenres(dataProcessed)
-
-	err = sv.storage.SaveGenres(genres)
-	if err != nil {
-		return err
-	}
-
 	err = sv.storage.SaveGameDetails(dataProcessed)
 	if err != nil {
 		return err
@@ -56,16 +49,6 @@ func (sv *GameProcessor) RunProcessData(ctx context.Context, limit int) error {
 
 	return err
 
-}
-
-func extractGenres(dataProcessed []steamapi.AppDetails) []steamapi.Genre {
-	var genres []steamapi.Genre
-	for _, appDetail := range dataProcessed {
-		for _, genre := range appDetail.Genres {
-			genres = append(genres, genre)
-		}
-	}
-	return genres
 }
 
 func (sv *GameProcessor) GetGamesFromAPI(ctx context.Context, items []entity.Item) ([][]byte, error) {

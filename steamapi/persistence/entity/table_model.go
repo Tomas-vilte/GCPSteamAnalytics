@@ -41,7 +41,7 @@ type ReleaseDate struct {
 }
 
 type FullGame struct {
-	FullGameAppID int64  `json:"appid" db:"fullgame_app_id"`
+	FullGameAppID int    `json:"appid" db:"fullgame_app_id"`
 	FullGameName  string `json:"fullgame_name" db:"fullgame_name"`
 }
 
@@ -51,12 +51,12 @@ type Genre struct {
 }
 
 type Price struct {
-	Currency              *string  `json:"currency" db:"currency"`
-	InitialPrice          *float64 `json:"initial_price" db:"initial_price"`
-	FinalPrice            *float64 `json:"final_price" db:"final_price"`
-	DiscountPercent       *int     `json:"discount_percent" db:"discount_percent"`
-	FormattedInitialPrice *string  `json:"formatted_initial_price" db:"formatted_initial_price"`
-	FormattedFinalPrice   *string  `json:"formatted_final_price" db:"formatted_final_price"`
+	Currency              string  `json:"currency" db:"currency"`
+	InitialPrice          float64 `json:"initial_price" db:"initial_price"`
+	FinalPrice            float64 `json:"final_price" db:"final_price"`
+	DiscountPercent       int     `json:"discount_percent" db:"discount_percent"`
+	FormattedInitialPrice string  `json:"formatted_initial_price" db:"formatted_initial_price"`
+	FormattedFinalPrice   string  `json:"formatted_final_price" db:"formatted_final_price"`
 }
 
 type GameDetails struct {

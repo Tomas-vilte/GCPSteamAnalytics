@@ -9,4 +9,5 @@ import (
 func main() {
 	log.Printf("App started!")
 	api.StartServer()
+
 }
