@@ -10,6 +10,11 @@ type MockStorage struct {
 	mock.Mock
 }
 
+func (m *MockStorage) GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error) {
+	argsList := m.Called(filter, startIndex, pageSize)
+	return argsList.Get(0).([]entity.GameDetails), argsList.Int(1), argsList.Error(2)
+}
+
 func (m *MockStorage) GetAllFrom(limit int) ([]entity.Item, error) {
 	args := m.Called(limit)
 	return args.Get(0).([]entity.Item), args.Error(1)

@@ -125,3 +125,17 @@ func TestStorage_Update_ItemNotFound(t *testing.T) {
 
 	mockStorage.AssertExpectations(t)
 }
+
+func TestGetGamesByPage(t *testing.T) {
+	mockDB := new(mocks.MockStorage)
+
+	expectedGames := []entity.GameDetails{{ID: 1, Name: "Game 1"}}
+	mockDB.On("GetGamesByPage", "game", 0, 10).Return(expectedGames, 1, nil)
+
+	games, totalItems, err := mockDB.GetGamesByPage("game", 0, 10)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedGames, games)
+	assert.Equal(t, 1, totalItems)
+	mockDB.AssertExpectations(t)
+}
