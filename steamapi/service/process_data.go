@@ -9,6 +9,7 @@ import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"log"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -137,8 +138,31 @@ func (sv *GameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 	return appDetails, nil
 }
 
+var spanishToEnglishMonths = map[string]string{
+	"ENE": "Jan",
+	"FEB": "Feb",
+	"MAR": "Mar",
+	"ABR": "Apr",
+	"MAY": "May",
+	"JUN": "Jun",
+	"JUL": "Jul",
+	"AGO": "Aug",
+	"SEP": "Sep",
+	"OCT": "Oct",
+	"NOV": "Nov",
+	"DIC": "Dec",
+}
+
+func parseSpanishDate(dateStr string) (time.Time, error) {
+	for spanishMonth, englishMonth := range spanishToEnglishMonths {
+		dateStr = strings.ReplaceAll(dateStr, spanishMonth, englishMonth)
+	}
+
+	return time.Parse("2 Jan 2006", dateStr)
+}
+
 func (sv *GameProcessor) processGameData(data *steamapi.AppDetails) error {
-	releaseDate, err := time.Parse("2 Jan 2006", data.ReleaseDate.Date)
+	releaseDate, err := parseSpanishDate(data.ReleaseDate.Date)
 	if err != nil {
 		return fmt.Errorf("error al analizar la fecha de lanzamiento: %v", err)
 	}
