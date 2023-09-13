@@ -19,7 +19,6 @@ type StorageDB interface {
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
 	GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails, int, error)
-	SaveGenres(genres []model.Genre) error
 }
 
 func NewStorage() StorageDB {
@@ -125,6 +124,8 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	               windows,
 	               mac,
 	               linux,
+	               genre_id,
+	               type_genre,
 	               release_date,
 	               coming_soon,
 	               currency,
@@ -134,7 +135,7 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	               formatted_initial_price,
 	               formatted_final_price
 	           )
-	           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 	           ON DUPLICATE KEY UPDATE
 	            name = VALUES(name),
 	            description = VALUES(description),
@@ -150,6 +151,8 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	            windows = VALUES(windows),
 	            mac = VALUES(mac),
 	            linux = VALUES(linux),
+				genre_id = VALUES(genre_id),
+				type_genre = VALUES(type_genre),
 	            release_date = VALUES(release_date),
 	            coming_soon = VALUES(coming_soon),
 	            currency = VALUES(currency),
@@ -176,6 +179,8 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 			appDetail.Platforms.Windows,
 			appDetail.Platforms.Mac,
 			appDetail.Platforms.Linux,
+			strings.Join(getGenreIDs(appDetail.Genres), ", "),
+			strings.Join(getGenreTypes(appDetail.Genres), ", "),
 			appDetail.ReleaseDate.Date,
 			appDetail.ReleaseDate.ComingSoon,
 			appDetail.PriceOverview.Currency,
@@ -191,18 +196,6 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 		}
 	}
 
-	return nil
-}
-
-func (s storage) SaveGenres(genres []model.Genre) error {
-	// Itera a través de los géneros y guárdalos en la base de datos
-	for _, genre := range genres {
-		query := "INSERT INTO genres (genre_id, type_genre) VALUES (?, ?) ON DUPLICATE KEY UPDATE type_genre = VALUES(type_genre)"
-		_, err := GetDB().Exec(query, genre.ID, genre.Description)
-		if err != nil {
-			return err
-		}
-	}
 	return nil
 }
 
@@ -222,6 +215,31 @@ func getGenreTypes(genres []model.Genre) []string {
 	return genreTypes
 }
 
+func mapGenresFromDB(genreID, typeGenre string) []entity.Genre {
+	// Dividir los valores por comas para obtener los IDs y descripciones
+	idValues := strings.Split(genreID, ", ")
+	descriptionValues := strings.Split(typeGenre, ", ")
+
+	// Crear un slice de géneros
+	var genres []entity.Genre
+
+	// Asegurarse de que haya la misma cantidad de IDs y descripciones
+	if len(idValues) != len(descriptionValues) {
+		return genres
+	}
+
+	// Mapear los datos a la estructura de géneros
+	for i := 0; i < len(idValues); i++ {
+		genre := entity.Genre{
+			GenreID:   idValues[i],
+			TypeGenre: descriptionValues[i],
+		}
+		genres = append(genres, genre)
+	}
+
+	return genres
+}
+
 func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	query := `SELECT * FROM games_details WHERE app_id = ?`
 
@@ -233,6 +251,7 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 		}
 		return nil, err
 	}
+	gameDetails.Genre = mapGenresFromDB(gameDetails.GenreID, gameDetails.TypeGenre)
 	return &gameDetails, nil
 }
 

@@ -66,7 +66,6 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 		return
 
 	}
-
 	if dbDetails != nil {
 		// Si los detalles están en la base de datos, responder con los detalles de la base de datos.
 		ctx.JSON(200, dbDetails)
