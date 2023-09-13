@@ -74,6 +74,6 @@ type GameDetails struct {
 	Genre            []Genre `json:"genre"`
 	ReleaseDate      `json:"release_date"`
 	Price            `json:"price"`
-	GenreID          string `json:"genre_id" db:"genre_id"`
-	TypeGenre        string `json:"type_genre" db:"type_genre"`
+	GenreID          string `json:"-" db:"genre_id"`
+	TypeGenre        string `json:"-" db:"type_genre"`
 }

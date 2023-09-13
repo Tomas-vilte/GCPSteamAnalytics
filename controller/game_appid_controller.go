@@ -57,7 +57,7 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 	}
 
 	// Intentar obtener los detalles de la base de datos.
-	dbDetails, dbErr := gc.GetDBGameDetails(gameint)
+	dbDetails, dbErr := gc.dbClient.GetGameDetails(gameint)
 	if dbErr != nil && !errors.Is(dbErr, sql.ErrNoRows) {
 		ctx.JSON(400, gin.H{
 			"Error al obtener detalles del juego desde la base de datos": dbErr.Error(),
@@ -101,14 +101,14 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 
 func (gc *GameControllers) fetchAndProcessGameDetails(gameint int) ([]steamapi.AppDetails, error) {
 	// Obtener los detalles del juego de la API de Steam.
-	apiDetails, err := gc.FetchAPIDetails(gameint)
+	apiDetails, err := gc.steamService.GetAppDetails(gameint)
 	if err != nil {
 		log.Printf("Error al obtener detalles de la API de Steam: %v", err)
 		return nil, err
 	}
 
 	// Obtener los detalles de los juegos de la base de datos.
-	games, err := gc.FetchDBDetails(gameint)
+	games, err := gc.dbClient.GetAllByAppID(gameint)
 	if err != nil {
 		log.Printf("Error al obtener detalles de la base de datos: %v", err)
 		return nil, err
@@ -133,41 +133,6 @@ func (gc *GameControllers) GetCachedGameDetails(gameID int) (*entity.GameDetails
 	}
 
 	return cachedDetails, nil
-}
-
-func (gc *GameControllers) GetDBGameDetails(gameID int) (*entity.GameDetails, error) {
-	dbDetails, err := gc.dbClient.GetGameDetails(gameID)
-	if err != nil && !errors.Is(err, sql.ErrNoRows) {
-		log.Printf("Error al obtener detalles de la base de datos: %v", err)
-		return nil, err
-	}
-	if errors.Is(err, sql.ErrNoRows) {
-		log.Printf("No se encontraron detalles en la base de datos para el juego con ID %d", gameID)
-		return nil, err
-	}
-	return dbDetails, nil
-}
-
-func (gc *GameControllers) FetchAPIDetails(gameint int) ([]byte, error) {
-	// Obtener los detalles del juego de la API de Steam.
-	apiDetails, err := gc.steamService.GetAppDetails(gameint)
-	if err != nil {
-		log.Printf("Error al obtener detalles de la API de Steam: %v", err)
-		return nil, err
-	}
-
-	return apiDetails, nil
-}
-
-func (gc *GameControllers) FetchDBDetails(gameint int) ([]entity.Item, error) {
-	// Obtener los detalles de los juegos de la base de datos.
-	games, err := gc.dbClient.GetAllByAppID(gameint)
-	if err != nil {
-		log.Printf("Error al obtener detalles de la base de datos: %v", err)
-		return nil, err
-	}
-
-	return games, nil
 }
 
 func encodeToJSON(data interface{}) ([]byte, error) {

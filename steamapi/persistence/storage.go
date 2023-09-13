@@ -215,24 +215,20 @@ func getGenreTypes(genres []model.Genre) []string {
 	return genreTypes
 }
 
-func mapGenresFromDB(genreID, typeGenre string) []entity.Genre {
-	// Dividir los valores por comas para obtener los IDs y descripciones
-	idValues := strings.Split(genreID, ", ")
-	descriptionValues := strings.Split(typeGenre, ", ")
+func mapGenresFromDB(genreID string, typeGenre string) []entity.Genre {
+	genreIDList := strings.Split(genreID, ",")
+	typeGenreList := strings.Split(typeGenre, ",")
 
-	// Crear un slice de géneros
 	var genres []entity.Genre
 
-	// Asegurarse de que haya la misma cantidad de IDs y descripciones
-	if len(idValues) != len(descriptionValues) {
+	if len(genreIDList) != len(typeGenreList) {
 		return genres
 	}
 
-	// Mapear los datos a la estructura de géneros
-	for i := 0; i < len(idValues); i++ {
+	for i := 0; i < len(genreIDList); i++ {
 		genre := entity.Genre{
-			GenreID:   idValues[i],
-			TypeGenre: descriptionValues[i],
+			GenreID:   genreIDList[i],
+			TypeGenre: typeGenreList[i],
 		}
 		genres = append(genres, genre)
 	}
