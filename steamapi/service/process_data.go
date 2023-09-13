@@ -4,14 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"strconv"
-	"sync"
-
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
+	"log"
+	"strconv"
+	"sync"
+	"time"
 )
 
 type GameProcessor struct {
@@ -114,7 +113,10 @@ func (sv *GameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 
 			if response.Success && (data.Type == "game" || data.Type == "dlc") {
 				log.Printf("[%d] Insertando juego/appID: %s/%d\n", logCounter, data.Name, appID)
-				data.SupportedLanguages = utils.ParseSupportedLanguages(data.SupportedLanguagesRaw)
+				if err := sv.processGameData(&data); err != nil {
+					log.Printf("[%d] Error al procesar datos del juego/appID %d: %v\n", logCounter, appID, err)
+					continue
+				}
 				appDetails = append(appDetails, data)
 			} else {
 				log.Printf("[%d] No insertado (tipo no válido: %s) / appID: %d\n", logCounter, data.Type, appID)
@@ -133,6 +135,26 @@ func (sv *GameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 	}
 
 	return appDetails, nil
+}
+
+func (sv *GameProcessor) processGameData(data *steamapi.AppDetails) error {
+	releaseDate, err := time.Parse("2 Jan 2006", data.ReleaseDate.Date)
+	if err != nil {
+		return fmt.Errorf("error al analizar la fecha de lanzamiento: %v", err)
+	}
+	data.ReleaseDate.Date = releaseDate.Format("2006-01-02")
+
+	// Verificar si initial_formatted está vacío y initial tiene un valor
+	if data.PriceOverview.InitialFormatted == "" && data.PriceOverview.Initial != 0 {
+		initialFloat := float64(data.PriceOverview.Initial) / 100.0
+		finalFloat := float64(data.PriceOverview.Final) / 100.0
+		priceARS := fmt.Sprintf("ARS$ %.2f", initialFloat)
+		data.PriceOverview.InitialFormatted = priceARS
+		data.PriceOverview.Initial = initialFloat
+		data.PriceOverview.Final = finalFloat
+	}
+
+	return nil
 }
 
 func (sv *GameProcessor) UpdateData(games []entity.Item, id int64, isValid bool) error {

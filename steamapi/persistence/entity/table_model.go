@@ -3,6 +3,7 @@ package entity
 import (
 	"errors"
 	"strings"
+	"time"
 )
 
 type LanguageArray []string
@@ -36,8 +37,8 @@ type Platforms struct {
 }
 
 type ReleaseDate struct {
-	Date       string `json:"release_date" db:"release_date"`
-	ComingSoon bool   `json:"coming_soon" db:"coming_soon"`
+	Date       time.Time `json:"release_date" db:"release_date"`
+	ComingSoon bool      `json:"coming_soon" db:"coming_soon"`
 }
 
 type FullGame struct {
@@ -62,10 +63,10 @@ type Price struct {
 type GameDetails struct {
 	ID               int    `json:"id" db:"id"`
 	AppID            int    `json:"app_id" db:"app_id"`
+	Name             string `json:"name" db:"name"`
 	Description      string `json:"description" db:"description"`
 	FullGame         `json:"fullgame"`
 	Type             string        `json:"type" db:"type"`
-	Name             string        `json:"name" db:"name"`
 	Publishers       LanguageArray `json:"publishers" db:"publishers"`
 	Developers       LanguageArray `json:"developers" db:"developers"`
 	IsFree           bool          `json:"is_free" db:"is_free"`
@@ -74,6 +75,6 @@ type GameDetails struct {
 	Genre            []Genre `json:"genre"`
 	ReleaseDate      `json:"release_date"`
 	Price            `json:"price"`
-	GenreID          string `json:"genre_id" db:"genre_id"`
-	TypeGenre        string `json:"type_genre" db:"type_genre"`
+	GenreID          string `json:"-" db:"genre_id"`
+	TypeGenre        string `json:"-" db:"type_genre"`
 }

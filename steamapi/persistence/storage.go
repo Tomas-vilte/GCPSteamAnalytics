@@ -18,7 +18,7 @@ type StorageDB interface {
 	SaveGameDetails(dataProcessed []model.AppDetails) error
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
-	GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails, int, error)
+	GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error)
 }
 
 func NewStorage() StorageDB {
@@ -105,8 +105,6 @@ func (s storage) Update(item entity.Item) error {
 func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	for _, appDetail := range dataProcessed {
 		fullGameAppID, _ := strconv.Atoi(appDetail.Fullgame.AppID)
-		initialPrice, _ := strconv.ParseFloat(strconv.FormatInt(appDetail.PriceOverview.Initial, 10), 64)
-		initialFinal, _ := strconv.ParseFloat(strconv.FormatInt(appDetail.PriceOverview.Final, 10), 64)
 		query := `
 	           INSERT INTO games_details (
 	               app_id,
@@ -184,8 +182,8 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 			appDetail.ReleaseDate.Date,
 			appDetail.ReleaseDate.ComingSoon,
 			appDetail.PriceOverview.Currency,
-			initialPrice,
-			initialFinal,
+			appDetail.PriceOverview.Initial,
+			appDetail.PriceOverview.Final,
 			appDetail.PriceOverview.DiscountPercent,
 			appDetail.PriceOverview.InitialFormatted,
 			appDetail.PriceOverview.FinalFormatted,
@@ -215,24 +213,20 @@ func getGenreTypes(genres []model.Genre) []string {
 	return genreTypes
 }
 
-func mapGenresFromDB(genreID, typeGenre string) []entity.Genre {
-	// Dividir los valores por comas para obtener los IDs y descripciones
-	idValues := strings.Split(genreID, ", ")
-	descriptionValues := strings.Split(typeGenre, ", ")
+func mapGenresFromDB(genreID string, typeGenre string) []entity.Genre {
+	genreIDList := strings.Split(genreID, ",")
+	typeGenreList := strings.Split(typeGenre, ",")
 
-	// Crear un slice de géneros
 	var genres []entity.Genre
 
-	// Asegurarse de que haya la misma cantidad de IDs y descripciones
-	if len(idValues) != len(descriptionValues) {
+	if len(genreIDList) != len(typeGenreList) {
 		return genres
 	}
 
-	// Mapear los datos a la estructura de géneros
-	for i := 0; i < len(idValues); i++ {
+	for i := 0; i < len(genreIDList); i++ {
 		genre := entity.Genre{
-			GenreID:   idValues[i],
-			TypeGenre: descriptionValues[i],
+			GenreID:   genreIDList[i],
+			TypeGenre: typeGenreList[i],
 		}
 		genres = append(genres, genre)
 	}
@@ -255,14 +249,18 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	return &gameDetails, nil
 }
 
-func (s storage) GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails, int, error) {
+func (s storage) GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error) {
 	var games []entity.GameDetails
 
-	query := "SELECT * FROM games_details LIMIT ?, ?"
-	err := GetDB().Select(&games, query, startIndex, pageSize)
+	query := "SELECT * FROM games_details WHERE type = ? LIMIT ?, ?"
+	err := GetDB().Select(&games, query, filter, startIndex, pageSize)
 	if err != nil {
 		log.Printf("Error al obtener los datos: %v\n", err)
 		return nil, 0, err
+	}
+
+	for i := range games {
+		games[i].Genre = mapGenresFromDB(games[i].GenreID, games[i].TypeGenre)
 	}
 
 	totalItems, err := getTotalGamesCount()
@@ -270,6 +268,7 @@ func (s storage) GetGamesByPage(startIndex, pageSize int) ([]entity.GameDetails,
 		log.Printf("Error al obtener el total: %v\n", err)
 		return nil, 0, err
 	}
+
 	return games, totalItems, nil
 }
 
