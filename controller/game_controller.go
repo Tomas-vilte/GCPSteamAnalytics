@@ -11,13 +11,14 @@ import (
 func (gc *GameControllers) GetGames(c *gin.Context) {
 	page := c.DefaultQuery("page", "1")
 	pageSize := c.DefaultQuery("page_size", "10")
+	filterType := c.DefaultQuery("filter", "game")
 
 	pageNum := parseParam(page)
 	pageSizeNum := parseParam(pageSize)
 
 	startIndex := (pageNum - 1) * pageSizeNum
 
-	games, totalItems, err := gc.dbClient.GetGamesByPage(startIndex, pageSizeNum)
+	games, totalItems, err := gc.dbClient.GetGamesByPage(filterType, startIndex, pageSizeNum)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
