@@ -215,6 +215,31 @@ func getGenreTypes(genres []model.Genre) []string {
 	return genreTypes
 }
 
+func mapGenresFromDB(genreID, typeGenre string) []entity.Genre {
+	// Dividir los valores por comas para obtener los IDs y descripciones
+	idValues := strings.Split(genreID, ", ")
+	descriptionValues := strings.Split(typeGenre, ", ")
+
+	// Crear un slice de géneros
+	var genres []entity.Genre
+
+	// Asegurarse de que haya la misma cantidad de IDs y descripciones
+	if len(idValues) != len(descriptionValues) {
+		return genres
+	}
+
+	// Mapear los datos a la estructura de géneros
+	for i := 0; i < len(idValues); i++ {
+		genre := entity.Genre{
+			GenreID:   idValues[i],
+			TypeGenre: descriptionValues[i],
+		}
+		genres = append(genres, genre)
+	}
+
+	return genres
+}
+
 func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 	query := `SELECT * FROM games_details WHERE app_id = ?`
 
@@ -226,7 +251,7 @@ func (s storage) GetGameDetails(gameID int) (*entity.GameDetails, error) {
 		}
 		return nil, err
 	}
-
+	gameDetails.Genre = mapGenresFromDB(gameDetails.GenreID, gameDetails.TypeGenre)
 	return &gameDetails, nil
 }
 

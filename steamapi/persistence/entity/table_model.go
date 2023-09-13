@@ -71,7 +71,9 @@ type GameDetails struct {
 	IsFree           bool          `json:"is_free" db:"is_free"`
 	SupportLanguages `json:"support_languages"`
 	Platforms        `json:"platforms"`
-	Genre            `json:"genre"`
+	Genre            []Genre `json:"genre"`
 	ReleaseDate      `json:"release_date"`
 	Price            `json:"price"`
+	GenreID          string `json:"genre_id" db:"genre_id"`
+	TypeGenre        string `json:"type_genre" db:"type_genre"`
 }
