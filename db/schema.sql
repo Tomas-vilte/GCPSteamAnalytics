@@ -17,7 +17,7 @@ CREATE INDEX idx_appid ON game (app_id);
 
 -- Crear la tabla games_details si aún no existe
 CREATE TABLE IF NOT EXISTS games_details (
-    id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
     app_id INT UNIQUE,
     name TEXT,
     description TEXT,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS games_details (
     linux BOOLEAN,
     genre_id TEXT,
     type_genre TEXT,
-    release_date TEXT,
+    release_date DATE,
     coming_soon BOOLEAN,
     currency TEXT,
     initial_price FLOAT,

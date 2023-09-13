@@ -105,8 +105,6 @@ func (s storage) Update(item entity.Item) error {
 func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 	for _, appDetail := range dataProcessed {
 		fullGameAppID, _ := strconv.Atoi(appDetail.Fullgame.AppID)
-		initialPrice, _ := strconv.ParseFloat(strconv.FormatInt(appDetail.PriceOverview.Initial, 10), 64)
-		initialFinal, _ := strconv.ParseFloat(strconv.FormatInt(appDetail.PriceOverview.Final, 10), 64)
 		query := `
 	           INSERT INTO games_details (
 	               app_id,
@@ -184,8 +182,8 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 			appDetail.ReleaseDate.Date,
 			appDetail.ReleaseDate.ComingSoon,
 			appDetail.PriceOverview.Currency,
-			initialPrice,
-			initialFinal,
+			appDetail.PriceOverview.Initial,
+			appDetail.PriceOverview.Final,
 			appDetail.PriceOverview.DiscountPercent,
 			appDetail.PriceOverview.InitialFormatted,
 			appDetail.PriceOverview.FinalFormatted,
