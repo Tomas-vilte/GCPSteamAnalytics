@@ -27,7 +27,7 @@ jobs:
       - name: Terraform Init
         run: |
           cd gcp
-          terraform Init
+          terraform init
 
       - name: Terraform Plan
         run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -out=tfplan
