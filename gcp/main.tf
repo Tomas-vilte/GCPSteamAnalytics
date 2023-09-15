@@ -1,5 +1,5 @@
 provider "google" {
-  project =  "gcpsteamanalytics"
+  project = "gcpsteamanalytics"
   region  =  "US"
 }
 
