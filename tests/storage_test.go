@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/stretchr/testify/require"
+	"reflect"
 	"testing"
 	"time"
 
@@ -184,4 +185,31 @@ func TestGetGameDetails_Success(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, &expectedGameDetails, result)
+}
+
+func TestGetAllByAppID(t *testing.T) {
+	mockStorage := new(mocks.MockStorage)
+
+	expectedItems := []entity.Item{
+		{Appid: 1, Name: "Juego1", Status: "Processed", IsValid: true},
+		{Appid: 2, Name: "Juego2", Status: "Pending", IsValid: false},
+	}
+
+	mockStorage.On("GetAllByAppID", 1).Return(expectedItems, nil)
+
+	// Llama a la función que estás probando
+	appID := 1
+	items, err := mockStorage.GetAllByAppID(appID)
+
+	if err != nil {
+		t.Fatalf("Se esperaba que no ocurriera un error, pero ocurrió: %v", err)
+	}
+
+	if !reflect.DeepEqual(items, expectedItems) {
+		t.Errorf("Los resultados obtenidos no coinciden con los valores esperados.")
+	}
+
+	mockStorage.AssertCalled(t, "GetAllByAppID", 1)
+
+	mockStorage.AssertExpectations(t)
 }
