@@ -197,7 +197,6 @@ func TestGetAllByAppID(t *testing.T) {
 
 	mockStorage.On("GetAllByAppID", 1).Return(expectedItems, nil)
 
-	// Llama a la función que estás probando
 	appID := 1
 	items, err := mockStorage.GetAllByAppID(appID)
 
