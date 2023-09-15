@@ -15,3 +15,6 @@ module "api_gateway" {
   source = "./api_gateway"
 }
   
+module "cloud_sql" {
+  source = "./cloud_sql"
+}

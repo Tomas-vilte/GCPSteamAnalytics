@@ -27,7 +27,7 @@ resource "google_sql_database_instance" "my_db_instance" {
 resource "google_sql_user" "my_db_user" {
   name     = "my-db-user"
   instance = google_sql_database_instance.my_db_instance.name
-  password = "mypassword" # Cambia esto a tu contraseña deseada
+  password = "root"
 }
 
 resource "google_sql_database" "my_db" {
