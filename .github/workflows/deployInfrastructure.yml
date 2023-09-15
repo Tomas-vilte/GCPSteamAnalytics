@@ -32,7 +32,7 @@ jobs:
       - name: Terraform Plan
         run: |
           cd gcp
-          terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -out=tfplan
+          terraform plan 
 
       - name: Terraform Apply
         run: |
