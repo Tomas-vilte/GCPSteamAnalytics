@@ -22,6 +22,7 @@ jobs:
       - name: move to gcp directory
         run: |
           cd gcp
+          ls
 
       - name: Terraform Init
         run: terraform init
