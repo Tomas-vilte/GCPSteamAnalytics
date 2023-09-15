@@ -34,7 +34,3 @@ resource "google_sql_database" "my_db" {
   name     = "my-database"
   instance = google_sql_database_instance.my_db_instance.name
 }
-
-output "public_ip" {
-  value = google_compute_instance.my_instance.network_interface.0.access_config.0.nat_ip
-}
