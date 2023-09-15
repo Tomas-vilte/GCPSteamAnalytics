@@ -28,12 +28,16 @@ jobs:
         run: |
           cd gcp
           terraform init
-
+  
       - name: Terraform Plan
-        run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -out=tfplan
+        run: |
+          cd gcp
+          terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: |
+          cd gcp
+          terraform apply -auto-approve tfplan
 
       - name: Validate Infrastructure
         run: |
