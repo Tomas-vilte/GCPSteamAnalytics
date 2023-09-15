@@ -1,6 +1,6 @@
 provider "google" {
-  project     = "gcpsteamanalytics"
-  region      = "US"
+  project = "gcpsteamanalytics"
+  region = "US"
 }
 
 module "cloud_storage" {
