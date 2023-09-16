@@ -20,7 +20,7 @@ func GetDB() *sqlx.DB {
 }
 
 func createClient() *sqlx.DB {
-	db, err := sqlx.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
+	db, err := sqlx.Open("mysql", "root:root@tcp(34.29.249.10:3306)/steamAnalytics?parseTime=true")
 	if err != nil {
 		panic(err)
 	}

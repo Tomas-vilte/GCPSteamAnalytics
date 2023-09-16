@@ -1,5 +1,5 @@
 cd ..
-zip -r cloud_function/steam.zip go.mod main.go go.sum utilities handlers functionGCP
+zip -r cloud_function/steam.zip go.mod main.go go.sum db controller api steamapi
 
 gsutil cp steam.zip gs://steam-analytics
 
