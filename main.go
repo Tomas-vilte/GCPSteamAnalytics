@@ -1,22 +1,31 @@
 package GCPSteamAnalytics
 
 import (
-	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/functionGCP"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/api"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
+	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
-func GameHandler(w http.ResponseWriter, r *http.Request) {
-	switch {
-	case r.Method == http.MethodGet && r.URL.Path == "/test-function":
-		functionGCP.CheckHealth(w, r)
-	case r.Method == http.MethodPost && r.URL.Path == "/getGamesFromSteam":
-		functionGCP.ProcessSteamDataAndSaveToStorage(w, r)
-	default:
-		http.Error(w, "Ruta inválida.", http.StatusNotFound)
-	}
+func createApp() controller.ProcessController {
+	storage := persistence.NewStorage()
+	steamClient := service.NewSteamClient(&http.Client{})
+	sv := service.NewGameProcessor(storage, steamClient)
+	return controller.NewProcessController(sv)
+}
+
+func StartServerProcess() {
+	r := gin.Default()
+	app := createApp()
+	api.SetupRoutesGetGamesGCP(r, app)
+
+	r.Run("localhost:8080")
 }
 
 func init() {
-	functions.HTTP("GameHandler", GameHandler)
+	log.Printf("App started!")
+	StartServerProcess()
 }

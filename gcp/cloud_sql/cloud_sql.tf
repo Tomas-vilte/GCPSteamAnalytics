@@ -1,6 +1,6 @@
 resource "google_compute_instance" "my_instance" {
   name         = "my-instance"
-  machine_type = "db-f1-micro"
+  machine_type = "db-n1-standard-4"
   zone         = "us-central1-a"
 
   boot_disk {
@@ -23,12 +23,8 @@ resource "google_sql_database_instance" "my_db_instance" {
   region           = "us-central1"
   settings {
     tier = "db-f1-micro"
-  }
-
-  # Configuración de la lista de redes autorizadas
-  settings {
     ip_configuration {
-      ipv4_enabled    = true
+      ipv4_enabled = true
       authorized_networks {
         name = "my-authorized-network"
         value = "181.165.142.76"

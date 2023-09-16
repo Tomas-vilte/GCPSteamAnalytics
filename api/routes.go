@@ -15,3 +15,11 @@ func MapRoutes(r *gin.Engine, app controller.ProcessController, reviewCtrl contr
 func SetupRoutes(r *gin.Engine, app controller.ProcessController, reviewCtrl controller.ReviewController, gameController controller.GameController) {
 	MapRoutes(r, app, reviewCtrl, gameController)
 }
+
+func MapRoutesGetGames(r *gin.Engine, app controller.ProcessController) {
+	r.POST("/processGames", app.Process)
+}
+
+func SetupRoutesGetGamesGCP(r *gin.Engine, gameController controller.ProcessController) {
+	MapRoutesGetGames(r, gameController)
+}
