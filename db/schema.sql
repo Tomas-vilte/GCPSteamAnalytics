@@ -2,14 +2,16 @@ USE steamAnalytics;
 
 -- Crear la tabla game
 CREATE TABLE IF NOT EXISTS game (
-    id SERIAL PRIMARY KEY,
+    id INT,
     app_id INT UNIQUE,
     name TEXT,
     status TEXT,
     valid BOOLEAN,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    PRIMARY KEY (id)
 );
+
 
 -- Crear un índice en el campo app_id de la tabla game
 CREATE INDEX idx_appid ON game (app_id);
