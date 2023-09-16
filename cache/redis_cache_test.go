@@ -1,9 +1,8 @@
-package tests
+package cache
 
 import (
 	"context"
 	"encoding/json"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/assert"
@@ -24,7 +23,7 @@ func TestRedisCache_Get(t *testing.T) {
 	client := setupTestRedisClient()
 	defer client.Close()
 
-	cacheClient := cache.NewRedisCacheClient("localhost:6379", 0)
+	cacheClient := NewRedisCacheClient("localhost:6379", 0)
 
 	// Datos de prueba
 	key := "test_key"
@@ -48,7 +47,7 @@ func TestRedisCache_Set(t *testing.T) {
 	client := setupTestRedisClient()
 	defer client.Close()
 
-	cacheClient := cache.NewRedisCacheClient("localhost:6379", 0)
+	cacheClient := NewRedisCacheClient("localhost:6379", 0)
 
 	// Datos de prueba
 	key := "test_key"
