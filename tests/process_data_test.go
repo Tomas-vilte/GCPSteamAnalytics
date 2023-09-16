@@ -75,7 +75,11 @@ func TestGameProcessor_ProcessResponse(t *testing.T) {
         "data": {
             "type": "game",
             "name": "Counter-Strike: Global Offensive",
-            "description": "A popular first-person shooter game."
+            "description": "A popular first-person shooter game.",
+			"release_date": {
+                "coming_soon": false,
+                "date": "21 AGO 2012"
+            }
         }
     }
 }`
