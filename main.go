@@ -6,7 +6,6 @@ import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -17,15 +16,9 @@ func createApp() controller.ProcessController {
 	return controller.NewProcessController(sv)
 }
 
-func StartServerProcess() {
-	r := gin.Default()
+func MyCloudFunction(w http.ResponseWriter, r *http.Request) {
+	rGin := gin.Default()
 	app := createApp()
-	api.SetupRoutesGetGamesGCP(r, app)
-
-	r.Run("localhost:8080")
-}
-
-func init() {
-	log.Printf("App started!")
-	StartServerProcess()
+	api.SetupRoutesGetGamesGCP(rGin, app)
+	rGin.ServeHTTP(w, r)
 }

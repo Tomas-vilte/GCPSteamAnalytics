@@ -1,5 +1,5 @@
 cd ..
-zip -r cloud_function/steam.zip go.mod main.go go.sum db controller api steamapi/persistence steamapi/service
+zip -r steam.zip go.mod main.go go.sum db controller api steamapi/persistence steamapi/service steamapi/model handlers cache utils
 
 gsutil cp steam.zip gs://steam-analytics
 
