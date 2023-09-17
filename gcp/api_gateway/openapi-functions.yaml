@@ -9,7 +9,7 @@ schemes:
 produces:
   - application/json
 paths:
-  /getGamesFromSteam:
+  /processGames:
     post:
       summary: Get games from steam
       operationId: getGamesFromSteam

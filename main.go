@@ -18,6 +18,7 @@ func createApp() controller.ProcessController {
 
 func MyCloudFunction(w http.ResponseWriter, r *http.Request) {
 	rGin := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 	app := createApp()
 	api.SetupRoutesGetGamesGCP(rGin, app)
 	rGin.ServeHTTP(w, r)

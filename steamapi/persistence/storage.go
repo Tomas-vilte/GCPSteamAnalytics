@@ -31,6 +31,7 @@ func (s storage) GetAllFrom(limit int) ([]entity.Item, error) {
 	query := "SELECT app_id, name, status, valid, created_at, updated_at FROM game WHERE status = 'PENDING' AND valid = false ORDER BY id LIMIT ?"
 	rows, err := GetDB().Query(query, limit)
 	if err != nil {
+		log.Printf("Error: %v", err.Error())
 		return nil, err
 	}
 	defer rows.Close()
