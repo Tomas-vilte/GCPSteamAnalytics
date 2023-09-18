@@ -1,6 +1,6 @@
 resource "google_compute_instance" "my_instance" {
   name         = "my-instance"
-  machine_type = "db-n1-standard-4"
+  machine_type = "n1-standard-4"
   zone         = "us-central1-a"
 
   boot_disk {
@@ -14,7 +14,7 @@ resource "google_compute_instance" "my_instance" {
     network = "default"
 
   }
-  
+  deletion_protection = false
 }
 
 resource "google_sql_database_instance" "my_db_instance" {
@@ -22,7 +22,7 @@ resource "google_sql_database_instance" "my_db_instance" {
   database_version = "MYSQL_8_0"
   region           = "us-central1"
   settings {
-    tier = "db-f1-micro"
+    tier = "db-n1-standard-4"
     ip_configuration {
       ipv4_enabled = true
       authorized_networks {
