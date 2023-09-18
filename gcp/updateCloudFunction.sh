@@ -3,4 +3,4 @@ zip -r my_functions/process_games/process_games.zip process_games.go go.mod go.s
 
 gsutil cp my_functions/process_games/process_games.zip gs://steam-analytics
 
-gcloud functions deploy process-steam-analytics --region=us-central1 --source=gs://steam-analytics/process_games.zip
+gcloud functions deploy process-games --region=us-central1 --source=gs://steam-analytics/process_games.zip
