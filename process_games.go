@@ -1,12 +1,13 @@
 package GCPSteamAnalytics
 
 import (
+	"net/http"
+
 	"github.com/Tomas-vilte/GCPSteamAnalytics/api"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func createApp() controller.ProcessController {

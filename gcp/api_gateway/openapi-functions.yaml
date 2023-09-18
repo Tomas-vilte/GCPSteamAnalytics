@@ -11,22 +11,10 @@ produces:
 paths:
   /processGames:
     post:
-      summary: Get games from steam
+      summary: Process Games
       operationId: getGamesFromSteam
       x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
-        path_translation: APPEND_PATH_TO_ADDRESS
-      responses:
-        '200':
-          description: A successful response
-          schema:
-            type: string
-  /test-function:
-    get:
-      summary: Test function
-      operationId: testFunction
-      x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-steam-analytics
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-games
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
