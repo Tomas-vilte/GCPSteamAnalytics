@@ -3,7 +3,7 @@ name: Go API Cloud Functions
 on:  
   push:
     paths:
-      - 'cloud_function/**.zip'
+      - 'my_functions/**.zip'
   
 jobs:
   test:
@@ -21,13 +21,7 @@ jobs:
       - name: Format code
         run: |
           go fmt ./...
-                    
-      - name: Build
-        run: |
-          ls
-          go build 
-
-
+                  
       - name: Run Tests
         run: |
           cd tests

@@ -1,15 +1,15 @@
-resource "google_cloudfunctions2_function" "function" {
-  name        = "process-steam-analytics"
+resource "google_cloudfunctions2_function" "function1" {
+  name        = "process-games"
   location    = "us-central1"
   description = "steam-analytics"
 
   build_config {
     runtime     = "go120"
-    entry_point = "ProcessSteamDataAndSaveToStorage" 
+    entry_point = "MyCloudFunction" 
     source {
       storage_source {  
         bucket = "steam-analytics"
-        object = "steam.zip"
+        object = "process_games.zip"
       }
     }
   }
