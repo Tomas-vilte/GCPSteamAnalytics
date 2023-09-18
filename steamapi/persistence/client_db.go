@@ -4,6 +4,7 @@ import (
 	"cloud.google.com/go/cloudsqlconn"
 	"context"
 	"fmt"
+	config2 "github.com/Tomas-vilte/GCPSteamAnalytics/config"
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -36,10 +37,7 @@ func createClientLocal() *sqlx.DB {
 
 // Conexion con Google Cloud SQL
 func createClientInGCP() (*sqlx.DB, error) {
-	dbUser := "root"
-	dbPwd := "root"
-	dbName := "steamAnalytics"
-	instanceConnectionName := "gcpsteamanalytics:us-central1:my-db-instance"
+	config := config2.LoadEnvVariables("configGCP.env")
 	d, err := cloudsqlconn.NewDialer(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("cloudsqlconn.NewDialer: %w", err)
@@ -48,11 +46,11 @@ func createClientInGCP() (*sqlx.DB, error) {
 
 	mysql.RegisterDialContext("cloudsqlconn",
 		func(ctx context.Context, addr string) (net.Conn, error) {
-			return d.Dial(ctx, instanceConnectionName, opts...)
+			return d.Dial(ctx, config.InstanceConnectionName, opts...)
 		})
 
 	dbURI := fmt.Sprintf("%s:%s@cloudsqlconn(localhost:3306)/%s?parseTime=true",
-		dbUser, dbPwd, dbName)
+		config.DBUser, config.DBPass, config.DBName)
 
 	dbPool, err := sqlx.Open("mysql", dbURI)
 	if err != nil {

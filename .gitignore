@@ -5,3 +5,4 @@ gcp/terraform.tfstate
 gcp/terraform.tfstate.backup
 gcp/.terraform.lock.hcl
 application_default_credentials.json
+configGCP.env
