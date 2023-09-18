@@ -19,13 +19,23 @@ var (
 func GetDB() *sqlx.DB {
 	doOnce.Do(func() {
 		if db == nil {
-			db, _ = createClient()
+			db, _ = createClientInGCP() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
 		}
 	})
 	return db
 }
 
-func createClient() (*sqlx.DB, error) {
+// Esta conexion sirve si no vas a usar servicios de gcp.
+func createClientLocal() *sqlx.DB {
+	db, err := sqlx.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
+	if err != nil {
+		panic(err)
+	}
+	return db
+}
+
+// Conexion con Google Cloud SQL
+func createClientInGCP() (*sqlx.DB, error) {
 	dbUser := "root"
 	dbPwd := "root"
 	dbName := "steamAnalytics"
