@@ -4,6 +4,7 @@ import (
 	"cloud.google.com/go/cloudsqlconn"
 	"context"
 	"fmt"
+	config2 "github.com/Tomas-vilte/GCPSteamAnalytics/config"
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -19,17 +20,24 @@ var (
 func GetDB() *sqlx.DB {
 	doOnce.Do(func() {
 		if db == nil {
-			db, _ = createClient()
+			db, _ = createClientInGCP() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
 		}
 	})
 	return db
 }
 
-func createClient() (*sqlx.DB, error) {
-	dbUser := "root"
-	dbPwd := "root"
-	dbName := "steamAnalytics"
-	instanceConnectionName := "gcpsteamanalytics:us-central1:my-db-instance"
+// Esta conexion sirve si no vas a usar servicios de gcp.
+func createClientLocal() *sqlx.DB {
+	db, err := sqlx.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
+	if err != nil {
+		panic(err)
+	}
+	return db
+}
+
+// Conexion con Google Cloud SQL
+func createClientInGCP() (*sqlx.DB, error) {
+	config := config2.LoadEnvVariables("configGCP.env")
 	d, err := cloudsqlconn.NewDialer(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("cloudsqlconn.NewDialer: %w", err)
@@ -38,11 +46,11 @@ func createClient() (*sqlx.DB, error) {
 
 	mysql.RegisterDialContext("cloudsqlconn",
 		func(ctx context.Context, addr string) (net.Conn, error) {
-			return d.Dial(ctx, instanceConnectionName, opts...)
+			return d.Dial(ctx, config.InstanceConnectionName, opts...)
 		})
 
 	dbURI := fmt.Sprintf("%s:%s@cloudsqlconn(localhost:3306)/%s?parseTime=true",
-		dbUser, dbPwd, dbName)
+		config.DBUser, config.DBPass, config.DBName)
 
 	dbPool, err := sqlx.Open("mysql", dbURI)
 	if err != nil {
