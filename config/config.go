@@ -12,6 +12,17 @@ type Config struct {
 	InstanceConnectionName string
 }
 
+type RedisConfig struct {
+	Host string
+}
+
+func LoadRedisenv() *RedisConfig {
+	config := &RedisConfig{
+		Host: setEnvVariable("REDISHOST"),
+	}
+	return config
+}
+
 func LoadEnvVariables() *Config {
 	config := &Config{
 		DBUser:                 setEnvVariable("DB_USER"),
