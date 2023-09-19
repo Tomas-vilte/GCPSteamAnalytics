@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
@@ -13,10 +12,7 @@ type Config struct {
 	InstanceConnectionName string
 }
 
-func LoadEnvVariables(file string) *Config {
-	if err := godotenv.Load(file); err != nil {
-		log.Fatalf("Error al cargar el archivo .env: %v", err)
-	}
+func LoadEnvVariables() *Config {
 	config := &Config{
 		DBUser:                 setEnvVariable("DB_USER"),
 		DBPass:                 setEnvVariable("DB_PASS"),

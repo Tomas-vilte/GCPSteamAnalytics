@@ -15,14 +15,6 @@ func InsertData(fetcher handlers.DataFetcher, database Database) error {
 		return err
 	}
 
-	// Creamos la conexion a la base de datos
-	err = database.Connect()
-	if err != nil {
-		log.Printf("Error al conectar a la base de datos: %v", err)
-		return err
-	}
-	defer database.Close()
-
 	// Insertamos los datos a la base de datos
 	err = database.InsertBatch(items)
 	if err != nil {

@@ -1,8 +1,7 @@
 package db
 
 import (
-	"database/sql"
-	"fmt"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"log"
 
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
@@ -12,37 +11,11 @@ import (
 const batchSize = 1000
 
 type Database interface {
-	Connect() error
-	Close() error
 	InsertBatch(items []entity.Item) error
 	InsertBatchData(items []entity.Item) error
 }
 
-type MySQLDatabase struct {
-	db *sql.DB
-}
-
-func (m *MySQLDatabase) Connect() error {
-	var err error
-	m.db, err = sql.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics")
-	if err != nil {
-		return err
-	}
-
-	err = m.db.Ping()
-	if err != nil {
-		log.Printf("Hubo un error al conectarse a la base de datos: %v", err)
-		m.db.Close()
-		return err
-	}
-
-	fmt.Println("Conexión exitosa a MySQL")
-	return nil
-}
-
-func (m *MySQLDatabase) Close() error {
-	return m.db.Close()
-}
+type MySQLDatabase struct{}
 
 // InsertBatch realiza la inserción de datos en la base de datos por lotes.
 // Divide los datos ingresados en lotes más pequeñas y llama a la función InsertBatchData para cada lote.
@@ -59,7 +32,6 @@ func (m *MySQLDatabase) InsertBatch(items []entity.Item) error {
 		if end > numItems {
 			end = numItems
 		}
-
 		batchData := items[start:end]
 
 		err := m.InsertBatchData(batchData)
@@ -93,7 +65,7 @@ func (m *MySQLDatabase) InsertBatchData(items []entity.Item) error {
 	}
 
 	// Ejecutamos la consulta en la base de datos
-	_, err := m.db.Exec(query, vals...)
+	_, err := persistence.GetDB().Exec(query, vals...)
 	if err != nil {
 		log.Printf("Error al insertar el lote de elementos: %v", err)
 		return err
