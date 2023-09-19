@@ -37,7 +37,8 @@ func createClientLocal() *sqlx.DB {
 
 // Conexion con Google Cloud SQL
 func createClientInGCP() (*sqlx.DB, error) {
-	config := config2.LoadEnvVariables("../configGCP.env")
+	// !ACORDATE DE CONFIGURAR LAS VARIABLES DE ENTORNO EN GCP!
+	config := config2.LoadEnvVariables()
 	d, err := cloudsqlconn.NewDialer(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("cloudsqlconn.NewDialer: %w", err)
