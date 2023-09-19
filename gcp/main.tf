@@ -7,9 +7,9 @@ provider "google" {
 #   source = "./cloud_storage"
 # }
 
-# module "cloud_function" {
-#   source = "./cloud_function"
-# }
+module "cloud_function" {
+  source = "./cloud_function"
+}
 
 # module "api_gateway" {
 #   source = "./api_gateway"
@@ -19,6 +19,6 @@ provider "google" {
 #   source = "./cloud_sql"
 # }
 
-module "redis" {
-  source = "./memory_storage_redis"
-}
+# module "redis" {
+#   source = "./memory_storage_redis"
+# }
