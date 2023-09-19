@@ -2,17 +2,16 @@ package main
 
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/api"
-	db2 "github.com/Tomas-vilte/GCPSteamAnalytics/db"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/handlers"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
 func main() {
+	// Si vas a usarlo en local o en gcp acordate primero de ejecutar esto
+	//data := &handlers.RealDataFetcher{}
+	//db := &db2.MySQLDatabase{}
+	//fmt.Println(db2.InsertData(data, db))
+
 	log.Printf("App started!")
 	api.StartServer()
-	data := handlers.RealDataFetcher{}
-	db := db2.MySQLDatabase{}
-	db2.InsertData(&data, &db)
-
 }
