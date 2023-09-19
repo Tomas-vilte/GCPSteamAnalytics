@@ -23,3 +23,12 @@ func MapRoutesGetGames(r *gin.Engine, app controller.ProcessController) {
 func SetupRoutesGetGamesGCP(r *gin.Engine, gameController controller.ProcessController) {
 	MapRoutesGetGames(r, gameController)
 }
+
+func MapRoutesGetGamesFromDB(r *gin.Engine, app controller.GameController) {
+	r.GET("/gameDetails/:appid", app.GetGameDetailsByID)
+	r.GET("/games", app.GetGames)
+}
+
+func SetupRoutesGetGamesFromDB(r *gin.Engine, app controller.GameController) {
+	MapRoutesGetGamesFromDB(r, app)
+}
