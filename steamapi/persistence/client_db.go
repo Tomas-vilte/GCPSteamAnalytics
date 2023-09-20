@@ -8,6 +8,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"log"
 	"net"
 	"sync"
 )
@@ -57,5 +58,6 @@ func createClientInGCP() (*sqlx.DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("sql.Open: %w", err)
 	}
+	log.Println("Conexion creada con exito")
 	return dbPool, nil
 }

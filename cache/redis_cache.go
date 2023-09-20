@@ -30,10 +30,10 @@ func NewRedisCacheClient(host string, db int) RedisClient {
 
 func (cache *redisCache) getClient() *redis.Client {
 	return redis.NewClient(&redis.Options{
+		Network:     "tcp",
 		Addr:        cache.host,
 		Password:    "",
 		DB:          cache.db,
-		DialTimeout: 100 * time.Millisecond,
 		ReadTimeout: 100 * time.Millisecond,
 	})
 }
