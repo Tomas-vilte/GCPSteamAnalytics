@@ -11,7 +11,7 @@ resource "google_compute_instance" "my_instance" {
   
 
   network_interface {
-    network = "default"
+    network = "my-vpc"
 
   }
   deletion_protection = false
@@ -24,6 +24,7 @@ resource "google_sql_database_instance" "my_db_instance" {
   settings {
     tier = "db-n1-standard-4"
     ip_configuration {
+      enable_private_path_for_google_cloud_services = true
       ipv4_enabled = true
       authorized_networks {
         name = "my-authorized-network"
