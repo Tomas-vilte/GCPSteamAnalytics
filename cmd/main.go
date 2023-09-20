@@ -9,8 +9,8 @@ import (
 func main() {
 	// Si vas a usarlo en local o en gcp acordate primero de ejecutar esto
 	//data := &handlers.RealDataFetcher{}
-	//db := &db2.MySQLDatabase{}
-	//fmt.Println(db2.InsertData(data, db))
+	//db1 := &db.MySQLDatabase{}
+	//fmt.Println(db.InsertData(data, db1))
 
 	log.Printf("App started!")
 	api.StartServer()

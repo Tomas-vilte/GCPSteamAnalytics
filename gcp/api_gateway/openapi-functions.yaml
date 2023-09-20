@@ -21,3 +21,32 @@ paths:
           description: A successful response
           schema:
             type: string
+  /gameDetails/{appid}:  
+    get:
+      summary: Get game details by ID
+      operationId: getGameDetailsByID
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: appid
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /games:
+    get:
+      summary: Get games
+      operationId: getGames
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
