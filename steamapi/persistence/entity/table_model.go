@@ -3,7 +3,6 @@ package entity
 import (
 	"errors"
 	"strings"
-	"time"
 )
 
 type LanguageArray []string
@@ -37,8 +36,8 @@ type Platforms struct {
 }
 
 type ReleaseDate struct {
-	Date       time.Time `json:"release_date" db:"release_date"`
-	ComingSoon bool      `json:"coming_soon" db:"coming_soon"`
+	Date       string `json:"release_date" db:"release_date"`
+	ComingSoon bool   `json:"coming_soon" db:"coming_soon"`
 }
 
 type FullGame struct {
