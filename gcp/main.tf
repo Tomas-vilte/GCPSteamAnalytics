@@ -14,6 +14,7 @@ module "cloud_function" {
   INSTANCE_CONNECTION_NAME = var.INSTANCE_CONNECTION_NAME
   REDISHOTS = var.REDISHOTS
   source = "./cloud_function"
+  
 }
 
 # module "api_gateway" {
@@ -24,8 +25,7 @@ module "cloud_function" {
 #   source = "./cloud_sql"
 # }
 
-module "redis" {
-  
+module "redis" { 
   source = "./memory_storage_redis"
 }
 
