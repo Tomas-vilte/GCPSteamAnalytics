@@ -3,4 +3,5 @@ resource "google_redis_instance" "cache" {
     region = "us-central1"
     tier = "BASIC"
     memory_size_gb = 5
+    authorized_network = "my-vpc"
 }
