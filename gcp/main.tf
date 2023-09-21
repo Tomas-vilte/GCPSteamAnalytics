@@ -24,9 +24,9 @@ module "cloud_function" {
 #   source = "./cloud_sql"
 # }
 
-# module "redis" {
-#   source = "./memory_storage_redis"
-# }
+module "redis" {
+  source = "./memory_storage_redis"
+}
 
 # module "my_network" {
 #   source = "./vpc"
