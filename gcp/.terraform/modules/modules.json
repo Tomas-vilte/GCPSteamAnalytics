@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"cloud_function","Source":"./cloud_function","Dir":"cloud_function"},{"Key":"redis","Source":"./memory_storage_redis","Dir":"memory_storage_redis"}]}
