@@ -18,7 +18,7 @@ variable "INSTANCE_CONNECTION_NAME" {
   type        = string
 }
 
-variable "REDISHOTS" {
+variable "REDISHOST" {
   description = "Dirrecion host de MemoryStore de Redis"
   type = string
 }
