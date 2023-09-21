@@ -12,7 +12,7 @@ module "cloud_function" {
   DB_PASS = var.DB_PASS
   DB_NAME = var.DB_NAME
   INSTANCE_CONNECTION_NAME = var.INSTANCE_CONNECTION_NAME
-  REDISHOST = var.REDISHOTS
+  REDISHOST = var.REDISHOST
   source = "./cloud_function" 
 }
 

@@ -18,7 +18,7 @@ resource "google_cloudfunctions2_function" "function1" {
       DB_PASS = var.DB_PASS
       DB_NAME = var.DB_NAME
       INSTANCE_CONNECTION_NAME = var.INSTANCE_CONNECTION_NAME
-      REDISHOST = var.REDISHOTS
+      REDISHOST = var.REDISHOST
     }
     max_instance_count = 1
     available_memory   = "1024M"
@@ -49,7 +49,7 @@ resource "google_cloudfunctions2_function" "function2" {
       DB_PASS = var.DB_PASS
       DB_NAME = var.DB_NAME
       INSTANCE_CONNECTION_NAME = var.INSTANCE_CONNECTION_NAME
-      REDISHOST = var.REDISHOTS
+      REDISHOST = var.REDISHOST
     }
     max_instance_count = 1
     available_memory = "1024M"
