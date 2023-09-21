@@ -25,6 +25,7 @@ module "cloud_function" {
 # }
 
 module "redis" {
+  
   source = "./memory_storage_redis"
 }
 
