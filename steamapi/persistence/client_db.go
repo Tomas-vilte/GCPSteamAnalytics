@@ -23,6 +23,7 @@ func GetDB() *sqlx.DB {
 		if db == nil {
 			db, _ = createClientInGCP() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
 		}
+		log.Println("Conexion creada con exito")
 	})
 	return db
 }
@@ -58,6 +59,5 @@ func createClientInGCP() (*sqlx.DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("sql.Open: %w", err)
 	}
-	log.Println("Conexion creada con exito")
 	return dbPool, nil
 }
