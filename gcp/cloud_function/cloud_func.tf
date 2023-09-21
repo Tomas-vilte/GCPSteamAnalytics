@@ -4,7 +4,7 @@ resource "google_cloudfunctions2_function" "function1" {
   description = "steam-analytics"
   build_config {
     runtime     = "go120"
-    entry_point = "MyCloudFunction" 
+    entry_point = "ProcessGames" 
     source {
       storage_source {  
         bucket = "steam-analytics"
@@ -13,12 +13,18 @@ resource "google_cloudfunctions2_function" "function1" {
     }
   }
   service_config {
+     environment_variables = {
+      DB_USER = var.DB_USER
+      DB_PASS = var.DB_PASS
+      DB_NAME = var.DB_NAME
+      INSTANCE_CONNECTION_NAME = var.INSTANCE_CONNECTION_NAME
+    }
     max_instance_count = 1
     available_memory   = "1024M"
     timeout_seconds    = 60
     ingress_settings = "ALLOW_ALL"
-    vpc_connector = "my-vpc"
-    vpc_connector_egress_settings = "PRIVATE_RANGES_ONLY"
+    vpc_connector = "vpc"
+    vpc_connector_egress_settings = "ALL_TRAFFIC"
   }
 }
 
@@ -26,7 +32,6 @@ resource "google_cloudfunctions2_function" "function2" {
   name = "get-games"
   location = "us-central1"
   description = "Get games from Cloud SQL"
-
   build_config {
     runtime = "go120"
     entry_point = "GetGames"
@@ -38,11 +43,18 @@ resource "google_cloudfunctions2_function" "function2" {
     }
   }
   service_config {
+   environment_variables = {
+      REDISHOST = var.REDISHOTS
+      DB_USER = var.DB_USER
+      DB_PASS = var.DB_PASS
+      DB_NAME = var.DB_NAME
+      INSTANCE_CONNECTION_NAME = var.INSTANCE_CONNECTION_NAME
+    }
     max_instance_count = 1
     available_memory = "1024M"
     timeout_seconds = 60
     ingress_settings = "ALLOW_ALL"
-    vpc_connector = "my-vpc"
-    vpc_connector_egress_settings = "PRIVATE_RANGES_ONLY"
+    vpc_connector = "vpc"
+    vpc_connector_egress_settings = "ALL_TRAFFIC"
   }
 }

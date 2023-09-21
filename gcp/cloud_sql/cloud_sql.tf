@@ -1,4 +1,4 @@
-resource "google_compute_instance" "my_instance" {
+resource "google_compute_instance" "my_instance_cloud_sql" {
   name         = "my-instance"
   machine_type = "n1-standard-4"
   zone         = "us-central1-a"
@@ -24,11 +24,12 @@ resource "google_sql_database_instance" "my_db_instance" {
   settings {
     tier = "db-n1-standard-4"
     ip_configuration {
+      ipv4_enabled = true  # Habilita la IP pública
+      private_network = "projects/gcpsteamanalytics/global/networks/my-vpc"  # Reemplazala con tu VPC
       enable_private_path_for_google_cloud_services = true
-      ipv4_enabled = true
       authorized_networks {
         name = "my-authorized-network"
-        value = "181.165.142.76"
+        value = "181.165.142.76" # Aca pone tu ip :D
       }
     }
   }

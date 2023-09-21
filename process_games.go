@@ -17,7 +17,7 @@ func createApp() controller.ProcessController {
 	return controller.NewProcessController(sv)
 }
 
-func MyCloudFunction(w http.ResponseWriter, r *http.Request) {
+func ProcessGames(w http.ResponseWriter, r *http.Request) {
 	rGin := gin.Default()
 	gin.SetMode(gin.ReleaseMode)
 	app := createApp()

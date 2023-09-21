@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS games_details (
     linux BOOLEAN,
     genre_id TEXT,
     type_genre TEXT,
-    release_date DATE,
+    release_date TEXT,
     coming_soon BOOLEAN,
     currency TEXT,
     initial_price FLOAT,

@@ -49,11 +49,24 @@ jobs:
           terraform plan
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      - name: Set up environment variables
+        env:
+          REDISHOST: ${{ secrets.REDISHOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          INSTANCE_CONNECTION_NAME: ${{ secrets.INSTANCE_CONNECTION_NAME }}
+        run: |
+          echo "REDISHOST=${REDISHOST}" >> $GITHUB_ENV
+          echo "DB_USER=${DB_USER}" >> $GITHUB_ENV
+          echo "DB_PASS=${DB_PASS}" >> $GITHUB_ENV
+          echo "DB_NAME=${DB_NAME}" >> $GITHUB_ENV
+          echo "INSTANCE_CONNECTION_NAME=${INSTANCE_CONNECTION_NAME}" >> $GITHUB_ENV
 
       - name: Terraform Apply
         run: |
           cd gcp
-          terraform apply -auto-approve 
+          terraform apply -auto-approve -var "REDISHOST=${{ secrets.REDISHOST }} DB_USER=${{ secrets.DB_USER }}" -var "DB_PASS=${{ secrets.DB_PASS }}" -var "DB_NAME=${{ secrets.DB_NAME }}" -var "INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}"
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 

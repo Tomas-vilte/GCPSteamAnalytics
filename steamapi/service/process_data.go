@@ -9,9 +9,7 @@ import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 	"log"
 	"strconv"
-	"strings"
 	"sync"
-	"time"
 )
 
 type GameProcessor struct {
@@ -138,40 +136,11 @@ func (sv *GameProcessor) ProcessResponse(responseData [][]byte, games []entity.I
 	return appDetails, nil
 }
 
-var spanishToEnglishMonths = map[string]string{
-	"ENE": "Jan",
-	"FEB": "Feb",
-	"MAR": "Mar",
-	"ABR": "Apr",
-	"MAY": "May",
-	"JUN": "Jun",
-	"JUL": "Jul",
-	"AGO": "Aug",
-	"SEP": "Sep",
-	"OCT": "Oct",
-	"NOV": "Nov",
-	"DIC": "Dec",
-}
-
-func parseSpanishDate(dateStr string) (time.Time, error) {
-	for spanishMonth, englishMonth := range spanishToEnglishMonths {
-		dateStr = strings.ReplaceAll(dateStr, spanishMonth, englishMonth)
-	}
-
-	return time.Parse("2 Jan 2006", dateStr)
-}
-
 func (sv *GameProcessor) processGameData(data *steamapi.AppDetails) error {
-	releaseDate, err := parseSpanishDate(data.ReleaseDate.Date)
-	if err != nil {
-		return fmt.Errorf("error al analizar la fecha de lanzamiento: %v", err)
-	}
-	data.ReleaseDate.Date = releaseDate.Format("2006-01-02")
-
 	// Verificar si initial_formatted está vacío y initial tiene un valor
 	if data.PriceOverview.InitialFormatted == "" && data.PriceOverview.Initial != 0 {
-		initialFloat := float64(data.PriceOverview.Initial) / 100.0
-		finalFloat := float64(data.PriceOverview.Final) / 100.0
+		initialFloat := float64(data.PriceOverview.Initial) / 100.00
+		finalFloat := float64(data.PriceOverview.Final) / 100.00
 		priceARS := fmt.Sprintf("ARS$ %.2f", initialFloat)
 		data.PriceOverview.InitialFormatted = priceARS
 		data.PriceOverview.Initial = initialFloat
