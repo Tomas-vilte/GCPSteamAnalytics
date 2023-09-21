@@ -24,7 +24,7 @@ resource "google_cloudfunctions2_function" "function1" {
     timeout_seconds    = 60
     ingress_settings = "ALLOW_ALL"
     vpc_connector = "vpc"
-    vpc_connector_egress_settings = "ALL_TRAFFIC"
+    vpc_connector_egress_settings = "VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED"
   }
 }
 
@@ -55,6 +55,6 @@ resource "google_cloudfunctions2_function" "function2" {
     timeout_seconds = 60
     ingress_settings = "ALLOW_ALL"
     vpc_connector = "vpc"
-    vpc_connector_egress_settings = "ALL_TRAFFIC"
+    vpc_connector_egress_settings = "VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED"
   }
 }

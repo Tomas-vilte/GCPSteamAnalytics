@@ -14,6 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up environment variables
+        env:
+          REDISHOST: ${{ secrets.REDISHOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          INSTANCE_CONNECTION_NAME: ${{ secrets.INSTANCE_CONNECTION_NAME }}
+        run: |
+          echo "DB_NAME=${DB_NAME}" >> $GITHUB_ENV
+          echo "DB_PASS=${DB_PASS}" >> $GITHUB_ENV
+          echo "DB_USER=${DB_USER}" >> $GITHUB_ENV
+          echo "INSTANCE_CONNECTION_NAME=${INSTANCE_CONNECTION_NAME}" >> $GITHUB_ENV
+          echo "REDISHOST=${REDISHOST}" >> $GITHUB_ENV 
+
       - name: Set up Cloud SDK
         uses: google-github-actions/auth@v1
         with:
@@ -46,27 +60,14 @@ jobs:
       - name: Terraform Plan
         run: |
           cd gcp
-          terraform plan
+          terraform plan -var "DB_NAME=${{ secrets.DB_NAME }} DB_PASS=${{ secrets.DB_PASS }}" -var "DB_USER=${{ secrets.DB_USER }}" -var "INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}" -var "REDISHOST=${{ secrets.REDISHOST }}"
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-      - name: Set up environment variables
-        env:
-          REDISHOST: ${{ secrets.REDISHOST }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          INSTANCE_CONNECTION_NAME: ${{ secrets.INSTANCE_CONNECTION_NAME }}
-        run: |
-          echo "REDISHOST=${REDISHOST}" >> $GITHUB_ENV
-          echo "DB_USER=${DB_USER}" >> $GITHUB_ENV
-          echo "DB_PASS=${DB_PASS}" >> $GITHUB_ENV
-          echo "DB_NAME=${DB_NAME}" >> $GITHUB_ENV
-          echo "INSTANCE_CONNECTION_NAME=${INSTANCE_CONNECTION_NAME}" >> $GITHUB_ENV
 
       - name: Terraform Apply
         run: |
           cd gcp
-          terraform apply -auto-approve -var "REDISHOST=${{ secrets.REDISHOST }} DB_USER=${{ secrets.DB_USER }}" -var "DB_PASS=${{ secrets.DB_PASS }}" -var "DB_NAME=${{ secrets.DB_NAME }}" -var "INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}"
+          terraform apply -auto-approve -var "DB_NAME=${{ secrets.DB_NAME }} DB_PASS=${{ secrets.DB_PASS }}" -var "DB_USER=${{ secrets.DB_USER }}" -var "INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}" -var "REDISHOST=${{ secrets.REDISHOST }}"
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
