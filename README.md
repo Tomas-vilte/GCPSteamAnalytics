@@ -17,7 +17,7 @@ Esta es la documentación de la API de Steam-Analytics. Aca vas a encontrar toda
 
 Este endpoint te permite obtener los detalles de un juego específico utilizando su `appID`.
 
-https://myapi-7tl86y4z.uc.gateway.dev/gameDetails/10
+- Endpoint: https://myapi-7tl86y4z.uc.gateway.dev/gameDetails/10
 
 ### Parámetros de la URL
 
@@ -51,13 +51,13 @@ https://myapi-7tl86y4z.uc.gateway.dev/gameDetails/10
 
 Este endpoint te permite obtener una lista de juegos.
 
-https://myapi-7tl86y4z.uc.gateway.dev/games?page=1&page_size=10&filter=dlc
+- Endpoint: https://myapi-7tl86y4z.uc.gateway.dev/games?page=1&page_size=10&filter=dlc
 
 ### Parámetros de la URL
 
 - `page` (integer, opcional): El número de página que deseas consultar (predeterminado: 1).
 
-- `limit` (integer, opcional): El número máximo de juegos por página (predeterminado: 10).
+- `page_size` (integer, opcional): El número máximo de juegos por página (predeterminado: 10).
 
 - `filter` (string, opcional): Filtro para tipo de juego (dlc o game) (predeterminado: game).
 
