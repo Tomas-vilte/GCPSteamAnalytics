@@ -11,7 +11,8 @@ import (
 )
 
 type ReviewController interface {
-	FetchReviews(ctx *gin.Context)
+	ProcessReviews(ctx *gin.Context)
+	GetReviews(ctx *gin.Context)
 }
 
 type reviewControllers struct {
@@ -26,7 +27,7 @@ func NewReviewController(api service.ReviewsClient, storage persistence.StorageD
 	}
 }
 
-func (rc *reviewControllers) FetchReviews(ctx *gin.Context) {
+func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
 	typeReview := ctx.DefaultQuery("typeReview", "")
 	appidStr := ctx.DefaultQuery("appid", "")
 	appid, err := strconv.Atoi(appidStr)
@@ -56,4 +57,25 @@ func (rc *reviewControllers) FetchReviews(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, reviews)
+}
+
+func parseURLParams(ctx *gin.Context) (int, string, int, error) {
+	// Obtener los parámetros de la URL
+	appidStr := ctx.Param("appid")
+	typeReview := ctx.Param("type_review")
+	limitStr := ctx.Param("limit")
+
+	// Convierte appid a int
+	appid, err := strconv.Atoi(appidStr)
+	if err != nil {
+		return 0, "", 0, err
+	}
+
+	// Convierte limit a int
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		return 0, "", 0, err
+	}
+
+	return appid, typeReview, limit, nil
 }
