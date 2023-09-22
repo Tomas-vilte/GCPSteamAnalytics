@@ -15,8 +15,10 @@ func StartServer() {
 	app := createApp()
 	reviewCtrl := createReviewController()
 	getGame := createGameDetails()
-	SetupRoutes(r, app, reviewCtrl, getGame)
 
+	r.Use(RateLimitMiddleware())
+
+	SetupRoutes(r, app, reviewCtrl, getGame)
 	r.Run("localhost:8080")
 }
 
