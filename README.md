@@ -6,10 +6,18 @@
 
 Esta es la documentación de la API de Steam-Analytics. Aca vas a encontrar toda la documentacion de los endpoints disponibles y cómo utilizarlos.
 
+### Límite de velocidad (Rate Limit)
+
+Implemente un límite de velocidad en las solicitudes a la API. El límite actual es de 100 solicitudes por minuto. Si excedes ese límite, vas a recibir una respuesta de error con el código de estado 429.
+![Texto alternativo](https://media.tenor.com/jxpZqsCMEWsAAAAC/paraaa-fisura.gif)
+
+
+
 ## Tabla de Contenidos
 
 - [Obtener Detalles de un Juego por appID](#obtener-detalles-de-un-juego-por-appid)
 - [Obtener Lista de Juegos](#obtener-lista-de-juegos)
+- [Obtener Reviews](#obtener-reviews)
 
 ## Obtener Detalles de un Juego por appID
 
@@ -92,5 +100,18 @@ Este endpoint te permite obtener una lista de juegos.
         }
     ]
 }
-
 ```
+
+## Obtener Reviews de un Juego
+
+### Descripción
+
+Este endpoint te permite obtener reseñas de un juego específico.
+
+- Endpoint: Proximamente
+
+### Parámetros de la URL
+
+- `appid`: El ID del juego de la que deseas obtener reseñas.
+
+- `type_reviews`: Puede ser "negative" o "positive" para filtrar reseñas negativas o positivas, respectivamente.
