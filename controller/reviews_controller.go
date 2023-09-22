@@ -13,17 +13,17 @@ type ReviewController interface {
 	FetchReviews(ctx *gin.Context)
 }
 
-type reviewController struct {
+type reviewControllers struct {
 	reviewAPI service.ReviewsClient
 }
 
 func NewReviewController(api service.ReviewsClient) ReviewController {
-	return &reviewController{
+	return &reviewControllers{
 		reviewAPI: api,
 	}
 }
 
-func (rc *reviewController) FetchReviews(ctx *gin.Context) {
+func (rc *reviewControllers) FetchReviews(ctx *gin.Context) {
 	typeReview := ctx.DefaultQuery("typeReview", "")
 	appidStr := ctx.DefaultQuery("appid", "")
 	appid, err := strconv.Atoi(appidStr)

@@ -1,19 +1,15 @@
 package service
 
 import (
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"log"
 	"net/http"
-	"os"
-	"strconv"
 )
 
 type ReviewsClient interface {
 	FetchReviews(appID int, typeReview string) (*model.ReviewResponse, error)
-	SaveReviewsToCSV(appID int, reviews *model.ReviewResponse, filePath string) error
 }
 
 type SteamReviewAPI struct {
@@ -59,75 +55,4 @@ func (s *SteamReviewAPI) FetchReviews(appID int, typeReview string) (*model.Revi
 
 	// Devolver un puntero a la estructura ReviewResponse y un posible error
 	return &reviewResponse, nil
-}
-
-func (s *SteamReviewAPI) SaveReviewsToCSV(appID int, reviews *model.ReviewResponse, filePath string) error {
-	log.Printf("Guardando reseñas en el archivo CSV para el appID %d...", appID)
-	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		log.Printf("Hubo un error al abrir el archivo csv: %v", err)
-		return err
-	}
-	defer file.Close()
-
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
-	fileInfo, _ := file.Stat()
-	if fileInfo.Size() == 0 {
-		header := []string{
-			"SteamAppID",
-			"numReviews",
-			"AuthorSteamID",
-			"NumGamesOwned",
-			"NumReviews",
-			"PlaytimeForever",
-			"PlaytimeLastTwoWeeks",
-			"PlaytimeAtReview",
-			"LastPlayed",
-			"Language",
-			"ReviewText",
-			"TimestampCreated",
-			"VotedUp",
-			"VotesUp",
-			"VotesFunny",
-			"CommentCount",
-			"SteamPurchase",
-			"ReceivedForFree",
-			"WrittenDuringEarlyAccess",
-		}
-		if err := writer.Write(header); err != nil {
-			return err
-		}
-	}
-
-	for _, review := range reviews.Reviews {
-		record := []string{
-			strconv.Itoa(appID),
-			strconv.Itoa(reviews.ReviewSummary.NumReviews),
-			review.Author.SteamID,
-			strconv.Itoa(review.Author.NumGamesOwned),
-			strconv.Itoa(review.Author.NumReviews),
-			strconv.Itoa(review.Author.PlaytimeForever),
-			strconv.Itoa(review.Author.PlaytimeLastTwoWeeks),
-			strconv.Itoa(review.Author.PlaytimeAtReview),
-			strconv.Itoa(review.Author.LastPlayed),
-			review.Language,
-			review.ReviewText,
-			strconv.Itoa(review.TimestampCreated),
-			strconv.FormatBool(review.VotedUp),
-			strconv.Itoa(review.VotesUp),
-			strconv.Itoa(review.VotesFunny),
-			strconv.Itoa(review.CommentCount),
-			strconv.FormatBool(review.SteamPurchase),
-			strconv.FormatBool(review.ReceivedForFree),
-			strconv.FormatBool(review.WrittenDuringEarlyAccess),
-		}
-		if err := writer.Write(record); err != nil {
-			log.Printf("Error al escribir en el CSV: %v", err)
-			return err
-		}
-	}
-	log.Printf("Reseñas guardadas en el archivo CSV para el appID %d.", appID)
-	return nil
 }

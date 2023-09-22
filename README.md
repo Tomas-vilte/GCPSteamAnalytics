@@ -115,3 +115,5 @@ Este endpoint te permite obtener reseñas de un juego específico.
 - `appid`: El ID del juego de la que deseas obtener reseñas.
 
 - `type_reviews`: Puede ser "negative" o "positive" para filtrar reseñas negativas o positivas, respectivamente.
+
+- `limit` (opcional): El numero max de reseñas que deseas obtener (por defecto, se devuelven 10 reseñas si no se especifica).

@@ -19,6 +19,7 @@ type StorageDB interface {
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
 	GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error)
+	InsertReviews(reviews []model.Review) error
 }
 
 func NewStorage() StorageDB {
@@ -282,4 +283,42 @@ func getTotalGamesCount() (int, error) {
 		return 0, err
 	}
 	return totalItems, nil
+}
+
+func (s storage) InsertReviews(reviews []model.Review) error {
+	for _, review := range reviews {
+		query := `INSERT INTO TablaDesnormalizadaReviews
+		(RecommendationID, SteamID, NumGamesOwned, NumReviews, PlaytimeForever,
+		PlaytimeLastTwoWeeks, PlaytimeAtReview, LastPlayed, Language, ReviewText,
+		TimestampCreated, TimestampUpdated, VotedUp, VotesUp, VotesFunny,
+		CommentCount, SteamPurchase, ReceivedForFree, WrittenDuringEarlyAccess)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+		_, err := GetDB().Query(query,
+			review.RecommendationID,
+			review.Author.SteamID,
+			review.Author.NumGamesOwned,
+			review.Author.NumReviews,
+			review.Author.PlaytimeForever,
+			review.Author.PlaytimeLastTwoWeeks,
+			review.Author.PlaytimeAtReview,
+			review.Author.LastPlayed,
+			review.Language,
+			review.ReviewText,
+			review.TimestampCreated,
+			review.TimestampUpdated,
+			review.VotedUp,
+			review.VotesUp,
+			review.VotesFunny,
+			review.CommentCount,
+			review.SteamPurchase,
+			review.ReceivedForFree,
+			review.WrittenDuringEarlyAccess,
+		)
+		if err != nil {
+			log.Printf("Hubo un error al guardar las reviews: %v\n", err)
+			return err
+		}
+	}
+	log.Println("Reseñas insertadas correctamente en la base de datos.")
+	return nil
 }

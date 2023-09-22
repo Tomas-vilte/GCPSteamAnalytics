@@ -1,9 +1,5 @@
 package model
 
-type ReviewData interface {
-	GetPositiveReviews(appID int) (*ReviewResponse, error)
-}
-
 type ReviewSummary struct {
 	NumReviews int `json:"num_reviews"`
 }
