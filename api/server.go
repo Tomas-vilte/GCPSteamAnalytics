@@ -31,7 +31,8 @@ func createApp() controller.ProcessController {
 
 func createReviewController() controller.ReviewController {
 	sv := service.NewSteamReviewAPI(&http.Client{})
-	return controller.NewReviewController(sv)
+	storage := persistence.NewStorage()
+	return controller.NewReviewController(sv, storage)
 }
 
 func createGameDetails() controller.GameController {

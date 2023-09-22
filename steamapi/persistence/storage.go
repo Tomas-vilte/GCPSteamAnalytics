@@ -19,7 +19,7 @@ type StorageDB interface {
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
 	GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error)
-	InsertReviews(reviews []model.Review) error
+	InsertReviews(appID int, reviews []model.Review) error
 }
 
 func NewStorage() StorageDB {
@@ -285,15 +285,16 @@ func getTotalGamesCount() (int, error) {
 	return totalItems, nil
 }
 
-func (s storage) InsertReviews(reviews []model.Review) error {
+func (s storage) InsertReviews(appID int, reviews []model.Review) error {
 	for _, review := range reviews {
-		query := `INSERT INTO TablaDesnormalizadaReviews
-		(RecommendationID, SteamID, NumGamesOwned, NumReviews, PlaytimeForever,
+		query := `INSERT INTO reviews
+		(app_id, RecommendationID, SteamID, NumGamesOwned, NumReviews, PlaytimeForever,
 		PlaytimeLastTwoWeeks, PlaytimeAtReview, LastPlayed, Language, ReviewText,
 		TimestampCreated, TimestampUpdated, VotedUp, VotesUp, VotesFunny,
 		CommentCount, SteamPurchase, ReceivedForFree, WrittenDuringEarlyAccess)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 		_, err := GetDB().Query(query,
+			appID,
 			review.RecommendationID,
 			review.Author.SteamID,
 			review.Author.NumGamesOwned,

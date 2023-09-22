@@ -50,7 +50,7 @@ CREATE INDEX idx_appid ON games_details (app_id);
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
-    app_id INT NOT NULL UNIQUE,
+    app_id INT NOT NULL,
     RecommendationID TEXT,
     SteamID TEXT,
     NumGamesOwned INT,

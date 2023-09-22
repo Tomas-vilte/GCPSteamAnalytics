@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -15,11 +16,13 @@ type ReviewController interface {
 
 type reviewControllers struct {
 	reviewAPI service.ReviewsClient
+	dbClient  persistence.StorageDB
 }
 
-func NewReviewController(api service.ReviewsClient) ReviewController {
+func NewReviewController(api service.ReviewsClient, storage persistence.StorageDB) ReviewController {
 	return &reviewControllers{
 		reviewAPI: api,
+		dbClient:  storage,
 	}
 }
 
@@ -40,6 +43,15 @@ func (rc *reviewControllers) FetchReviews(ctx *gin.Context) {
 		log.Printf("Error al obtener las revisiones para appID %d: %v", appid, err)
 		ctx.JSON(500, gin.H{
 			"error": fmt.Sprintf("Error al obtener las revisiones para appID %d: %v", appid, err),
+		})
+		return
+	}
+
+	err = rc.dbClient.InsertReviews(appid, reviews.Reviews)
+	if err != nil {
+		log.Printf("Error al insertar las revisiones en la base de datos: %v", err)
+		ctx.JSON(500, gin.H{
+			"error": fmt.Sprintf("Error al insertar las revisiones en la base de datos: %v", err.Error()),
 		})
 		return
 	}
