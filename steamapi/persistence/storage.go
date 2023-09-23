@@ -20,6 +20,7 @@ type StorageDB interface {
 	GetAllByAppID(appID int) ([]entity.Item, error)
 	GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error)
 	InsertReviews(appID int, reviewType string, reviews []model.Review) error
+	GetReviews(appID int, reviewType string, limit int) (*model.ReviewsDB, error)
 }
 
 func NewStorage() StorageDB {
@@ -343,4 +344,17 @@ func reviewExistsInDB(recommendationID string) (bool, error) {
 		return false, err
 	}
 	return exists, nil
+}
+
+func (s storage) GetReviews(appID int, reviewType string, limit int) (*model.ReviewsDB, error) {
+	var reviews model.ReviewsDB
+	query := `SELECT * FROM reviews WHERE app_id = ? AND review_type = ? AND LIMIT = ?`
+	err := GetDB().QueryRow(query, appID, reviewType, limit).Scan(&reviews)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, err
+		}
+		return nil, err
+	}
+	return &reviews, nil
 }
