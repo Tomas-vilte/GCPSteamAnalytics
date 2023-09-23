@@ -19,7 +19,7 @@ type StorageDB interface {
 	GetGameDetails(id int) (*entity.GameDetails, error)
 	GetAllByAppID(appID int) ([]entity.Item, error)
 	GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error)
-	InsertReviews(appID int, reviews []model.Review) error
+	InsertReviews(appID int, reviewType string, reviews []model.Review) error
 }
 
 func NewStorage() StorageDB {
@@ -285,41 +285,62 @@ func getTotalGamesCount() (int, error) {
 	return totalItems, nil
 }
 
-func (s storage) InsertReviews(appID int, reviews []model.Review) error {
+func (s storage) InsertReviews(appID int, reviewType string, reviews []model.Review) error {
 	for _, review := range reviews {
+		exists, err := reviewExistsInDB(review.RecommendationID)
+		if err != nil {
+			log.Printf("Error al verificar si el RecommendationID %s existe en la base de datos: %v", review.RecommendationID, err)
+			return err
+		}
 		query := `INSERT INTO reviews
-		(app_id, RecommendationID, SteamID, NumGamesOwned, NumReviews, PlaytimeForever,
-		PlaytimeLastTwoWeeks, PlaytimeAtReview, LastPlayed, Language, ReviewText,
-		TimestampCreated, TimestampUpdated, VotedUp, VotesUp, VotesFunny,
-		CommentCount, SteamPurchase, ReceivedForFree, WrittenDuringEarlyAccess)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-		_, err := GetDB().Query(query,
-			appID,
-			review.RecommendationID,
-			review.Author.SteamID,
-			review.Author.NumGamesOwned,
-			review.Author.NumReviews,
-			review.Author.PlaytimeForever,
-			review.Author.PlaytimeLastTwoWeeks,
-			review.Author.PlaytimeAtReview,
-			review.Author.LastPlayed,
-			review.Language,
-			review.ReviewText,
-			review.TimestampCreated,
-			review.TimestampUpdated,
-			review.VotedUp,
-			review.VotesUp,
-			review.VotesFunny,
-			review.CommentCount,
-			review.SteamPurchase,
-			review.ReceivedForFree,
-			review.WrittenDuringEarlyAccess,
-		)
+		(app_id, review_type, recommendation_id, steam_id, num_games_owned, num_reviews, playtime_forever,
+		playtime_last_two_weeks, playtime_at_review, last_played, language, review_text,
+		timestamp_created, timestamp_updated, voted_up, votes_up, votes_funny,
+		comment_count, steam_purchase, received_for_free, written_during_early_access)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+		recommendationID, _ := strconv.Atoi(review.RecommendationID)
+
+		if !exists {
+			_, err = GetDB().Query(query,
+				appID,
+				reviewType,
+				recommendationID,
+				review.Author.SteamID,
+				review.Author.NumGamesOwned,
+				review.Author.NumReviews,
+				review.Author.PlaytimeForever,
+				review.Author.PlaytimeLastTwoWeeks,
+				review.Author.PlaytimeAtReview,
+				review.Author.LastPlayed,
+				review.Language,
+				review.ReviewText,
+				review.TimestampCreated,
+				review.TimestampUpdated,
+				review.VotedUp,
+				review.VotesUp,
+				review.VotesFunny,
+				review.CommentCount,
+				review.SteamPurchase,
+				review.ReceivedForFree,
+				review.WrittenDuringEarlyAccess,
+			)
+		}
 		if err != nil {
 			log.Printf("Hubo un error al guardar las reviews: %v\n", err)
 			return err
 		}
 	}
-	log.Println("Reseñas insertadas correctamente en la base de datos.")
+	log.Printf("Reseñas para AppID %d insertadas correctamente en la base de datos.", appID)
 	return nil
+}
+
+func reviewExistsInDB(recommendationID string) (bool, error) {
+	// Consultar si el RecommendationID ya existe en la base de datos
+	var exists bool
+	err := GetDB().QueryRow("SELECT EXISTS (SELECT 1 FROM reviews WHERE recommendation_id = ?)", recommendationID).Scan(&exists)
+	if err != nil {
+		log.Printf("Error al verificar si el RecommendationID %s existe en la base de datos: %v", recommendationID, err)
+		return false, err
+	}
+	return exists, nil
 }

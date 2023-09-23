@@ -12,7 +12,6 @@ import (
 
 type ReviewController interface {
 	ProcessReviews(ctx *gin.Context)
-	GetReviews(ctx *gin.Context)
 }
 
 type reviewControllers struct {
@@ -28,8 +27,9 @@ func NewReviewController(api service.ReviewsClient, storage persistence.StorageD
 }
 
 func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
-	typeReview := ctx.DefaultQuery("typeReview", "")
-	appidStr := ctx.DefaultQuery("appid", "")
+	typeReview := ctx.DefaultQuery("review_type", "negative")
+	appidStr := ctx.DefaultQuery("appid", "10")
+	limit := ctx.DefaultQuery("limit", "10")
 	appid, err := strconv.Atoi(appidStr)
 	if err != nil {
 		log.Printf("Error al convertir appid a int: %v", err)
@@ -39,7 +39,7 @@ func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
 		return
 	}
 
-	reviews, err := rc.reviewAPI.FetchReviews(appid, typeReview)
+	reviews, err := rc.reviewAPI.FetchReviews(appid, typeReview, limit)
 	if err != nil {
 		log.Printf("Error al obtener las revisiones para appID %d: %v", appid, err)
 		ctx.JSON(500, gin.H{
@@ -48,7 +48,7 @@ func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
 		return
 	}
 
-	err = rc.dbClient.InsertReviews(appid, reviews.Reviews)
+	err = rc.dbClient.InsertReviews(appid, typeReview, reviews.Reviews)
 	if err != nil {
 		log.Printf("Error al insertar las revisiones en la base de datos: %v", err)
 		ctx.JSON(500, gin.H{

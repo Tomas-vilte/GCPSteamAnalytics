@@ -9,7 +9,7 @@ import (
 )
 
 type ReviewsClient interface {
-	FetchReviews(appID int, typeReview string) (*model.ReviewResponse, error)
+	FetchReviews(appID int, typeReview string, limit string) (*model.ReviewResponse, error)
 }
 
 type SteamReviewAPI struct {
@@ -23,11 +23,11 @@ func NewSteamReviewAPI(client *http.Client) *SteamReviewAPI {
 // FetchReviews obtiene las reseñas de un juego específico utilizando su appID.
 // Acepta el appID del juego como argumento y devuelve un puntero a la estructura ReviewResponse
 // que contiene la información de las reseñas, así como un posible error si ocurre.
-func (s *SteamReviewAPI) FetchReviews(appID int, typeReview string) (*model.ReviewResponse, error) {
+func (s *SteamReviewAPI) FetchReviews(appID int, typeReview string, limit string) (*model.ReviewResponse, error) {
 	log.Printf("Obteniendo reseñas para el appID %d...", appID)
 
 	// Construir la URL de la API de reseñas de Steam
-	url := fmt.Sprintf("https://store.steampowered.com/appreviews/%d?json=1&language=latam&filter=recent&num_per_page=30&review_type=%s", appID, typeReview)
+	url := fmt.Sprintf("https://store.steampowered.com/appreviews/%d?json=1&language=latam&filter=recent&num_per_page=%s&review_type=%s", appID, limit, typeReview)
 
 	// Crear una nueva solicitud HTTP GET
 	req, err := http.NewRequest("GET", url, nil)
