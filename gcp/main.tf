@@ -15,7 +15,6 @@ provider "google" {
 #   source = "./api_gateway"
 # }
   
-
 module "cloud_function" {
   DB_USER = var.DB_USER
   DB_PASS = var.DB_PASS
