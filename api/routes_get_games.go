@@ -6,7 +6,7 @@ import (
 )
 
 func MapRoutesGetGamesFromDB(r *gin.Engine, app controller.GameController) {
-	r.GET("/gameDetails/:appid", app.GetGameDetailsByID)
+	r.GET("/gameDetails", app.GetGameDetailsByID)
 	r.GET("/games", app.GetGames)
 }
 
