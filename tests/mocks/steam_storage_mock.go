@@ -10,6 +10,16 @@ type MockStorage struct {
 	mock.Mock
 }
 
+func (m *MockStorage) InsertReviews(appID int, reviewType string, reviews []model.Review) error {
+	args := m.Called(appID, reviewType, reviews)
+	return args.Error(0)
+}
+
+func (m *MockStorage) GetReviews(appID int, reviewType string, limit int) ([]entity.ReviewDB, int, error) {
+	args := m.Called(appID, reviewType, limit)
+	return args.Get(0).([]entity.ReviewDB), args.Int(1), args.Error(2)
+}
+
 func (m *MockStorage) GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error) {
 	argsList := m.Called(filter, startIndex, pageSize)
 	return argsList.Get(0).([]entity.GameDetails), argsList.Int(1), argsList.Error(2)
