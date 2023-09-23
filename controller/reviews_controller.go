@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"encoding/json"
+	"fmt"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
@@ -16,14 +19,16 @@ type ReviewController interface {
 }
 
 type reviewControllers struct {
-	reviewAPI service.ReviewsClient
-	dbClient  persistence.StorageDB
+	reviewAPI   service.ReviewsClient
+	dbClient    persistence.StorageDB
+	redisClient cache.RedisClient
 }
 
-func NewReviewController(api service.ReviewsClient, storage persistence.StorageDB) ReviewController {
+func NewReviewController(api service.ReviewsClient, storage persistence.StorageDB, redisClient cache.RedisClient) ReviewController {
 	return &reviewControllers{
-		reviewAPI: api,
-		dbClient:  storage,
+		reviewAPI:   api,
+		dbClient:    storage,
+		redisClient: redisClient,
 	}
 }
 
@@ -70,6 +75,21 @@ func (rc *reviewControllers) GetReviews(ctx *gin.Context) {
 		return
 	}
 
+	cacheKey := fmt.Sprintf("reviews:%d:%s:%d", appID, typeReview, limit)
+	cachedReviews, err := rc.redisClient.GetReviewsInCache(cacheKey)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"Error al obtener reseñas desde la caché": err.Error(),
+		})
+		return
+	}
+
+	if cachedReviews != nil {
+		// Datos encontrados en caché, devolverlos directamente
+		ctx.JSON(http.StatusOK, *cachedReviews)
+		return
+	}
+
 	reviews, totalReviews, err := rc.dbClient.GetReviews(appID, typeReview, limit)
 	if err != nil {
 		log.Printf("Error al obtener reseñas desde la base de datos: %v", err)
@@ -82,6 +102,15 @@ func (rc *reviewControllers) GetReviews(ctx *gin.Context) {
 	response := steamapi.ReviewsResponse{
 		Metadata: metadata,
 		Reviews:  reviews,
+	}
+
+	// Almacenar los datos en Redis con un tiempo de expiración
+	jsonData, err := json.Marshal(response)
+	if err == nil {
+		err := rc.redisClient.Set(cacheKey, string(jsonData))
+		if err != nil {
+			return
+		}
 	}
 
 	ctx.JSON(200, response)
