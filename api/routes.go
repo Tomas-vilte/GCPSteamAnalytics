@@ -9,7 +9,7 @@ func MapRoutes(r *gin.Engine, app controller.ProcessController, reviewCtrl contr
 	r.POST("/processGames", app.Process)
 	r.POST("/processReviews", reviewCtrl.ProcessReviews)
 	r.GET("/getReviews", reviewCtrl.GetReviews)
-	r.GET("/gameDetails/:appid", gameController.GetGameDetailsByID)
+	r.GET("/gameDetails", gameController.GetGameDetailsByID)
 	r.GET("/games", gameController.GetGames)
 }
 

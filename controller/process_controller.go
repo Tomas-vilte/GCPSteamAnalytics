@@ -36,9 +36,9 @@ func (p *processController) Process(ctx *gin.Context) {
 
 	err = p.sv.RunProcessData(context.Background(), limit)
 	if err != nil {
-		log.Printf("Hubo un error: %v", err)
+		log.Printf("Hubo un error en procesar los datos: %v", err)
 		ctx.JSON(500, gin.H{
-			"msg": err.Error(),
+			"Hubo un error en procesar los datos": err.Error(),
 		})
 		return
 	}

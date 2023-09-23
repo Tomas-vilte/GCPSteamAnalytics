@@ -3,6 +3,7 @@ package controller
 import (
 	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/gin-gonic/gin"
+	"log"
 	"math"
 	"net/http"
 	"strconv"
@@ -20,6 +21,7 @@ func (gc *GameControllers) GetGames(c *gin.Context) {
 
 	games, totalItems, err := gc.dbClient.GetGamesByPage(filterType, startIndex, pageSizeNum)
 	if err != nil {
+		log.Printf("Error al obtener detalles de la base de datos: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

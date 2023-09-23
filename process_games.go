@@ -22,5 +22,6 @@ func ProcessGames(w http.ResponseWriter, r *http.Request) {
 	gin.SetMode(gin.ReleaseMode)
 	app := createApp()
 	api.SetupRoutesGetGamesGCP(rGin, app)
+	rGin.Use(api.RateLimitMiddleware())
 	rGin.ServeHTTP(w, r)
 }
