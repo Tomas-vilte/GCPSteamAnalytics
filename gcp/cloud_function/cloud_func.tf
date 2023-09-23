@@ -1,7 +1,7 @@
 resource "google_cloudfunctions2_function" "function1" {
   name        = "process-games-raw"
   location    = "us-central1"
-  description = "steam-analytics"
+  description = "Process games from Steam"
   build_config {
     runtime     = "go120"
     entry_point = "ProcessGames" 
