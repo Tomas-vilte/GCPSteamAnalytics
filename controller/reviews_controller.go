@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+	steamapi "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
@@ -12,6 +12,7 @@ import (
 
 type ReviewController interface {
 	ProcessReviews(ctx *gin.Context)
+	GetReviews(ctx *gin.Context)
 }
 
 type reviewControllers struct {
@@ -34,7 +35,7 @@ func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
 	if err != nil {
 		log.Printf("Error al convertir appid a int: %v", err)
 		ctx.JSON(400, gin.H{
-			"error": fmt.Sprintf("El valor de appid no es un número válido: %v", err),
+			"El valor de appid no es un número válido": err.Error(),
 		})
 		return
 	}
@@ -43,7 +44,7 @@ func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
 	if err != nil {
 		log.Printf("Error al obtener las revisiones para appID %d: %v", appid, err)
 		ctx.JSON(500, gin.H{
-			"error": fmt.Sprintf("Error al obtener las revisiones para appID %d: %v", appid, err),
+			"Error al obtener las revisiones": err.Error(),
 		})
 		return
 	}
@@ -52,18 +53,45 @@ func (rc *reviewControllers) ProcessReviews(ctx *gin.Context) {
 	if err != nil {
 		log.Printf("Error al insertar las revisiones en la base de datos: %v", err)
 		ctx.JSON(500, gin.H{
-			"error": fmt.Sprintf("Error al insertar las revisiones en la base de datos: %v", err.Error()),
+			"Error al insertar las revisiones en la base de datos": err.Error(),
 		})
 		return
 	}
 	ctx.JSON(http.StatusOK, reviews)
 }
 
+func (rc *reviewControllers) GetReviews(ctx *gin.Context) {
+	appID, typeReview, limit, err := parseURLParams(ctx)
+	if err != nil {
+		log.Printf("Error al analizar los parámetros de la URL: %v", err)
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"Error al analizar los parámetros de la URL": err.Error(),
+		})
+		return
+	}
+
+	reviews, totalReviews, err := rc.dbClient.GetReviews(appID, typeReview, limit)
+	if err != nil {
+		log.Printf("Error al obtener reseñas desde la base de datos: %v", err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"Error al obtener reseñas desde la base de datos": err.Error(),
+		})
+		return
+	}
+	metadata := generateMetadataReview(totalReviews, limit, typeReview)
+	response := steamapi.ReviewsResponse{
+		Metadata: metadata,
+		Reviews:  reviews,
+	}
+
+	ctx.JSON(200, response)
+}
+
 func parseURLParams(ctx *gin.Context) (int, string, int, error) {
 	// Obtener los parámetros de la URL
-	appidStr := ctx.Param("appid")
-	typeReview := ctx.Param("type_review")
-	limitStr := ctx.Param("limit")
+	appidStr := ctx.DefaultQuery("appid", "10")
+	typeReview := ctx.DefaultQuery("review_type", "positive")
+	limitStr := ctx.DefaultQuery("limit", "10")
 
 	// Convierte appid a int
 	appid, err := strconv.Atoi(appidStr)
@@ -78,4 +106,14 @@ func parseURLParams(ctx *gin.Context) (int, string, int, error) {
 	}
 
 	return appid, typeReview, limit, nil
+}
+
+func generateMetadataReview(totalReview, size int, typeReview string) map[string]interface{} {
+	metadata := map[string]interface{}{
+		"size":         size,
+		"total_review": totalReview,
+		"type_review":  typeReview,
+	}
+
+	return metadata
 }

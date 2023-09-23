@@ -20,7 +20,7 @@ type StorageDB interface {
 	GetAllByAppID(appID int) ([]entity.Item, error)
 	GetGamesByPage(filter string, startIndex, pageSize int) ([]entity.GameDetails, int, error)
 	InsertReviews(appID int, reviewType string, reviews []model.Review) error
-	GetReviews(appID int, reviewType string, limit int) (*model.ReviewsDB, error)
+	GetReviews(appID int, reviewType string, limit int) ([]entity.ReviewDB, int, error)
 }
 
 func NewStorage() StorageDB {
@@ -346,15 +346,31 @@ func reviewExistsInDB(recommendationID string) (bool, error) {
 	return exists, nil
 }
 
-func (s storage) GetReviews(appID int, reviewType string, limit int) (*model.ReviewsDB, error) {
-	var reviews model.ReviewsDB
-	query := `SELECT * FROM reviews WHERE app_id = ? AND review_type = ? AND LIMIT = ?`
-	err := GetDB().QueryRow(query, appID, reviewType, limit).Scan(&reviews)
+func (s storage) GetReviews(appID int, reviewType string, limit int) ([]entity.ReviewDB, int, error) {
+	var reviews []entity.ReviewDB
+	query := `SELECT * FROM reviews WHERE app_id = ? AND review_type = ? LIMIT ?`
+	err := GetDB().Select(&reviews, query, appID, reviewType, limit)
+	totalReviews, err := getTotalReviewsCount()
+	if err != nil {
+		log.Printf("Error al obtener el total: %v\n", err)
+		return nil, 0, err
+	}
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, err
+			return nil, 0, err
 		}
-		return nil, err
+		return nil, 0, err
 	}
-	return &reviews, nil
+	return reviews, totalReviews, nil
+}
+
+func getTotalReviewsCount() (int, error) {
+	var totalItems int
+	query := "SELECT COUNT(*) FROM reviews"
+	err := GetDB().Get(&totalItems, query)
+	if err != nil {
+		log.Printf("Hubo un error al obtener el total de los datos: %v\n", err)
+		return 0, err
+	}
+	return totalItems, nil
 }
