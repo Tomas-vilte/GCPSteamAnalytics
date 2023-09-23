@@ -36,7 +36,7 @@ resource "google_api_gateway_gateway" "gw" {
   api_config   = google_api_gateway_api_config.api_cfg.id
 
   gateway_id   = local.gateway_id
-  display_name = "The Gateway"
+  display_name = "SteamAPIGateway"
 
   depends_on = [google_api_gateway_api_config.api_cfg]
 }

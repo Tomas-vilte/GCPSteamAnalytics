@@ -14,25 +14,25 @@ paths:
       summary: Process Games
       operationId: getGamesFromSteam
       x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-games
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-games-raw
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: A successful response
           schema:
             type: string
-  /gameDetails/{appid}:  
+  /gameDetails:  
     get:
       summary: Get game details by ID
       operationId: getGameDetailsByID
       x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games-raw
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
         - name: appid
-          in: path
+          in: query
           required: true
-          type: string
+          type: integer
       responses:
         '200':
           description: A successful response
@@ -43,7 +43,7 @@ paths:
       summary: Get games
       operationId: getGames
       x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games-raw
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -55,33 +55,33 @@ paths:
       summary: Process Reviews
       operationId: processReviews
       x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews-raw
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: A successful response
           schema:
             type: string
-  /getReviews/{appid}/{review_type}/{limit}:
+  /getReviews:
     get:
       summary: Get reviews by app ID, type, and limit
       operationId: getReviews
       x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews-raw
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
         - name: appid
-          in: path
+          in: query
           required: true
           type: string
         - name: review_type
-          in: path
+          in: query
           required: true
           type: string
         - name: limit
-          in: path
+          in: query
           required: true
-          type: integer
+          type: string
       responses:
         '200':
           description: A successful response
