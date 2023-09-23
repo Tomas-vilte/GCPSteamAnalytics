@@ -15,7 +15,7 @@ func createReviewController() controller.ReviewController {
 	redis := config.LoadRedisenv()
 	sv := service.NewSteamReviewAPI(&http.Client{})
 	storage := persistence.NewStorage()
-	redisClient := cache.NewRedisCacheClient(redis.Host, 1)
+	redisClient := cache.NewRedisCacheClient(redis.Host, 0)
 	return controller.NewReviewController(sv, storage, redisClient)
 }
 
