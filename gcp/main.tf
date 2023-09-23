@@ -16,6 +16,7 @@ provider "google" {
 # }
   
 module "cloud_function" {
+  
   DB_USER = var.DB_USER
   DB_PASS = var.DB_PASS
   DB_NAME = var.DB_NAME
