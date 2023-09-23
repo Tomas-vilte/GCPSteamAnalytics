@@ -3,6 +3,7 @@ package GCPSteamAnalytics
 import (
 	"github.com/Tomas-vilte/GCPSteamAnalytics/api"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/config"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
@@ -11,13 +12,14 @@ import (
 )
 
 func createReviewController() controller.ReviewController {
+	redis := config.LoadRedisenv()
 	sv := service.NewSteamReviewAPI(&http.Client{})
 	storage := persistence.NewStorage()
-	redisClient := cache.NewRedisCacheClient("localhost:6379", 1)
+	redisClient := cache.NewRedisCacheClient(redis.Host, 1)
 	return controller.NewReviewController(sv, storage, redisClient)
 }
 
-func GamesReviews(w http.ResponseWriter, r *http.Request) {
+func GameReviews(w http.ResponseWriter, r *http.Request) {
 	rGin := gin.Default()
 	gin.SetMode(gin.ReleaseMode)
 	app := createReviewController()
