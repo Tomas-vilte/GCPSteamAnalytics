@@ -50,3 +50,40 @@ paths:
           description: A successful response
           schema:
             type: string
+  /processReviews:
+    post:
+      summary: Process Reviews
+      operationId: processReviews
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /getReviews/{appid}/{review_type}/{limit}:
+    get:
+      summary: Get reviews by app ID, type, and limit
+      operationId: getReviews
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: appid
+          in: path
+          required: true
+          type: string
+        - name: review_type
+          in: path
+          required: true
+          type: string
+        - name: limit
+          in: path
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string

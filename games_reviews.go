@@ -11,21 +11,19 @@ import (
 	"net/http"
 )
 
-func createGameDetails() controller.GameController {
+func createReviewController() controller.ReviewController {
 	redis := config.LoadRedisenv()
-	steamClient := service.NewSteamClient(&http.Client{})
-	redisClient := cache.NewRedisCacheClient(redis.Host, 0)
+	sv := service.NewSteamReviewAPI(&http.Client{})
 	storage := persistence.NewStorage()
-	sv := service.NewGameProcessor(storage, steamClient)
-	return controller.NewGameController(steamClient, redisClient, storage, *sv)
-
+	redisClient := cache.NewRedisCacheClient(redis.Host, 1)
+	return controller.NewReviewController(sv, storage, redisClient)
 }
 
-func GetGames(w http.ResponseWriter, r *http.Request) {
+func GameReviews(w http.ResponseWriter, r *http.Request) {
 	rGin := gin.Default()
 	gin.SetMode(gin.ReleaseMode)
-	app := createGameDetails()
-	api.SetupRoutesGetGamesFromDB(rGin, app)
+	app := createReviewController()
+	api.SetupRoutesReviews(rGin, app)
 	rGin.Use(api.RateLimitMiddleware())
 	rGin.ServeHTTP(w, r)
 }

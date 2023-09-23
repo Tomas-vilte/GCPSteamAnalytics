@@ -1,8 +1,6 @@
 package model
 
-type ReviewData interface {
-	GetPositiveReviews(appID int) (*ReviewResponse, error)
-}
+import "github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
 
 type ReviewSummary struct {
 	NumReviews int `json:"num_reviews"`
@@ -38,4 +36,9 @@ type Review struct {
 	SteamPurchase            bool         `json:"steam_purchase"`
 	ReceivedForFree          bool         `json:"received_for_free"`
 	WrittenDuringEarlyAccess bool         `json:"written_during_early_access"`
+}
+
+type ReviewsResponse struct {
+	Metadata map[string]interface{} `json:"metadata"`
+	Reviews  []entity.ReviewDB      `json:"reviews"`
 }

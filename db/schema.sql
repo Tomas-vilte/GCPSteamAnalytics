@@ -47,3 +47,30 @@ CREATE TABLE IF NOT EXISTS games_details (
 );
 
 CREATE INDEX idx_appid ON games_details (app_id);
+
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+    app_id INT NOT NULL,
+    review_type TEXT,
+    recommendation_id INT UNIQUE,
+    steam_id TEXT,
+    num_games_owned INT,
+    num_reviews INT,
+    playtime_forever INT,
+    playtime_last_two_weeks INT,
+    playtime_at_review INT,
+    last_played INT,
+    language TEXT,
+    review_text TEXT,
+    timestamp_created INT,
+    timestamp_updated INT,
+    voted_up BOOLEAN,
+    votes_up INT,
+    votes_funny INT,
+    comment_count INT,
+    steam_purchase BOOLEAN,
+    received_for_free BOOLEAN,
+    written_during_early_access BOOLEAN
+);
+
+CREATE INDEX idx_appid ON reviews (app_id);

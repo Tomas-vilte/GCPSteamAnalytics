@@ -37,7 +37,7 @@ func NewGameController(steamService service.SteamClient, redisClient cache.Redis
 }
 
 func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
-	gameID := ctx.Param("appid")
+	gameID := ctx.DefaultQuery("appid", "10")
 	gameint, _ := strconv.Atoi(gameID)
 
 	// Consultar Redis para ver si los detalles del juego están en caché.
@@ -45,7 +45,7 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 	if err != nil {
 		log.Printf("Error al consultar detalles en caché: %v", err)
 		ctx.JSON(500, gin.H{
-			"error": err.Error(),
+			"Error al consultar detalles en caché": err.Error(),
 		})
 		return
 	}
@@ -73,7 +73,9 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 		err := gc.SaveToCache(gameID, dbDetails)
 		if err != nil {
 			log.Printf("Error al guardar detalles del juego en caché: %v", err)
-			ctx.JSON(400, gin.H{"error:": err.Error()})
+			ctx.JSON(400, gin.H{
+				"Error al guardar detalles del juego en caché": err.Error(),
+			})
 		}
 		return
 	}
@@ -84,7 +86,7 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 		log.Printf("Error al obtener y procesar detalles del juego: %v", err)
 		// Manejar errores si ocurren durante la obtención y procesamiento.
 		ctx.JSON(500, gin.H{
-			"error": err.Error(),
+			"Error al obtener y procesar detalles del juego": err.Error(),
 		})
 		return
 	}
@@ -92,7 +94,9 @@ func (gc *GameControllers) GetGameDetailsByID(ctx *gin.Context) {
 	err = gc.dbClient.SaveGameDetails(responseData)
 	if err != nil {
 		log.Printf("Error al guardar detalles del juego en la base de datos: %v", err)
-		ctx.JSON(404, gin.H{"error:": err.Error()})
+		ctx.JSON(404, gin.H{
+			"Error al guardar detalles del juego en la base de datos": err.Error(),
+		})
 	}
 
 	// Responder con los detalles obtenidos y procesados.

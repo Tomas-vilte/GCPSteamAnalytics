@@ -21,7 +21,7 @@ var (
 func GetDB() *sqlx.DB {
 	doOnce.Do(func() {
 		if db == nil {
-			db = createClientLocal() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
+			db, _ = createClientInGCP() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
 		}
 		log.Println("Conexion creada con exito")
 	})

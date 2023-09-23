@@ -13,7 +13,7 @@ import (
 type RedisClient interface {
 	Get(key string) (*entity.GameDetails, error)
 	Set(key string, value string) error
-	GetGames(key string) (*steamapi.PaginatedResponse, error)
+	GetReviewsInCache(key string) (*steamapi.ReviewsResponse, error)
 }
 
 type redisCache struct {
@@ -71,21 +71,27 @@ func (cache *redisCache) Set(key string, value string) error {
 	return nil
 }
 
-func (cache *redisCache) GetGames(key string) (*steamapi.PaginatedResponse, error) {
+func (cache *redisCache) GetReviewsInCache(key string) (*steamapi.ReviewsResponse, error) {
 	ctx := context.Background()
+
+	// Obtener el valor de Redis
 	value, err := cache.getClient().Get(ctx, key).Result()
 	if err != nil {
 		if err == redis.Nil {
-			return nil, err
+			log.Printf("La clave %s no existe en la caché.", key)
+			return nil, nil
 		}
+		// Error al obtener el valor de Redis
+		log.Printf("Error al obtener el valor de la clave %s: %v", key, err)
 		return nil, err
 	}
 
-	// Deserializa el valor de la caché en la estructura correspondiente.
-	var response steamapi.PaginatedResponse
-	if err := json.Unmarshal([]byte(value), &response); err != nil {
+	// Deserializar los datos en la estructura ReviewsResponse
+	var reviews steamapi.ReviewsResponse
+	if err := json.Unmarshal([]byte(value), &reviews); err != nil {
+		log.Printf("Error al deserializar los datos de la caché: %v", err)
 		return nil, err
 	}
 
-	return &response, nil
+	return &reviews, nil
 }

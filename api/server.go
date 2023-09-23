@@ -31,7 +31,9 @@ func createApp() controller.ProcessController {
 
 func createReviewController() controller.ReviewController {
 	sv := service.NewSteamReviewAPI(&http.Client{})
-	return controller.NewReviewController(sv)
+	storage := persistence.NewStorage()
+	redisClient := cache.NewRedisCacheClient("localhost:6379", 1)
+	return controller.NewReviewController(sv, storage, redisClient)
 }
 
 func createGameDetails() controller.GameController {
