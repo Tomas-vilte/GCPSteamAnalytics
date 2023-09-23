@@ -68,8 +68,10 @@ resource "google_cloudfunctions2_function" "function3" {
     runtime = "go120"
     entry_point = "GameReviews"
     source {
-      bucket = "steam-analytics"
-      object = "get_reviews.zip"
+      storage_source {
+        bucket = "steam-analytics"
+        object = "get_reviews.zip"
+      }
     }
   }
   service_config {
