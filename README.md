@@ -27,6 +27,8 @@ Implemente un límite de velocidad en las solicitudes a la API. El límite actua
 
 Este endpoint te permite obtener los detalles de un juego específico utilizando su `appID`.
 
+- Método: GET
+
 - Endpoint: https://steamapigateway-7tl86y4z.uc.gateway.dev/gameDetails/?appid=730
 
 ### Parámetros de Consulta
@@ -60,6 +62,8 @@ Este endpoint te permite obtener los detalles de un juego específico utilizando
 ### Descripción
 
 Este endpoint te permite obtener una lista de juegos.
+
+- Método: GET
 
 - Endpoint: https://steamapigateway-7tl86y4z.uc.gateway.dev/games?page=1&page_size=10&filter=game
 
@@ -109,6 +113,8 @@ Este endpoint te permite obtener una lista de juegos.
 ### Descripción
 
 Este endpoint te permite obtener reseñas de un juego específico.
+
+- Método: GET
 
 - Endpoint: https://steamapigateway-7tl86y4z.uc.gateway.dev/getReviews/?appid=730&review_type=negative&limit=1
 
@@ -164,7 +170,7 @@ Este endpoint te permite obtener reseñas de un juego específico.
 
 Este endpoint proporciona acceso a datos y análisis relacionados con Steam y sus juegos. Puede utilizarse para obtener detalles de juegos,
 
-Método: POST
+- Método: POST
 
 - Endpoint: https://steamapigateway-7tl86y4z.uc.gateway.dev/processGames?limit=50
 
@@ -185,7 +191,7 @@ Método: POST
 
 Este endpoint se utiliza para procesar las reseñas de usuarios de Steam.
 
-Método: POST
+- Método: POST
 
 - Endpoint: https://steamapigateway-7tl86y4z.uc.gateway.dev/processReviews/?review_type=positive&appid=730&limit=5
 
