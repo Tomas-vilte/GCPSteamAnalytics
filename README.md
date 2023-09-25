@@ -6,6 +6,15 @@
 
 Esta es la documentación de la API de Steam-Analytics. Aca vas a encontrar toda la documentacion de los endpoints disponibles y cómo utilizarlos.
 
+## Acceso a los Endpoints
+
+Para acceder a los endpoints de esta API, es necesario utilizar una API Key válida.
+
+1. Haga una solicitud POST al endpoint `/createApiKey` para generar una nueva API Key. Recibirá una respuesta que incluirá su API Key en el campo `"api_key"`.
+
+2. Para acceder a los endpoints, incluya la API Key en sus solicitudes como un parámetro de consulta llamado `key`. Por ejemplo:
+
+
 ### Límite de velocidad (Rate Limit)
 
 Implemente un límite de velocidad en las solicitudes a la API. El límite actual es de 100 solicitudes por minuto. Si excedes ese límite, vas a recibir una respuesta de error con el código de estado 429.
