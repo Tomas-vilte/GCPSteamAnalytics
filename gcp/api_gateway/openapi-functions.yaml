@@ -33,7 +33,7 @@ x-google-management:
         metric: "write-requests"
         unit: "1/min/{project}"
         values:
-          STANDARD: 1
+          STANDARD: 100
 paths:
   /processGames:
     post:
@@ -44,9 +44,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       x-google-quota:
         metricCosts:
-          "write-requests": 1
+          "write-requests": 100
       security:
-        - google_id_token: []
+       - api_key: []
       responses:
         '200':
           description: A successful response
@@ -61,9 +61,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       x-google-quota:
         metricCosts:
-          "read-requests": 1
+          "read-requests": 100
       security:
-        - google_id_token: []
+         - api_key: []
       parameters:
         - name: appid
           in: query
@@ -83,9 +83,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       x-google-quota:
         metricCosts:
-          "read-requests": 1
+          "read-requests": 100
       security:
-        - google_id_token: []
+        - api_key: []
       responses:
         '200':
           description: A successful response
@@ -100,9 +100,26 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       x-google-quota:
         metricCosts:
-          "write-requests": 1
+          "write-requests": 100
       security:
-        - google_id_token: []
+        - api_key: []
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /createApiKey:
+    post:
+      summary: Create api key
+      operationId: createApikey
+      x-google-backend:
+        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/create-api-key
+        path_translation: APPEND_PATH_TO_ADDRESS
+      x-google-quota:
+        metricCosts:
+          "write-requests": 100
+      security:
+        - api_key: []
       responses:
         '200':
           description: A successful response
@@ -117,9 +134,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       x-google-quota:
         metricCosts:
-          "read-requests": 1
+          "read-requests": 100
       security:
-        - google_id_token: []
+        - api_key: []
       parameters:
         - name: appid
           in: query
@@ -144,10 +161,3 @@ securityDefinitions:
     type: "apiKey"
     name: "key"
     in: "query"
-  google_id_token:
-    authorizationUrl: ""
-    flow: "implicit"
-    type: "oauth2"
-    x-google-issuer: "https://accounts.google.com"
-    x-google-jwks_uri: "https://www.googleapis.com/oauth2/v3/certs"
-    x-google-audiences: "848149964201.apps.googleusercontent.com,841077041629.apps.googleusercontent.com"
