@@ -46,7 +46,7 @@ paths:
         metricCosts:
           "write-requests": 1
       security:
-      - api_key: []
+        - google_id_token: []
       responses:
         '200':
           description: A successful response
@@ -63,7 +63,7 @@ paths:
         metricCosts:
           "read-requests": 1
       security:
-      - api_key: []
+        - google_id_token: []
       parameters:
         - name: appid
           in: query
@@ -85,7 +85,7 @@ paths:
         metricCosts:
           "read-requests": 1
       security:
-      - api_key: []
+        - google_id_token: []
       responses:
         '200':
           description: A successful response
@@ -102,7 +102,7 @@ paths:
         metricCosts:
           "write-requests": 1
       security:
-      - api_key: []
+        - google_id_token: []
       responses:
         '200':
           description: A successful response
@@ -119,7 +119,7 @@ paths:
         metricCosts:
           "read-requests": 1
       security:
-      - api_key: []
+        - google_id_token: []
       parameters:
         - name: appid
           in: query
@@ -139,7 +139,15 @@ paths:
           schema:
             type: string
 securityDefinitions:
+  # This section configures basic authentication with an API key.
   api_key:
     type: "apiKey"
     name: "key"
     in: "query"
+  google_id_token:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "https://accounts.google.com"
+    x-google-jwks_uri: "https://www.googleapis.com/oauth2/v3/certs"
+    x-google-audiences: "848149964201.apps.googleusercontent.com,841077041629.apps.googleusercontent.com"
