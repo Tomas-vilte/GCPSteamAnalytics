@@ -8,32 +8,6 @@ schemes:
   - https
 produces:
   - application/json
-x-google-management:
-  metrics:
-    # Defina una métrica para las solicitudes de lectura.
-    - name: "read-requests"
-      displayName: "Read requests"
-      valueType: INT64
-      metricKind: DELTA
-    # Defina una métrica para las solicitudes de escritura.
-    - name: "write-requests"
-      displayName: "Write requests"
-      valueType: INT64
-      metricKind: DELTA
-  quota:
-    limits:
-      # Rate limit para leer
-      - name: "read-requests-limit"
-        metric: "read-requests"
-        unit: "1/min/{project}"
-        values:
-          STANDARD: 1
-      # Rate limit para escribir.
-      - name: "write-request-limit"
-        metric: "write-requests"
-        unit: "1/min/{project}"
-        values:
-          STANDARD: 100
 paths:
   /processGames:
     post:
@@ -42,11 +16,6 @@ paths:
       x-google-backend:
         address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/process-games-raw
         path_translation: APPEND_PATH_TO_ADDRESS
-      x-google-quota:
-        metricCosts:
-          "write-requests": 100
-      security:
-       - api_key: []
       responses:
         '200':
           description: A successful response
@@ -59,11 +28,6 @@ paths:
       x-google-backend:
         address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games-raw
         path_translation: APPEND_PATH_TO_ADDRESS
-      x-google-quota:
-        metricCosts:
-          "read-requests": 100
-      security:
-         - api_key: []
       parameters:
         - name: appid
           in: query
@@ -81,11 +45,6 @@ paths:
       x-google-backend:
         address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-games-raw
         path_translation: APPEND_PATH_TO_ADDRESS
-      x-google-quota:
-        metricCosts:
-          "read-requests": 100
-      security:
-        - api_key: []
       responses:
         '200':
           description: A successful response
@@ -98,28 +57,6 @@ paths:
       x-google-backend:
         address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews-raw
         path_translation: APPEND_PATH_TO_ADDRESS
-      x-google-quota:
-        metricCosts:
-          "write-requests": 100
-      security:
-        - api_key: []
-      responses:
-        '200':
-          description: A successful response
-          schema:
-            type: string
-  /createApiKey:
-    post:
-      summary: Create api key
-      operationId: createApikey
-      x-google-backend:
-        address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/create-api-key
-        path_translation: APPEND_PATH_TO_ADDRESS
-      x-google-quota:
-        metricCosts:
-          "write-requests": 100
-      security:
-        - api_key: []
       responses:
         '200':
           description: A successful response
@@ -132,11 +69,6 @@ paths:
       x-google-backend:
         address: https://us-central1-gcpsteamanalytics.cloudfunctions.net/get-reviews-raw
         path_translation: APPEND_PATH_TO_ADDRESS
-      x-google-quota:
-        metricCosts:
-          "read-requests": 100
-      security:
-        - api_key: []
       parameters:
         - name: appid
           in: query
@@ -155,9 +87,3 @@ paths:
           description: A successful response
           schema:
             type: string
-securityDefinitions:
-  # This section configures basic authentication with an API key.
-  api_key:
-    type: "apiKey"
-    name: "key"
-    in: "query"
