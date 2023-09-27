@@ -6,6 +6,11 @@
 
 Esta es la documentación de la API de Steam-Analytics. Aca vas a encontrar toda la documentacion de los endpoints disponibles y cómo utilizarlos.
 
+## Arquitectura de la API
+
+Si deseas comprender la arquitectura de la API, clickea aca [explicacion de la arquitectura](/arquitecturaAPI.md).
+
+
 ### Límite de velocidad (Rate Limit)
 
 Implemente un límite de velocidad en las solicitudes a la API. El límite actual es de 100 solicitudes por minuto. Si excedes ese límite, vas a recibir una respuesta de error con el código de estado 429.
