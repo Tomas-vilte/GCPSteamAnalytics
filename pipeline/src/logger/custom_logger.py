@@ -1,5 +1,9 @@
 import logging
 from logging import Logger
+from pathlib import Path
+
+dir: Path = Path(__file__).resolve().parent.parent.parent
+logPath = Path(f"{dir}/logs/myapp.log")
 
 
 def setup_logger(name: str) -> Logger:
@@ -18,7 +22,7 @@ def setup_logger(name: str) -> Logger:
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
     # Configura el manejador de registro para escribir en un archivo
-    file_handler = logging.FileHandler("../logs/my_app.log")
+    file_handler = logging.FileHandler(logPath)
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 

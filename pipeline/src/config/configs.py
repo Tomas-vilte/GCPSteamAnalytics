@@ -1,6 +1,9 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from pipeline.src.logger.custom_logger import logs
+
+dir: Path = Path(__file__).resolve().parent
 
 
 def load_env_variables() -> dict:
@@ -13,12 +16,13 @@ def load_env_variables() -> dict:
         "DB_PASS": get_env_variable("DB_PASS"),
         "DB_NAME": get_env_variable("DB_NAME"),
         "DB_USER": get_env_variable("DB_USER"),
-        "InstanceConnectionName": get_env_variable("INSTANCE_CONNECTION_NAME")
+        "DB_HOST": get_env_variable("DB_HOST")
     }
     return db_variables
 
 
-load_dotenv("config.env")
+dotenvPath = Path(f'{dir}/config.env')
+load_dotenv(dotenvPath)
 
 
 def get_env_variable(key: str) -> str:
@@ -31,4 +35,5 @@ def get_env_variable(key: str) -> str:
     if value is None:
         logs.error(f"Error: {key} variable de entorno no establecida")
         raise ValueError(f"Error: {key} variable de entorno no establecida")
+    logs.info(f"Variables de entorno establecidas con exito {key}")
     return value
