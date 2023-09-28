@@ -8,3 +8,4 @@ application_default_credentials.json
 configGCP.env
 gcp/.terraform.tfstate.lock.info
 venv
+pipeline/src/config/config.env
