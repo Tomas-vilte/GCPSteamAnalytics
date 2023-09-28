@@ -32,3 +32,6 @@ def setup_logger(name: str) -> Logger:
     log.addHandler(console_handler)
 
     return log
+
+
+logs = setup_logger("mi_logger")
