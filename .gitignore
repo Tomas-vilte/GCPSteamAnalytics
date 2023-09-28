@@ -7,3 +7,4 @@ gcp/.terraform.lock.hcl
 application_default_credentials.json
 configGCP.env
 gcp/.terraform.tfstate.lock.info
+venv
