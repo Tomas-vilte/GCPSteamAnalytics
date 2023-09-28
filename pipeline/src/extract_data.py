@@ -1,8 +1,8 @@
-from pipeline.src.cloudsql_connection import connect_to_cloud_sql
+from pipeline.src.cloudsql_connection import DatabaseConnection
 
 
 def extract_data_games_details() -> list:
-    connection = connect_to_cloud_sql()
+    connection = DatabaseConnection().get_connection()
     data = []
     # Realiza operaciones de consulta o inserción aquí si la conexión se estableció con éxito.
     if connection:
@@ -16,5 +16,4 @@ def extract_data_games_details() -> list:
         cursor.close()
         connection.close()
     return data
-
 

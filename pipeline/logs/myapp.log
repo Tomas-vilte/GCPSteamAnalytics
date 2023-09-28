@@ -61,3 +61,13 @@
 2023-09-28 20:28:55,096 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
 2023-09-28 20:28:55,096 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
 2023-09-28 20:28:56,783 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-28 20:44:47,409 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-28 20:44:47,410 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-28 20:44:47,410 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-28 20:44:47,410 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-28 20:44:49,067 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-28 20:45:34,678 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-28 20:45:34,678 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-28 20:45:34,678 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-28 20:45:34,678 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-28 20:45:36,302 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
