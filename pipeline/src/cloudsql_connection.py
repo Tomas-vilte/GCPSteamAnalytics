@@ -3,7 +3,12 @@ from pipeline.src.config.configs import load_env_variables
 from pipeline.src.logger.custom_logger import logs
 
 
-def connect_to_cloud_sql() -> mysql.connector.pooling.PooledMySQLConnection | None:
+def connect_to_cloud_sql() -> mysql.connector.connection_cext.CMySQLConnection | None:
+    """
+     Conecta a una instancia de Google Cloud SQL utilizando las variables de entorno cargadas.
+    :return: mysql.connector.connection_cext.CMySQLConnection | None:
+            Una conexión MySQL si la conexión se establece con éxito, o None si falla.
+    """
     environment: dict = load_env_variables()
     try:
         # Crea una conexión a Cloud SQL
