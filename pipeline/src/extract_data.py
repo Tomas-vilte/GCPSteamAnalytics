@@ -24,7 +24,6 @@ def extract_data_games_details() -> tuple[list, list]:
 
     except Exception as e:
         logs.info(f"Error al extraer datos: {str(e)}")
-
     return data, column_names
 
 
