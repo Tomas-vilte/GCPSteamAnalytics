@@ -1,0 +1,40 @@
+name: Test DAGs
+
+on:
+  push:
+    paths:
+      - 'dags/**'
+  pull_request:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Verificar python y configuar entorno
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Instalar Dependencias de python
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip check
+
+      - name: Black PEP 8 Format Test
+        run: |
+          pip install black
+          black . --check
+
+      - name: Correr Tests Unitarios
+        run: |
+          cd pipeline/src/tests
+          pytest -v || exit
+
+        

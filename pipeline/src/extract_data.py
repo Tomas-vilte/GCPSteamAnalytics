@@ -5,7 +5,7 @@ from pipeline.src.cloudsql_connection import DatabaseConnection
 from pipeline.src.logger.custom_logger import logs
 
 dir: Path = Path(__file__).resolve().parent.parent
-dataPath = Path(f"{dir}/include/dataset/")
+dataPath: Path = Path(f"{dir}/include/dataset/")
 
 
 def extract_data_games_details() -> tuple[list, list]:
@@ -24,7 +24,6 @@ def extract_data_games_details() -> tuple[list, list]:
 
     except Exception as e:
         logs.info(f"Error al extraer datos: {str(e)}")
-
     return data, column_names
 
 

@@ -123,3 +123,256 @@
 2023-09-28 21:28:48,641 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
 2023-09-28 21:28:50,310 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
 2023-09-28 21:28:51,870 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-28.csv
+2023-09-28 23:21:18,331 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-28 23:21:19,951 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-28 23:21:28,366 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-28 23:22:17,798 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:46:01,904 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:46:01,906 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:47:03,951 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:47:06,075 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:49:42,952 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:50:03,064 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:50:51,635 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:51:43,916 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 15:52:27,142 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:52:27,142 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:52:27,142 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:52:27,142 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:52:28,819 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 15:53:02,903 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:53:02,903 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:53:02,903 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:53:02,903 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:53:04,570 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 15:53:58,637 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:53:58,637 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:53:58,637 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:53:58,638 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:54:00,290 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 15:54:22,549 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:54:22,551 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:54:22,552 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:54:22,553 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:54:24,261 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 15:54:50,747 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:54:50,747 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:54:50,747 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:54:50,747 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:54:52,400 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 15:58:23,273 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:58:23,273 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:58:23,273 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:58:23,273 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:58:24,910 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 15:59:09,705 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 15:59:09,705 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 15:59:09,705 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 15:59:09,705 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 15:59:11,331 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:00:02,617 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:00:02,617 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:00:02,617 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:00:02,617 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:00:02,617 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:04:14,140 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:04:36,327 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:04:36,327 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:04:36,327 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:04:36,327 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:04:37,947 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:05:32,062 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:06:21,818 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:06:28,034 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:09:06,822 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:11:26,865 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:15:18,083 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 16:20:59,818 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:20:59,818 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:20:59,818 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:20:59,818 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:21:01,455 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:21:20,696 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:21:20,696 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:21:20,696 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:21:20,696 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:21:22,329 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:25:15,162 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:25:15,162 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:25:15,162 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:25:15,162 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:25:16,799 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:25:28,815 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:25:28,816 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:25:28,816 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:25:28,816 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:25:30,504 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:26:47,492 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:26:47,493 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:26:47,493 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:26:47,493 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:26:49,118 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:29:43,918 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:29:43,918 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:29:43,919 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:29:43,919 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:29:45,535 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:30:17,444 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:30:25,945 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:30:27,573 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:30:27,913 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:30:49,428 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:33:48,300 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:33:48,300 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:33:48,300 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:33:48,300 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:33:49,968 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:38:06,100 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:38:06,100 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:38:06,100 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:38:06,100 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:38:07,727 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:50:11,876 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:50:11,876 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:50:11,876 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:50:11,876 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:50:13,485 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 16:51:04,040 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 16:51:04,040 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 16:51:04,040 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 16:51:04,040 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 16:51:05,700 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:36:37,101 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:36:37,101 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:36:37,101 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:36:37,101 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:36:38,745 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:38:13,600 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:38:13,600 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:38:13,600 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:38:13,600 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:38:15,242 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:38:23,977 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:38:23,977 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:38:23,977 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:38:23,977 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:38:25,673 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:38:40,116 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:38:40,116 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:38:40,116 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:38:40,117 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:38:41,799 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:39:20,357 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:39:20,357 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:39:20,357 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:39:20,357 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:39:21,978 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:40:40,322 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:40:40,322 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:40:40,322 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:40:40,322 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:40:41,972 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:42:22,120 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:42:22,120 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:42:22,120 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:42:22,120 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:42:23,752 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:42:38,334 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:42:38,334 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:42:38,334 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:42:38,334 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:42:39,962 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:42:56,944 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:42:56,944 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:42:56,944 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:42:56,944 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:42:58,606 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:43:07,229 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:43:07,229 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:43:07,229 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:43:07,229 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:43:08,925 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:43:57,515 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:43:57,515 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:43:57,516 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:43:57,516 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:43:59,148 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:44:43,605 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:44:43,605 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:44:43,605 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:44:43,605 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:44:45,247 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:45:41,918 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:45:41,918 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:45:41,918 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:45:41,918 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:45:43,526 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:45:53,966 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:45:53,966 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:45:53,966 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:45:53,966 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:45:55,594 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:46:22,341 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 17:46:31,561 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-29 17:46:31,561 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 17:46:31,561 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 17:46:31,561 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 17:46:31,561 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 17:46:33,211 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 17:52:08,204 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 17:54:01,507 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 17:56:29,243 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 17:56:29,244 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 17:56:48,275 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 17:56:50,021 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 17:57:46,157 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: <MagicMock name='open().name' id='140620882830256'>
+2023-09-29 17:58:39,379 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: <MagicMock name='open().name' id='140706381587328'>
+2023-09-29 18:00:38,428 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: <MagicMock name='open().name' id='139844057998064'>
+2023-09-29 18:00:57,172 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: <MagicMock name='open().name' id='140641123460016'>
+2023-09-29 18:01:29,530 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 18:03:36,705 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 18:06:09,801 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 18:08:00,896 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 18:10:28,507 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 18:16:25,507 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 18:16:25,507 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 18:16:25,507 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 18:16:25,507 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 18:16:27,154 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 18:16:28,681 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /home/tomi/GCPSteamAnalytics/pipeline/include/dataset/games_details_2023-09-29.csv
+2023-09-29 20:43:11,522 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 20:43:11,523 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 20:43:11,523 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 20:43:11,523 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 20:43:13,195 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 20:43:14,731 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 20:44:16,129 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 20:44:16,130 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 20:44:16,130 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 20:44:16,130 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 20:44:17,873 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 20:44:19,424 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 20:44:45,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 20:44:45,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 20:44:45,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 20:44:45,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 20:44:47,167 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 20:44:48,734 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 20:45:34,815 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 20:45:34,815 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 20:45:34,815 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 20:45:34,815 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 20:45:36,540 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 20:45:38,065 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 20:48:45,504 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 20:48:45,505 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 20:48:45,505 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 20:48:45,505 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 20:48:47,174 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 20:48:48,646 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 20:54:50,342 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 20:54:50,343 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 20:54:50,343 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 20:54:50,343 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 20:54:52,047 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 20:54:53,533 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
