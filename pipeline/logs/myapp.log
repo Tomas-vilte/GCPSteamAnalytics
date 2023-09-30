@@ -376,3 +376,29 @@
 2023-09-29 20:54:50,343 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
 2023-09-29 20:54:52,047 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
 2023-09-29 20:54:53,533 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 23:16:19,321 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 23:16:19,321 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 23:16:19,321 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 23:16:19,321 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 23:16:21,062 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 23:16:22,568 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 23:16:46,186 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 23:16:46,186 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 23:16:46,186 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 23:16:46,186 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 23:16:47,943 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 23:16:49,472 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 23:16:59,036 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-29 23:16:59,036 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-29 23:16:59,037 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-29 23:16:59,037 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-29 23:17:00,670 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-29 23:17:02,133 - mi_logger - INFO - Error al extraer datos: MySQL Connection not available.
+2023-09-29 23:37:07,595 - mi_logger - INFO - Error al extraer datos: super(type, obj): obj must be an instance or subtype of type
+2023-09-30 00:16:05,467 - mi_logger - INFO - Error al extraer datos: super() argument 1 must be type, not MagicMock
+2023-09-30 00:21:19,478 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+2023-09-30 00:21:19,478 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+2023-09-30 00:21:19,478 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+2023-09-30 00:21:19,478 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+2023-09-30 00:21:21,094 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics en Cloud SQL.
+2023-09-30 00:24:19,714 - mi_logger - INFO - Error al extraer datos: super(type, obj): obj must be an instance or subtype of type
