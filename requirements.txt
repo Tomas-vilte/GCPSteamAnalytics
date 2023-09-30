@@ -114,3 +114,4 @@ WTForms==3.0.1
 yarl==1.9.2
 
 python-dotenv~=1.0.0
+mysql-connector-python~=8.1.0
