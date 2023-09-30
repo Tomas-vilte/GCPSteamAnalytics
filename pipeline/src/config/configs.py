@@ -16,12 +16,12 @@ def load_env_variables() -> dict:
         "DB_PASS": get_env_variable("DB_PASS"),
         "DB_NAME": get_env_variable("DB_NAME"),
         "DB_USER": get_env_variable("DB_USER"),
-        "DB_HOST": get_env_variable("DB_HOST")
+        "DB_HOST": get_env_variable("DB_HOST"),
     }
     return db_variables
 
 
-dotenvPath = Path(f'{dir}/config.env')
+dotenvPath = Path(f"{dir}/config.env")
 load_dotenv(dotenvPath)
 
 

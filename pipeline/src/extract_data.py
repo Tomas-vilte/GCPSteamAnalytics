@@ -30,7 +30,9 @@ def extract_data_games_details() -> tuple[list, list]:
 def save_data_to_csv(data: list, column_names: list) -> None:
     try:
         column_names_lower = [name.lower() for name in column_names]
-        with open(f"{dataPath}/games_details_{datetime.date.today()}.csv", "w", newline="") as csv_file:
+        with open(
+            f"{dataPath}/games_details_{datetime.date.today()}.csv", "w", newline=""
+        ) as csv_file:
             csv_writer = csv.writer(csv_file)
             csv_writer.writerow(column_names_lower)
             csv_writer.writerows(data)
