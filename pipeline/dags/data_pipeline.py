@@ -10,6 +10,7 @@ from airflow.providers.google.cloud.transfers.local_to_gcs import (
     schedule=None,
     catchup=False,
     tags=["steam_analytics"],
+    description="data pipeline ELT",
 )
 def games_details():
     upload_csv_to_gcs = LocalFilesystemToGCSOperator(
