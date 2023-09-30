@@ -1,0 +1,32 @@
+name: Sync DAGs
+
+on:
+  workflow_run:
+    workflows:
+      - 'Test DAGs'
+    types:
+      - completed
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout
+      
+      - name: Set up Cloud SDK
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+        
+      - name: Configure gcloud
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Deploy Dags to GCS
+        run: |
+          cd pipeline/
+          gsutil -m cp -r pipeline/dags/* gs://us-central1-steam-airflow-905bc110-bucket/
