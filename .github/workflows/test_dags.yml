@@ -30,6 +30,7 @@ jobs:
 
       - name: Black PEP 8 Format Test
         run: |
+          cd pipeline/
           pip install black
           black . --check
 
