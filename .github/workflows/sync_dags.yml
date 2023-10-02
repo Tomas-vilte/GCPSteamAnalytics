@@ -29,5 +29,4 @@ jobs:
 
       - name: Deploy Dags to GCS
         run: |
-          cd pipeline/
           gsutil -m cp -r pipeline/dags/* gs://us-central1-steam-airflow-905bc110-bucket/

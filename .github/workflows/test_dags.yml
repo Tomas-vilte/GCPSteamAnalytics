@@ -35,11 +35,6 @@ jobs:
           black . --check
 
       - name: Correr Tests Unitarios
-        env:
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_HOST: ${{ secrets.DB_HOST }}
         run: |
           cd pipeline/src/tests
           pytest -v || exit
