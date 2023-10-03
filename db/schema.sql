@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS games_details (
     developers TEXT, 
     is_free BOOLEAN,
     interface_languages TEXT, 
-    fullAudio_languages TEXT, 
+    fullaudio_languages TEXT, 
     subtitles_languages TEXT, 
     windows BOOLEAN,
     mac BOOLEAN,

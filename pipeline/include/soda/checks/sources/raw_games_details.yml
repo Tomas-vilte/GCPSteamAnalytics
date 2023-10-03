@@ -1,0 +1,47 @@
+checks for raw_games:
+  - schema:
+      fail:
+        when required column missing: [id, app_id, name, description, fullgame_app_id, fullgame_name, type, publishers, developers, is_free,
+          interface_languages, 
+          fullaudio_languages, 
+          subtitles_languages, 
+          windows,
+          mac,
+          linux,
+          genre_id,
+          type_genre,
+          release_date,
+          coming_soon,
+          currency,
+          initial_price,
+          final_price,
+          discount_percent,
+          formatted_initial_price,
+          formatted_final_price]
+        when wrong column type:
+          id: integer
+          app_id: integer
+          name: string
+          description: string
+          fullgame_app_id: integer
+          fullgame_name: string
+          type: string
+          publishers: string
+          developers: string
+          is_free: integer
+          interface_languages: string
+          fullaudio_languages: string
+          subtitles_languages: string
+          windows: integer
+          mac: integer
+          linux: integer
+          genre_id: string
+          type_genre: string
+          release_date: string
+          coming_soon: integer
+          currency: string
+          initial_price: float64
+          final_price: float64
+          discount_percent: integer
+          formatted_initial_price: string
+          formatted_final_price: string
