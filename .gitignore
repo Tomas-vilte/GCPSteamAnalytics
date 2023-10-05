@@ -12,3 +12,4 @@ pipeline/src/config/config.env
 credentials.json
 __pycache__/
 logs/
+/includes/dbt/target/
