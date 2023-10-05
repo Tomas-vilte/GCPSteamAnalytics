@@ -1,1 +1,1 @@
-{"_invocation_id": "cc07b040-9302-457b-81e4-d95089662e54", "linked": {}}
+{"_invocation_id": "3dddb72c-b98d-4018-9657-ae8ebdce9d06", "linked": {"0": {"name": "source.games.games.raw_games", "type": "source", "succ": [1]}, "1": {"name": "model.games.dim_publishers", "type": "model"}}}

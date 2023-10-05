@@ -4,7 +4,7 @@
 WITH publishers_cte AS (
     SELECT
         DISTINCT publishers AS publishers_name
-    FROM {{ source('games', 'raw_games') }}
+    FROM `pristine-flames-400818`.`games`.`raw_games`
 )
 
 SELECT

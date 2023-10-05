@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: games
+    database: pristine-flames-400818
+
+    tables:
+      - name: raw_games
