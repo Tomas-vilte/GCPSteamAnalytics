@@ -1,7 +1,7 @@
 data_source games:
   type: bigquery
   connection:
-    account_info_json_path: /home/tomi/GCPSteamAnalytics/credentials.json
+    account_info_json_path: /opt/airflow/credentials.json #/home/tomi/GCPSteamAnalytics/credentials.json
     auth_scopes:
       - https://www.googleapis.com/auth/bigquery
       - https://www.googleapis.com/auth/cloud-platform
@@ -10,5 +10,5 @@ data_source games:
     dataset: 'games'
 soda_cloud:
   host: cloud.us.soda.io
-  api_key_id: $SODA_API_KEY_ID
-  api_key_secret: $SODA_API_KEY_SECRET
+  api_key_id: a51146d9-cc93-448c-9cd0-729d19142e7e
+  api_key_secret: pCZrxgRuWCriZm_QxdELFgcNYcX_1iM2FiUPpo1Am1Wn1LOk63bwgQ

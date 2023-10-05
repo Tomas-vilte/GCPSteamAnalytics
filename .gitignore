@@ -7,7 +7,7 @@ gcp/.terraform.lock.hcl
 configGCP.env
 gcp/.terraform.tfstate.lock.info
 venv
-soda_venv/
+venv/
 pipeline/src/config/config.env
 credentials.json
 __pycache__/
