@@ -1,0 +1,7 @@
+name: 'games'
+
+profile: 'games'
+
+models:
+  games:
+    materialized: table

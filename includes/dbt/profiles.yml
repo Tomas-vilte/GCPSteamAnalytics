@@ -1,0 +1,12 @@
+games:
+  target: dev
+  outputs:
+    dev: 
+      type: bigquery
+      method: service-account
+      keyfile: /opt/airflow/credentials.json
+      project: pristine-flames-400818
+      dataset: games
+      threads: 1
+      timeout_seconds: 300
+      location: US
