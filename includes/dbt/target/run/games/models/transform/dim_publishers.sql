@@ -19,9 +19,9 @@ WITH publishers_cte AS (
 )
 
 SELECT
-    ROW_NUMBER() OVER () AS publishers_id,
+    ROW_NUMBER() OVER () AS publisher_id,
     publishers_name
 FROM
-    publishers
+    publishers_cte
     );
   
