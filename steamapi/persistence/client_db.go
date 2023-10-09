@@ -1,16 +1,17 @@
 package persistence
 
 import (
-	"cloud.google.com/go/cloudsqlconn"
 	"context"
 	"fmt"
+	"log"
+	"net"
+	"sync"
+
+	"cloud.google.com/go/cloudsqlconn"
 	config2 "github.com/Tomas-vilte/GCPSteamAnalytics/config"
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"log"
-	"net"
-	"sync"
 )
 
 var (
@@ -21,7 +22,7 @@ var (
 func GetDB() *sqlx.DB {
 	doOnce.Do(func() {
 		if db == nil {
-			db, _ = createClientInGCP() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
+			db = createClientLocal() // Aca podes cambiarlo a createClientLocal() si no pensas usarlo en gcp
 		}
 		log.Println("Conexion creada con exito")
 	})
@@ -30,7 +31,7 @@ func GetDB() *sqlx.DB {
 
 // Esta conexion sirve si no vas a usar servicios de gcp.
 func createClientLocal() *sqlx.DB {
-	db, err := sqlx.Open("mysql", "root:root@tcp(localhost:3306)/steamAnalytics?parseTime=true")
+	db, err := sqlx.Open("mysql", "tomi:tomi@tcp(localhost:3306)/steamAnalytics?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
