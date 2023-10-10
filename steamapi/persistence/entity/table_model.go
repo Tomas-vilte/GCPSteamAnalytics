@@ -25,7 +25,7 @@ func (l *LanguageArray) Scan(src interface{}) error {
 
 type SupportLanguages struct {
 	InterfaceLanguages LanguageArray `json:"interface_languages" db:"interface_languages"`
-	FullAudioLanguages LanguageArray `json:"full_audio_languages" db:"fullAudio_languages"`
+	FullAudioLanguages LanguageArray `json:"fullaudio_languages" db:"fullaudio_languages"`
 	SubtitlesLanguages LanguageArray `json:"subtitles_languages" db:"subtitles_languages"`
 }
 
@@ -51,12 +51,12 @@ type Genre struct {
 }
 
 type Price struct {
-	Currency              string  `json:"currency" db:"currency"`
-	InitialPrice          float64 `json:"initial_price" db:"initial_price"`
-	FinalPrice            float64 `json:"final_price" db:"final_price"`
-	DiscountPercent       int     `json:"discount_percent" db:"discount_percent"`
-	FormattedInitialPrice string  `json:"formatted_initial_price" db:"formatted_initial_price"`
-	FormattedFinalPrice   string  `json:"formatted_final_price" db:"formatted_final_price"`
+	Currency              string `json:"currency" db:"currency"`
+	InitialPrice          int64  `json:"initial_price" db:"initial_price"`
+	FinalPrice            int64  `json:"final_price" db:"final_price"`
+	DiscountPercent       int    `json:"discount_percent" db:"discount_percent"`
+	FormattedInitialPrice string `json:"formatted_initial_price" db:"formatted_initial_price"`
+	FormattedFinalPrice   string `json:"formatted_final_price" db:"formatted_final_price"`
 }
 
 type GameDetails struct {

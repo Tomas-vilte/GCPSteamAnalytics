@@ -147,7 +147,6 @@ func (sv *GameProcessor) processGameData(data *steamapi.AppDetails) error {
 
 	return nil
 }
-
 func (sv *GameProcessor) UpdateData(games []entity.Item, id int64, isValid bool) error {
 	findItem := func(games []entity.Item, id int64) *entity.Item {
 		for i := range games {
