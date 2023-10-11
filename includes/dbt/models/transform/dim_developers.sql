@@ -9,7 +9,7 @@ WITH developers_cte AS (
 )
 
 SELECT
-    ROW_NUMBER() OVER() AS publisher_id,
+    ROW_NUMBER() OVER() AS developer_id,
     developers_name
 FROM
     developers_cte

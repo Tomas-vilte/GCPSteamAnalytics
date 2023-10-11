@@ -1,14 +1,14 @@
 checks for dim_developers:
   - schema:
       fail:
-        when required column missing: [publisher_id, developers_name]
+        when required column missing: [developer_id, developers_name]
         when wrong column type:
-          publisher_id: integer
+          developer_id: integer
           developers_name: string
   
-  # check failes when publisher_id is not unique
-  - duplicate_count(publisher_id) = 0:
+  # check failes when developers_name is not unique
+  - duplicate_count(developer_id) = 0:
 
   # Check fails when any Null values exist in the column
-  - missing_count(publisher_id) = 0:
+  - missing_count(developer_id) = 0:
       name: All 
