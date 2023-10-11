@@ -8,6 +8,7 @@ WITH price_overview_cte AS (
         discount_percent AS discount_pct,
         formatted_initial_price,
         formatted_final_price,
+        app_id,
         -- Monto del Descuento formateado como decimal con dos decimales
        CAST(
         (CASE
@@ -29,6 +30,7 @@ WITH price_overview_cte AS (
 
 SELECT
     ROW_NUMBER() OVER() AS purchase_id,
+    app_id,
     initial_price,
     final_price,
     discount_pct,
