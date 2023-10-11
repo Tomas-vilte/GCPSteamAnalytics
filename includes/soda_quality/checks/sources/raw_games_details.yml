@@ -40,8 +40,8 @@ checks for raw_games:
           release_date: string
           coming_soon: integer
           currency: string
-          initial_price: float64
-          final_price: float64
+          initial_price: integer
+          final_price: integer
           discount_percent: integer
           formatted_initial_price: string
           formatted_final_price: string

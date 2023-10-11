@@ -6,3 +6,4 @@ RUN pip install pytest
 RUN pip install astro-sdk-python
 RUN pip install apache-airflow
 RUN pip install dbt-bigquery
+RUN pip install astronomer-cosmos

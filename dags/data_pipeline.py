@@ -3,10 +3,15 @@ from datetime import datetime
 from airflow.operators.python import PythonVirtualenvOperator
 from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateEmptyDatasetOperator
+from airflow.models.baseoperator import chain
 from astro import sql as aql
 from astro.files import File
 from astro.sql.table import BaseTable, Metadata
 from astro.constants import FileType
+from cosmos.airflow.task_group import DbtTaskGroup
+from cosmos.config import RenderConfig
+from cosmos.constants import LoadMode
+from includes.dbt.cosmos_config import DBT_PROJECT_CONFIG, DBT_CONFIG
 from includes.soda_quality.check_function import check
 
 
@@ -55,6 +60,24 @@ def games_details():
         requirements=["-i https://pypi.cloud.soda.io", "soda-core-bigquery"],
         system_site_packages=False,
         op_args=["check_load", "sources"]
+    )
+
+    transform = DbtTaskGroup(
+        group_id="transform",
+        project_config=DBT_PROJECT_CONFIG,
+        profile_config=DBT_CONFIG,
+        render_config=RenderConfig(
+            load_method=LoadMode.DBT_LS,
+            select=['path:models/transform']
+        )
+    )
+
+    chain(
+        upload_csv_to_gcs,
+        create_details_dataset,
+        gcs_to_raw,
+        check_load,
+        transform,
     )
 
 
