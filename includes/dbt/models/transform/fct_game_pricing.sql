@@ -18,5 +18,26 @@ WITH game_sales AS (
 )
 
 SELECT
-   g.*
-FROM game_sales g
+    fct.app_id,
+    fct.total_sales,
+    fct.total_discounts,
+    fct.num_sales,
+    fct.max_discount,
+    fct.min_price,
+    fct.max_price,
+    fct.total_sales_with_tax,
+    fct.total_sales_with_tax_discounted,
+    games.name AS game_name,
+    games.description AS game_description,
+    games.is_free AS game_is_free,
+    games.fullgame_app_id,
+    games.fullgame_name,
+    games.type,
+    games.genre_id,
+    games.type_genre,
+FROM
+    game_sales AS fct
+INNER JOIN
+    {{ ref('dim_games') }} AS games
+ON
+    fct.app_id = games.app_id
