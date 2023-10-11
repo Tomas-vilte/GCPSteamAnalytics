@@ -1,0 +1,18 @@
+checks for dim_games:
+  - schema:
+      fail:
+        when required column missing: [app_id, name, description, fullgame_app_id, fullgame_name, type,
+                                      is_free, genre_id, type_genre]
+        when wrong column type:
+          app_id: integer
+          name: string
+          description: string
+          fullgame_app_id: integer
+          fullgame_name: string
+          type: string
+          is_free: integer
+          genre_id: integer
+          type_genre: string
+
+  # Check fails when any Null values exist in the column
+  - missing_count(app_id) = 0:
