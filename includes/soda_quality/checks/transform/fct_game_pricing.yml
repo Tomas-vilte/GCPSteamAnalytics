@@ -1,10 +1,26 @@
 checks for fct_game_pricing:
   - schema:
       fail:
-        when required column missing: [app_id, total_sales, total_discounts, num_sales, max_discount,
-                                      min_price, max_price, total_sales_with_tax, total_sales_with_tax_discounted,
-                                      game_name, game_description, game_is_free, fullgame_app_id, fullgame_name,
-                                      type, genre_id, type_genre]
+        when required column missing:
+          [
+            app_id,
+            total_sales,
+            total_discounts,
+            num_sales,
+            max_discount,
+            min_price,
+            max_price,
+            total_sales_with_tax,
+            total_sales_with_tax_discounted,
+            game_name,
+            game_description,
+            game_is_free,
+            fullgame_app_id,
+            fullgame_name,
+            type,
+            genre_id,
+            type_genre,
+          ]
         when wrong column type:
           app_id: integer
           total_sales: numeric
@@ -23,11 +39,11 @@ checks for fct_game_pricing:
           type: string
           genre_id: string
           type_genre: string
-    
+
   # Check fails when any Null values exist in the column
   - missing_count(app_id) = 0:
 
-   # check failes when app_id is not unique
+    # check failes when app_id is not unique
   - duplicate_count(app_id) = 0:
 
   - row_count > 0

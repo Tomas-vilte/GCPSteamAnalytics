@@ -1,9 +1,20 @@
 checks for dim_price_overview:
   - schema:
       fail:
-        when required column missing: [purchase_id, app_id, initial_price, final_price, discount_pct, discount_amount,
-                                      formatted_initial_price, formatted_final_price, price_with_tax, formatted_price_with_tax]
-        when wrong column type: 
+        when required column missing:
+          [
+            purchase_id,
+            app_id,
+            initial_price,
+            final_price,
+            discount_pct,
+            discount_amount,
+            formatted_initial_price,
+            formatted_final_price,
+            price_with_tax,
+            formatted_price_with_tax,
+          ]
+        when wrong column type:
           purchase_id: integer
           app_id: integer
           initial_price: integer
@@ -14,7 +25,7 @@ checks for dim_price_overview:
           formatted_final_price: string
           price_with_tax: numeric
           formatted_price_with_tax: string
-  
+
   # Check fails when any Null values exist in the column
   - missing_count(purchase_id) = 0:
 

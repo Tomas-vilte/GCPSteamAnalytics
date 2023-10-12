@@ -5,7 +5,7 @@ checks for dim_publishers:
         when wrong column type:
           publisher_id: integer
           publishers_name: string
-  
+
   # check failes when publisher_id is not unique
   - duplicate_count(publisher_id) = 0:
 

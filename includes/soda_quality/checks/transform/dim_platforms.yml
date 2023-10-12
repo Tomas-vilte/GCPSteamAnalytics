@@ -7,7 +7,7 @@ checks for dim_platforms:
           windows: integer
           mac: integer
           linux: integer
-  
+
     # check failes when platform_id is not unique
   - duplicate_count(platform_id) = 0:
 
