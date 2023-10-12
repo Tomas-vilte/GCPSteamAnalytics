@@ -80,6 +80,16 @@ def games_details():
         op_args=["check_transform", "transform"]
     )
 
+    report = DbtTaskGroup(
+        group_id="report",
+        project_config=DBT_PROJECT_CONFIG,
+        profile_config=DBT_CONFIG,
+        render_config=RenderConfig(
+            load_method=LoadMode.DBT_LS,
+            select=["path:models/report"]
+        )
+    )
+
     chain(
         upload_csv_to_gcs,
         create_details_dataset,
@@ -87,6 +97,7 @@ def games_details():
         check_load,
         transform,
         check_transform,
+        report,
     )
 
 
