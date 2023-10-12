@@ -1,0 +1,14 @@
+checks for dim_release:
+  - schema:
+      fail:
+        when required column missing: [release_id, release_date, coming_soon]
+        when wrong column type:
+          release_id: integer
+          release_date: string
+          coming_soon: integer
+  
+  # check failes when release_id is not unique
+  - duplicate_count(release_id) = 0:
+
+  # Check fails when any Null values exist in the column
+  - missing_count(release_id) = 0:

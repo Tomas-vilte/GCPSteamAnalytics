@@ -1,0 +1,15 @@
+checks for dim_platforms:
+  - schema:
+      fail:
+        when required column missing: [platform_id, windows, mac, linux]
+        when wrong column type:
+          platform_id: integer
+          windows: integer
+          mac: integer
+          linux: integer
+  
+    # check failes when platform_id is not unique
+  - duplicate_count(platform_id) = 0:
+
+    # Check fails when any Null values exist in the column
+  - missing_count(platform_id) = 0:
