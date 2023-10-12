@@ -11,4 +11,3 @@ checks for dim_publishers:
 
   # Check fails when any Null values exist in the column
   - missing_count(publisher_id) = 0:
-      name: All 
