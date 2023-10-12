@@ -12,8 +12,8 @@ checks for dim_price_overview:
             formatted_initial_price,
             formatted_final_price,
             price_with_tax,
-            formatted_price_with_tax,
-          ]
+            formatted_price_with_tax]
+
         when wrong column type:
           purchase_id: integer
           app_id: integer
