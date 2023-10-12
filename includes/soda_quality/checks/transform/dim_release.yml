@@ -6,7 +6,7 @@ checks for dim_release:
           release_id: integer
           release_date: string
           coming_soon: integer
-  
+
   # check failes when release_id is not unique
   - duplicate_count(release_id) = 0:
 

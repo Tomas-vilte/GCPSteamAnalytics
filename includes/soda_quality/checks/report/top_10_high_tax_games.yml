@@ -1,0 +1,5 @@
+checks for top_10_high_tax_games:
+  # Checks fails if total_taxes is lower or equal to 0
+  - min(total_taxes):
+      fail: when <= 0
+  - row_count > 0

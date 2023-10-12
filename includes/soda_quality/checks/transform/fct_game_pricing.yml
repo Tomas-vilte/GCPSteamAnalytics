@@ -1,0 +1,57 @@
+checks for fct_game_pricing:
+  - schema:
+      fail:
+        when required column missing:
+          [
+            app_id,
+            total_sales,
+            total_discounts,
+            num_sales,
+            max_discount,
+            min_price,
+            max_price,
+            total_sales_with_tax,
+            total_sales_with_tax_discounted,
+            game_name,
+            game_description,
+            game_is_free,
+            fullgame_app_id,
+            fullgame_name,
+            type,
+            genre_id,
+            type_genre,
+          ]
+        when wrong column type:
+          app_id: integer
+          total_sales: numeric
+          total_discounts: numeric
+          num_sales: integer
+          max_discount: integer
+          min_price: integer
+          max_price: integer
+          total_sales_with_tax: numeric
+          total_sales_with_tax_discounted: integer
+          game_name: string
+          game_description: string
+          game_is_free: integer
+          fullgame_app_id: integer
+          fullgame_name: string
+          type: string
+          genre_id: string
+          type_genre: string
+
+  # Check fails when any Null values exist in the column
+  - missing_count(app_id) = 0:
+
+    # check failes when app_id is not unique
+  - duplicate_count(app_id) = 0:
+
+  - row_count > 0
+
+  # Check fails when the total of any total_sales is negative
+  - failed rows:
+      name: All prices have a positive total amount
+      fail query: |
+        SELECT app_id, total_sales
+        FROM fct_game_pricing
+        WHERE total_sales < 0

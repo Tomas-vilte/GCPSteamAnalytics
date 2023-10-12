@@ -5,7 +5,7 @@ checks for dim_developers:
         when wrong column type:
           developer_id: integer
           developers_name: string
-  
+
   # check failes when developer_id is not unique
   - duplicate_count(developer_id) = 0:
 

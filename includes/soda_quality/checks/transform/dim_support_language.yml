@@ -1,0 +1,21 @@
+checks for dim_support_language:
+  - schema:
+      fail:
+        when required column missing:
+          [
+            language_id,
+            interface_languages,
+            subtitles_languages,
+            fullaudio_languages,
+          ]
+        when wrong column type:
+          language_id: integer
+          interface_languages: string
+          subtitles_languages: string
+          fullaudio_languages: string
+
+    # check failes when language_id is not unique
+  - duplicate_count(language_id) = 0:
+
+    # Check fails when any Null values exist in the column
+  - missing_count(language_id) = 0:
