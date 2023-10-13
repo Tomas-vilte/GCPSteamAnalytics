@@ -38,8 +38,12 @@ SELECT
     formatted_initial_price,
     formatted_final_price,
     price_with_tax,
+    platform_id,
+    windows,
+    mac,
+    linux,
     CONCAT('ARS$ ', REPLACE(FORMAT('%.2f', price_with_tax), '.', ',')) AS formatted_price_with_tax
-FROM price_overview_cte
+FROM price_overview_cte, games.dim_platforms
 WHERE 
     (initial_price IS NOT NULL)
     AND (final_price IS NOT NULL)
