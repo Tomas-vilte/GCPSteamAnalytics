@@ -1,0 +1,4 @@
+checks for top_10_discounted_games:
+  - min(total_discounts):
+      fail: when <= 0
+  - row_count > 0

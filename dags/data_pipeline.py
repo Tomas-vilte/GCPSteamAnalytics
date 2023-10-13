@@ -90,6 +90,14 @@ def games_details():
         )
     )
 
+    check_report = PythonVirtualenvOperator(
+        task_id="test_report",
+        python_callable=check,
+        requirements=["-i https://pypi.cloud.soda.io", "soda-core-bigquery"],
+        system_site_packages=False,
+        op_args=["check_report", "report"]
+    )
+
     chain(
         upload_csv_to_gcs,
         create_details_dataset,
@@ -98,6 +106,7 @@ def games_details():
         transform,
         check_transform,
         report,
+        check_report,
     )
 
 

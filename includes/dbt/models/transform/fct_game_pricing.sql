@@ -4,6 +4,7 @@
 WITH game_sales AS (
     SELECT
         app_id,
+        formatted_initial_price,
         SUM(price_with_tax) AS total_sales,
         SUM(discount_amount) AS total_discounts,
         COUNT(*) AS num_sales,
@@ -19,6 +20,7 @@ WITH game_sales AS (
 
 SELECT
     fct.app_id,
+    fct.formatted_initial_price,
     fct.total_sales,
     fct.total_discounts,
     fct.num_sales,

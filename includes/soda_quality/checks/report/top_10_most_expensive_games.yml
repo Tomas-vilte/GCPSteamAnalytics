@@ -1,0 +1,5 @@
+checks for top_10_most_expensive_games:
+  # Checks fails if max_price is lower or equal to 0
+  - min(max_price):
+      fail: when <= 0
+  - row_count > 0
