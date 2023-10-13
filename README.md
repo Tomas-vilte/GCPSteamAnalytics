@@ -243,3 +243,64 @@ Este endpoint se utiliza para procesar las reseñas de usuarios de Steam.
     ]
 }
 ```
+
+
+## Flujo de Trabajo de ELT, Validación y Generación de Informes
+
+Este proyecto tiene como objetivo demostrar un flujo de trabajo de Extracción, Transformación y Carga (ELT) que garantiza la calidad de los datos en cada etapa y facilita la generación de informes confiables. Aquí se describe en detalle cómo funciona el flujo de trabajo y las herramientas que utilizamos.
+
+## Flujo de Trabajo
+![Arquitectura Data Pipeline](/diagram/Data%20pipeline%20arquitectura.png)
+
+1. **Extracción de Datos de Cloud SQL**: Comenzamos extrayendo datos de nuestras tablas en Cloud SQL. Estos datos actúan como la fuente principal para nuestro análisis.
+
+2. **Guardar Datos como CSV**: Los datos extraídos se guardan en formato CSV. Este formato es adecuado para su posterior procesamiento y carga.
+
+3. **Cargar Datos en BigQuery**: Luego, cargamos los datos en BigQuery. Esta plataforma de análisis escalable nos permite realizar transformaciones y consultas complejas.
+
+4. **Validación de Calidad con Soda Data (Primera Etapa)**: Utilizamos Soda Data para realizar controles de calidad en los datos recién cargados en BigQuery. Esto asegura que los datos sean precisos y cumplan con nuestras expectativas.
+
+5. **Transformación con dbt**: Utilizamos dbt (Data Build Tool) para realizar transformaciones en los datos. Estas transformaciones pueden incluir la creación de modelos dimensionales y tablas de hecho para facilitar la generación de informes.
+
+6. **Validación de Calidad con Soda Data (Segunda Etapa)**: Nuevamente, empleamos Soda Data para verificar la calidad de los datos después de las transformaciones realizadas con dbt.
+
+7. **Ejecución de Modelos dbt para Generación de Informes**: Los modelos dbt se ejecutan para generar informes y vistas basados en las transformaciones previas. Estos informes son fundamentales para nuestro análisis de datos.
+
+8. **Validación de Calidad con Soda Data (Tercera Etapa)**: Una vez más, utilizamos Soda Data para garantizar que los datos utilizados en los informes cumplan con nuestros estándares de calidad.
+
+9. **Visualización con Looker Studio**: Finalmente, empleamos Looker Studio para visualizar y explorar los datos a través de paneles de control y reportes. Looker Studio proporciona una plataforma poderosa para la creación de informes interactivos.
+
+10. **Validación Continua**: A lo largo de todo el flujo de trabajo, realizamos controles de calidad en múltiples etapas utilizando Soda Data para garantizar la integridad de los datos en cada fase.
+
+## Requisitos y Configuración
+
+- Antes de comenzar, asegúrate de que tienes acceso a las siguientes herramientas y servicios:
+  - Docker y Docker Compose: Asegúrate de tener Docker y Docker Compose instalados en tu sistema. Puedes encontrar instrucciones detalladas sobre cómo instalarlos en [el sitio web oficial de Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/).
+  - Configuración de GCP con Apache Airflow: Este proyecto utiliza Google Cloud Platform (GCP) para la extracción y carga de datos. Asegúrate de tener una cuenta de GCP y configurar la conexión de GCP con Apache Airflow siguiendo las directrices de [GCP y Apache Airflow](https://cloud.google.com/composer/docs/how-to/managing/connections).
+  - Cuenta en Soda: Para realizar controles de calidad de datos, necesitarás una cuenta en Soda Data. Si aún no tienes una cuenta, puedes registrarte en [el sitio web de Soda Data](https://www.soda.io/).
+
+  - Cloud SQL para la fuente de datos o MySQL en tu local.
+  - Google Cloud Storage para el almacenamiento intermedio de archivos CSV.
+  - BigQuery para el procesamiento y almacenamiento de datos.
+  - Soda Data para las validaciones de calidad.
+  - dbt para la transformación de datos.
+  - Looker Studio para la visualización.
+
+## Ejecución
+
+Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
+
+1. Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
+
+2. Abre una terminal y navega al directorio raíz de este proyecto.
+
+3. Ejecuta el siguiente comando para iniciar los contenedores de Docker Compose en segundo plano:
+
+   ```bash
+   docker-compose up -d
+
+4. Esto iniciará los servicios necesarios para ejecutar el flujo de trabajo. Después de que los contenedores se hayan iniciado correctamente, puedes ejecutar el proceso de ELT utilizando un Dockerfile personalizado que contiene los paquetes y configuraciones necesarios. Ejecuta el siguiente comando:
+
+    ```bash
+    cd GCPSteamAnalytics/
+    docker build . --tag extended_airflow:2.7.1

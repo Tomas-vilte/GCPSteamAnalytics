@@ -4,8 +4,12 @@ checks for fct_game_pricing:
         when required column missing:
           [
             app_id,
+            formatted_initial_price,
             total_sales,
+            platform_id,
+            formatted_price_with_tax,
             total_discounts,
+            price_with_tax,
             num_sales,
             max_discount,
             min_price,
@@ -23,8 +27,12 @@ checks for fct_game_pricing:
           ]
         when wrong column type:
           app_id: integer
+          formatted_initial_price: string
           total_sales: numeric
+          platform_id: integer
+          formatted_price_with_tax: string
           total_discounts: numeric
+          price_with_tax: numeric
           num_sales: integer
           max_discount: integer
           min_price: integer

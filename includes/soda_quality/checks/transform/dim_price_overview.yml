@@ -12,7 +12,10 @@ checks for dim_price_overview:
             formatted_initial_price,
             formatted_final_price,
             price_with_tax,
-            formatted_price_with_tax]
+            formatted_price_with_tax,
+            windows,
+            mac,
+            linux]
 
         when wrong column type:
           purchase_id: integer
@@ -25,6 +28,9 @@ checks for dim_price_overview:
           formatted_final_price: string
           price_with_tax: numeric
           formatted_price_with_tax: string
+          windows: integer
+          mac: integer
+          linux: integer
 
   # Check fails when any Null values exist in the column
   - missing_count(purchase_id) = 0:
