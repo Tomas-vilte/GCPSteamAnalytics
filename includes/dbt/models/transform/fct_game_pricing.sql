@@ -15,7 +15,7 @@ WITH game_sales AS (
         SUM(final_price) AS total_sales_with_tax_discounted
     FROM
         {{ ref('dim_price_overview') }}
-    GROUP BY app_id
+    GROUP BY app_id, formatted_initial_price
 )
 
 SELECT
