@@ -11,8 +11,10 @@ from astro.constants import FileType
 from cosmos.airflow.task_group import DbtTaskGroup
 from cosmos.config import RenderConfig
 from cosmos.constants import LoadMode
+from dags.src.extract_data import extract_data_games_details, save_data_to_csv
 from includes.dbt.cosmos_config import DBT_PROJECT_CONFIG, DBT_CONFIG
 from includes.soda_quality.check_function import check
+from airflow.operators.python import PythonOperator
 
 
 @dag(
@@ -23,6 +25,18 @@ from includes.soda_quality.check_function import check
     description="data pipeline ELT",
 )
 def games_details():
+
+    extract_data = PythonOperator(
+        task_id="extract_data",
+        python_callable=extract_data_games_details,
+    )
+
+    save_data = PythonOperator(
+        task_id="save_data_to_csv",
+        python_callable=save_data_to_csv,
+        op_args=[extract_data.output],
+    )
+
     upload_csv_to_gcs = LocalFilesystemToGCSOperator(
         task_id="upload_csv_to_gcs",
         src="/opt/airflow/includes/dataset/games_details_2023-10-9.csv",
@@ -99,6 +113,8 @@ def games_details():
     )
 
     chain(
+        extract_data,
+        save_data,
         upload_csv_to_gcs,
         create_details_dataset,
         gcs_to_raw,

@@ -1,6 +1,6 @@
 import mysql.connector
-from pipeline.src.config.configs import load_env_variables
-from pipeline.src.logger.custom_logger import logs
+from config.configs import load_env_variables
+from logger.custom_logger import logs
 
 
 class DatabaseConnection:

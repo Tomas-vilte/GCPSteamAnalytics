@@ -1,11 +1,11 @@
 import csv
 import datetime
 from pathlib import Path
-from pipeline.src.cloudsql_connection import DatabaseConnection
-from pipeline.src.logger.custom_logger import logs
+from cloudsql_connection import DatabaseConnection
+from logger.custom_logger import logs
 
 dir: Path = Path(__file__).resolve().parent.parent
-dataPath: Path = Path(f"{dir}/include/dataset/")
+dataPath: Path = Path(f"{dir}/includes/dataset/")
 
 
 def extract_data_games_details() -> tuple[list, list]:

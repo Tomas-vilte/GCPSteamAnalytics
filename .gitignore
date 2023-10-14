@@ -11,5 +11,5 @@ venv/
 pipeline/src/config/config.env
 credentials.json
 __pycache__/
-logs/
+dags/logs/
 /includes/dbt/target/

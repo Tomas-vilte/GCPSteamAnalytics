@@ -309,7 +309,7 @@ Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
 
 ## Informes y Consultas DBT
 
-Este directorio contiene una serie de informes y consultas SQL desarrollados en DBT para analizar los datos de juegos y ventas. Cada informe se enfoca en un aspecto específico de los datos y proporciona información valiosa para la toma de decisiones y el análisis de rendimiento.
+[Este directorio](/includes/dbt/models/report/) contiene una serie de informes y consultas SQL desarrollados en DBT para analizar los datos de juegos y ventas. Cada informe se enfoca en un aspecto específico de los datos y proporciona información valiosa para la toma de decisiones y el análisis de rendimiento.
 
 ## Informes Disponibles
 

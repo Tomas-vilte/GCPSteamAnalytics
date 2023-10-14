@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from pipeline.src.logger.custom_logger import logs
+from dags.src.logger.custom_logger import logs
 
 dir: Path = Path(__file__).resolve().parent
 
