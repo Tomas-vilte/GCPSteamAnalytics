@@ -25,6 +25,7 @@ Implemente un límite de velocidad en las solicitudes a la API. El límite actua
 - [Obtener Reviews de un Juego](#obtener-reviews-de-un-juego)
 - [Procesar juegos de Steam](#procesar-juegos-de-steam)
 - [Procesar reviews de Steam](#procesar-reviews-de-steam)
+- [Explicacion Flujo de Trabajo ELT](#explicacion-flujo-de-trabajo-elt)
 
 ## Obtener Detalles de un Juego por appID
 
@@ -247,9 +248,9 @@ Este endpoint se utiliza para procesar las reseñas de usuarios de Steam.
 
 ## Flujo de Trabajo de ELT, Validación y Generación de Informes
 
-Este proyecto tiene como objetivo demostrar un flujo de trabajo de Extracción, Transformación y Carga (ELT) que garantiza la calidad de los datos en cada etapa y facilita la generación de informes confiables. Aquí se describe en detalle cómo funciona el flujo de trabajo y las herramientas que utilizamos.
+Este proyecto tiene como objetivo demostrar un flujo de trabajo de Extracción, Transformación y Carga (ELT) que garantiza la calidad de los datos en cada etapa y facilita la generación de informes confiables. Aquí se describe en detalle cómo funciona el flujo de trabajo y las herramientas que utilice.
 
-## Flujo de Trabajo
+## Explicacion Flujo de Trabajo ELT
 ![Arquitectura Data Pipeline](/diagram/Data%20pipeline%20arquitectura.png)
 
 1. **Extracción de Datos de Cloud SQL**: Comenzamos extrayendo datos de nuestras tablas en Cloud SQL. Estos datos actúan como la fuente principal para nuestro análisis.
@@ -304,3 +305,21 @@ Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
     ```bash
     cd GCPSteamAnalytics/
     docker build . --tag extended_airflow:2.7.1
+
+
+## Informes y Consultas DBT
+
+Este directorio contiene una serie de informes y consultas SQL desarrollados en DBT para analizar los datos de juegos y ventas. Cada informe se enfoca en un aspecto específico de los datos y proporciona información valiosa para la toma de decisiones y el análisis de rendimiento.
+
+## Informes Disponibles
+
+1. `revenue_by_platform_and_game.sql`: Este informe analiza los ingresos desglosados por plataforma y juego. Proporciona una visión general de cuánto ingreso se genera en cada plataforma para cada juego.
+
+
+2. `top_10_discounted_games.sql`: Este informe identifica y muestra los diez juegos con los mayores descuentos en términos de porcentaje de descuento. Es útil para comprender cuáles son los juegos más rebajados en el catálogo.
+
+
+3. `top_10_high_tax_games.sql`: Este informe muestra los diez juegos que tienen el impuesto más alto aplicado a sus precios. Ayuda a identificar los juegos con mayores impuestos y, por lo tanto, precios más elevados.
+
+
+4. `top_10_most_expensive_games.sql`: Este informe enumera los diez juegos con los precios más altos en el catálogo. Proporciona información sobre los juegos más caros disponibles.
