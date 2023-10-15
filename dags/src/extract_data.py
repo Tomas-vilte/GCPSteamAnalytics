@@ -1,6 +1,7 @@
 import csv
 import datetime
 from pathlib import Path
+from typing import Tuple, List
 from cloudsql_connection import DatabaseConnection
 from logger.custom_logger import logs
 
@@ -8,7 +9,7 @@ dir: Path = Path(__file__).resolve().parent.parent
 dataPath: Path = Path(f"{dir}/includes/dataset/")
 
 
-def extract_data_games_details() -> tuple[list, list]:
+def extract_data_games_details() -> Tuple[List, List]:
     data: list = []
     column_names: list = []
     try:

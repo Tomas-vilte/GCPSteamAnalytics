@@ -1,0 +1,15 @@
+[2023-10-14T23:11:33.165+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-13T00:00:00+00:00 [queued]>
+[2023-10-14T23:11:33.172+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-13T00:00:00+00:00 [queued]>
+[2023-10-14T23:11:33.172+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-14T23:11:33.182+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): extract_data> on 2023-10-13 00:00:00+00:00
+[2023-10-14T23:11:33.188+0000] {standard_task_runner.py:57} INFO - Started process 455 to run task
+[2023-10-14T23:11:33.190+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'extract_data', 'scheduled__2023-10-13T00:00:00+00:00', '--job-id', '384', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmpa_xodz9i']
+[2023-10-14T23:11:33.192+0000] {standard_task_runner.py:85} INFO - Job 384: Subtask extract_data
+[2023-10-14T23:11:33.226+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.extract_data scheduled__2023-10-13T00:00:00+00:00 [running]> on host 73255a4feea0
+[2023-10-14T23:11:33.289+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2023-10-13T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-13T00:00:00+00:00'
+[2023-10-14T23:11:33.291+0000] {configs.py:36} ERROR - Error: DB_PASS variable de entorno no establecida
+[2023-10-14T23:11:33.291+0000] {extract_data.py:27} INFO - Error al extraer datos: Error: DB_PASS variable de entorno no establecida
+[2023-10-14T23:11:33.291+0000] {python.py:194} INFO - Done. Returned value was: ([], [])
+[2023-10-14T23:11:33.310+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=extract_data, execution_date=20231013T000000, start_date=20231014T231133, end_date=20231014T231133
+[2023-10-14T23:11:33.362+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-14T23:11:33.388+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

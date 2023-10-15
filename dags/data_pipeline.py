@@ -39,7 +39,7 @@ def games_details():
 
     upload_csv_to_gcs = LocalFilesystemToGCSOperator(
         task_id="upload_csv_to_gcs",
-        src="/opt/airflow/includes/dataset/games_details_2023-10-9.csv",
+        src=f"/opt/airflow/includes/dataset/games_details_2023-10-9.csv",
         dst="raw/games_details_2023-09-29.csv",
         bucket="steamanalytics",
         gcp_conn_id="gcp",

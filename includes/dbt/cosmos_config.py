@@ -8,5 +8,5 @@ DBT_CONFIG = ProfileConfig(
 )
 
 DBT_PROJECT_CONFIG = ProjectConfig(
-    dbt_project_path="/opt/airflow/includes/dbt/",
+    dbt_project_path=Path("/opt/airflow/includes/dbt/"),
 )
