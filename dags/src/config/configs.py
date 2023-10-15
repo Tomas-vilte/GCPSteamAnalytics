@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from pipeline.src.logger.custom_logger import logs
+from dags.src.logger.custom_logger import logs
 
 dir: Path = Path(__file__).resolve().parent
 
@@ -18,6 +18,7 @@ def load_env_variables() -> dict:
         "DB_USER": get_env_variable("DB_USER"),
         "DB_HOST": get_env_variable("DB_HOST"),
     }
+    print(db_variables)
     return db_variables
 
 
@@ -37,3 +38,5 @@ def get_env_variable(key: str) -> str:
         raise ValueError(f"Error: {key} variable de entorno no establecida")
     logs.info(f"Variables de entorno establecidas con exito {key}")
     return value
+
+load_env_variables()

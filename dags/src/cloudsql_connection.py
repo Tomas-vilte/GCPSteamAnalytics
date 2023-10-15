@@ -1,6 +1,7 @@
+from typing import Optional
 import mysql.connector
-from pipeline.src.config.configs import load_env_variables
-from pipeline.src.logger.custom_logger import logs
+from config.configs import load_env_variables
+from logger.custom_logger import logs
 
 
 class DatabaseConnection:
@@ -14,7 +15,7 @@ class DatabaseConnection:
 
     def create_connection(
         self,
-    ) -> mysql.connector.connection_cext.CMySQLConnection | None:
+    ) -> Optional[mysql.connector.connection_cext.CMySQLConnection]:
         environment: dict = load_env_variables()
         try:
             # Crea una conexión a Cloud SQL
@@ -38,5 +39,5 @@ class DatabaseConnection:
             logs.error(f"Error al conectar a la base de datos: {str(e)}")
             return None
 
-    def get_connection(self) -> mysql.connector.connection_cext.CMySQLConnection | None:
+    def get_connection(self) -> Optional[mysql.connector.connection_cext.CMySQLConnection]:
         return self.conn
