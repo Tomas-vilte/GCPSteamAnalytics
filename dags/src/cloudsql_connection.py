@@ -1,7 +1,7 @@
+import pymysql
 from typing import Optional
-import mysql.connector
-from config.configs import load_env_variables
-from logger.custom_logger import logs
+from dags.src.config.configs import load_env_variables
+from dags.src.logger.custom_logger import logs
 
 
 class DatabaseConnection:
@@ -14,30 +14,30 @@ class DatabaseConnection:
         return cls._instance
 
     def create_connection(
-        self,
-    ) -> Optional[mysql.connector.connection_cext.CMySQLConnection]:
+            self,
+    ) -> Optional[pymysql.connections.Connection]:
         environment: dict = load_env_variables()
         try:
-            # Crea una conexión a Cloud SQL
-            conn = mysql.connector.connect(
+            # Crea una conexión a la base de datos MySQL
+            conn = pymysql.connect(
                 user=environment["DB_USER"],
                 password=environment["DB_PASS"],
                 database=environment["DB_NAME"],
                 host=environment["DB_HOST"],
             )
 
-            if conn.is_connected():
+            if conn.open:
                 logs.info(
-                    f'Conexión exitosa a la base de datos {environment["DB_NAME"]} en Cloud SQL.'
+                    f'Conexión exitosa a la base de datos {environment["DB_NAME"]}.'
                 )
                 return conn
             else:
                 logs.error("No se pudo establecer la conexión.")
                 return None
 
-        except mysql.connector.errors.Error as e:
+        except pymysql.Error as e:
             logs.error(f"Error al conectar a la base de datos: {str(e)}")
             return None
 
-    def get_connection(self) -> Optional[mysql.connector.connection_cext.CMySQLConnection]:
+    def get_connection(self) -> Optional[pymysql.connections.Connection]:
         return self.conn

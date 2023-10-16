@@ -5,7 +5,7 @@ from typing import Tuple, List
 from cloudsql_connection import DatabaseConnection
 from logger.custom_logger import logs
 
-dir: Path = Path(__file__).resolve().parent.parent
+dir: Path = Path(__file__).resolve().parent.parent.parent
 dataPath: Path = Path(f"{dir}/includes/dataset/")
 
 
