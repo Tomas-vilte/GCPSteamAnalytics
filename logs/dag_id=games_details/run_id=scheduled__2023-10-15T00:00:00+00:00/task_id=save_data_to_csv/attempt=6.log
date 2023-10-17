@@ -1,0 +1,20 @@
+[2023-10-16T21:57:52.044+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.save_data_to_csv scheduled__2023-10-15T00:00:00+00:00 [queued]>
+[2023-10-16T21:57:52.054+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.save_data_to_csv scheduled__2023-10-15T00:00:00+00:00 [queued]>
+[2023-10-16T21:57:52.054+0000] {taskinstance.py:1359} INFO - Starting attempt 6 of 6
+[2023-10-16T21:57:52.071+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): save_data_to_csv> on 2023-10-15 00:00:00+00:00
+[2023-10-16T21:57:52.077+0000] {standard_task_runner.py:57} INFO - Started process 272 to run task
+[2023-10-16T21:57:52.081+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'save_data_to_csv', 'scheduled__2023-10-15T00:00:00+00:00', '--job-id', '440', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmped6hmyjt']
+[2023-10-16T21:57:52.083+0000] {standard_task_runner.py:85} INFO - Job 440: Subtask save_data_to_csv
+[2023-10-16T21:57:52.125+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.save_data_to_csv scheduled__2023-10-15T00:00:00+00:00 [running]> on host a9d8e4a47580
+[2023-10-16T21:57:52.198+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='save_data_to_csv' AIRFLOW_CTX_EXECUTION_DATE='2023-10-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='6' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-15T00:00:00+00:00'
+[2023-10-16T21:57:52.201+0000] {taskinstance.py:1935} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+TypeError: save_data_to_csv() missing 1 required positional argument: 'column_names'
+[2023-10-16T21:57:52.208+0000] {taskinstance.py:1398} INFO - Marking task as FAILED. dag_id=games_details, task_id=save_data_to_csv, execution_date=20231015T000000, start_date=20231016T215752, end_date=20231016T215752
+[2023-10-16T21:57:52.218+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 440 for task save_data_to_csv (save_data_to_csv() missing 1 required positional argument: 'column_names'; 272)
+[2023-10-16T21:57:52.252+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-10-16T21:57:52.279+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check

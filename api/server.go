@@ -1,12 +1,13 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/Tomas-vilte/GCPSteamAnalytics/cache"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/controller"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence"
 	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/service"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func StartServer() {
@@ -19,7 +20,7 @@ func StartServer() {
 	r.Use(RateLimitMiddleware())
 
 	SetupRoutes(r, app, reviewCtrl, getGame)
-	r.Run("localhost:8080")
+	r.Run("localhost:8081")
 }
 
 func createApp() controller.ProcessController {
