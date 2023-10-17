@@ -313,13 +313,10 @@ Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
 
 ## Informes Disponibles
 
-1. `revenue_by_platform_and_game.sql`: Este informe analiza los ingresos desglosados por plataforma y juego. Proporciona una visión general de cuánto ingreso se genera en cada plataforma para cada juego.
+1. `top_10_discounted_games.sql`: Este informe identifica y muestra los diez juegos con los mayores descuentos en términos de porcentaje de descuento. Es útil para comprender cuáles son los juegos más rebajados en el catálogo.
 
 
-2. `top_10_discounted_games.sql`: Este informe identifica y muestra los diez juegos con los mayores descuentos en términos de porcentaje de descuento. Es útil para comprender cuáles son los juegos más rebajados en el catálogo.
+2. `top_10_high_tax_games.sql`: Este informe muestra los diez juegos que tienen el impuesto más alto aplicado a sus precios. Ayuda a identificar los juegos con mayores impuestos y, por lo tanto, precios más elevados.
 
 
-3. `top_10_high_tax_games.sql`: Este informe muestra los diez juegos que tienen el impuesto más alto aplicado a sus precios. Ayuda a identificar los juegos con mayores impuestos y, por lo tanto, precios más elevados.
-
-
-4. `top_10_most_expensive_games.sql`: Este informe enumera los diez juegos con los precios más altos en el catálogo. Proporciona información sobre los juegos más caros disponibles.
+3. `top_10_most_expensive_games.sql`: Este informe enumera los diez juegos con los precios más altos en el catálogo. Proporciona información sobre los juegos más caros disponibles.

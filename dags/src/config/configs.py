@@ -37,5 +37,3 @@ def get_env_variable(key: str) -> str:
         raise ValueError(f"Error: {key} variable de entorno no establecida")
     logs.info(f"Variables de entorno establecidas con exito {key}")
     return value
-
-load_env_variables()

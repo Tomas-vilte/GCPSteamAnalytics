@@ -24,6 +24,7 @@ class DatabaseConnection:
                 password=environment["DB_PASS"],
                 database=environment["DB_NAME"],
                 host=environment["DB_HOST"],
+                port=3307,
             )
 
             if conn.open:

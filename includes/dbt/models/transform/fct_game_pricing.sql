@@ -5,7 +5,6 @@ WITH game_sales AS (
     SELECT
         app_id,
         formatted_initial_price,
-        platform_id,
         formatted_price_with_tax,
         price_with_tax,
         SUM(price_with_tax) AS total_sales,
@@ -18,14 +17,13 @@ WITH game_sales AS (
         SUM(final_price) AS total_sales_with_tax_discounted
     FROM
         {{ ref('dim_price_overview') }}
-    GROUP BY app_id, platform_id, formatted_initial_price, formatted_price_with_tax, price_with_tax
+    GROUP BY app_id, formatted_initial_price, formatted_price_with_tax, price_with_tax
 )
 
 SELECT
     fct.app_id,
     fct.formatted_initial_price,
     fct.total_sales,
-    fct.platform_id,
     fct.formatted_price_with_tax,
     fct.total_discounts,
     fct.price_with_tax,
@@ -49,7 +47,3 @@ INNER JOIN
     {{ ref('dim_games') }} AS games
 ON
     fct.app_id = games.app_id
-INNER JOIN 
-    {{ ref('dim_platforms') }} AS dp
-ON
-    fct.platform_id = dp.platform_id
