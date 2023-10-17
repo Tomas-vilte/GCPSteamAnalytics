@@ -59277,3 +59277,625 @@ LIMIT 10
 [0m19:00:06.068716 [debug] [MainThread]: Command `dbt run` succeeded at 19:00:06.068606 after 65.91 seconds
 [0m19:00:06.069107 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f252730d180>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f252071fcd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f252071fa60>]}
 [0m19:00:06.069537 [debug] [MainThread]: Flushing usage events
+[0m14:12:06.586507 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab4b09bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab2ba0070>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab2ba00d0>]}
+
+
+============================== 14:12:06.589839 | af9ddb6a-8b47-45f2-a2db-3121987cd76b ==============================
+[0m14:12:06.589839 [info ] [MainThread]: Running with dbt=1.6.5
+[0m14:12:06.590310 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '../dbt/', 'debug': 'False', 'version_check': 'True', 'log_path': '/home/tomi/GCPSteamAnalytics/includes/dbt/logs', 'warn_error': 'None', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'log_format': 'default', 'static_parser': 'True', 'target_path': 'None', 'invocation_command': 'dbt run --profiles-dir ../dbt/', 'send_anonymous_usage_stats': 'True'}
+[0m14:12:07.331054 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0b22c50>]}
+[0m14:12:07.348761 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0b3c7c0>]}
+[0m14:12:07.349606 [info ] [MainThread]: Registered adapter: bigquery=1.6.7
+[0m14:12:07.365216 [debug] [MainThread]: checksum: aab365d456d99653250b9db50d1a1ebb1796991a326d59c2eea7a74da9519161, vars: {}, profile: , target: , version: 1.6.5
+[0m14:12:07.465739 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:12:07.466114 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:12:07.472300 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab09a80d0>]}
+[0m14:12:07.483867 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0971c90>]}
+[0m14:12:07.484339 [info ] [MainThread]: Found 12 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models
+[0m14:12:07.484688 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0973970>]}
+[0m14:12:07.486122 [info ] [MainThread]: 
+[0m14:12:07.486805 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m14:12:07.488432 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_pristine-flames-400818'
+[0m14:12:07.488884 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:12:08.379348 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_pristine-flames-400818, now list_pristine-flames-400818_games)
+[0m14:12:08.381433 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m14:12:09.074936 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab2d77f10>]}
+[0m14:12:09.078229 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m14:12:09.080003 [info ] [MainThread]: 
+[0m14:12:09.087962 [debug] [Thread-1 (]: Began running node model.games.dim_developers
+[0m14:12:09.090170 [info ] [Thread-1 (]: 1 of 12 START sql table model games.dim_developers ............................. [RUN]
+[0m14:12:09.093132 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_pristine-flames-400818_games, now model.games.dim_developers)
+[0m14:12:09.094956 [debug] [Thread-1 (]: Began compiling node model.games.dim_developers
+[0m14:12:09.124650 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_developers"
+[0m14:12:09.126346 [debug] [Thread-1 (]: Timing info for model.games.dim_developers (compile): 14:12:09.096284 => 14:12:09.125866
+[0m14:12:09.127163 [debug] [Thread-1 (]: Began executing node model.games.dim_developers
+[0m14:12:09.147235 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:09.940868 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_developers"
+[0m14:12:09.943534 [debug] [Thread-1 (]: On model.games.dim_developers: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_developers"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_developers`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_developers.sql
+
+-- Crea la dimension de la tabla
+WITH developers_cte AS (
+    SELECT
+        developers AS developers_name
+    FROM `pristine-flames-400818`.`games`.`raw_games`
+    WHERE developers IS NOT NULL
+)
+
+SELECT
+    ROW_NUMBER() OVER() AS developer_id,
+    developers_name
+FROM
+    developers_cte
+    );
+  
+[0m14:12:10.538853 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:1d8cf0f1-fa71-4b6e-94fd-98bb2cfbf634&page=queryresults
+[0m14:12:13.043669 [debug] [Thread-1 (]: Timing info for model.games.dim_developers (execute): 14:12:09.127713 => 14:12:13.043351
+[0m14:12:13.044811 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0b49f60>]}
+[0m14:12:13.045735 [info ] [Thread-1 (]: 1 of 12 OK created sql table model games.dim_developers ........................ [[32mCREATE TABLE (2.6k rows, 41.9 KiB processed)[0m in 3.95s]
+[0m14:12:13.046610 [debug] [Thread-1 (]: Finished running node model.games.dim_developers
+[0m14:12:13.047235 [debug] [Thread-1 (]: Began running node model.games.dim_games
+[0m14:12:13.047958 [info ] [Thread-1 (]: 2 of 12 START sql table model games.dim_games .................................. [RUN]
+[0m14:12:13.048827 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_developers, now model.games.dim_games)
+[0m14:12:13.049361 [debug] [Thread-1 (]: Began compiling node model.games.dim_games
+[0m14:12:13.052806 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_games"
+[0m14:12:13.054834 [debug] [Thread-1 (]: Timing info for model.games.dim_games (compile): 14:12:13.049740 => 14:12:13.054584
+[0m14:12:13.055316 [debug] [Thread-1 (]: Began executing node model.games.dim_games
+[0m14:12:13.063883 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:13.753434 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_games"
+[0m14:12:13.757695 [debug] [Thread-1 (]: On model.games.dim_games: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_games"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_games`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_games.sql
+
+WITH games_cte AS (
+    SELECT
+        app_id,
+        name,
+        description,
+        fullgame_app_id,
+        fullgame_name,
+        type,
+        is_free,
+        genre_id,
+        type_genre
+    FROM
+        `pristine-flames-400818`.`games`.`raw_games`
+)
+
+SELECT
+    g.*
+FROM games_cte g
+    );
+  
+[0m14:12:14.354963 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:b8b45c2a-6e1c-415f-afa4-393ea34eada4&page=queryresults
+[0m14:12:16.497091 [debug] [Thread-1 (]: Timing info for model.games.dim_games (execute): 14:12:13.055649 => 14:12:16.496209
+[0m14:12:16.500468 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0993f10>]}
+[0m14:12:16.503063 [info ] [Thread-1 (]: 2 of 12 OK created sql table model games.dim_games ............................. [[32mCREATE TABLE (2.8k rows, 776.0 KiB processed)[0m in 3.45s]
+[0m14:12:16.505893 [debug] [Thread-1 (]: Finished running node model.games.dim_games
+[0m14:12:16.507950 [debug] [Thread-1 (]: Began running node model.games.dim_platforms
+[0m14:12:16.510326 [info ] [Thread-1 (]: 3 of 12 START sql table model games.dim_platforms .............................. [RUN]
+[0m14:12:16.513383 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_games, now model.games.dim_platforms)
+[0m14:12:16.515273 [debug] [Thread-1 (]: Began compiling node model.games.dim_platforms
+[0m14:12:16.521793 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_platforms"
+[0m14:12:16.522597 [debug] [Thread-1 (]: Timing info for model.games.dim_platforms (compile): 14:12:16.516564 => 14:12:16.522351
+[0m14:12:16.523003 [debug] [Thread-1 (]: Began executing node model.games.dim_platforms
+[0m14:12:16.525279 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:17.246000 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_platforms"
+[0m14:12:17.248736 [debug] [Thread-1 (]: On model.games.dim_platforms: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_platforms"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_platforms`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_platforms.sql
+
+WITH platforms_cte AS (
+    SELECT
+        windows, mac, linux
+    FROM `pristine-flames-400818`.`games`.`raw_games`
+)
+
+SELECT
+    ROW_NUMBER() OVER() AS platform_id,
+    windows,
+    mac,
+    linux
+FROM
+    platforms_cte
+    );
+  
+[0m14:12:17.859222 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:c11be4ae-6136-431d-bb41-e09729d155d3&page=queryresults
+[0m14:12:20.539997 [debug] [Thread-1 (]: Timing info for model.games.dim_platforms (execute): 14:12:16.523313 => 14:12:20.539070
+[0m14:12:20.543148 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab08295a0>]}
+[0m14:12:20.545743 [info ] [Thread-1 (]: 3 of 12 OK created sql table model games.dim_platforms ......................... [[32mCREATE TABLE (2.8k rows, 65.6 KiB processed)[0m in 4.03s]
+[0m14:12:20.548613 [debug] [Thread-1 (]: Finished running node model.games.dim_platforms
+[0m14:12:20.550665 [debug] [Thread-1 (]: Began running node model.games.dim_price_overview
+[0m14:12:20.553142 [info ] [Thread-1 (]: 4 of 12 START sql table model games.dim_price_overview ......................... [RUN]
+[0m14:12:20.556116 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_platforms, now model.games.dim_price_overview)
+[0m14:12:20.557413 [debug] [Thread-1 (]: Began compiling node model.games.dim_price_overview
+[0m14:12:20.564081 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_price_overview"
+[0m14:12:20.564888 [debug] [Thread-1 (]: Timing info for model.games.dim_price_overview (compile): 14:12:20.558330 => 14:12:20.564687
+[0m14:12:20.565346 [debug] [Thread-1 (]: Began executing node model.games.dim_price_overview
+[0m14:12:20.567682 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:21.306729 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_price_overview"
+[0m14:12:21.309703 [debug] [Thread-1 (]: On model.games.dim_price_overview: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_price_overview"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_price_overview`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_price_overview.sql
+
+-- Calculamos el precio final con impuesto considerando el descuento
+WITH price_overview_cte AS (
+    SELECT
+        initial_price,
+        final_price,
+        discount_percent AS discount_pct,
+        formatted_initial_price,
+        formatted_final_price,
+        app_id,
+        -- Monto del Descuento formateado como decimal con dos decimales
+       CAST(
+        (CASE
+            WHEN discount_percent > 0 THEN initial_price * (discount_percent / 100)
+            ELSE 0.0
+        END) / 100 AS NUMERIC
+    ) AS discount_amount,
+
+    -- Precio del Juego con Impuesto (75%)
+    (CASE
+    WHEN discount_percent > 0 THEN
+        CAST((initial_price * (1 - discount_percent / 100) * 1.75) AS NUMERIC)
+    ELSE
+        CAST(initial_price * 1.75 AS NUMERIC)
+    END) AS price_with_tax
+    FROM
+    `pristine-flames-400818`.`games`.`raw_games`
+)
+
+SELECT
+    ROW_NUMBER() OVER() AS purchase_id,
+    app_id,
+    initial_price,
+    final_price,
+    discount_pct,
+    discount_amount,
+    formatted_initial_price,
+    formatted_final_price,
+    price_with_tax,
+    platform_id,
+    windows,
+    mac,
+    linux,
+    CONCAT('ARS$ ', REPLACE(FORMAT('%.2f', price_with_tax), '.', ',')) AS formatted_price_with_tax
+FROM price_overview_cte, games.dim_platforms
+WHERE 
+    (initial_price IS NOT NULL)
+    AND (final_price IS NOT NULL)
+    AND (discount_pct IS NOT NULL)
+    AND (discount_amount IS NOT NULL)
+    AND (formatted_initial_price IS NOT NULL)
+    AND (formatted_final_price IS NOT NULL)
+    AND (price_with_tax IS NOT NULL)
+    );
+  
+[0m14:12:21.932424 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:34147e6c-5d85-482a-912d-0a59afb53317&page=queryresults
+[0m14:12:27.472996 [debug] [Thread-1 (]: Timing info for model.games.dim_price_overview (execute): 14:12:20.565609 => 14:12:27.472795
+[0m14:12:27.473891 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab083c2b0>]}
+[0m14:12:27.474588 [info ] [Thread-1 (]: 4 of 12 OK created sql table model games.dim_price_overview .................... [[32mCREATE TABLE (3.3m rows, 205.3 KiB processed)[0m in 6.92s]
+[0m14:12:27.475296 [debug] [Thread-1 (]: Finished running node model.games.dim_price_overview
+[0m14:12:27.475745 [debug] [Thread-1 (]: Began running node model.games.dim_publishers
+[0m14:12:27.476449 [info ] [Thread-1 (]: 5 of 12 START sql table model games.dim_publishers ............................. [RUN]
+[0m14:12:27.477147 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_price_overview, now model.games.dim_publishers)
+[0m14:12:27.477543 [debug] [Thread-1 (]: Began compiling node model.games.dim_publishers
+[0m14:12:27.485748 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_publishers"
+[0m14:12:27.486507 [debug] [Thread-1 (]: Timing info for model.games.dim_publishers (compile): 14:12:27.477805 => 14:12:27.486265
+[0m14:12:27.486914 [debug] [Thread-1 (]: Began executing node model.games.dim_publishers
+[0m14:12:27.489412 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:28.210426 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_publishers"
+[0m14:12:28.213153 [debug] [Thread-1 (]: On model.games.dim_publishers: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_publishers"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_publishers`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_publishers.sql
+
+-- Crea la dimension de la tabla
+WITH publishers_cte AS (
+    SELECT
+        DISTINCT publishers AS publishers_name
+    FROM `pristine-flames-400818`.`games`.`raw_games`
+    WHERE publishers IS NOT NULL
+)
+
+SELECT
+    ROW_NUMBER() OVER() AS publisher_id,
+    publishers_name
+FROM
+    publishers_cte
+    );
+  
+[0m14:12:28.791500 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:f1e83818-1cf9-48bf-9a0e-f2453da37563&page=queryresults
+[0m14:12:31.251204 [debug] [Thread-1 (]: Timing info for model.games.dim_publishers (execute): 14:12:27.487221 => 14:12:31.250954
+[0m14:12:31.251987 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab084a6e0>]}
+[0m14:12:31.252980 [info ] [Thread-1 (]: 5 of 12 OK created sql table model games.dim_publishers ........................ [[32mCREATE TABLE (1.9k rows, 38.3 KiB processed)[0m in 3.78s]
+[0m14:12:31.255812 [debug] [Thread-1 (]: Finished running node model.games.dim_publishers
+[0m14:12:31.256362 [debug] [Thread-1 (]: Began running node model.games.dim_release
+[0m14:12:31.256887 [info ] [Thread-1 (]: 6 of 12 START sql table model games.dim_release ................................ [RUN]
+[0m14:12:31.257697 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_publishers, now model.games.dim_release)
+[0m14:12:31.258195 [debug] [Thread-1 (]: Began compiling node model.games.dim_release
+[0m14:12:31.261312 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_release"
+[0m14:12:31.262559 [debug] [Thread-1 (]: Timing info for model.games.dim_release (compile): 14:12:31.258529 => 14:12:31.262292
+[0m14:12:31.263085 [debug] [Thread-1 (]: Began executing node model.games.dim_release
+[0m14:12:31.268389 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:31.958988 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_release"
+[0m14:12:31.959705 [debug] [Thread-1 (]: On model.games.dim_release: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_release"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_release`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_release.sql
+
+WITH release_cte AS (
+    SELECT
+        release_date, coming_soon
+    FROM
+        `pristine-flames-400818`.`games`.`raw_games`
+)
+
+SELECT
+    ROW_NUMBER() OVER() AS release_id,
+    release_date,
+    coming_soon
+FROM release_cte
+    );
+  
+[0m14:12:32.613921 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:b91b129c-a7c4-4b49-acd2-a5d7f0a9fd1a&page=queryresults
+[0m14:12:35.303509 [debug] [Thread-1 (]: Timing info for model.games.dim_release (execute): 14:12:31.263468 => 14:12:35.303318
+[0m14:12:35.304305 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab099af80>]}
+[0m14:12:35.304972 [info ] [Thread-1 (]: 6 of 12 OK created sql table model games.dim_release ........................... [[32mCREATE TABLE (2.8k rows, 60.1 KiB processed)[0m in 4.05s]
+[0m14:12:35.305691 [debug] [Thread-1 (]: Finished running node model.games.dim_release
+[0m14:12:35.306192 [debug] [Thread-1 (]: Began running node model.games.dim_support_language
+[0m14:12:35.306774 [info ] [Thread-1 (]: 7 of 12 START sql table model games.dim_support_language ....................... [RUN]
+[0m14:12:35.307441 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_release, now model.games.dim_support_language)
+[0m14:12:35.307852 [debug] [Thread-1 (]: Began compiling node model.games.dim_support_language
+[0m14:12:35.310665 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.dim_support_language"
+[0m14:12:35.311398 [debug] [Thread-1 (]: Timing info for model.games.dim_support_language (compile): 14:12:35.308116 => 14:12:35.311128
+[0m14:12:35.311801 [debug] [Thread-1 (]: Began executing node model.games.dim_support_language
+[0m14:12:35.314119 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:35.986013 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.dim_support_language"
+[0m14:12:35.986737 [debug] [Thread-1 (]: On model.games.dim_support_language: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.dim_support_language"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`dim_support_language`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- dim_support_language.sql
+
+WITH support_language_cte AS (
+    SELECT
+        interface_languages,
+        subtitles_languages,
+        fullaudio_languages
+    FROM `pristine-flames-400818`.`games`.`raw_games`
+)
+
+SELECT
+    ROW_NUMBER() OVER() AS language_id,
+    interface_languages,
+    subtitles_languages,
+    fullaudio_languages
+FROM support_language_cte
+    );
+  
+[0m14:12:36.563931 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:0a77191d-f797-4018-8bc1-7577db54002e&page=queryresults
+[0m14:12:39.290986 [debug] [Thread-1 (]: Timing info for model.games.dim_support_language (execute): 14:12:35.312062 => 14:12:39.290795
+[0m14:12:39.291780 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab08e1390>]}
+[0m14:12:39.292381 [info ] [Thread-1 (]: 7 of 12 OK created sql table model games.dim_support_language .................. [[32mCREATE TABLE (2.8k rows, 336.1 KiB processed)[0m in 3.98s]
+[0m14:12:39.293023 [debug] [Thread-1 (]: Finished running node model.games.dim_support_language
+[0m14:12:39.293558 [debug] [Thread-1 (]: Began running node model.games.fct_game_pricing
+[0m14:12:39.294219 [info ] [Thread-1 (]: 8 of 12 START sql table model games.fct_game_pricing ........................... [RUN]
+[0m14:12:39.294936 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.dim_support_language, now model.games.fct_game_pricing)
+[0m14:12:39.295394 [debug] [Thread-1 (]: Began compiling node model.games.fct_game_pricing
+[0m14:12:39.298678 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.fct_game_pricing"
+[0m14:12:39.299435 [debug] [Thread-1 (]: Timing info for model.games.fct_game_pricing (compile): 14:12:39.295662 => 14:12:39.299198
+[0m14:12:39.299844 [debug] [Thread-1 (]: Began executing node model.games.fct_game_pricing
+[0m14:12:39.302160 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:39.987821 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.fct_game_pricing"
+[0m14:12:39.988619 [debug] [Thread-1 (]: On model.games.fct_game_pricing: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.fct_game_pricing"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`fct_game_pricing`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- fct_game_pricing.sql
+
+-- Crea una tabla de hechos para el análisis de precios de juegos
+WITH game_sales AS (
+    SELECT
+        app_id,
+        formatted_initial_price,
+        platform_id,
+        formatted_price_with_tax,
+        price_with_tax,
+        SUM(price_with_tax) AS total_sales,
+        SUM(discount_amount) AS total_discounts,
+        COUNT(*) AS num_sales,
+        MAX(discount_pct) AS max_discount,
+        MIN(initial_price) AS min_price,
+        MAX(initial_price) AS max_price,
+        SUM(price_with_tax) AS total_sales_with_tax,
+        SUM(final_price) AS total_sales_with_tax_discounted
+    FROM
+        `pristine-flames-400818`.`games`.`dim_price_overview`
+    GROUP BY app_id, platform_id, formatted_initial_price, formatted_price_with_tax, price_with_tax
+)
+
+SELECT
+    fct.app_id,
+    fct.formatted_initial_price,
+    fct.total_sales,
+    fct.platform_id,
+    fct.formatted_price_with_tax,
+    fct.total_discounts,
+    fct.price_with_tax,
+    fct.num_sales,
+    fct.max_discount,
+    fct.min_price,
+    fct.max_price,
+    fct.total_sales_with_tax,
+    fct.total_sales_with_tax_discounted,
+    games.name AS game_name,
+    games.description AS game_description,
+    games.is_free AS game_is_free,
+    games.fullgame_app_id,
+    games.fullgame_name,
+    games.type,
+    games.genre_id,
+    games.type_genre,
+FROM
+    game_sales AS fct
+INNER JOIN
+    `pristine-flames-400818`.`games`.`dim_games` AS games
+ON
+    fct.app_id = games.app_id
+INNER JOIN 
+    `pristine-flames-400818`.`games`.`dim_platforms` AS dp
+ON
+    fct.platform_id = dp.platform_id
+    );
+  
+[0m14:12:40.584660 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:2bea0a00-1d58-4bf8-8918-5125004d194b&page=queryresults
+[0m14:12:49.120356 [debug] [Thread-1 (]: Timing info for model.games.fct_game_pricing (execute): 14:12:39.300105 => 14:12:49.119463
+[0m14:12:49.123512 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab08e16c0>]}
+[0m14:12:49.126088 [info ] [Thread-1 (]: 8 of 12 OK created sql table model games.fct_game_pricing ...................... [[32mCREATE TABLE (3.3m rows, 313.2 MiB processed)[0m in 9.83s]
+[0m14:12:49.128950 [debug] [Thread-1 (]: Finished running node model.games.fct_game_pricing
+[0m14:12:49.132374 [debug] [Thread-1 (]: Began running node model.games.revenue_by_platform_and_game
+[0m14:12:49.134710 [info ] [Thread-1 (]: 9 of 12 START sql table model games.revenue_by_platform_and_game ............... [RUN]
+[0m14:12:49.136782 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.fct_game_pricing, now model.games.revenue_by_platform_and_game)
+[0m14:12:49.138074 [debug] [Thread-1 (]: Began compiling node model.games.revenue_by_platform_and_game
+[0m14:12:49.145314 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.revenue_by_platform_and_game"
+[0m14:12:49.146599 [debug] [Thread-1 (]: Timing info for model.games.revenue_by_platform_and_game (compile): 14:12:49.138982 => 14:12:49.146194
+[0m14:12:49.147371 [debug] [Thread-1 (]: Began executing node model.games.revenue_by_platform_and_game
+[0m14:12:49.151341 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:12:49.853448 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.revenue_by_platform_and_game"
+[0m14:12:49.856302 [debug] [Thread-1 (]: On model.games.revenue_by_platform_and_game: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.revenue_by_platform_and_game"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`revenue_by_platform_and_game`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- Informe de Ingresos por Plataforma
+SELECT
+    s.app_id,
+    p.platform_id,
+    s.total_sales,
+    SUM(CASE WHEN p.windows = 1 THEN s.price_with_tax ELSE 0 END) AS total_sales_windows,
+    SUM(CASE WHEN p.mac = 1 THEN s.price_with_tax ELSE 0 END) AS total_sales_mac,
+    SUM(CASE WHEN p.linux = 1 THEN s.price_with_tax ELSE 0 END) AS total_sales_linux
+FROM
+    `pristine-flames-400818`.`games`.`fct_game_pricing` s
+JOIN
+    `pristine-flames-400818`.`games`.`dim_platforms` p ON s.platform_id = p.platform_id
+GROUP BY
+    s.app_id, p.platform_id, s.total_sales
+ORDER BY
+    total_sales DESC
+    );
+  
+[0m14:12:50.407803 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:fa6f04a3-4608-4e0f-9638-3025821ebe07&page=queryresults
+[0m14:13:01.037769 [debug] [Thread-1 (]: Timing info for model.games.revenue_by_platform_and_game (execute): 14:12:49.147908 => 14:13:01.036874
+[0m14:13:01.041177 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab08953f0>]}
+[0m14:13:01.043875 [info ] [Thread-1 (]: 9 of 12 OK created sql table model games.revenue_by_platform_and_game .......... [[32mCREATE TABLE (3.3m rows, 152.1 MiB processed)[0m in 11.90s]
+[0m14:13:01.046778 [debug] [Thread-1 (]: Finished running node model.games.revenue_by_platform_and_game
+[0m14:13:01.049001 [debug] [Thread-1 (]: Began running node model.games.top_10_discounted_games
+[0m14:13:01.051189 [info ] [Thread-1 (]: 10 of 12 START sql table model games.top_10_discounted_games ................... [RUN]
+[0m14:13:01.054703 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.revenue_by_platform_and_game, now model.games.top_10_discounted_games)
+[0m14:13:01.056720 [debug] [Thread-1 (]: Began compiling node model.games.top_10_discounted_games
+[0m14:13:01.065919 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.top_10_discounted_games"
+[0m14:13:01.067643 [debug] [Thread-1 (]: Timing info for model.games.top_10_discounted_games (compile): 14:13:01.058072 => 14:13:01.067099
+[0m14:13:01.068634 [debug] [Thread-1 (]: Began executing node model.games.top_10_discounted_games
+[0m14:13:01.080417 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:13:01.789791 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.top_10_discounted_games"
+[0m14:13:01.790596 [debug] [Thread-1 (]: On model.games.top_10_discounted_games: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.top_10_discounted_games"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`top_10_discounted_games`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- Top 10 descuentos más grandes
+SELECT
+    app_id,
+    game_name,
+    total_discounts
+FROM
+    `pristine-flames-400818`.`games`.`fct_game_pricing`
+ORDER BY total_discounts DESC
+LIMIT 10
+    );
+  
+[0m14:13:02.330496 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:fe35bdb1-c0ad-4b95-974d-ee793ac03c77&page=queryresults
+[0m14:13:04.434164 [debug] [Thread-1 (]: Timing info for model.games.top_10_discounted_games (execute): 14:13:01.069320 => 14:13:04.433276
+[0m14:13:04.437302 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feaadefd510>]}
+[0m14:13:04.439897 [info ] [Thread-1 (]: 10 of 12 OK created sql table model games.top_10_discounted_games .............. [[32mCREATE TABLE (10.0 rows, 173.9 MiB processed)[0m in 3.38s]
+[0m14:13:04.442733 [debug] [Thread-1 (]: Finished running node model.games.top_10_discounted_games
+[0m14:13:04.444864 [debug] [Thread-1 (]: Began running node model.games.top_10_high_tax_games
+[0m14:13:04.447300 [info ] [Thread-1 (]: 11 of 12 START sql table model games.top_10_high_tax_games ..................... [RUN]
+[0m14:13:04.450231 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.top_10_discounted_games, now model.games.top_10_high_tax_games)
+[0m14:13:04.452102 [debug] [Thread-1 (]: Began compiling node model.games.top_10_high_tax_games
+[0m14:13:04.458689 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.top_10_high_tax_games"
+[0m14:13:04.459467 [debug] [Thread-1 (]: Timing info for model.games.top_10_high_tax_games (compile): 14:13:04.453411 => 14:13:04.459247
+[0m14:13:04.459905 [debug] [Thread-1 (]: Began executing node model.games.top_10_high_tax_games
+[0m14:13:04.462241 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:13:05.168901 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.top_10_high_tax_games"
+[0m14:13:05.171693 [debug] [Thread-1 (]: On model.games.top_10_high_tax_games: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.top_10_high_tax_games"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`top_10_high_tax_games`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- Top 10 juegos con más impuestos
+SELECT
+    app_id,
+    game_name,
+    SUM(total_sales_with_tax) AS total_taxes
+FROM
+    `pristine-flames-400818`.`games`.`fct_game_pricing`
+GROUP BY app_id, game_name
+ORDER BY total_taxes DESC, game_name DESC
+LIMIT 10
+    );
+  
+[0m14:13:05.743353 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:b75e615d-7140-4fcc-a7ea-56257df16074&page=queryresults
+[0m14:13:08.171826 [debug] [Thread-1 (]: Timing info for model.games.top_10_high_tax_games (execute): 14:13:04.460165 => 14:13:08.170903
+[0m14:13:08.175115 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab084a6e0>]}
+[0m14:13:08.177742 [info ] [Thread-1 (]: 11 of 12 OK created sql table model games.top_10_high_tax_games ................ [[32mCREATE TABLE (10.0 rows, 173.9 MiB processed)[0m in 3.73s]
+[0m14:13:08.180591 [debug] [Thread-1 (]: Finished running node model.games.top_10_high_tax_games
+[0m14:13:08.182634 [debug] [Thread-1 (]: Began running node model.games.top_10_most_expensive_games
+[0m14:13:08.185080 [info ] [Thread-1 (]: 12 of 12 START sql table model games.top_10_most_expensive_games ............... [RUN]
+[0m14:13:08.188269 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.games.top_10_high_tax_games, now model.games.top_10_most_expensive_games)
+[0m14:13:08.190199 [debug] [Thread-1 (]: Began compiling node model.games.top_10_most_expensive_games
+[0m14:13:08.200066 [debug] [Thread-1 (]: Writing injected SQL for node "model.games.top_10_most_expensive_games"
+[0m14:13:08.201661 [debug] [Thread-1 (]: Timing info for model.games.top_10_most_expensive_games (compile): 14:13:08.191559 => 14:13:08.201145
+[0m14:13:08.202598 [debug] [Thread-1 (]: Began executing node model.games.top_10_most_expensive_games
+[0m14:13:08.207360 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:13:08.903735 [debug] [Thread-1 (]: Writing runtime sql for node "model.games.top_10_most_expensive_games"
+[0m14:13:08.906701 [debug] [Thread-1 (]: On model.games.top_10_most_expensive_games: /* {"app": "dbt", "dbt_version": "1.6.5", "profile_name": "games", "target_name": "dev", "node_id": "model.games.top_10_most_expensive_games"} */
+
+  
+    
+
+    create or replace table `pristine-flames-400818`.`games`.`top_10_most_expensive_games`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- Top 10 juegos más caros
+SELECT
+    app_id,
+    game_name,
+    max_price,
+    formatted_initial_price,
+FROM
+    `pristine-flames-400818`.`games`.`fct_game_pricing`
+ORDER BY max_price DESC
+LIMIT 10
+    );
+  
+[0m14:13:09.490198 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pristine-flames-400818&j=bq:US:8f141168-5b95-4f56-bcfb-26a68b4a7104&page=queryresults
+[0m14:13:11.972070 [debug] [Thread-1 (]: Timing info for model.games.top_10_most_expensive_games (execute): 14:13:08.203275 => 14:13:11.971161
+[0m14:13:11.975416 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'af9ddb6a-8b47-45f2-a2db-3121987cd76b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab0b22740>]}
+[0m14:13:11.978025 [info ] [Thread-1 (]: 12 of 12 OK created sql table model games.top_10_most_expensive_games .......... [[32mCREATE TABLE (10.0 rows, 189.9 MiB processed)[0m in 3.79s]
+[0m14:13:11.980900 [debug] [Thread-1 (]: Finished running node model.games.top_10_most_expensive_games
+[0m14:13:11.986882 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m14:13:11.988583 [debug] [MainThread]: Connection 'model.games.top_10_most_expensive_games' was properly closed.
+[0m14:13:11.990348 [info ] [MainThread]: 
+[0m14:13:11.992162 [info ] [MainThread]: Finished running 12 table models in 0 hours 1 minutes and 4.50 seconds (64.50s).
+[0m14:13:12.003297 [debug] [MainThread]: Command end result
+[0m14:13:12.033695 [info ] [MainThread]: 
+[0m14:13:12.034290 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m14:13:12.034740 [info ] [MainThread]: 
+[0m14:13:12.035187 [info ] [MainThread]: Done. PASS=12 WARN=0 ERROR=0 SKIP=0 TOTAL=12
+[0m14:13:12.035868 [debug] [MainThread]: Command `dbt run` succeeded at 14:13:12.035747 after 65.46 seconds
+[0m14:13:12.036310 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab4b09bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feab08b3e50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7feaadf1b940>]}
+[0m14:13:12.036774 [debug] [MainThread]: Flushing usage events
