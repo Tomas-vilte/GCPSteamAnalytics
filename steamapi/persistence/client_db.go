@@ -35,7 +35,7 @@ func GetDB() *sqlx.DB {
 
 // Esta conexion sirve si no vas a usar servicios de gcp.
 func createClientLocal() *sqlx.DB {
-	db, err := sqlx.Open("mysql", "tomi:tomi@tcp(localhost:3306)/steamAnalytics?parseTime=true")
+	db, err := sqlx.Open("mysql", "tomi:tomi@tcp(172.20.0.3:3307)/steamAnalytics?parseTime=true")
 	if err != nil {
 		panic(err)
 	}

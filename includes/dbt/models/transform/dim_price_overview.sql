@@ -2,34 +2,35 @@
 
 -- Calculamos el precio final con impuesto considerando el descuento
 WITH price_overview_cte AS (
-    SELECT
-        initial_price,
-        final_price,
-        discount_percent AS discount_pct,
-        formatted_initial_price,
-        formatted_final_price,
-        app_id,
-        -- Monto del Descuento formateado como decimal con dos decimales
-       CAST(
-        (CASE
+   SELECT
+    initial_price,
+    final_price,
+    discount_percent AS discount_pct,
+    formatted_initial_price,
+    formatted_final_price,
+    app_id,
+    -- Monto del Descuento formateado como decimal con dos decimales
+    (
+        CASE
             WHEN discount_percent > 0 THEN initial_price * (discount_percent / 100)
             ELSE 0.0
-        END) / 100 AS NUMERIC
+        END / 100
     ) AS discount_amount,
 
     -- Precio del Juego con Impuesto (75%)
-    (CASE
-    WHEN discount_percent > 0 THEN
-        CAST((initial_price * (1 - discount_percent / 100) * 1.75) AS NUMERIC)
-    ELSE
-        CAST(initial_price * 1.75 AS NUMERIC)
-    END) AS price_with_tax
-    FROM
-    {{ source('games', 'raw_games') }}
+    (
+        CASE
+            WHEN discount_percent > 0 THEN initial_price * (1 - discount_percent / 100) * 1.75
+            ELSE initial_price * 1.75
+        END
+    
+    ) AS price_with_tax
+    FROM 
+        {{ source('games', 'raw_games') }}
 )
 
+
 SELECT
-    ROW_NUMBER() OVER() AS purchase_id,
     app_id,
     initial_price,
     final_price,
@@ -38,12 +39,8 @@ SELECT
     formatted_initial_price,
     formatted_final_price,
     price_with_tax,
-    platform_id,
-    windows,
-    mac,
-    linux,
-    CONCAT('ARS$ ', REPLACE(FORMAT('%.2f', price_with_tax), '.', ',')) AS formatted_price_with_tax
-FROM price_overview_cte, games.dim_platforms
+    CONCAT('ARS$ ', FORMAT("%'.2f", price_with_tax / 100)) AS formatted_price_with_tax
+FROM price_overview_cte
 WHERE 
     (initial_price IS NOT NULL)
     AND (final_price IS NOT NULL)

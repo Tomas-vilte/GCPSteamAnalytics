@@ -4,7 +4,7 @@ games:
     dev: 
       type: bigquery
       method: service-account
-      keyfile: /home/tomi/GCPSteamAnalytics/credentials.json #/opt/airflow/credentials.json
+      keyfile: /home/tomi/GCPSteamAnalytics/credentials.json #/opt/airflow/credentials.json 
       project: pristine-flames-400818
       dataset: games
       threads: 1

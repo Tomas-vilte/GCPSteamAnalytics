@@ -14,3 +14,4 @@ __pycache__/
 dags/logs/
 /includes/dbt/target/
 /dags/src/config/config.env
+dump.rdb
