@@ -1,0 +1,54 @@
+[2023-10-17T16:38:25.094+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.gcs_to_raw scheduled__2023-10-16T00:00:00+00:00 [queued]>
+[2023-10-17T16:38:25.100+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.gcs_to_raw scheduled__2023-10-16T00:00:00+00:00 [queued]>
+[2023-10-17T16:38:25.101+0000] {taskinstance.py:1359} INFO - Starting attempt 3 of 3
+[2023-10-17T16:38:25.109+0000] {taskinstance.py:1380} INFO - Executing <Task(LoadFileOperator): gcs_to_raw> on 2023-10-16 00:00:00+00:00
+[2023-10-17T16:38:25.115+0000] {standard_task_runner.py:57} INFO - Started process 2302 to run task
+[2023-10-17T16:38:25.118+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'gcs_to_raw', 'scheduled__2023-10-16T00:00:00+00:00', '--job-id', '486', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmpq89a2vyv']
+[2023-10-17T16:38:25.120+0000] {standard_task_runner.py:85} INFO - Job 486: Subtask gcs_to_raw
+[2023-10-17T16:38:25.154+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.gcs_to_raw scheduled__2023-10-16T00:00:00+00:00 [running]> on host ee1b836360c8
+[2023-10-17T16:38:25.215+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='gcs_to_raw' AIRFLOW_CTX_EXECUTION_DATE='2023-10-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-16T00:00:00+00:00'
+[2023-10-17T16:38:25.229+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:25.232+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:25.249+0000] {load_file.py:134} INFO - Loading gs://steamanalytics/raw/games_details_2023-09-29.csv into BaseTable(name='raw_games', conn_id='gcp', metadata=Metadata(schema='games', database=None), columns=[], temp=False) ...
+[2023-10-17T16:38:25.254+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:25.255+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:25.294+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:25.295+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:25.299+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:25.300+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:26.011+0000] {bigquery.py:1094} INFO - Dataset Resource: Dataset(DatasetReference('pristine-flames-400818', 'games'))
+[2023-10-17T16:38:26.017+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:26.017+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:26.022+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:26.023+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:26.028+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:26.029+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:27.355+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:27.356+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:27.361+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:27.362+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:27.790+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:27.791+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:27.797+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:27.798+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:27.810+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:27.812+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:31.560+0000] {base.py:573} INFO - Loading file(s) with Pandas...
+[2023-10-17T16:38:31.565+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:31.566+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:31.570+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:31.571+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:32.713+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:32.714+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:32.718+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:32.719+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:32.725+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-17T16:38:32.726+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-17T16:38:41.978+0000] {gbq.py:616} INFO - 2718 out of 2718 rows loaded.
+[2023-10-17T16:38:41.979+0000] {load_file.py:168} INFO - Completed loading the data into BaseTable(name='raw_games', conn_id='gcp', metadata=Metadata(schema='games', database=None), columns=[], temp=False).
+[2023-10-17T16:38:42.014+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/models/baseoperator.py:1473: RemovedInAirflow3Warning: Passing 'execution_date' to 'TaskInstance.xcom_push()' is deprecated.
+  context["ti"].xcom_push(key=key, value=value, execution_date=execution_date)
+
+[2023-10-17T16:38:42.043+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=gcs_to_raw, execution_date=20231016T000000, start_date=20231017T163825, end_date=20231017T163842
+[2023-10-17T16:38:42.090+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-17T16:38:42.115+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

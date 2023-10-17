@@ -1,0 +1,16 @@
+[2023-10-17T16:49:42.076+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.save_data_to_csv scheduled__2023-10-16T00:00:00+00:00 [queued]>
+[2023-10-17T16:49:42.082+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.save_data_to_csv scheduled__2023-10-16T00:00:00+00:00 [queued]>
+[2023-10-17T16:49:42.082+0000] {taskinstance.py:1359} INFO - Starting attempt 8 of 8
+[2023-10-17T16:49:42.092+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): save_data_to_csv> on 2023-10-16 00:00:00+00:00
+[2023-10-17T16:49:42.097+0000] {standard_task_runner.py:57} INFO - Started process 3823 to run task
+[2023-10-17T16:49:42.100+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'save_data_to_csv', 'scheduled__2023-10-16T00:00:00+00:00', '--job-id', '499', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmpq0aiws6a']
+[2023-10-17T16:49:42.102+0000] {standard_task_runner.py:85} INFO - Job 499: Subtask save_data_to_csv
+[2023-10-17T16:49:42.134+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.save_data_to_csv scheduled__2023-10-16T00:00:00+00:00 [running]> on host ee1b836360c8
+[2023-10-17T16:49:42.191+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='save_data_to_csv' AIRFLOW_CTX_EXECUTION_DATE='2023-10-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='8' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-16T00:00:00+00:00'
+[2023-10-17T16:49:42.205+0000] {log.py:232} WARNING - 2023-10-17 16:49:42,205 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /opt/***/includes/dataset/games_details_2023-10-17.csv
+[2023-10-17T16:49:42.205+0000] {log.py:232} WARNING - 2023-10-17 16:49:42,205 - mi_logger - INFO - Se cargaron los datos en el archivo CSV: /opt/***/includes/dataset/games_details_2023-10-17.csv
+[2023-10-17T16:49:42.205+0000] {extract_data.py:42} INFO - Se cargaron los datos en el archivo CSV: /opt/***/includes/dataset/games_details_2023-10-17.csv
+[2023-10-17T16:49:42.205+0000] {python.py:194} INFO - Done. Returned value was: None
+[2023-10-17T16:49:42.216+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=save_data_to_csv, execution_date=20231016T000000, start_date=20231017T164942, end_date=20231017T164942
+[2023-10-17T16:49:42.271+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-17T16:49:42.298+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

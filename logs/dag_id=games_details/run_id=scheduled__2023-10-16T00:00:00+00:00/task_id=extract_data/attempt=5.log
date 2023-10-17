@@ -1,0 +1,28 @@
+[2023-10-17T17:01:57.374+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-16T00:00:00+00:00 [queued]>
+[2023-10-17T17:01:57.382+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-16T00:00:00+00:00 [queued]>
+[2023-10-17T17:01:57.382+0000] {taskinstance.py:1359} INFO - Starting attempt 5 of 5
+[2023-10-17T17:01:57.414+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): extract_data> on 2023-10-16 00:00:00+00:00
+[2023-10-17T17:01:57.420+0000] {standard_task_runner.py:57} INFO - Started process 5184 to run task
+[2023-10-17T17:01:57.434+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'extract_data', 'scheduled__2023-10-16T00:00:00+00:00', '--job-id', '510', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmpb9mn43w4']
+[2023-10-17T17:01:57.448+0000] {standard_task_runner.py:85} INFO - Job 510: Subtask extract_data
+[2023-10-17T17:01:57.566+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.extract_data scheduled__2023-10-16T00:00:00+00:00 [running]> on host ee1b836360c8
+[2023-10-17T17:01:57.659+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2023-10-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='5' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-16T00:00:00+00:00'
+[2023-10-17T17:01:57.662+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,661 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-17T17:01:57.662+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,661 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-17T17:01:57.661+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-17T17:01:57.662+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,662 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-17T17:01:57.662+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,662 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-17T17:01:57.662+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-17T17:01:57.662+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,662 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-17T17:01:57.662+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,662 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-17T17:01:57.662+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-17T17:01:57.663+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,663 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-17T17:01:57.663+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,663 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-17T17:01:57.663+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-17T17:01:57.669+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,669 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics.
+[2023-10-17T17:01:57.669+0000] {log.py:232} WARNING - 2023-10-17 17:01:57,669 - mi_logger - INFO - Conexión exitosa a la base de datos steamAnalytics.
+[2023-10-17T17:01:57.669+0000] {cloudsql_connection.py:30} INFO - Conexión exitosa a la base de datos steamAnalytics.
+[2023-10-17T17:01:57.929+0000] {python.py:194} INFO - Done. Returned value was: None
+[2023-10-17T17:01:57.940+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=extract_data, execution_date=20231016T000000, start_date=20231017T170157, end_date=20231017T170157
+[2023-10-17T17:01:57.996+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-17T17:01:58.028+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check
