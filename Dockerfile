@@ -9,5 +9,5 @@ RUN pip install astro-sdk-python
 RUN pip install apache-airflow
 RUN pip install dbt-bigquery
 RUN pip install astronomer-cosmos
-RUN pip install mysql
+RUN pip install pymysql
 RUN pip install python-dotenv

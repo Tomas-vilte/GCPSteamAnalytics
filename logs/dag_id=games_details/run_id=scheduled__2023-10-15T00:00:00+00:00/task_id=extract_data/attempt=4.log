@@ -1,0 +1,32 @@
+[2023-10-16T21:43:23.239+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-15T00:00:00+00:00 [queued]>
+[2023-10-16T21:43:23.249+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-15T00:00:00+00:00 [queued]>
+[2023-10-16T21:43:23.249+0000] {taskinstance.py:1359} INFO - Starting attempt 4 of 4
+[2023-10-16T21:43:23.261+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): extract_data> on 2023-10-15 00:00:00+00:00
+[2023-10-16T21:43:23.266+0000] {standard_task_runner.py:57} INFO - Started process 89 to run task
+[2023-10-16T21:43:23.272+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'extract_data', 'scheduled__2023-10-15T00:00:00+00:00', '--job-id', '431', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmpnl0vc3_a']
+[2023-10-16T21:43:23.274+0000] {standard_task_runner.py:85} INFO - Job 431: Subtask extract_data
+[2023-10-16T21:43:23.319+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.extract_data scheduled__2023-10-15T00:00:00+00:00 [running]> on host 91a6b863ca83
+[2023-10-16T21:43:23.495+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2023-10-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='4' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-15T00:00:00+00:00'
+[2023-10-16T21:43:23.496+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,496 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-16T21:43:23.496+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,496 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-16T21:43:23.496+0000] {configs.py:39} INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-16T21:43:23.496+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,496 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-16T21:43:23.496+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,496 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-16T21:43:23.496+0000] {configs.py:39} INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-16T21:43:23.497+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,497 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-16T21:43:23.497+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,497 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-16T21:43:23.497+0000] {configs.py:39} INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-16T21:43:23.497+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,497 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-16T21:43:23.497+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,497 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-16T21:43:23.497+0000] {configs.py:39} INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-16T21:43:23.497+0000] {logging_mixin.py:151} INFO - {'DB_PASS': 'tomi', 'DB_NAME': 'steamAnalytics', 'DB_USER': 'tomi', 'DB_HOST': '127.0.0.1'}
+[2023-10-16T21:43:23.499+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,498 - mi_logger - ERROR - Error al conectar a la base de datos: (2003, "Can't connect to MySQL server on '127.0.0.1' ([Errno 111] Connection refused)")
+[2023-10-16T21:43:23.499+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,498 - mi_logger - ERROR - Error al conectar a la base de datos: (2003, "Can't connect to MySQL server on '127.0.0.1' ([Errno 111] Connection refused)")
+[2023-10-16T21:43:23.498+0000] {cloudsql_connection.py:39} ERROR - Error al conectar a la base de datos: (2003, "Can't connect to MySQL server on '127.0.0.1' ([Errno 111] Connection refused)")
+[2023-10-16T21:43:23.499+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,499 - mi_logger - INFO - Error al extraer datos: __enter__
+[2023-10-16T21:43:23.499+0000] {log.py:232} WARNING - 2023-10-16 21:43:23,499 - mi_logger - INFO - Error al extraer datos: __enter__
+[2023-10-16T21:43:23.499+0000] {extract_data.py:27} INFO - Error al extraer datos: __enter__
+[2023-10-16T21:43:23.499+0000] {python.py:194} INFO - Done. Returned value was: ([], [])
+[2023-10-16T21:43:23.531+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=extract_data, execution_date=20231015T000000, start_date=20231016T214323, end_date=20231016T214323
+[2023-10-16T21:43:23.569+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-16T21:43:23.615+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

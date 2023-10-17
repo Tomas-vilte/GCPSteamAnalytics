@@ -18,7 +18,6 @@ def load_env_variables() -> dict:
         "DB_USER": get_env_variable("DB_USER"),
         "DB_HOST": get_env_variable("DB_HOST"),
     }
-    print(db_variables)
     return db_variables
 
 
