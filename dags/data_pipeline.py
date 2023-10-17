@@ -1,5 +1,5 @@
 from airflow.decorators import dag
-from datetime import datetime
+from datetime import datetime, date
 from airflow.operators.python import PythonVirtualenvOperator
 from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateEmptyDatasetOperator
@@ -16,6 +16,8 @@ from includes.dbt.cosmos_config import DBT_PROJECT_CONFIG, DBT_CONFIG
 from includes.soda_quality.check_function import check
 from airflow.operators.python import PythonOperator
 
+current_date = datetime.now().strftime("%Y-%m-%d")
+
 
 @dag(
     start_date=datetime(2023, 1, 1),
@@ -25,7 +27,6 @@ from airflow.operators.python import PythonOperator
     description="data pipeline ELT",
 )
 def games_details():
-
     extract_data = PythonOperator(
         task_id="extract_data",
         python_callable=extract_data_games_details,
@@ -34,13 +35,12 @@ def games_details():
     save_data = PythonOperator(
         task_id="save_data_to_csv",
         python_callable=save_data_to_csv,
-        op_args=[extract_data.output],
     )
 
     upload_csv_to_gcs = LocalFilesystemToGCSOperator(
         task_id="upload_csv_to_gcs",
-        src=f"/opt/airflow/includes/dataset/games_details_2023-10-9.csv",
-        dst="raw/games_details_2023-09-29.csv",
+        src=f"/opt/airflow/includes/dataset/games_details_{current_date}.csv",
+        dst=f"raw/games_details_{current_date}.csv",
         bucket="steamanalytics",
         gcp_conn_id="gcp",
         mime_type="text/csv",
@@ -55,7 +55,7 @@ def games_details():
     gcs_to_raw = aql.load_file(
         task_id="gcs_to_raw",
         input_file=File(
-            "gs://steamanalytics/raw/games_details_2023-09-29.csv",
+            f"gs://steamanalytics/raw/games_details_{current_date}.csv",
             conn_id="gcp",
             filetype=FileType.CSV,
         ),
