@@ -1,0 +1,18 @@
+[2023-10-18T20:22:58.389+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.create_details_dataset scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T20:22:58.396+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.create_details_dataset scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T20:22:58.396+0000] {taskinstance.py:1359} INFO - Starting attempt 2 of 2
+[2023-10-18T20:22:58.408+0000] {taskinstance.py:1380} INFO - Executing <Task(BigQueryCreateEmptyDatasetOperator): create_details_dataset> on 2023-10-17 00:00:00+00:00
+[2023-10-18T20:22:58.415+0000] {standard_task_runner.py:57} INFO - Started process 562 to run task
+[2023-10-18T20:22:58.418+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'create_details_dataset', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '563', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmp9z8woco4']
+[2023-10-18T20:22:58.420+0000] {standard_task_runner.py:85} INFO - Job 563: Subtask create_details_dataset
+[2023-10-18T20:22:58.456+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.create_details_dataset scheduled__2023-10-17T00:00:00+00:00 [running]> on host f991a33f9277
+[2023-10-18T20:22:58.527+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='create_details_dataset' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T20:22:58.535+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-18T20:22:58.538+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-18T20:22:58.572+0000] {bigquery.py:470} INFO - datasetId was not specified in `dataset_reference`. Will use default value games.
+[2023-10-18T20:22:58.572+0000] {bigquery.py:470} INFO - projectId was not specified in `dataset_reference`. Will use default value pristine-flames-400818.
+[2023-10-18T20:22:58.572+0000] {bigquery.py:481} INFO - Creating dataset: games in project: pristine-flames-400818 
+[2023-10-18T20:22:59.077+0000] {bigquery.py:2030} INFO - Dataset games already exists.
+[2023-10-18T20:22:59.096+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=create_details_dataset, execution_date=20231017T000000, start_date=20231018T202258, end_date=20231018T202259
+[2023-10-18T20:22:59.112+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-18T20:22:59.140+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

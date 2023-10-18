@@ -10,7 +10,6 @@ import (
 	"cloud.google.com/go/cloudsqlconn"
 	config2 "github.com/Tomas-vilte/GCPSteamAnalytics/config"
 	"github.com/go-sql-driver/mysql"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
