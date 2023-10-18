@@ -3,13 +3,14 @@ package persistence
 import (
 	"database/sql"
 	"errors"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
-	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 	"log"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/model"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/steamapi/persistence/entity"
+	"github.com/Tomas-vilte/GCPSteamAnalytics/utils"
 )
 
 type StorageDB interface {
@@ -105,66 +106,76 @@ func (s storage) Update(item entity.Item) error {
 	return nil
 }
 
-func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
+func insertGameDetailsBatch(dataProcessed []model.AppDetails) error {
+	tx, err := GetDB().Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(`
+	INSERT INTO games_details (
+		app_id,
+		name,
+		description,
+		fullgame_app_id,
+		fullgame_name,
+		type,
+		publishers,
+		developers,
+		is_free,
+		interface_languages,
+		fullAudio_languages,
+		subtitles_languages,
+		windows,
+		mac,
+		linux,
+		genre_id,
+		type_genre,
+		release_date,
+		coming_soon,
+		currency,
+		initial_price,
+		final_price,
+		discount_percent,
+		formatted_initial_price,
+		formatted_final_price
+	)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	ON DUPLICATE KEY UPDATE
+	 name = VALUES(name),
+	 description = VALUES(description),
+	 fullgame_app_id = VALUES(fullgame_app_id),
+	 fullgame_name = VALUES(fullgame_name),
+	 type = VALUES(type),
+	 publishers = VALUES(publishers),
+	 developers = VALUES(developers),
+	 is_free = VALUES(is_free),
+	 interface_languages = VALUES(interface_languages),
+	 fullAudio_languages = VALUES(fullAudio_languages),
+	 subtitles_languages = VALUES(subtitles_languages),
+	 windows = VALUES(windows),
+	 mac = VALUES(mac),
+	 linux = VALUES(linux),
+	 genre_id = VALUES(genre_id),
+	 type_genre = VALUES(type_genre),
+	 release_date = VALUES(release_date),
+	 coming_soon = VALUES(coming_soon),
+	 currency = VALUES(currency),
+		initial_price = VALUES(initial_price),
+		final_price = VALUES(final_price),
+	 discount_percent = VALUES(discount_percent),
+	 formatted_initial_price = VALUES(formatted_initial_price),
+	 formatted_final_price = VALUES(formatted_final_price)
+    `)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
 	for _, appDetail := range dataProcessed {
 		fullGameAppID, _ := strconv.Atoi(appDetail.Fullgame.AppID)
-		query := `
-	           INSERT INTO games_details (
-	               app_id,
-	               name,
-	               description,
-	               fullgame_app_id,
-	               fullgame_name,
-	               type,
-	               publishers,
-	               developers,
-	               is_free,
-	               interface_languages,
-	               fullAudio_languages,
-	               subtitles_languages,
-	               windows,
-	               mac,
-	               linux,
-	               genre_id,
-	               type_genre,
-	               release_date,
-	               coming_soon,
-	               currency,
-	               initial_price,
-	               final_price,
-	               discount_percent,
-	               formatted_initial_price,
-	               formatted_final_price
-	           )
-	           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-	           ON DUPLICATE KEY UPDATE
-	            name = VALUES(name),
-	            description = VALUES(description),
-	            fullgame_app_id = VALUES(fullgame_app_id),
-	            fullgame_name = VALUES(fullgame_name),
-	            type = VALUES(type),
-	            publishers = VALUES(publishers),
-	            developers = VALUES(developers),
-	            is_free = VALUES(is_free),
-	            interface_languages = VALUES(interface_languages),
-	            fullAudio_languages = VALUES(fullAudio_languages),
-	            subtitles_languages = VALUES(subtitles_languages),
-	            windows = VALUES(windows),
-	            mac = VALUES(mac),
-	            linux = VALUES(linux),
-				genre_id = VALUES(genre_id),
-				type_genre = VALUES(type_genre),
-	            release_date = VALUES(release_date),
-	            coming_soon = VALUES(coming_soon),
-	            currency = VALUES(currency),
-	           	initial_price = VALUES(initial_price),
-	           	final_price = VALUES(final_price),
-	        	discount_percent = VALUES(discount_percent),
-	            formatted_initial_price = VALUES(formatted_initial_price),
-	            formatted_final_price = VALUES(formatted_final_price)
-	       `
-		_, err := GetDB().Query(
-			query,
+		_, err = stmt.Exec(
 			appDetail.SteamAppid,
 			appDetail.Name,
 			appDetail.Description,
@@ -191,6 +202,25 @@ func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
 			appDetail.PriceOverview.InitialFormatted,
 			appDetail.PriceOverview.FinalFormatted,
 		)
+		if err != nil {
+			log.Printf("Hubo un error al guardar los juegos: %v\n", err)
+			return err
+		}
+	}
+
+	return tx.Commit()
+}
+
+func (s storage) SaveGameDetails(dataProcessed []model.AppDetails) error {
+	batchSize := 100
+	for i := 0; i < len(dataProcessed); i += batchSize {
+		endIndex := i + batchSize
+		if endIndex > len(dataProcessed) {
+			endIndex = len(dataProcessed)
+		}
+		batchData := dataProcessed[i:endIndex]
+
+		err := insertGameDetailsBatch(batchData)
 		if err != nil {
 			log.Printf("Hubo un error al guardar los juegos: %v\n", err)
 			return err
