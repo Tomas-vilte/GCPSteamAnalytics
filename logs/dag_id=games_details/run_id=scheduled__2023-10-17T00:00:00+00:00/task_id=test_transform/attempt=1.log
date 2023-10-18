@@ -1,0 +1,600 @@
+[2023-10-18T17:39:51.591+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.test_transform scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T17:39:51.600+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.test_transform scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T17:39:51.600+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-18T17:39:51.610+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonVirtualenvOperator): test_transform> on 2023-10-17 00:00:00+00:00
+[2023-10-18T17:39:51.615+0000] {standard_task_runner.py:57} INFO - Started process 890 to run task
+[2023-10-18T17:39:51.618+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'test_transform', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '545', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmplyf_pih2']
+[2023-10-18T17:39:51.620+0000] {standard_task_runner.py:85} INFO - Job 545: Subtask test_transform
+[2023-10-18T17:39:51.656+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.test_transform scheduled__2023-10-17T00:00:00+00:00 [running]> on host 3c47de805a7a
+[2023-10-18T17:39:51.731+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='test_transform' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T17:39:51.732+0000] {process_utils.py:182} INFO - Executing cmd: /usr/local/bin/python -m virtualenv /tmp/venvjpejxz91
+[2023-10-18T17:39:51.744+0000] {process_utils.py:186} INFO - Output:
+[2023-10-18T17:39:52.631+0000] {process_utils.py:190} INFO - created virtual environment CPython3.8.18.final.0-64 in 342ms
+[2023-10-18T17:39:52.631+0000] {process_utils.py:190} INFO -   creator CPython3Posix(dest=/tmp/venvjpejxz91, clear=False, no_vcs_ignore=False, global=False)
+[2023-10-18T17:39:52.631+0000] {process_utils.py:190} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/tmp/tmplrnnedf2)
+[2023-10-18T17:39:52.632+0000] {process_utils.py:190} INFO -     added seed packages: pip==23.2, setuptools==68.0.0, wheel==0.40.0
+[2023-10-18T17:39:52.632+0000] {process_utils.py:190} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2023-10-18T17:39:52.654+0000] {process_utils.py:182} INFO - Executing cmd: /tmp/venvjpejxz91/bin/pip install -r /tmp/venvjpejxz91/requirements.txt
+[2023-10-18T17:39:52.665+0000] {process_utils.py:186} INFO - Output:
+[2023-10-18T17:39:53.966+0000] {process_utils.py:190} INFO - WARNING: The directory '/home/***/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+[2023-10-18T17:39:54.070+0000] {process_utils.py:190} INFO - Looking in indexes: https://pypi.cloud.soda.io
+[2023-10-18T17:39:55.462+0000] {process_utils.py:190} INFO - Collecting soda-core-bigquery (from -r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:55.462+0000] {process_utils.py:190} INFO -   Obtaining dependency information for soda-core-bigquery from https://files.pythonhosted.org/packages/8b/70/9e1eb02fd7f3814314c6f4c89e4e3c5f040135d9b97ec4504bedefa063c3/soda_core_bigquery-3.0.51-py3-none-any.whl.metadata
+[2023-10-18T17:39:55.521+0000] {process_utils.py:190} INFO -   Downloading soda_core_bigquery-3.0.51-py3-none-any.whl.metadata (149 bytes)
+[2023-10-18T17:39:56.058+0000] {process_utils.py:190} INFO - Collecting soda-core==3.0.51 (from soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:56.059+0000] {process_utils.py:190} INFO -   Obtaining dependency information for soda-core==3.0.51 from https://files.pythonhosted.org/packages/25/9c/c15271d048ecf6d6f2b638fa3e62812c54297a3d985fee13794171bcab44/soda_core-3.0.51-py3-none-any.whl.metadata
+[2023-10-18T17:39:56.077+0000] {process_utils.py:190} INFO -   Downloading soda_core-3.0.51-py3-none-any.whl.metadata (1.0 kB)
+[2023-10-18T17:39:56.665+0000] {process_utils.py:190} INFO - Collecting google-cloud-bigquery<4.0,>=2.25.0 (from soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:56.666+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-cloud-bigquery<4.0,>=2.25.0 from https://files.pythonhosted.org/packages/22/03/a5d04741507156b88e9101e91d97bd395d043e9de280b94b1d00cb0f4e03/google_cloud_bigquery-3.12.0-py2.py3-none-any.whl.metadata
+[2023-10-18T17:39:56.684+0000] {process_utils.py:190} INFO -   Downloading google_cloud_bigquery-3.12.0-py2.py3-none-any.whl.metadata (8.5 kB)
+[2023-10-18T17:39:57.270+0000] {process_utils.py:190} INFO - Collecting markupsafe<=2.1.2,>=2.0.1 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:57.284+0000] {process_utils.py:190} INFO -   Downloading MarkupSafe-2.1.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+[2023-10-18T17:39:57.797+0000] {process_utils.py:190} INFO - Collecting Jinja2<4.0,>=2.11 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:57.813+0000] {process_utils.py:190} INFO -   Downloading Jinja2-3.1.2-py3-none-any.whl (133 kB)
+[2023-10-18T17:39:57.832+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.1/133.1 kB 7.9 MB/s eta 0:00:00
+[2023-10-18T17:39:58.350+0000] {process_utils.py:190} INFO - Collecting click~=8.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:58.350+0000] {process_utils.py:190} INFO -   Obtaining dependency information for click~=8.0 from https://files.pythonhosted.org/packages/00/2e/d53fa4befbf2cfa713304affc7ca780ce4fc1fd8710527771b58311a3229/click-8.1.7-py3-none-any.whl.metadata
+[2023-10-18T17:39:58.364+0000] {process_utils.py:190} INFO -   Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+[2023-10-18T17:39:59.204+0000] {process_utils.py:190} INFO - Collecting ruamel.yaml<0.18.0,>=0.17.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:59.204+0000] {process_utils.py:190} INFO -   Obtaining dependency information for ruamel.yaml<0.18.0,>=0.17.0 from https://files.pythonhosted.org/packages/79/a9/ae2f346226fcec5beb172ae3cab6d47ae0baa986f1ed1bdf08d96b469b27/ruamel.yaml-0.17.35-py3-none-any.whl.metadata
+[2023-10-18T17:39:59.219+0000] {process_utils.py:190} INFO -   Downloading ruamel.yaml-0.17.35-py3-none-any.whl.metadata (18 kB)
+[2023-10-18T17:39:59.748+0000] {process_utils.py:190} INFO - Collecting requests~=2.28 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:39:59.748+0000] {process_utils.py:190} INFO -   Obtaining dependency information for requests~=2.28 from https://files.pythonhosted.org/packages/70/8e/0e2d847013cb52cd35b38c009bb167a1a26b2ce6cd6965bf26b47bc0bf44/requests-2.31.0-py3-none-any.whl.metadata
+[2023-10-18T17:39:59.758+0000] {process_utils.py:190} INFO -   Downloading requests-2.31.0-py3-none-any.whl.metadata (4.6 kB)
+[2023-10-18T17:40:00.264+0000] {process_utils.py:190} INFO - Collecting antlr4-python3-runtime~=4.11.1 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:00.277+0000] {process_utils.py:190} INFO -   Downloading antlr4_python3_runtime-4.11.1-py3-none-any.whl (144 kB)
+[2023-10-18T17:40:00.289+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 144.2/144.2 kB 12.6 MB/s eta 0:00:00
+[2023-10-18T17:40:00.811+0000] {process_utils.py:190} INFO - Collecting opentelemetry-api~=1.16.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:00.824+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_api-1.16.0-py3-none-any.whl (57 kB)
+[2023-10-18T17:40:00.830+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 kB 13.8 MB/s eta 0:00:00
+[2023-10-18T17:40:01.341+0000] {process_utils.py:190} INFO - Collecting opentelemetry-exporter-otlp-proto-http~=1.16.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:01.358+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_exporter_otlp_proto_http-1.16.0-py3-none-any.whl (21 kB)
+[2023-10-18T17:40:01.898+0000] {process_utils.py:190} INFO - Collecting sqlparse~=0.4 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:01.913+0000] {process_utils.py:190} INFO -   Downloading sqlparse-0.4.4-py3-none-any.whl (41 kB)
+[2023-10-18T17:40:01.917+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.2/41.2 kB 15.4 MB/s eta 0:00:00
+[2023-10-18T17:40:02.440+0000] {process_utils.py:190} INFO - Collecting inflect~=6.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:02.440+0000] {process_utils.py:190} INFO -   Obtaining dependency information for inflect~=6.0 from https://files.pythonhosted.org/packages/6a/e1/79603e4ae91b38a91dfd855f92321afb65e7f3d0192ac831d00bc9c45cca/inflect-6.2.0-py3-none-any.whl.metadata
+[2023-10-18T17:40:02.465+0000] {process_utils.py:190} INFO -   Downloading inflect-6.2.0-py3-none-any.whl.metadata (21 kB)
+[2023-10-18T17:40:03.896+0000] {process_utils.py:190} INFO - Collecting grpcio<2.0dev,>=1.47.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:03.897+0000] {process_utils.py:190} INFO -   Obtaining dependency information for grpcio<2.0dev,>=1.47.0 from https://files.pythonhosted.org/packages/d6/a1/c5ca3fb951edb7bab892e61e24c72fc7359ae48916cf7352cde9d712867d/grpcio-1.59.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+[2023-10-18T17:40:03.913+0000] {process_utils.py:190} INFO -   Downloading grpcio-1.59.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+[2023-10-18T17:40:04.485+0000] {process_utils.py:190} INFO - Collecting google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:04.486+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5 from https://files.pythonhosted.org/packages/4d/ce/4fd62ea66b3508debc795e475336ce915929765870f0ad52328426ba016e/google_api_core-2.12.0-py3-none-any.whl.metadata
+[2023-10-18T17:40:04.498+0000] {process_utils.py:190} INFO -   Downloading google_api_core-2.12.0-py3-none-any.whl.metadata (2.7 kB)
+[2023-10-18T17:40:05.011+0000] {process_utils.py:190} INFO - Collecting proto-plus<2.0.0dev,>=1.15.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:05.012+0000] {process_utils.py:190} INFO -   Obtaining dependency information for proto-plus<2.0.0dev,>=1.15.0 from https://files.pythonhosted.org/packages/36/5b/e02636d221917d6fa2a61289b3f16002eb4c93d51c0191ac8e896d527182/proto_plus-1.22.3-py3-none-any.whl.metadata
+[2023-10-18T17:40:05.028+0000] {process_utils.py:190} INFO -   Downloading proto_plus-1.22.3-py3-none-any.whl.metadata (2.2 kB)
+[2023-10-18T17:40:05.569+0000] {process_utils.py:190} INFO - Collecting google-cloud-core<3.0.0dev,>=1.6.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:05.569+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-cloud-core<3.0.0dev,>=1.6.0 from https://files.pythonhosted.org/packages/a2/40/02045f776fdb6e44194f34b6375a26ce8a61bd9bd03cd8930ed91cf51a62/google_cloud_core-2.3.3-py2.py3-none-any.whl.metadata
+[2023-10-18T17:40:05.584+0000] {process_utils.py:190} INFO -   Downloading google_cloud_core-2.3.3-py2.py3-none-any.whl.metadata (2.5 kB)
+[2023-10-18T17:40:06.121+0000] {process_utils.py:190} INFO - Collecting google-resumable-media<3.0dev,>=0.6.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:06.122+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-resumable-media<3.0dev,>=0.6.0 from https://files.pythonhosted.org/packages/c7/4f/b8e5e22406e5aeafa46df8799939d5eeee52f18eeed339675167fac6603a/google_resumable_media-2.6.0-py2.py3-none-any.whl.metadata
+[2023-10-18T17:40:06.177+0000] {process_utils.py:190} INFO -   Downloading google_resumable_media-2.6.0-py2.py3-none-any.whl.metadata (2.1 kB)
+[2023-10-18T17:40:06.704+0000] {process_utils.py:190} INFO - Collecting packaging>=20.0.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:06.704+0000] {process_utils.py:190} INFO -   Obtaining dependency information for packaging>=20.0.0 from https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl.metadata
+[2023-10-18T17:40:06.717+0000] {process_utils.py:190} INFO -   Downloading packaging-23.2-py3-none-any.whl.metadata (3.2 kB)
+[2023-10-18T17:40:07.560+0000] {process_utils.py:190} INFO - Collecting protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.19.5 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:07.561+0000] {process_utils.py:190} INFO -   Obtaining dependency information for protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.19.5 from https://files.pythonhosted.org/packages/c8/2c/03046cac73f46bfe98fc846ef629cf4f84c2f59258216aa2cc0d22bfca8f/protobuf-4.24.4-cp37-abi3-manylinux2014_x86_64.whl.metadata
+[2023-10-18T17:40:07.573+0000] {process_utils.py:190} INFO -   Downloading protobuf-4.24.4-cp37-abi3-manylinux2014_x86_64.whl.metadata (540 bytes)
+[2023-10-18T17:40:08.095+0000] {process_utils.py:190} INFO - Collecting python-dateutil<3.0dev,>=2.7.2 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:08.106+0000] {process_utils.py:190} INFO -   Downloading python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+[2023-10-18T17:40:08.128+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 247.7/247.7 kB 12.1 MB/s eta 0:00:00
+[2023-10-18T17:40:08.682+0000] {process_utils.py:190} INFO - Collecting googleapis-common-protos<2.0.dev0,>=1.56.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:08.683+0000] {process_utils.py:190} INFO -   Obtaining dependency information for googleapis-common-protos<2.0.dev0,>=1.56.2 from https://files.pythonhosted.org/packages/21/49/12996dc0238e017504dceea1d121a48bd49fb3f4416f40d59fc3e924b4f3/googleapis_common_protos-1.61.0-py2.py3-none-any.whl.metadata
+[2023-10-18T17:40:08.700+0000] {process_utils.py:190} INFO -   Downloading googleapis_common_protos-1.61.0-py2.py3-none-any.whl.metadata (1.5 kB)
+[2023-10-18T17:40:09.280+0000] {process_utils.py:190} INFO - Collecting google-auth<3.0.dev0,>=2.14.1 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:09.280+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-auth<3.0.dev0,>=2.14.1 from https://files.pythonhosted.org/packages/39/7c/2e4fa55a99f83ef9ef229ac5d59c44ceb90e2d0145711590c0fa39669f32/google_auth-2.23.3-py2.py3-none-any.whl.metadata
+[2023-10-18T17:40:09.293+0000] {process_utils.py:190} INFO -   Downloading google_auth-2.23.3-py2.py3-none-any.whl.metadata (4.2 kB)
+[2023-10-18T17:40:09.866+0000] {process_utils.py:190} INFO - Collecting grpcio-status<2.0.dev0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:09.866+0000] {process_utils.py:190} INFO -   Obtaining dependency information for grpcio-status<2.0.dev0,>=1.33.2 from https://files.pythonhosted.org/packages/55/ce/e6d0382610240439ced22fe2183bcc387946bf80e5e0f17f5b5250978ff3/grpcio_status-1.59.0-py3-none-any.whl.metadata
+[2023-10-18T17:40:09.879+0000] {process_utils.py:190} INFO -   Downloading grpcio_status-1.59.0-py3-none-any.whl.metadata (1.3 kB)
+[2023-10-18T17:40:10.460+0000] {process_utils.py:190} INFO - Collecting google-crc32c<2.0dev,>=1.0 (from google-resumable-media<3.0dev,>=0.6.0->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:10.476+0000] {process_utils.py:190} INFO -   Downloading google_crc32c-1.5.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (32 kB)
+[2023-10-18T17:40:11.223+0000] {process_utils.py:190} INFO - Collecting pydantic>=1.9.1 (from inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:11.223+0000] {process_utils.py:190} INFO -   Obtaining dependency information for pydantic>=1.9.1 from https://files.pythonhosted.org/packages/73/66/0a72c9fcde42e5650c8d8d5c5c1873b9a3893018020c77ca8eb62708b923/pydantic-2.4.2-py3-none-any.whl.metadata
+[2023-10-18T17:40:11.235+0000] {process_utils.py:190} INFO -   Downloading pydantic-2.4.2-py3-none-any.whl.metadata (158 kB)
+[2023-10-18T17:40:11.249+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 158.6/158.6 kB 12.4 MB/s eta 0:00:00
+[2023-10-18T17:40:11.762+0000] {process_utils.py:190} INFO - Collecting typing-extensions (from inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:11.762+0000] {process_utils.py:190} INFO -   Obtaining dependency information for typing-extensions from https://files.pythonhosted.org/packages/24/21/7d397a4b7934ff4028987914ac1044d3b7d52712f30e2ac7a2ae5bc86dd0/typing_extensions-4.8.0-py3-none-any.whl.metadata
+[2023-10-18T17:40:11.773+0000] {process_utils.py:190} INFO -   Downloading typing_extensions-4.8.0-py3-none-any.whl.metadata (3.0 kB)
+[2023-10-18T17:40:12.294+0000] {process_utils.py:190} INFO - Collecting deprecated>=1.2.6 (from opentelemetry-api~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:12.295+0000] {process_utils.py:190} INFO -   Obtaining dependency information for deprecated>=1.2.6 from https://files.pythonhosted.org/packages/20/8d/778b7d51b981a96554f29136cd59ca7880bf58094338085bcf2a979a0e6a/Deprecated-1.2.14-py2.py3-none-any.whl.metadata
+[2023-10-18T17:40:12.308+0000] {process_utils.py:190} INFO -   Downloading Deprecated-1.2.14-py2.py3-none-any.whl.metadata (5.4 kB)
+[2023-10-18T17:40:12.309+0000] {process_utils.py:190} INFO - Requirement already satisfied: setuptools>=16.0 in /tmp/venvjpejxz91/lib/python3.8/site-packages (from opentelemetry-api~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2)) (68.0.0)
+[2023-10-18T17:40:12.827+0000] {process_utils.py:190} INFO - Collecting backoff<3.0.0,>=1.10.0 (from opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:12.840+0000] {process_utils.py:190} INFO -   Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+[2023-10-18T17:40:13.372+0000] {process_utils.py:190} INFO - Collecting opentelemetry-proto==1.16.0 (from opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:13.390+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_proto-1.16.0-py3-none-any.whl (52 kB)
+[2023-10-18T17:40:13.396+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.6/52.6 kB 14.1 MB/s eta 0:00:00
+[2023-10-18T17:40:13.916+0000] {process_utils.py:190} INFO - Collecting opentelemetry-sdk~=1.16.0 (from opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:13.936+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_sdk-1.16.0-py3-none-any.whl (94 kB)
+[2023-10-18T17:40:13.943+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.6/94.6 kB 114.6 MB/s eta 0:00:00
+[2023-10-18T17:40:14.548+0000] {process_utils.py:190} INFO - Collecting six>=1.5 (from python-dateutil<3.0dev,>=2.7.2->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:14.560+0000] {process_utils.py:190} INFO -   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+[2023-10-18T17:40:15.180+0000] {process_utils.py:190} INFO - Collecting charset-normalizer<4,>=2 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:15.181+0000] {process_utils.py:190} INFO -   Obtaining dependency information for charset-normalizer<4,>=2 from https://files.pythonhosted.org/packages/1e/c8/fd52271326c052f95f47ef718b018aa2bc3fd097d9bac44d7d48894c6130/charset_normalizer-3.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+[2023-10-18T17:40:15.204+0000] {process_utils.py:190} INFO -   Downloading charset_normalizer-3.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (32 kB)
+[2023-10-18T17:40:15.711+0000] {process_utils.py:190} INFO - Collecting idna<4,>=2.5 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:15.723+0000] {process_utils.py:190} INFO -   Downloading idna-3.4-py3-none-any.whl (61 kB)
+[2023-10-18T17:40:15.729+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.5/61.5 kB 13.8 MB/s eta 0:00:00
+[2023-10-18T17:40:16.276+0000] {process_utils.py:190} INFO - Collecting urllib3<3,>=1.21.1 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:16.276+0000] {process_utils.py:190} INFO -   Obtaining dependency information for urllib3<3,>=1.21.1 from https://files.pythonhosted.org/packages/d2/b2/b157855192a68541a91ba7b2bbcb91f1b4faa51f8bae38d8005c034be524/urllib3-2.0.7-py3-none-any.whl.metadata
+[2023-10-18T17:40:16.290+0000] {process_utils.py:190} INFO -   Downloading urllib3-2.0.7-py3-none-any.whl.metadata (6.6 kB)
+[2023-10-18T17:40:16.813+0000] {process_utils.py:190} INFO - Collecting certifi>=2017.4.17 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:16.814+0000] {process_utils.py:190} INFO -   Obtaining dependency information for certifi>=2017.4.17 from https://files.pythonhosted.org/packages/4c/dd/2234eab22353ffc7d94e8d13177aaa050113286e93e7b40eae01fbf7c3d9/certifi-2023.7.22-py3-none-any.whl.metadata
+[2023-10-18T17:40:16.827+0000] {process_utils.py:190} INFO -   Downloading certifi-2023.7.22-py3-none-any.whl.metadata (2.2 kB)
+[2023-10-18T17:40:17.367+0000] {process_utils.py:190} INFO - Collecting ruamel.yaml.clib>=0.2.7 (from ruamel.yaml<0.18.0,>=0.17.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:17.368+0000] {process_utils.py:190} INFO -   Obtaining dependency information for ruamel.yaml.clib>=0.2.7 from https://files.pythonhosted.org/packages/22/fa/b2a8fd49c92693e9b9b6b11eef4c2a8aedaca2b521ab3e020aa4778efc23/ruamel.yaml.clib-0.2.8-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl.metadata
+[2023-10-18T17:40:17.381+0000] {process_utils.py:190} INFO -   Downloading ruamel.yaml.clib-0.2.8-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl.metadata (2.2 kB)
+[2023-10-18T17:40:18.058+0000] {process_utils.py:190} INFO - Collecting wrapt<2,>=1.10 (from deprecated>=1.2.6->opentelemetry-api~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:18.070+0000] {process_utils.py:190} INFO -   Downloading wrapt-1.15.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (81 kB)
+[2023-10-18T17:40:18.078+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 81.5/81.5 kB 13.3 MB/s eta 0:00:00
+[2023-10-18T17:40:18.637+0000] {process_utils.py:190} INFO - Collecting cachetools<6.0,>=2.0.0 (from google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:18.637+0000] {process_utils.py:190} INFO -   Obtaining dependency information for cachetools<6.0,>=2.0.0 from https://files.pythonhosted.org/packages/a9/c9/c8a7710f2cedcb1db9224fdd4d8307c9e48cbddc46c18b515fefc0f1abbe/cachetools-5.3.1-py3-none-any.whl.metadata
+[2023-10-18T17:40:18.648+0000] {process_utils.py:190} INFO -   Downloading cachetools-5.3.1-py3-none-any.whl.metadata (5.2 kB)
+[2023-10-18T17:40:19.173+0000] {process_utils.py:190} INFO - Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:19.190+0000] {process_utils.py:190} INFO -   Downloading pyasn1_modules-0.3.0-py2.py3-none-any.whl (181 kB)
+[2023-10-18T17:40:19.207+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 12.5 MB/s eta 0:00:00
+[2023-10-18T17:40:19.717+0000] {process_utils.py:190} INFO - Collecting rsa<5,>=3.1.4 (from google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:19.733+0000] {process_utils.py:190} INFO -   Downloading rsa-4.9-py3-none-any.whl (34 kB)
+[2023-10-18T17:40:20.350+0000] {process_utils.py:190} INFO - Collecting opentelemetry-semantic-conventions==0.37b0 (from opentelemetry-sdk~=1.16.0->opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:20.365+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_semantic_conventions-0.37b0-py3-none-any.whl (26 kB)
+[2023-10-18T17:40:20.896+0000] {process_utils.py:190} INFO - Collecting annotated-types>=0.4.0 (from pydantic>=1.9.1->inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:20.897+0000] {process_utils.py:190} INFO -   Obtaining dependency information for annotated-types>=0.4.0 from https://files.pythonhosted.org/packages/28/78/d31230046e58c207284c6b2c4e8d96e6d3cb4e52354721b944d3e1ee4aa5/annotated_types-0.6.0-py3-none-any.whl.metadata
+[2023-10-18T17:40:20.907+0000] {process_utils.py:190} INFO -   Downloading annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+[2023-10-18T17:40:22.379+0000] {process_utils.py:190} INFO - Collecting pydantic-core==2.10.1 (from pydantic>=1.9.1->inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:22.379+0000] {process_utils.py:190} INFO -   Obtaining dependency information for pydantic-core==2.10.1 from https://files.pythonhosted.org/packages/da/82/4139ea7aebec9e22be42d8a5342df5022b7b6b6deb10126dc3ff80b4d6fd/pydantic_core-2.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+[2023-10-18T17:40:22.393+0000] {process_utils.py:190} INFO -   Downloading pydantic_core-2.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+[2023-10-18T17:40:23.064+0000] {process_utils.py:190} INFO - Collecting pyasn1<0.6.0,>=0.4.6 (from pyasn1-modules>=0.2.1->google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvjpejxz91/requirements.txt (line 2))
+[2023-10-18T17:40:23.075+0000] {process_utils.py:190} INFO -   Downloading pyasn1-0.5.0-py2.py3-none-any.whl (83 kB)
+[2023-10-18T17:40:23.083+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.9/83.9 kB 13.0 MB/s eta 0:00:00
+[2023-10-18T17:40:23.149+0000] {process_utils.py:190} INFO - Downloading soda_core_bigquery-3.0.51-py3-none-any.whl (3.7 kB)
+[2023-10-18T17:40:23.165+0000] {process_utils.py:190} INFO - Downloading soda_core-3.0.51-py3-none-any.whl (178 kB)
+[2023-10-18T17:40:23.181+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 178.9/178.9 kB 12.3 MB/s eta 0:00:00
+[2023-10-18T17:40:23.194+0000] {process_utils.py:190} INFO - Downloading google_cloud_bigquery-3.12.0-py2.py3-none-any.whl (220 kB)
+[2023-10-18T17:40:23.213+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.4/220.4 kB 12.7 MB/s eta 0:00:00
+[2023-10-18T17:40:23.229+0000] {process_utils.py:190} INFO - Downloading click-8.1.7-py3-none-any.whl (97 kB)
+[2023-10-18T17:40:23.237+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 12.6 MB/s eta 0:00:00
+[2023-10-18T17:40:23.253+0000] {process_utils.py:190} INFO - Downloading google_cloud_core-2.3.3-py2.py3-none-any.whl (29 kB)
+[2023-10-18T17:40:23.268+0000] {process_utils.py:190} INFO - Downloading google_resumable_media-2.6.0-py2.py3-none-any.whl (80 kB)
+[2023-10-18T17:40:23.276+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.3/80.3 kB 13.0 MB/s eta 0:00:00
+[2023-10-18T17:40:23.293+0000] {process_utils.py:190} INFO - Downloading grpcio-1.59.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.3 MB)
+[2023-10-18T17:40:23.745+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 11.8 MB/s eta 0:00:00
+[2023-10-18T17:40:23.762+0000] {process_utils.py:190} INFO - Downloading inflect-6.2.0-py3-none-any.whl (35 kB)
+[2023-10-18T17:40:23.775+0000] {process_utils.py:190} INFO - Downloading packaging-23.2-py3-none-any.whl (53 kB)
+[2023-10-18T17:40:23.781+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.0/53.0 kB 14.4 MB/s eta 0:00:00
+[2023-10-18T17:40:23.793+0000] {process_utils.py:190} INFO - Downloading proto_plus-1.22.3-py3-none-any.whl (48 kB)
+[2023-10-18T17:40:23.798+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.1/48.1 kB 13.8 MB/s eta 0:00:00
+[2023-10-18T17:40:23.822+0000] {process_utils.py:190} INFO - Downloading protobuf-4.24.4-cp37-abi3-manylinux2014_x86_64.whl (311 kB)
+[2023-10-18T17:40:23.849+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 311.6/311.6 kB 11.9 MB/s eta 0:00:00
+[2023-10-18T17:40:23.864+0000] {process_utils.py:190} INFO - Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+[2023-10-18T17:40:23.870+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.6/62.6 kB 37.8 MB/s eta 0:00:00
+[2023-10-18T17:40:23.888+0000] {process_utils.py:190} INFO - Downloading ruamel.yaml-0.17.35-py3-none-any.whl (112 kB)
+[2023-10-18T17:40:23.895+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 69.5 MB/s eta 0:00:00
+[2023-10-18T17:40:23.916+0000] {process_utils.py:190} INFO - Downloading certifi-2023.7.22-py3-none-any.whl (158 kB)
+[2023-10-18T17:40:23.926+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 158.3/158.3 kB 34.3 MB/s eta 0:00:00
+[2023-10-18T17:40:23.941+0000] {process_utils.py:190} INFO - Downloading charset_normalizer-3.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (137 kB)
+[2023-10-18T17:40:23.953+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.9/137.9 kB 12.4 MB/s eta 0:00:00
+[2023-10-18T17:40:23.966+0000] {process_utils.py:190} INFO - Downloading Deprecated-1.2.14-py2.py3-none-any.whl (9.6 kB)
+[2023-10-18T17:40:23.990+0000] {process_utils.py:190} INFO - Downloading google_api_core-2.12.0-py3-none-any.whl (121 kB)
+[2023-10-18T17:40:23.998+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 81.5 MB/s eta 0:00:00
+[2023-10-18T17:40:24.015+0000] {process_utils.py:190} INFO - Downloading google_auth-2.23.3-py2.py3-none-any.whl (182 kB)
+[2023-10-18T17:40:24.032+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 182.3/182.3 kB 12.0 MB/s eta 0:00:00
+[2023-10-18T17:40:24.050+0000] {process_utils.py:190} INFO - Downloading googleapis_common_protos-1.61.0-py2.py3-none-any.whl (230 kB)
+[2023-10-18T17:40:24.066+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 230.9/230.9 kB 21.8 MB/s eta 0:00:00
+[2023-10-18T17:40:24.089+0000] {process_utils.py:190} INFO - Downloading grpcio_status-1.59.0-py3-none-any.whl (14 kB)
+[2023-10-18T17:40:24.107+0000] {process_utils.py:190} INFO - Downloading pydantic-2.4.2-py3-none-any.whl (395 kB)
+[2023-10-18T17:40:24.142+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 395.8/395.8 kB 12.1 MB/s eta 0:00:00
+[2023-10-18T17:40:24.155+0000] {process_utils.py:190} INFO - Downloading pydantic_core-2.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+[2023-10-18T17:40:24.332+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 11.7 MB/s eta 0:00:00
+[2023-10-18T17:40:24.354+0000] {process_utils.py:190} INFO - Downloading ruamel.yaml.clib-0.2.8-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (596 kB)
+[2023-10-18T17:40:24.400+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 596.0/596.0 kB 14.4 MB/s eta 0:00:00
+[2023-10-18T17:40:24.419+0000] {process_utils.py:190} INFO - Downloading typing_extensions-4.8.0-py3-none-any.whl (31 kB)
+[2023-10-18T17:40:24.437+0000] {process_utils.py:190} INFO - Downloading urllib3-2.0.7-py3-none-any.whl (124 kB)
+[2023-10-18T17:40:24.443+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.2/124.2 kB 82.4 MB/s eta 0:00:00
+[2023-10-18T17:40:24.457+0000] {process_utils.py:190} INFO - Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+[2023-10-18T17:40:24.473+0000] {process_utils.py:190} INFO - Downloading cachetools-5.3.1-py3-none-any.whl (9.3 kB)
+[2023-10-18T17:40:24.777+0000] {process_utils.py:190} INFO - Installing collected packages: antlr4-python3-runtime, wrapt, urllib3, typing-extensions, sqlparse, six, ruamel.yaml.clib, pyasn1, protobuf, packaging, opentelemetry-semantic-conventions, markupsafe, idna, grpcio, google-crc32c, click, charset-normalizer, certifi, cachetools, backoff, ruamel.yaml, rsa, requests, python-dateutil, pydantic-core, pyasn1-modules, proto-plus, opentelemetry-proto, Jinja2, googleapis-common-protos, google-resumable-media, deprecated, annotated-types, pydantic, opentelemetry-api, grpcio-status, google-auth, opentelemetry-sdk, inflect, google-api-core, opentelemetry-exporter-otlp-proto-http, google-cloud-core, soda-core, google-cloud-bigquery, soda-core-bigquery
+[2023-10-18T17:40:26.926+0000] {process_utils.py:190} INFO - Successfully installed Jinja2-3.1.2 annotated-types-0.6.0 antlr4-python3-runtime-4.11.1 backoff-2.2.1 cachetools-5.3.1 certifi-2023.7.22 charset-normalizer-3.3.0 click-8.1.7 deprecated-1.2.14 google-api-core-2.12.0 google-auth-2.23.3 google-cloud-bigquery-3.12.0 google-cloud-core-2.3.3 google-crc32c-1.5.0 google-resumable-media-2.6.0 googleapis-common-protos-1.61.0 grpcio-1.59.0 grpcio-status-1.59.0 idna-3.4 inflect-6.2.0 markupsafe-2.1.2 opentelemetry-api-1.16.0 opentelemetry-exporter-otlp-proto-http-1.16.0 opentelemetry-proto-1.16.0 opentelemetry-sdk-1.16.0 opentelemetry-semantic-conventions-0.37b0 packaging-23.2 proto-plus-1.22.3 protobuf-4.24.4 pyasn1-0.5.0 pyasn1-modules-0.3.0 pydantic-2.4.2 pydantic-core-2.10.1 python-dateutil-2.8.2 requests-2.31.0 rsa-4.9 ruamel.yaml-0.17.35 ruamel.yaml.clib-0.2.8 six-1.16.0 soda-core-3.0.51 soda-core-bigquery-3.0.51 sqlparse-0.4.4 typing-extensions-4.8.0 urllib3-2.0.7 wrapt-1.15.0
+[2023-10-18T17:40:27.032+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:27.032+0000] {process_utils.py:190} INFO - [notice] A new release of pip is available: 23.2 -> 23.3
+[2023-10-18T17:40:27.032+0000] {process_utils.py:190} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2023-10-18T17:40:27.376+0000] {process_utils.py:182} INFO - Executing cmd: /tmp/venvjpejxz91/bin/python /tmp/venvjpejxz91/script.py /tmp/venvjpejxz91/script.in /tmp/venvjpejxz91/script.out /tmp/venvjpejxz91/string_args.txt /tmp/venvjpejxz91/termination.log
+[2023-10-18T17:40:27.394+0000] {process_utils.py:186} INFO - Output:
+[2023-10-18T17:40:28.128+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_price_overview.yml
+[2023-10-18T17:40:28.128+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.129+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.129+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.129+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.130+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.130+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.130+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.130+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.130+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.130+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.131+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.144+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/fct_game_pricing.yml
+[2023-10-18T17:40:28.144+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.144+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.144+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.145+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.145+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.145+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.145+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.145+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.145+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.146+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.146+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.146+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.146+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.146+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.147+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.147+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.147+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.149+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_publishers.yml
+[2023-10-18T17:40:28.149+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.149+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.149+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.149+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.150+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.151+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.151+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.151+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.151+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.151+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.151+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.159+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_release.yml
+[2023-10-18T17:40:28.160+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.160+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.160+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.160+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.160+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.160+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.161+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.161+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.161+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.161+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.161+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.161+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.162+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.162+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.162+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.162+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.162+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.164+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_support_language.yml
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.165+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.166+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.166+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.168+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.168+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.168+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.168+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.169+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.169+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.169+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.169+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.171+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_games.yml
+[2023-10-18T17:40:28.171+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.171+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.171+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.172+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.172+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.172+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.172+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.172+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.172+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.173+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.173+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.173+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.173+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.173+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.173+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.174+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.174+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.175+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_developers.yml
+[2023-10-18T17:40:28.175+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.175+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.176+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.176+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.176+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.176+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.176+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.176+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.177+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.177+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.177+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.177+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.177+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.177+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.178+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.178+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.178+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:28.180+0000] {process_utils.py:190} INFO - [17:40:28] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_platforms.yml
+[2023-10-18T17:40:28.180+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:28.180+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:28.180+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:28.182+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:28.182+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:28.182+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:28.182+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:28.183+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:28.183+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:28.183+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:28.183+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:28.183+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:28.183+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:28.184+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:28.184+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:28.184+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:28.184+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.855+0000] {process_utils.py:190} INFO - /tmp/venvjpejxz91/lib/python3.8/site-packages/google/cloud/bigquery/client.py:570: UserWarning: Cannot create BigQuery Storage client, the dependency google-cloud-bigquery-storage is not installed.
+[2023-10-18T17:40:44.855+0000] {process_utils.py:190} INFO -   warnings.warn(
+[2023-10-18T17:40:44.855+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_price_overview.yml
+[2023-10-18T17:40:44.855+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.856+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.856+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.857+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.857+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.857+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.857+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.857+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.858+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.858+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.858+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.858+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.858+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.858+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.859+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.859+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.859+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.859+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/fct_game_pricing.yml
+[2023-10-18T17:40:44.859+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.859+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.860+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.860+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.860+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.860+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.860+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.860+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.861+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.861+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.861+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.861+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.861+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.861+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_publishers.yml
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.862+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.863+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.863+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.863+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.863+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.863+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.863+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.864+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.864+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.864+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.864+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.864+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.864+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_release.yml
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.865+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.866+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.866+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.866+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.866+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.867+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.867+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.867+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.867+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.867+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_support_language.yml
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.868+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.869+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.869+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.869+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.869+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.869+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.869+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.870+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.870+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.870+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.870+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.870+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_games.yml
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.871+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.872+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.872+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.872+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.872+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.872+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.872+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.873+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.873+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.873+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.873+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.873+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.873+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.874+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.874+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.874+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_developers.yml
+[2023-10-18T17:40:44.874+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.874+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.874+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.875+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.875+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.875+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.875+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.875+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.875+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.876+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.876+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.876+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.876+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.876+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.876+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO - [17:40:44] Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_platforms.yml
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO -   | 'NoneType' object is not iterable
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO -   | Stacktrace:
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO -   | Traceback (most recent call last):
+[2023-10-18T17:40:44.877+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 304, in add_sodacl_yaml_file
+[2023-10-18T17:40:44.878+0000] {process_utils.py:190} INFO -   |     self._parse_sodacl_yaml_str(sodacl_yaml_str=sodacl_yaml_str, file_path=file_path)
+[2023-10-18T17:40:44.878+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/scan.py", line 335, in _parse_sodacl_yaml_str
+[2023-10-18T17:40:44.878+0000] {process_utils.py:190} INFO -   |     sodacl_parser.parse_sodacl_yaml_str(sodacl_yaml_str)
+[2023-10-18T17:40:44.878+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 115, in parse_sodacl_yaml_str
+[2023-10-18T17:40:44.878+0000] {process_utils.py:190} INFO -   |     self.__parse_headers(sodacl_dict)
+[2023-10-18T17:40:44.878+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 151, in __parse_headers
+[2023-10-18T17:40:44.879+0000] {process_utils.py:190} INFO -   |     self.__parse_table_checks_section(
+[2023-10-18T17:40:44.879+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 215, in __parse_table_checks_section
+[2023-10-18T17:40:44.879+0000] {process_utils.py:190} INFO -   |     check_str, check_configurations = self.__parse_check_configuration(check_list_element)
+[2023-10-18T17:40:44.879+0000] {process_utils.py:190} INFO -   |   File "/tmp/venvjpejxz91/lib/python3.8/site-packages/soda/sodacl/sodacl_parser.py", line 1759, in __parse_check_configuration
+[2023-10-18T17:40:44.880+0000] {process_utils.py:190} INFO -   |     ignored_config_keys = [k for k in check_configurations if k != check_str]
+[2023-10-18T17:40:44.880+0000] {process_utils.py:190} INFO -   | TypeError: 'NoneType' object is not iterable
+[2023-10-18T17:40:44.880+0000] {process_utils.py:190} INFO - 
+[2023-10-18T17:40:46.540+0000] {process_utils.py:190} INFO - Running Soda Scan...
+[2023-10-18T17:40:46.541+0000] {process_utils.py:190} INFO - INFO   | Soda Core 3.0.51
+[2023-10-18T17:40:46.541+0000] {process_utils.py:190} INFO - DEBUG  | Reading configuration file "/opt/***/includes/soda_quality/configuration.yml"
+[2023-10-18T17:40:46.541+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_price_overview.yml"
+[2023-10-18T17:40:46.541+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_price_overview.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.542+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/fct_game_pricing.yml"
+[2023-10-18T17:40:46.542+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/fct_game_pricing.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.542+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_publishers.yml"
+[2023-10-18T17:40:46.542+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_publishers.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.543+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_release.yml"
+[2023-10-18T17:40:46.543+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_release.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.543+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_support_language.yml"
+[2023-10-18T17:40:46.543+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_support_language.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.543+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_games.yml"
+[2023-10-18T17:40:46.544+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_games.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.544+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_developers.yml"
+[2023-10-18T17:40:46.544+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_developers.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.544+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/transform/dim_platforms.yml"
+[2023-10-18T17:40:46.544+0000] {process_utils.py:190} INFO - ERROR  | Could not add SodaCL file /opt/***/includes/soda_quality/checks/transform/dim_platforms.yml | 'NoneType' object is not iterable
+[2023-10-18T17:40:46.545+0000] {process_utils.py:190} INFO - DEBUG  | Scan execution starts
+[2023-10-18T17:40:46.545+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_price_overview.schema[dim_price_overview]:
+[2023-10-18T17:40:46.545+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_price_overview';
+[2023-10-18T17:40:46.545+0000] {process_utils.py:190} INFO - DEBUG  | Query games.fct_game_pricing.schema[fct_game_pricing]:
+[2023-10-18T17:40:46.545+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'fct_game_pricing';
+[2023-10-18T17:40:46.545+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_publishers.schema[dim_publishers]:
+[2023-10-18T17:40:46.546+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_publishers';
+[2023-10-18T17:40:46.548+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_release.schema[dim_release]:
+[2023-10-18T17:40:46.548+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_release';
+[2023-10-18T17:40:46.548+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_support_language.schema[dim_support_language]:
+[2023-10-18T17:40:46.548+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_support_language';
+[2023-10-18T17:40:46.549+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_games.schema[dim_games]:
+[2023-10-18T17:40:46.549+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_games';
+[2023-10-18T17:40:46.549+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_developers.schema[dim_developers]:
+[2023-10-18T17:40:46.549+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_developers';
+[2023-10-18T17:40:46.549+0000] {process_utils.py:190} INFO - DEBUG  | Query games.dim_platforms.schema[dim_platforms]:
+[2023-10-18T17:40:46.549+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dim_platforms';
+[2023-10-18T17:40:46.550+0000] {process_utils.py:190} INFO - INFO   | Scan summary:
+[2023-10-18T17:40:46.550+0000] {process_utils.py:190} INFO - DEBUG  | 8/8 queries OK
+[2023-10-18T17:40:46.550+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_price_overview.schema[dim_price_overview] [OK] 0:00:01.971684
+[2023-10-18T17:40:46.550+0000] {process_utils.py:190} INFO - DEBUG  |   games.fct_game_pricing.schema[fct_game_pricing] [OK] 0:00:02.242858
+[2023-10-18T17:40:46.550+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_publishers.schema[dim_publishers] [OK] 0:00:01.862069
+[2023-10-18T17:40:46.550+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_release.schema[dim_release] [OK] 0:00:01.480218
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_support_language.schema[dim_support_language] [OK] 0:00:01.616758
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_games.schema[dim_games] [OK] 0:00:01.713422
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_developers.schema[dim_developers] [OK] 0:00:01.979472
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - DEBUG  |   games.dim_platforms.schema[dim_platforms] [OK] 0:00:01.488085
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - INFO   | 6/8 checks PASSED:
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - INFO   |     dim_publishers in games
+[2023-10-18T17:40:46.551+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_publishers.yml] [PASSED]
+[2023-10-18T17:40:46.552+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [publisher_id INT64, publishers_name STRING]
+[2023-10-18T17:40:46.553+0000] {process_utils.py:190} INFO - INFO   |     dim_release in games
+[2023-10-18T17:40:46.553+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_release.yml] [PASSED]
+[2023-10-18T17:40:46.553+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [release_id INT64, release_date STRING, coming_soon INT64]
+[2023-10-18T17:40:46.553+0000] {process_utils.py:190} INFO - INFO   |     dim_support_language in games
+[2023-10-18T17:40:46.553+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_support_language.yml] [PASSED]
+[2023-10-18T17:40:46.554+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [language_id INT64, interface_languages STRING, subtitles_languages STRING, fullaudio_languages STRING]
+[2023-10-18T17:40:46.554+0000] {process_utils.py:190} INFO - INFO   |     dim_games in games
+[2023-10-18T17:40:46.554+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_games.yml] [PASSED]
+[2023-10-18T17:40:46.554+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [app_id INT64, name STRING, description STRING, fullgame_app_id INT64, fullgame_name STRING, type STRING, is_free INT64, genre_id STRING, type_genre STRING]
+[2023-10-18T17:40:46.554+0000] {process_utils.py:190} INFO - INFO   |     dim_developers in games
+[2023-10-18T17:40:46.554+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_developers.yml] [PASSED]
+[2023-10-18T17:40:46.555+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [developer_id INT64, developers_name STRING]
+[2023-10-18T17:40:46.555+0000] {process_utils.py:190} INFO - INFO   |     dim_platforms in games
+[2023-10-18T17:40:46.555+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_platforms.yml] [PASSED]
+[2023-10-18T17:40:46.555+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [platform_id INT64, windows INT64, mac INT64, linux INT64]
+[2023-10-18T17:40:46.555+0000] {process_utils.py:190} INFO - INFO   | 2/8 checks FAILED:
+[2023-10-18T17:40:46.555+0000] {process_utils.py:190} INFO - INFO   |     dim_price_overview in games
+[2023-10-18T17:40:46.556+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/dim_price_overview.yml] [FAILED]
+[2023-10-18T17:40:46.556+0000] {process_utils.py:190} INFO - INFO   |         fail_missing_column_names = [purchase_id, linux, windows, mac]
+[2023-10-18T17:40:46.561+0000] {process_utils.py:190} INFO - INFO   |         fail_column_type_mismatch[discount_amount] expected(numeric) actual(FLOAT64)
+[2023-10-18T17:40:46.561+0000] {process_utils.py:190} INFO - INFO   |         fail_column_type_mismatch[price_with_tax] expected(numeric) actual(FLOAT64)
+[2023-10-18T17:40:46.562+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [app_id INT64, initial_price INT64, final_price INT64, discount_pct INT64, discount_amount FLOAT64, formatted_initial_price STRING, formatted_final_price STRING, price_with_tax FLOAT64, formatted_price_with_tax STRING]
+[2023-10-18T17:40:46.562+0000] {process_utils.py:190} INFO - INFO   |     fct_game_pricing in games
+[2023-10-18T17:40:46.562+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/transform/fct_game_pricing.yml] [FAILED]
+[2023-10-18T17:40:46.562+0000] {process_utils.py:190} INFO - INFO   |         fail_missing_column_names = [platform_id]
+[2023-10-18T17:40:46.562+0000] {process_utils.py:190} INFO - INFO   |         fail_column_type_mismatch[total_sales] expected(numeric) actual(FLOAT64)
+[2023-10-18T17:40:46.562+0000] {process_utils.py:190} INFO - INFO   |         fail_column_type_mismatch[total_discounts] expected(numeric) actual(FLOAT64)
+[2023-10-18T17:40:46.563+0000] {process_utils.py:190} INFO - INFO   |         fail_column_type_mismatch[price_with_tax] expected(numeric) actual(FLOAT64)
+[2023-10-18T17:40:46.563+0000] {process_utils.py:190} INFO - INFO   |         fail_column_type_mismatch[total_sales_with_tax] expected(numeric) actual(FLOAT64)
+[2023-10-18T17:40:46.563+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [app_id INT64, formatted_initial_price STRING, total_sales FLOAT64, formatted_price_with_tax STRING, total_discounts FLOAT64, price_with_tax FLOAT64, num_sales INT64, max_discount INT64, min_price INT64, max_price INT64, total_sales_with_tax FLOAT64, total_sales_with_tax_discounted INT64, game_name STRING, game_description STRING, game_is_free INT64, fullgame_app_id INT64, fullgame_name STRING, type STRING, genre_id STRING, type_genre STRING]
+[2023-10-18T17:40:46.564+0000] {process_utils.py:190} INFO - INFO   | 8 errors.
+[2023-10-18T17:40:46.564+0000] {process_utils.py:190} INFO - INFO   | Oops! 8 errors. 2 failures. 0 warnings. 6 pass.
+[2023-10-18T17:40:46.568+0000] {process_utils.py:190} INFO - INFO   | Sending results to Soda Cloud
+[2023-10-18T17:40:46.568+0000] {process_utils.py:190} INFO - INFO   | Soda Cloud Trace: 1580975871700774516
+[2023-10-18T17:40:46.568+0000] {process_utils.py:190} INFO - Traceback (most recent call last):
+[2023-10-18T17:40:46.569+0000] {process_utils.py:190} INFO -   File "/tmp/venvjpejxz91/script.py", line 51, in <module>
+[2023-10-18T17:40:46.569+0000] {process_utils.py:190} INFO -     res = check(*arg_dict["args"], **arg_dict["kwargs"])
+[2023-10-18T17:40:46.569+0000] {process_utils.py:190} INFO -   File "/tmp/venvjpejxz91/script.py", line 45, in check
+[2023-10-18T17:40:46.569+0000] {process_utils.py:190} INFO -     raise ValueError(f"Soda Scan failed with errors!")
+[2023-10-18T17:40:46.569+0000] {process_utils.py:190} INFO - ValueError: Soda Scan failed with errors!
+[2023-10-18T17:40:46.771+0000] {taskinstance.py:1935} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 395, in execute
+    return super().execute(context=serializable_context)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 602, in execute_callable
+    result = self._execute_python_callable_in_subprocess(python_path, tmp_path)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 463, in _execute_python_callable_in_subprocess
+    raise AirflowException(error_msg) from None
+airflow.exceptions.AirflowException: Process returned non-zero exit status 1.
+Soda Scan failed with errors!
+[2023-10-18T17:40:46.775+0000] {taskinstance.py:1398} INFO - Marking task as FAILED. dag_id=games_details, task_id=test_transform, execution_date=20231017T000000, start_date=20231018T173951, end_date=20231018T174046
+[2023-10-18T17:40:46.785+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 545 for task test_transform (Process returned non-zero exit status 1.
+Soda Scan failed with errors!; 890)
+[2023-10-18T17:40:46.810+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-10-18T17:40:46.830+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check

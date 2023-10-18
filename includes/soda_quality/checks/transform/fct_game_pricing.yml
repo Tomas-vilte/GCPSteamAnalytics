@@ -6,7 +6,6 @@ checks for fct_game_pricing:
             app_id,
             formatted_initial_price,
             total_sales,
-            platform_id,
             formatted_price_with_tax,
             total_discounts,
             price_with_tax,
@@ -28,16 +27,15 @@ checks for fct_game_pricing:
         when wrong column type:
           app_id: integer
           formatted_initial_price: string
-          total_sales: numeric
-          platform_id: integer
+          total_sales: float64
           formatted_price_with_tax: string
-          total_discounts: numeric
-          price_with_tax: numeric
+          total_discounts: float64
+          price_with_tax: float64
           num_sales: integer
           max_discount: integer
           min_price: integer
           max_price: integer
-          total_sales_with_tax: numeric
+          total_sales_with_tax: float64
           total_sales_with_tax_discounted: integer
           game_name: string
           game_description: string

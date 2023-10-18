@@ -3,7 +3,6 @@ checks for dim_price_overview:
       fail:
         when required column missing:
           [
-            purchase_id,
             app_id,
             initial_price,
             final_price,
@@ -12,30 +11,23 @@ checks for dim_price_overview:
             formatted_initial_price,
             formatted_final_price,
             price_with_tax,
-            formatted_price_with_tax,
-            windows,
-            mac,
-            linux]
+            formatted_price_with_tax]
 
         when wrong column type:
-          purchase_id: integer
           app_id: integer
           initial_price: integer
           final_price: integer
           discount_pct: integer
-          discount_amount: numeric
+          discount_amount: float64
           formatted_initial_price: string
           formatted_final_price: string
-          price_with_tax: numeric
+          price_with_tax: float64
           formatted_price_with_tax: string
-          windows: integer
-          mac: integer
-          linux: integer
 
   # Check fails when any Null values exist in the column
-  - missing_count(purchase_id) = 0:
+  - missing_count(app_id) = 0:
 
-  # check failes when purchase_id is not unique
-  - duplicate_count(purchase_id) = 0:
+  # check failes when app_id is not unique
+  - duplicate_count(app_id) = 0:
 
   - row_count > 0

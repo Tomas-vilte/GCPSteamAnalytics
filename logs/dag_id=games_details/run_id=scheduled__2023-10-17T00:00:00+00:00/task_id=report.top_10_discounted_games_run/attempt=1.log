@@ -1,0 +1,73 @@
+[2023-10-18T17:53:56.024+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.report.top_10_discounted_games_run scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T17:53:56.032+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.report.top_10_discounted_games_run scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T17:53:56.032+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-18T17:53:56.044+0000] {taskinstance.py:1380} INFO - Executing <Task(DbtRunLocalOperator): report.top_10_discounted_games_run> on 2023-10-17 00:00:00+00:00
+[2023-10-18T17:53:56.050+0000] {standard_task_runner.py:57} INFO - Started process 1446 to run task
+[2023-10-18T17:53:56.053+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'report.top_10_discounted_games_run', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '549', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmp8opgrn8m']
+[2023-10-18T17:53:56.055+0000] {standard_task_runner.py:85} INFO - Job 549: Subtask report.top_10_discounted_games_run
+[2023-10-18T17:53:56.094+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.report.top_10_discounted_games_run scheduled__2023-10-17T00:00:00+00:00 [running]> on host 3c47de805a7a
+[2023-10-18T17:53:56.177+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='report.top_10_discounted_games_run' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T17:53:56.179+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.178+0000[0m] {[34mlocal.py:[0m190} INFO[0m - [35m(astronomer-cosmos)[0m - Cloning project to writable temp directory /tmp/tmpbqy0l8r7 from /opt/***/includes/dbt[0m
+[2023-10-18T17:53:56.178+0000] {local.py:190} INFO - Cloning project to writable temp directory /tmp/tmpbqy0l8r7 from /opt/airflow/includes/dbt
+[2023-10-18T17:53:56.310+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.310+0000[0m] {[34mconfig.py:[0m168} INFO[0m - [35m(astronomer-cosmos)[0m - Using user-supplied profiles.yml at /opt/***/includes/dbt/profiles.yml[0m
+[2023-10-18T17:53:56.310+0000] {config.py:168} INFO - Using user-supplied profiles.yml at /opt/airflow/includes/dbt/profiles.yml
+[2023-10-18T17:53:56.311+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.311+0000[0m] {[34mlocal.py:[0m222} INFO[0m - [35m(astronomer-cosmos)[0m - Trying to run the command:
+ ['/home/***/.local/bin/dbt', 'run', '--models', 'top_10_discounted_games', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev']
+From /tmp/tmpbqy0l8r7/dbt_project[0m
+[2023-10-18T17:53:56.311+0000] {local.py:222} INFO - Trying to run the command:
+ ['/home/***/.local/bin/dbt', 'run', '--models', 'top_10_discounted_games', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev']
+From /tmp/tmpbqy0l8r7/dbt_project
+[2023-10-18T17:53:56.311+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.311+0000[0m] {[34mlocal.py:[0m223} INFO[0m - [35m(astronomer-cosmos)[0m - Using environment variables keys: dict_keys(['AIRFLOW_CTX_DAG_OWNER', 'AIRFLOW_CTX_DAG_ID', 'AIRFLOW_CTX_TASK_ID', 'AIRFLOW_CTX_EXECUTION_DATE', 'AIRFLOW_CTX_TRY_NUMBER', 'AIRFLOW_CTX_DAG_RUN_ID'])[0m
+[2023-10-18T17:53:56.311+0000] {local.py:223} INFO - Using environment variables keys: dict_keys(['AIRFLOW_CTX_DAG_OWNER', 'AIRFLOW_CTX_DAG_ID', 'AIRFLOW_CTX_TASK_ID', 'AIRFLOW_CTX_EXECUTION_DATE', 'AIRFLOW_CTX_TRY_NUMBER', 'AIRFLOW_CTX_DAG_RUN_ID'])
+[2023-10-18T17:53:56.311+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.311+0000[0m] {[34msubprocess.py:[0m60} INFO[0m - [35m(astronomer-cosmos)[0m - Tmp dir root location: 
+ /tmp[0m
+[2023-10-18T17:53:56.311+0000] {subprocess.py:60} INFO - Tmp dir root location: 
+ /tmp
+[2023-10-18T17:53:56.312+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.312+0000[0m] {[34msubprocess.py:[0m73} INFO[0m - [35m(astronomer-cosmos)[0m - Running command: ['/home/***/.local/bin/dbt', 'run', '--models', 'top_10_discounted_games', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev'][0m
+[2023-10-18T17:53:56.312+0000] {subprocess.py:73} INFO - Running command: ['/home/***/.local/bin/dbt', 'run', '--models', 'top_10_discounted_games', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev']
+[2023-10-18T17:53:56.326+0000] {log.py:232} WARNING - [[34m2023-10-18T17:53:56.325+0000[0m] {[34msubprocess.py:[0m84} INFO[0m - [35m(astronomer-cosmos)[0m - Command output:[0m
+[2023-10-18T17:53:56.325+0000] {subprocess.py:84} INFO - Command output:
+[2023-10-18T17:54:01.173+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:01.173+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:01  Running with dbt=1.6.6[0m
+[2023-10-18T17:54:01.173+0000] {subprocess.py:94} INFO - [0m17:54:01  Running with dbt=1.6.6
+[2023-10-18T17:54:01.937+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:01.937+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:01  Registered adapter: bigquery=1.6.7[0m
+[2023-10-18T17:54:01.937+0000] {subprocess.py:94} INFO - [0m17:54:01  Registered adapter: bigquery=1.6.7
+[2023-10-18T17:54:01.968+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:01.968+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:01  Unable to do partial parsing because of a version mismatch[0m
+[2023-10-18T17:54:01.968+0000] {subprocess.py:94} INFO - [0m17:54:01  Unable to do partial parsing because of a version mismatch
+[2023-10-18T17:54:03.403+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.403+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:03  Found 11 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models[0m
+[2023-10-18T17:54:03.403+0000] {subprocess.py:94} INFO - [0m17:54:03  Found 11 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models
+[2023-10-18T17:54:03.405+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.405+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:03[0m
+[2023-10-18T17:54:03.405+0000] {subprocess.py:94} INFO - [0m17:54:03
+[2023-10-18T17:54:03.409+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.409+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:03[0m
+[2023-10-18T17:54:03.409+0000] {subprocess.py:94} INFO - [0m17:54:03
+[2023-10-18T17:54:03.409+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.409+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:03  Finished running  in 0 hours 0 minutes and 0.00 seconds (0.00s).[0m
+[2023-10-18T17:54:03.409+0000] {subprocess.py:94} INFO - [0m17:54:03  Finished running  in 0 hours 0 minutes and 0.00 seconds (0.00s).
+[2023-10-18T17:54:03.409+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.409+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m17:54:03  Encountered an error:[0m
+[2023-10-18T17:54:03.409+0000] {subprocess.py:94} INFO - [0m17:54:03  Encountered an error:
+[2023-10-18T17:54:03.410+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.410+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - Database Error[0m
+[2023-10-18T17:54:03.410+0000] {subprocess.py:94} INFO - Database Error
+[2023-10-18T17:54:03.410+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:03.410+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m -   [Errno 2] No such file or directory: '/home/tomi/GCPSteamAnalytics/credentials.json'[0m
+[2023-10-18T17:54:03.410+0000] {subprocess.py:94} INFO -   [Errno 2] No such file or directory: '/home/tomi/GCPSteamAnalytics/credentials.json'
+[2023-10-18T17:54:04.342+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:04.342+0000[0m] {[34msubprocess.py:[0m98} INFO[0m - [35m(astronomer-cosmos)[0m - Command exited with return code 2[0m
+[2023-10-18T17:54:04.342+0000] {subprocess.py:98} INFO - Command exited with return code 2
+[2023-10-18T17:54:04.351+0000] {local.py:86} WARNING - Artifact schema version: https://schemas.getdbt.com/dbt/manifest/v10.json is above dbt-ol supported version 7. This might cause errors.
+[2023-10-18T17:54:04.352+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:04.352+0000[0m] {[34mlocal.py:[0m239} INFO[0m - [35m(astronomer-cosmos)[0m - Inlets: [][0m
+[2023-10-18T17:54:04.352+0000] {local.py:239} INFO - Inlets: []
+[2023-10-18T17:54:04.352+0000] {log.py:232} WARNING - [[34m2023-10-18T17:54:04.352+0000[0m] {[34mlocal.py:[0m240} INFO[0m - [35m(astronomer-cosmos)[0m - Outlets: [][0m
+[2023-10-18T17:54:04.352+0000] {local.py:240} INFO - Outlets: []
+[2023-10-18T17:54:04.352+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-18T17:54:04.373+0000] {dag.py:3696} INFO - Setting next_dagrun for games_details to 2023-10-18T00:00:00+00:00, run_after=2023-10-19T00:00:00+00:00
+[2023-10-18T17:54:04.393+0000] {taskinstance.py:1935} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/cosmos/operators/local.py", line 445, in execute
+    self.build_and_run_cmd(context=context, cmd_flags=cmd_flags)
+  File "/home/airflow/.local/lib/python3.8/site-packages/cosmos/operators/local.py", line 357, in build_and_run_cmd
+    result = self.run_command(cmd=dbt_cmd, env=env, context=context)
+  File "/home/airflow/.local/lib/python3.8/site-packages/cosmos/operators/local.py", line 243, in run_command
+    self.exception_handling(result)
+  File "/home/airflow/.local/lib/python3.8/site-packages/cosmos/operators/local.py", line 124, in exception_handling
+    raise AirflowException(
+airflow.exceptions.AirflowException: ('dbt command failed. The command returned a non-zero exit code 2. Details: ', '\x1b[0m17:54:01  Running with dbt=1.6.6', '\x1b[0m17:54:01  Registered adapter: bigquery=1.6.7', '\x1b[0m17:54:01  Unable to do partial parsing because of a version mismatch', '\x1b[0m17:54:03  Found 11 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models', '\x1b[0m17:54:03', '\x1b[0m17:54:03', '\x1b[0m17:54:03  Finished running  in 0 hours 0 minutes and 0.00 seconds (0.00s).', '\x1b[0m17:54:03  Encountered an error:', 'Database Error', "  [Errno 2] No such file or directory: '/home/tomi/GCPSteamAnalytics/credentials.json'")
+[2023-10-18T17:54:04.395+0000] {taskinstance.py:1398} INFO - Marking task as FAILED. dag_id=games_details, task_id=report.top_10_discounted_games_run, execution_date=20231017T000000, start_date=20231018T175356, end_date=20231018T175404
+[2023-10-18T17:54:04.405+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 549 for task report.top_10_discounted_games_run (('dbt command failed. The command returned a non-zero exit code 2. Details: ', '\x1b[0m17:54:01  Running with dbt=1.6.6', '\x1b[0m17:54:01  Registered adapter: bigquery=1.6.7', '\x1b[0m17:54:01  Unable to do partial parsing because of a version mismatch', '\x1b[0m17:54:03  Found 11 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models', '\x1b[0m17:54:03', '\x1b[0m17:54:03', '\x1b[0m17:54:03  Finished running  in 0 hours 0 minutes and 0.00 seconds (0.00s).', '\x1b[0m17:54:03  Encountered an error:', 'Database Error', "  [Errno 2] No such file or directory: '/home/tomi/GCPSteamAnalytics/credentials.json'"); 1446)
+[2023-10-18T17:54:04.422+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-10-18T17:54:04.434+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,31 @@
+[2023-10-18T00:00:21.064+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T00:00:21.070+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.extract_data scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T00:00:21.070+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-18T00:00:21.090+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonOperator): extract_data> on 2023-10-17 00:00:00+00:00
+[2023-10-18T00:00:21.096+0000] {standard_task_runner.py:57} INFO - Started process 4288 to run task
+[2023-10-18T00:00:21.099+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'extract_data', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '536', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmprfywive_']
+[2023-10-18T00:00:21.102+0000] {standard_task_runner.py:85} INFO - Job 536: Subtask extract_data
+[2023-10-18T00:00:21.151+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.extract_data scheduled__2023-10-17T00:00:00+00:00 [running]> on host 3c47de805a7a
+[2023-10-18T00:00:21.422+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T00:00:21.431+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,423 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-18T00:00:21.431+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,423 - mi_logger - INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-18T00:00:21.423+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_PASS
+[2023-10-18T00:00:21.432+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-18T00:00:21.432+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-18T00:00:21.432+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_NAME
+[2023-10-18T00:00:21.432+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-18T00:00:21.432+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-18T00:00:21.432+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_USER
+[2023-10-18T00:00:21.432+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-18T00:00:21.432+0000] {log.py:232} WARNING - 2023-10-18 00:00:21,432 - mi_logger - INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-18T00:00:21.432+0000] {configs.py:38} INFO - Variables de entorno establecidas con exito DB_HOST
+[2023-10-18T00:00:31.460+0000] {log.py:232} WARNING - 2023-10-18 00:00:31,460 - mi_logger - ERROR - Error al conectar a la base de datos: (2003, "Can't connect to MySQL server on '172.20.0.3' (timed out)")
+[2023-10-18T00:00:31.460+0000] {log.py:232} WARNING - 2023-10-18 00:00:31,460 - mi_logger - ERROR - Error al conectar a la base de datos: (2003, "Can't connect to MySQL server on '172.20.0.3' (timed out)")
+[2023-10-18T00:00:31.460+0000] {cloudsql_connection.py:40} ERROR - Error al conectar a la base de datos: (2003, "Can't connect to MySQL server on '172.20.0.3' (timed out)")
+[2023-10-18T00:00:31.461+0000] {log.py:232} WARNING - 2023-10-18 00:00:31,460 - mi_logger - INFO - Error al extraer datos: __enter__
+[2023-10-18T00:00:31.461+0000] {log.py:232} WARNING - 2023-10-18 00:00:31,460 - mi_logger - INFO - Error al extraer datos: __enter__
+[2023-10-18T00:00:31.460+0000] {extract_data.py:24} INFO - Error al extraer datos: __enter__
+[2023-10-18T00:00:31.633+0000] {python.py:194} INFO - Done. Returned value was: None
+[2023-10-18T00:00:31.641+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=extract_data, execution_date=20231017T000000, start_date=20231018T000021, end_date=20231018T000031
+[2023-10-18T00:00:31.694+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-18T00:00:31.721+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check
