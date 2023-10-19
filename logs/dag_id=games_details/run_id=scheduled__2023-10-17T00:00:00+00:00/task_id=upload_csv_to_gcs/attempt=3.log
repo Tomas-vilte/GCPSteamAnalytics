@@ -1,0 +1,15 @@
+[2023-10-18T21:43:17.367+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.upload_csv_to_gcs scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T21:43:17.373+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.upload_csv_to_gcs scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T21:43:17.374+0000] {taskinstance.py:1359} INFO - Starting attempt 3 of 3
+[2023-10-18T21:43:17.384+0000] {taskinstance.py:1380} INFO - Executing <Task(LocalFilesystemToGCSOperator): upload_csv_to_gcs> on 2023-10-17 00:00:00+00:00
+[2023-10-18T21:43:17.391+0000] {standard_task_runner.py:57} INFO - Started process 2992 to run task
+[2023-10-18T21:43:17.395+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'upload_csv_to_gcs', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '581', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmplie92id0']
+[2023-10-18T21:43:17.397+0000] {standard_task_runner.py:85} INFO - Job 581: Subtask upload_csv_to_gcs
+[2023-10-18T21:43:17.435+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.upload_csv_to_gcs scheduled__2023-10-17T00:00:00+00:00 [running]> on host f991a33f9277
+[2023-10-18T21:43:17.497+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='upload_csv_to_gcs' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T21:43:17.504+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2023-10-18T21:43:17.508+0000] {base.py:73} INFO - Using connection ID 'gcp' for task execution.
+[2023-10-18T21:43:18.711+0000] {gcs.py:564} INFO - File /opt/***/includes/dataset/games_details_2023-10-18.csv uploaded to raw/games_details_2023-10-18.csv in steamanalytics bucket
+[2023-10-18T21:43:18.718+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=upload_csv_to_gcs, execution_date=20231017T000000, start_date=20231018T214317, end_date=20231018T214318
+[2023-10-18T21:43:18.770+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-18T21:43:18.801+0000] {taskinstance.py:2776} INFO - 1 downstream tasks scheduled from follow-on schedule check

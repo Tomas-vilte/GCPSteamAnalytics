@@ -1,0 +1,227 @@
+[2023-10-18T21:44:39.480+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.soda_core_scan_demodata scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T21:44:39.486+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.soda_core_scan_demodata scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T21:44:39.487+0000] {taskinstance.py:1359} INFO - Starting attempt 3 of 3
+[2023-10-18T21:44:39.495+0000] {taskinstance.py:1380} INFO - Executing <Task(PythonVirtualenvOperator): soda_core_scan_demodata> on 2023-10-17 00:00:00+00:00
+[2023-10-18T21:44:39.500+0000] {standard_task_runner.py:57} INFO - Started process 3099 to run task
+[2023-10-18T21:44:39.503+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'soda_core_scan_demodata', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '584', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmp4axmg423']
+[2023-10-18T21:44:39.506+0000] {standard_task_runner.py:85} INFO - Job 584: Subtask soda_core_scan_demodata
+[2023-10-18T21:44:39.539+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.soda_core_scan_demodata scheduled__2023-10-17T00:00:00+00:00 [running]> on host f991a33f9277
+[2023-10-18T21:44:39.595+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='soda_core_scan_demodata' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T21:44:39.596+0000] {process_utils.py:182} INFO - Executing cmd: /usr/local/bin/python -m virtualenv /tmp/venvko8x5_id
+[2023-10-18T21:44:39.609+0000] {process_utils.py:186} INFO - Output:
+[2023-10-18T21:44:40.453+0000] {process_utils.py:190} INFO - created virtual environment CPython3.8.18.final.0-64 in 329ms
+[2023-10-18T21:44:40.454+0000] {process_utils.py:190} INFO -   creator CPython3Posix(dest=/tmp/venvko8x5_id, clear=False, no_vcs_ignore=False, global=False)
+[2023-10-18T21:44:40.454+0000] {process_utils.py:190} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/tmp/tmp3hxw2zfp)
+[2023-10-18T21:44:40.454+0000] {process_utils.py:190} INFO -     added seed packages: pip==23.2, setuptools==68.0.0, wheel==0.40.0
+[2023-10-18T21:44:40.455+0000] {process_utils.py:190} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2023-10-18T21:44:40.475+0000] {process_utils.py:182} INFO - Executing cmd: /tmp/venvko8x5_id/bin/pip install -r /tmp/venvko8x5_id/requirements.txt
+[2023-10-18T21:44:40.488+0000] {process_utils.py:186} INFO - Output:
+[2023-10-18T21:44:41.621+0000] {process_utils.py:190} INFO - WARNING: The directory '/home/***/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+[2023-10-18T21:44:41.731+0000] {process_utils.py:190} INFO - Looking in indexes: https://pypi.cloud.soda.io
+[2023-10-18T21:44:42.839+0000] {process_utils.py:190} INFO - Collecting soda-core-bigquery (from -r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:42.839+0000] {process_utils.py:190} INFO -   Obtaining dependency information for soda-core-bigquery from https://files.pythonhosted.org/packages/8b/70/9e1eb02fd7f3814314c6f4c89e4e3c5f040135d9b97ec4504bedefa063c3/soda_core_bigquery-3.0.51-py3-none-any.whl.metadata
+[2023-10-18T21:44:42.903+0000] {process_utils.py:190} INFO -   Downloading soda_core_bigquery-3.0.51-py3-none-any.whl.metadata (149 bytes)
+[2023-10-18T21:44:43.602+0000] {process_utils.py:190} INFO - Collecting soda-core==3.0.51 (from soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:43.603+0000] {process_utils.py:190} INFO -   Obtaining dependency information for soda-core==3.0.51 from https://files.pythonhosted.org/packages/25/9c/c15271d048ecf6d6f2b638fa3e62812c54297a3d985fee13794171bcab44/soda_core-3.0.51-py3-none-any.whl.metadata
+[2023-10-18T21:44:43.625+0000] {process_utils.py:190} INFO -   Downloading soda_core-3.0.51-py3-none-any.whl.metadata (1.0 kB)
+[2023-10-18T21:44:44.210+0000] {process_utils.py:190} INFO - Collecting google-cloud-bigquery<4.0,>=2.25.0 (from soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:44.212+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-cloud-bigquery<4.0,>=2.25.0 from https://files.pythonhosted.org/packages/22/03/a5d04741507156b88e9101e91d97bd395d043e9de280b94b1d00cb0f4e03/google_cloud_bigquery-3.12.0-py2.py3-none-any.whl.metadata
+[2023-10-18T21:44:44.238+0000] {process_utils.py:190} INFO -   Downloading google_cloud_bigquery-3.12.0-py2.py3-none-any.whl.metadata (8.5 kB)
+[2023-10-18T21:44:44.819+0000] {process_utils.py:190} INFO - Collecting markupsafe<=2.1.2,>=2.0.1 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:44.835+0000] {process_utils.py:190} INFO -   Downloading MarkupSafe-2.1.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+[2023-10-18T21:44:45.362+0000] {process_utils.py:190} INFO - Collecting Jinja2<4.0,>=2.11 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:45.374+0000] {process_utils.py:190} INFO -   Downloading Jinja2-3.1.2-py3-none-any.whl (133 kB)
+[2023-10-18T21:44:45.390+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.1/133.1 kB 8.9 MB/s eta 0:00:00
+[2023-10-18T21:44:45.910+0000] {process_utils.py:190} INFO - Collecting click~=8.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:45.910+0000] {process_utils.py:190} INFO -   Obtaining dependency information for click~=8.0 from https://files.pythonhosted.org/packages/00/2e/d53fa4befbf2cfa713304affc7ca780ce4fc1fd8710527771b58311a3229/click-8.1.7-py3-none-any.whl.metadata
+[2023-10-18T21:44:45.927+0000] {process_utils.py:190} INFO -   Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+[2023-10-18T21:44:46.785+0000] {process_utils.py:190} INFO - Collecting ruamel.yaml<0.18.0,>=0.17.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:46.785+0000] {process_utils.py:190} INFO -   Obtaining dependency information for ruamel.yaml<0.18.0,>=0.17.0 from https://files.pythonhosted.org/packages/79/a9/ae2f346226fcec5beb172ae3cab6d47ae0baa986f1ed1bdf08d96b469b27/ruamel.yaml-0.17.35-py3-none-any.whl.metadata
+[2023-10-18T21:44:46.799+0000] {process_utils.py:190} INFO -   Downloading ruamel.yaml-0.17.35-py3-none-any.whl.metadata (18 kB)
+[2023-10-18T21:44:47.340+0000] {process_utils.py:190} INFO - Collecting requests~=2.28 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:47.341+0000] {process_utils.py:190} INFO -   Obtaining dependency information for requests~=2.28 from https://files.pythonhosted.org/packages/70/8e/0e2d847013cb52cd35b38c009bb167a1a26b2ce6cd6965bf26b47bc0bf44/requests-2.31.0-py3-none-any.whl.metadata
+[2023-10-18T21:44:47.353+0000] {process_utils.py:190} INFO -   Downloading requests-2.31.0-py3-none-any.whl.metadata (4.6 kB)
+[2023-10-18T21:44:47.858+0000] {process_utils.py:190} INFO - Collecting antlr4-python3-runtime~=4.11.1 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:47.870+0000] {process_utils.py:190} INFO -   Downloading antlr4_python3_runtime-4.11.1-py3-none-any.whl (144 kB)
+[2023-10-18T21:44:47.884+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 144.2/144.2 kB 12.3 MB/s eta 0:00:00
+[2023-10-18T21:44:48.410+0000] {process_utils.py:190} INFO - Collecting opentelemetry-api~=1.16.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:48.429+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_api-1.16.0-py3-none-any.whl (57 kB)
+[2023-10-18T21:44:48.435+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 kB 13.1 MB/s eta 0:00:00
+[2023-10-18T21:44:48.948+0000] {process_utils.py:190} INFO - Collecting opentelemetry-exporter-otlp-proto-http~=1.16.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:48.962+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_exporter_otlp_proto_http-1.16.0-py3-none-any.whl (21 kB)
+[2023-10-18T21:44:49.485+0000] {process_utils.py:190} INFO - Collecting sqlparse~=0.4 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:49.496+0000] {process_utils.py:190} INFO -   Downloading sqlparse-0.4.4-py3-none-any.whl (41 kB)
+[2023-10-18T21:44:49.500+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.2/41.2 kB 15.7 MB/s eta 0:00:00
+[2023-10-18T21:44:50.018+0000] {process_utils.py:190} INFO - Collecting inflect~=6.0 (from soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:50.019+0000] {process_utils.py:190} INFO -   Obtaining dependency information for inflect~=6.0 from https://files.pythonhosted.org/packages/6a/e1/79603e4ae91b38a91dfd855f92321afb65e7f3d0192ac831d00bc9c45cca/inflect-6.2.0-py3-none-any.whl.metadata
+[2023-10-18T21:44:50.035+0000] {process_utils.py:190} INFO -   Downloading inflect-6.2.0-py3-none-any.whl.metadata (21 kB)
+[2023-10-18T21:44:51.527+0000] {process_utils.py:190} INFO - Collecting grpcio<2.0dev,>=1.47.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:51.528+0000] {process_utils.py:190} INFO -   Obtaining dependency information for grpcio<2.0dev,>=1.47.0 from https://files.pythonhosted.org/packages/d6/a1/c5ca3fb951edb7bab892e61e24c72fc7359ae48916cf7352cde9d712867d/grpcio-1.59.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+[2023-10-18T21:44:51.540+0000] {process_utils.py:190} INFO -   Downloading grpcio-1.59.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+[2023-10-18T21:44:52.125+0000] {process_utils.py:190} INFO - Collecting google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:52.126+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5 from https://files.pythonhosted.org/packages/4d/ce/4fd62ea66b3508debc795e475336ce915929765870f0ad52328426ba016e/google_api_core-2.12.0-py3-none-any.whl.metadata
+[2023-10-18T21:44:52.139+0000] {process_utils.py:190} INFO -   Downloading google_api_core-2.12.0-py3-none-any.whl.metadata (2.7 kB)
+[2023-10-18T21:44:52.656+0000] {process_utils.py:190} INFO - Collecting proto-plus<2.0.0dev,>=1.15.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:52.656+0000] {process_utils.py:190} INFO -   Obtaining dependency information for proto-plus<2.0.0dev,>=1.15.0 from https://files.pythonhosted.org/packages/36/5b/e02636d221917d6fa2a61289b3f16002eb4c93d51c0191ac8e896d527182/proto_plus-1.22.3-py3-none-any.whl.metadata
+[2023-10-18T21:44:52.673+0000] {process_utils.py:190} INFO -   Downloading proto_plus-1.22.3-py3-none-any.whl.metadata (2.2 kB)
+[2023-10-18T21:44:53.195+0000] {process_utils.py:190} INFO - Collecting google-cloud-core<3.0.0dev,>=1.6.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:53.196+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-cloud-core<3.0.0dev,>=1.6.0 from https://files.pythonhosted.org/packages/a2/40/02045f776fdb6e44194f34b6375a26ce8a61bd9bd03cd8930ed91cf51a62/google_cloud_core-2.3.3-py2.py3-none-any.whl.metadata
+[2023-10-18T21:44:53.208+0000] {process_utils.py:190} INFO -   Downloading google_cloud_core-2.3.3-py2.py3-none-any.whl.metadata (2.5 kB)
+[2023-10-18T21:44:53.731+0000] {process_utils.py:190} INFO - Collecting google-resumable-media<3.0dev,>=0.6.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:53.731+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-resumable-media<3.0dev,>=0.6.0 from https://files.pythonhosted.org/packages/c7/4f/b8e5e22406e5aeafa46df8799939d5eeee52f18eeed339675167fac6603a/google_resumable_media-2.6.0-py2.py3-none-any.whl.metadata
+[2023-10-18T21:44:53.748+0000] {process_utils.py:190} INFO -   Downloading google_resumable_media-2.6.0-py2.py3-none-any.whl.metadata (2.1 kB)
+[2023-10-18T21:44:54.268+0000] {process_utils.py:190} INFO - Collecting packaging>=20.0.0 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:54.269+0000] {process_utils.py:190} INFO -   Obtaining dependency information for packaging>=20.0.0 from https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl.metadata
+[2023-10-18T21:44:54.285+0000] {process_utils.py:190} INFO -   Downloading packaging-23.2-py3-none-any.whl.metadata (3.2 kB)
+[2023-10-18T21:44:55.133+0000] {process_utils.py:190} INFO - Collecting protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.19.5 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:55.134+0000] {process_utils.py:190} INFO -   Obtaining dependency information for protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.19.5 from https://files.pythonhosted.org/packages/c8/2c/03046cac73f46bfe98fc846ef629cf4f84c2f59258216aa2cc0d22bfca8f/protobuf-4.24.4-cp37-abi3-manylinux2014_x86_64.whl.metadata
+[2023-10-18T21:44:55.145+0000] {process_utils.py:190} INFO -   Downloading protobuf-4.24.4-cp37-abi3-manylinux2014_x86_64.whl.metadata (540 bytes)
+[2023-10-18T21:44:55.655+0000] {process_utils.py:190} INFO - Collecting python-dateutil<3.0dev,>=2.7.2 (from google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:55.670+0000] {process_utils.py:190} INFO -   Downloading python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+[2023-10-18T21:44:55.688+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 247.7/247.7 kB 19.3 MB/s eta 0:00:00
+[2023-10-18T21:44:56.232+0000] {process_utils.py:190} INFO - Collecting googleapis-common-protos<2.0.dev0,>=1.56.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:56.233+0000] {process_utils.py:190} INFO -   Obtaining dependency information for googleapis-common-protos<2.0.dev0,>=1.56.2 from https://files.pythonhosted.org/packages/21/49/12996dc0238e017504dceea1d121a48bd49fb3f4416f40d59fc3e924b4f3/googleapis_common_protos-1.61.0-py2.py3-none-any.whl.metadata
+[2023-10-18T21:44:56.244+0000] {process_utils.py:190} INFO -   Downloading googleapis_common_protos-1.61.0-py2.py3-none-any.whl.metadata (1.5 kB)
+[2023-10-18T21:44:56.835+0000] {process_utils.py:190} INFO - Collecting google-auth<3.0.dev0,>=2.14.1 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:56.835+0000] {process_utils.py:190} INFO -   Obtaining dependency information for google-auth<3.0.dev0,>=2.14.1 from https://files.pythonhosted.org/packages/39/7c/2e4fa55a99f83ef9ef229ac5d59c44ceb90e2d0145711590c0fa39669f32/google_auth-2.23.3-py2.py3-none-any.whl.metadata
+[2023-10-18T21:44:56.847+0000] {process_utils.py:190} INFO -   Downloading google_auth-2.23.3-py2.py3-none-any.whl.metadata (4.2 kB)
+[2023-10-18T21:44:57.404+0000] {process_utils.py:190} INFO - Collecting grpcio-status<2.0.dev0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:57.405+0000] {process_utils.py:190} INFO -   Obtaining dependency information for grpcio-status<2.0.dev0,>=1.33.2 from https://files.pythonhosted.org/packages/55/ce/e6d0382610240439ced22fe2183bcc387946bf80e5e0f17f5b5250978ff3/grpcio_status-1.59.0-py3-none-any.whl.metadata
+[2023-10-18T21:44:57.416+0000] {process_utils.py:190} INFO -   Downloading grpcio_status-1.59.0-py3-none-any.whl.metadata (1.3 kB)
+[2023-10-18T21:44:57.996+0000] {process_utils.py:190} INFO - Collecting google-crc32c<2.0dev,>=1.0 (from google-resumable-media<3.0dev,>=0.6.0->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:58.009+0000] {process_utils.py:190} INFO -   Downloading google_crc32c-1.5.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (32 kB)
+[2023-10-18T21:44:58.767+0000] {process_utils.py:190} INFO - Collecting pydantic>=1.9.1 (from inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:58.767+0000] {process_utils.py:190} INFO -   Obtaining dependency information for pydantic>=1.9.1 from https://files.pythonhosted.org/packages/73/66/0a72c9fcde42e5650c8d8d5c5c1873b9a3893018020c77ca8eb62708b923/pydantic-2.4.2-py3-none-any.whl.metadata
+[2023-10-18T21:44:58.781+0000] {process_utils.py:190} INFO -   Downloading pydantic-2.4.2-py3-none-any.whl.metadata (158 kB)
+[2023-10-18T21:44:58.796+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 158.6/158.6 kB 12.8 MB/s eta 0:00:00
+[2023-10-18T21:44:59.305+0000] {process_utils.py:190} INFO - Collecting typing-extensions (from inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:59.305+0000] {process_utils.py:190} INFO -   Obtaining dependency information for typing-extensions from https://files.pythonhosted.org/packages/24/21/7d397a4b7934ff4028987914ac1044d3b7d52712f30e2ac7a2ae5bc86dd0/typing_extensions-4.8.0-py3-none-any.whl.metadata
+[2023-10-18T21:44:59.316+0000] {process_utils.py:190} INFO -   Downloading typing_extensions-4.8.0-py3-none-any.whl.metadata (3.0 kB)
+[2023-10-18T21:44:59.856+0000] {process_utils.py:190} INFO - Collecting deprecated>=1.2.6 (from opentelemetry-api~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:44:59.856+0000] {process_utils.py:190} INFO -   Obtaining dependency information for deprecated>=1.2.6 from https://files.pythonhosted.org/packages/20/8d/778b7d51b981a96554f29136cd59ca7880bf58094338085bcf2a979a0e6a/Deprecated-1.2.14-py2.py3-none-any.whl.metadata
+[2023-10-18T21:44:59.864+0000] {process_utils.py:190} INFO -   Downloading Deprecated-1.2.14-py2.py3-none-any.whl.metadata (5.4 kB)
+[2023-10-18T21:44:59.866+0000] {process_utils.py:190} INFO - Requirement already satisfied: setuptools>=16.0 in /tmp/venvko8x5_id/lib/python3.8/site-packages (from opentelemetry-api~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2)) (68.0.0)
+[2023-10-18T21:45:00.409+0000] {process_utils.py:190} INFO - Collecting backoff<3.0.0,>=1.10.0 (from opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:00.423+0000] {process_utils.py:190} INFO -   Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+[2023-10-18T21:45:00.948+0000] {process_utils.py:190} INFO - Collecting opentelemetry-proto==1.16.0 (from opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:00.959+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_proto-1.16.0-py3-none-any.whl (52 kB)
+[2023-10-18T21:45:00.965+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.6/52.6 kB 15.0 MB/s eta 0:00:00
+[2023-10-18T21:45:01.482+0000] {process_utils.py:190} INFO - Collecting opentelemetry-sdk~=1.16.0 (from opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:01.503+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_sdk-1.16.0-py3-none-any.whl (94 kB)
+[2023-10-18T21:45:01.508+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.6/94.6 kB 240.9 MB/s eta 0:00:00
+[2023-10-18T21:45:02.101+0000] {process_utils.py:190} INFO - Collecting six>=1.5 (from python-dateutil<3.0dev,>=2.7.2->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:02.119+0000] {process_utils.py:190} INFO -   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+[2023-10-18T21:45:02.732+0000] {process_utils.py:190} INFO - Collecting charset-normalizer<4,>=2 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:02.732+0000] {process_utils.py:190} INFO -   Obtaining dependency information for charset-normalizer<4,>=2 from https://files.pythonhosted.org/packages/1e/c8/fd52271326c052f95f47ef718b018aa2bc3fd097d9bac44d7d48894c6130/charset_normalizer-3.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+[2023-10-18T21:45:02.745+0000] {process_utils.py:190} INFO -   Downloading charset_normalizer-3.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (32 kB)
+[2023-10-18T21:45:03.255+0000] {process_utils.py:190} INFO - Collecting idna<4,>=2.5 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:03.266+0000] {process_utils.py:190} INFO -   Downloading idna-3.4-py3-none-any.whl (61 kB)
+[2023-10-18T21:45:03.273+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.5/61.5 kB 11.0 MB/s eta 0:00:00
+[2023-10-18T21:45:03.818+0000] {process_utils.py:190} INFO - Collecting urllib3<3,>=1.21.1 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:03.819+0000] {process_utils.py:190} INFO -   Obtaining dependency information for urllib3<3,>=1.21.1 from https://files.pythonhosted.org/packages/d2/b2/b157855192a68541a91ba7b2bbcb91f1b4faa51f8bae38d8005c034be524/urllib3-2.0.7-py3-none-any.whl.metadata
+[2023-10-18T21:45:03.831+0000] {process_utils.py:190} INFO -   Downloading urllib3-2.0.7-py3-none-any.whl.metadata (6.6 kB)
+[2023-10-18T21:45:04.346+0000] {process_utils.py:190} INFO - Collecting certifi>=2017.4.17 (from requests~=2.28->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:04.346+0000] {process_utils.py:190} INFO -   Obtaining dependency information for certifi>=2017.4.17 from https://files.pythonhosted.org/packages/4c/dd/2234eab22353ffc7d94e8d13177aaa050113286e93e7b40eae01fbf7c3d9/certifi-2023.7.22-py3-none-any.whl.metadata
+[2023-10-18T21:45:04.362+0000] {process_utils.py:190} INFO -   Downloading certifi-2023.7.22-py3-none-any.whl.metadata (2.2 kB)
+[2023-10-18T21:45:04.901+0000] {process_utils.py:190} INFO - Collecting ruamel.yaml.clib>=0.2.7 (from ruamel.yaml<0.18.0,>=0.17.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:04.901+0000] {process_utils.py:190} INFO -   Obtaining dependency information for ruamel.yaml.clib>=0.2.7 from https://files.pythonhosted.org/packages/22/fa/b2a8fd49c92693e9b9b6b11eef4c2a8aedaca2b521ab3e020aa4778efc23/ruamel.yaml.clib-0.2.8-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl.metadata
+[2023-10-18T21:45:04.913+0000] {process_utils.py:190} INFO -   Downloading ruamel.yaml.clib-0.2.8-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl.metadata (2.2 kB)
+[2023-10-18T21:45:05.582+0000] {process_utils.py:190} INFO - Collecting wrapt<2,>=1.10 (from deprecated>=1.2.6->opentelemetry-api~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:05.619+0000] {process_utils.py:190} INFO -   Downloading wrapt-1.15.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (81 kB)
+[2023-10-18T21:45:05.623+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 81.5/81.5 kB 236.5 MB/s eta 0:00:00
+[2023-10-18T21:45:06.159+0000] {process_utils.py:190} INFO - Collecting cachetools<6.0,>=2.0.0 (from google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:06.159+0000] {process_utils.py:190} INFO -   Obtaining dependency information for cachetools<6.0,>=2.0.0 from https://files.pythonhosted.org/packages/a9/c9/c8a7710f2cedcb1db9224fdd4d8307c9e48cbddc46c18b515fefc0f1abbe/cachetools-5.3.1-py3-none-any.whl.metadata
+[2023-10-18T21:45:06.177+0000] {process_utils.py:190} INFO -   Downloading cachetools-5.3.1-py3-none-any.whl.metadata (5.2 kB)
+[2023-10-18T21:45:06.715+0000] {process_utils.py:190} INFO - Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:06.732+0000] {process_utils.py:190} INFO -   Downloading pyasn1_modules-0.3.0-py2.py3-none-any.whl (181 kB)
+[2023-10-18T21:45:06.744+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 26.5 MB/s eta 0:00:00
+[2023-10-18T21:45:07.267+0000] {process_utils.py:190} INFO - Collecting rsa<5,>=3.1.4 (from google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:07.285+0000] {process_utils.py:190} INFO -   Downloading rsa-4.9-py3-none-any.whl (34 kB)
+[2023-10-18T21:45:07.943+0000] {process_utils.py:190} INFO - Collecting opentelemetry-semantic-conventions==0.37b0 (from opentelemetry-sdk~=1.16.0->opentelemetry-exporter-otlp-proto-http~=1.16.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:07.956+0000] {process_utils.py:190} INFO -   Downloading opentelemetry_semantic_conventions-0.37b0-py3-none-any.whl (26 kB)
+[2023-10-18T21:45:08.498+0000] {process_utils.py:190} INFO - Collecting annotated-types>=0.4.0 (from pydantic>=1.9.1->inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:08.498+0000] {process_utils.py:190} INFO -   Obtaining dependency information for annotated-types>=0.4.0 from https://files.pythonhosted.org/packages/28/78/d31230046e58c207284c6b2c4e8d96e6d3cb4e52354721b944d3e1ee4aa5/annotated_types-0.6.0-py3-none-any.whl.metadata
+[2023-10-18T21:45:08.510+0000] {process_utils.py:190} INFO -   Downloading annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+[2023-10-18T21:45:09.998+0000] {process_utils.py:190} INFO - Collecting pydantic-core==2.10.1 (from pydantic>=1.9.1->inflect~=6.0->soda-core==3.0.51->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:09.999+0000] {process_utils.py:190} INFO -   Obtaining dependency information for pydantic-core==2.10.1 from https://files.pythonhosted.org/packages/da/82/4139ea7aebec9e22be42d8a5342df5022b7b6b6deb10126dc3ff80b4d6fd/pydantic_core-2.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+[2023-10-18T21:45:10.033+0000] {process_utils.py:190} INFO -   Downloading pydantic_core-2.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+[2023-10-18T21:45:10.697+0000] {process_utils.py:190} INFO - Collecting pyasn1<0.6.0,>=0.4.6 (from pyasn1-modules>=0.2.1->google-auth<3.0.dev0,>=2.14.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0dev,>=1.31.5->google-cloud-bigquery<4.0,>=2.25.0->soda-core-bigquery->-r /tmp/venvko8x5_id/requirements.txt (line 2))
+[2023-10-18T21:45:10.711+0000] {process_utils.py:190} INFO -   Downloading pyasn1-0.5.0-py2.py3-none-any.whl (83 kB)
+[2023-10-18T21:45:10.718+0000] {process_utils.py:190} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.9/83.9 kB 15.4 MB/s eta 0:00:00
+[2023-10-18T21:45:10.789+0000] {process_utils.py:190} INFO - Downloading soda_core_bigquery-3.0.51-py3-none-any.whl (3.7 kB)
+[2023-10-18T21:45:10.805+0000] {process_utils.py:190} INFO - Downloading soda_core-3.0.51-py3-none-any.whl (178 kB)
+[2023-10-18T21:45:10.821+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 178.9/178.9 kB 12.4 MB/s eta 0:00:00
+[2023-10-18T21:45:10.835+0000] {process_utils.py:190} INFO - Downloading google_cloud_bigquery-3.12.0-py2.py3-none-any.whl (220 kB)
+[2023-10-18T21:45:10.854+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 220.4/220.4 kB 12.4 MB/s eta 0:00:00
+[2023-10-18T21:45:10.866+0000] {process_utils.py:190} INFO - Downloading click-8.1.7-py3-none-any.whl (97 kB)
+[2023-10-18T21:45:10.875+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 12.8 MB/s eta 0:00:00
+[2023-10-18T21:45:10.887+0000] {process_utils.py:190} INFO - Downloading google_cloud_core-2.3.3-py2.py3-none-any.whl (29 kB)
+[2023-10-18T21:45:10.903+0000] {process_utils.py:190} INFO - Downloading google_resumable_media-2.6.0-py2.py3-none-any.whl (80 kB)
+[2023-10-18T21:45:10.910+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.3/80.3 kB 13.4 MB/s eta 0:00:00
+[2023-10-18T21:45:10.925+0000] {process_utils.py:190} INFO - Downloading grpcio-1.59.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.3 MB)
+[2023-10-18T21:45:11.377+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 11.8 MB/s eta 0:00:00
+[2023-10-18T21:45:11.396+0000] {process_utils.py:190} INFO - Downloading inflect-6.2.0-py3-none-any.whl (35 kB)
+[2023-10-18T21:45:11.412+0000] {process_utils.py:190} INFO - Downloading packaging-23.2-py3-none-any.whl (53 kB)
+[2023-10-18T21:45:11.417+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.0/53.0 kB 14.6 MB/s eta 0:00:00
+[2023-10-18T21:45:11.428+0000] {process_utils.py:190} INFO - Downloading proto_plus-1.22.3-py3-none-any.whl (48 kB)
+[2023-10-18T21:45:11.433+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.1/48.1 kB 14.4 MB/s eta 0:00:00
+[2023-10-18T21:45:11.450+0000] {process_utils.py:190} INFO - Downloading protobuf-4.24.4-cp37-abi3-manylinux2014_x86_64.whl (311 kB)
+[2023-10-18T21:45:11.477+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 311.6/311.6 kB 12.1 MB/s eta 0:00:00
+[2023-10-18T21:45:11.494+0000] {process_utils.py:190} INFO - Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+[2023-10-18T21:45:11.500+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.6/62.6 kB 13.1 MB/s eta 0:00:00
+[2023-10-18T21:45:11.515+0000] {process_utils.py:190} INFO - Downloading ruamel.yaml-0.17.35-py3-none-any.whl (112 kB)
+[2023-10-18T21:45:11.526+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.9/112.9 kB 12.0 MB/s eta 0:00:00
+[2023-10-18T21:45:11.538+0000] {process_utils.py:190} INFO - Downloading certifi-2023.7.22-py3-none-any.whl (158 kB)
+[2023-10-18T21:45:11.552+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 158.3/158.3 kB 12.6 MB/s eta 0:00:00
+[2023-10-18T21:45:11.568+0000] {process_utils.py:190} INFO - Downloading charset_normalizer-3.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (137 kB)
+[2023-10-18T21:45:11.581+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.9/137.9 kB 12.3 MB/s eta 0:00:00
+[2023-10-18T21:45:11.594+0000] {process_utils.py:190} INFO - Downloading Deprecated-1.2.14-py2.py3-none-any.whl (9.6 kB)
+[2023-10-18T21:45:11.610+0000] {process_utils.py:190} INFO - Downloading google_api_core-2.12.0-py3-none-any.whl (121 kB)
+[2023-10-18T21:45:11.621+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.4/121.4 kB 12.8 MB/s eta 0:00:00
+[2023-10-18T21:45:11.636+0000] {process_utils.py:190} INFO - Downloading google_auth-2.23.3-py2.py3-none-any.whl (182 kB)
+[2023-10-18T21:45:11.652+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 182.3/182.3 kB 12.4 MB/s eta 0:00:00
+[2023-10-18T21:45:11.673+0000] {process_utils.py:190} INFO - Downloading googleapis_common_protos-1.61.0-py2.py3-none-any.whl (230 kB)
+[2023-10-18T21:45:11.690+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 230.9/230.9 kB 20.5 MB/s eta 0:00:00
+[2023-10-18T21:45:11.702+0000] {process_utils.py:190} INFO - Downloading grpcio_status-1.59.0-py3-none-any.whl (14 kB)
+[2023-10-18T21:45:11.720+0000] {process_utils.py:190} INFO - Downloading pydantic-2.4.2-py3-none-any.whl (395 kB)
+[2023-10-18T21:45:11.754+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 395.8/395.8 kB 11.8 MB/s eta 0:00:00
+[2023-10-18T21:45:11.772+0000] {process_utils.py:190} INFO - Downloading pydantic_core-2.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+[2023-10-18T21:45:11.944+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 12.3 MB/s eta 0:00:00
+[2023-10-18T21:45:11.964+0000] {process_utils.py:190} INFO - Downloading ruamel.yaml.clib-0.2.8-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (596 kB)
+[2023-10-18T21:45:12.010+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 596.0/596.0 kB 14.4 MB/s eta 0:00:00
+[2023-10-18T21:45:12.027+0000] {process_utils.py:190} INFO - Downloading typing_extensions-4.8.0-py3-none-any.whl (31 kB)
+[2023-10-18T21:45:12.043+0000] {process_utils.py:190} INFO - Downloading urllib3-2.0.7-py3-none-any.whl (124 kB)
+[2023-10-18T21:45:12.054+0000] {process_utils.py:190} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.2/124.2 kB 12.8 MB/s eta 0:00:00
+[2023-10-18T21:45:12.071+0000] {process_utils.py:190} INFO - Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+[2023-10-18T21:45:12.087+0000] {process_utils.py:190} INFO - Downloading cachetools-5.3.1-py3-none-any.whl (9.3 kB)
+[2023-10-18T21:45:12.298+0000] {process_utils.py:190} INFO - Installing collected packages: antlr4-python3-runtime, wrapt, urllib3, typing-extensions, sqlparse, six, ruamel.yaml.clib, pyasn1, protobuf, packaging, opentelemetry-semantic-conventions, markupsafe, idna, grpcio, google-crc32c, click, charset-normalizer, certifi, cachetools, backoff, ruamel.yaml, rsa, requests, python-dateutil, pydantic-core, pyasn1-modules, proto-plus, opentelemetry-proto, Jinja2, googleapis-common-protos, google-resumable-media, deprecated, annotated-types, pydantic, opentelemetry-api, grpcio-status, google-auth, opentelemetry-sdk, inflect, google-api-core, opentelemetry-exporter-otlp-proto-http, google-cloud-core, soda-core, google-cloud-bigquery, soda-core-bigquery
+[2023-10-18T21:45:14.446+0000] {process_utils.py:190} INFO - Successfully installed Jinja2-3.1.2 annotated-types-0.6.0 antlr4-python3-runtime-4.11.1 backoff-2.2.1 cachetools-5.3.1 certifi-2023.7.22 charset-normalizer-3.3.0 click-8.1.7 deprecated-1.2.14 google-api-core-2.12.0 google-auth-2.23.3 google-cloud-bigquery-3.12.0 google-cloud-core-2.3.3 google-crc32c-1.5.0 google-resumable-media-2.6.0 googleapis-common-protos-1.61.0 grpcio-1.59.0 grpcio-status-1.59.0 idna-3.4 inflect-6.2.0 markupsafe-2.1.2 opentelemetry-api-1.16.0 opentelemetry-exporter-otlp-proto-http-1.16.0 opentelemetry-proto-1.16.0 opentelemetry-sdk-1.16.0 opentelemetry-semantic-conventions-0.37b0 packaging-23.2 proto-plus-1.22.3 protobuf-4.24.4 pyasn1-0.5.0 pyasn1-modules-0.3.0 pydantic-2.4.2 pydantic-core-2.10.1 python-dateutil-2.8.2 requests-2.31.0 rsa-4.9 ruamel.yaml-0.17.35 ruamel.yaml.clib-0.2.8 six-1.16.0 soda-core-3.0.51 soda-core-bigquery-3.0.51 sqlparse-0.4.4 typing-extensions-4.8.0 urllib3-2.0.7 wrapt-1.15.0
+[2023-10-18T21:45:14.565+0000] {process_utils.py:190} INFO - 
+[2023-10-18T21:45:14.565+0000] {process_utils.py:190} INFO - [notice] A new release of pip is available: 23.2 -> 23.3
+[2023-10-18T21:45:14.565+0000] {process_utils.py:190} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2023-10-18T21:45:14.857+0000] {process_utils.py:182} INFO - Executing cmd: /tmp/venvko8x5_id/bin/python /tmp/venvko8x5_id/script.py /tmp/venvko8x5_id/script.in /tmp/venvko8x5_id/script.out /tmp/venvko8x5_id/string_args.txt /tmp/venvko8x5_id/termination.log
+[2023-10-18T21:45:14.870+0000] {process_utils.py:186} INFO - Output:
+[2023-10-18T21:45:20.651+0000] {process_utils.py:190} INFO - /tmp/venvko8x5_id/lib/python3.8/site-packages/google/cloud/bigquery/client.py:570: UserWarning: Cannot create BigQuery Storage client, the dependency google-cloud-bigquery-storage is not installed.
+[2023-10-18T21:45:20.652+0000] {process_utils.py:190} INFO -   warnings.warn(
+[2023-10-18T21:45:20.652+0000] {process_utils.py:190} INFO - Running Soda Scan...
+[2023-10-18T21:45:20.652+0000] {process_utils.py:190} INFO - INFO   | Soda Core 3.0.51
+[2023-10-18T21:45:20.652+0000] {process_utils.py:190} INFO - DEBUG  | Reading configuration file "/opt/***/includes/soda_quality/configuration.yml"
+[2023-10-18T21:45:20.652+0000] {process_utils.py:190} INFO - DEBUG  | Reading SodaCL file "/opt/***/includes/soda_quality/checks/sources/raw_games_details.yml"
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - DEBUG  | Scan execution starts
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - DEBUG  | Query games.raw_games.schema[raw_games]:
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - SELECT column_name, data_type, is_nullable FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'raw_games';
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - INFO   | Scan summary:
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - DEBUG  | 1/1 query OK
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - DEBUG  |   games.raw_games.schema[raw_games] [OK] 0:00:01.873954
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - INFO   | 1/1 check PASSED:
+[2023-10-18T21:45:20.653+0000] {process_utils.py:190} INFO - INFO   |     raw_games in games
+[2023-10-18T21:45:20.654+0000] {process_utils.py:190} INFO - INFO   |       Schema Check [/opt/***/includes/soda_quality/checks/sources/raw_games_details.yml] [PASSED]
+[2023-10-18T21:45:20.654+0000] {process_utils.py:190} INFO - INFO   |         schema_measured = [id INT64, app_id INT64, name STRING, description STRING, fullgame_app_id INT64, fullgame_name STRING, type STRING, publishers STRING, developers STRING, is_free INT64, interface_languages STRING, fullaudio_languages STRING, subtitles_languages STRING, windows INT64, mac INT64, linux INT64, genre_id STRING, type_genre STRING, release_date STRING, coming_soon INT64, currency STRING, initial_price INT64, final_price INT64, discount_percent INT64, formatted_initial_price STRING, formatted_final_price STRING]
+[2023-10-18T21:45:20.654+0000] {process_utils.py:190} INFO - INFO   | All is good. No failures. No warnings. No errors.
+[2023-10-18T21:45:20.655+0000] {process_utils.py:190} INFO - INFO   | Sending results to Soda Cloud
+[2023-10-18T21:45:20.655+0000] {process_utils.py:190} INFO - INFO   | Soda Cloud Trace: 4136665758740734886
+[2023-10-18T21:45:20.655+0000] {process_utils.py:190} INFO - Soda scan successful
+[2023-10-18T21:45:20.825+0000] {python.py:194} INFO - Done. Returned value was: 0
+[2023-10-18T21:45:20.845+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=soda_core_scan_demodata, execution_date=20231017T000000, start_date=20231018T214439, end_date=20231018T214520
+[2023-10-18T21:45:20.863+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-18T21:45:20.890+0000] {taskinstance.py:2776} INFO - 7 downstream tasks scheduled from follow-on schedule check
