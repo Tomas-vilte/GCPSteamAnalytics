@@ -22826,3 +22826,22 @@ File Path                                   PID  Runtime      # DAGs    # Errors
 [2023-10-19T01:55:25.004+0000] {manager.py:759} INFO - Searching for files in /opt/airflow/dags
 [2023-10-19T01:55:25.173+0000] {manager.py:762} INFO - There are 2 files in /opt/airflow/dags
 [2023-10-19T01:55:25.203+0000] {manager.py:1217} ERROR - Processor for /opt/airflow/dags/data_pipeline.py with PID 7654 started at 2023-10-18T22:44:56.610535+00:00 has timed out, killing it.
+[2023-10-19T01:55:46.639+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/data_pipeline.py                                 0           1  11428.59s       2023-10-19T01:55:25
+/opt/airflow/dags/src/tests/test_dags.py                           0           0  0.33s           2023-10-19T01:55:25
+================================================================================
+[2023-10-19T01:56:16.667+0000] {manager.py:893} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+----------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/src/tests/test_dags.py                           0           0  0.14s           2023-10-19T01:55:55
+/opt/airflow/dags/data_pipeline.py                                 1           0  21.31s          2023-10-19T01:56:16
+================================================================================
+[2023-10-19T01:56:19.292+0000] {manager.py:469} INFO - Exiting gracefully upon receiving signal 15
