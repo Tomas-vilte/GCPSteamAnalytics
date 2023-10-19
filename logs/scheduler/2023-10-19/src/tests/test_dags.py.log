@@ -1,0 +1,5 @@
+[2023-10-19T01:55:25.244+0000] {processor.py:157} INFO - Started process (PID=7682) to work on /opt/airflow/dags/src/tests/test_dags.py
+[2023-10-19T01:55:25.244+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/src/tests/test_dags.py for tasks to queue
+[2023-10-19T01:55:25.245+0000] {logging_mixin.py:151} INFO - [2023-10-19T01:55:25.245+0000] {dagbag.py:539} INFO - Filling up the DagBag from /opt/airflow/dags/src/tests/test_dags.py
+[2023-10-19T01:55:25.486+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/src/tests/test_dags.py
+[2023-10-19T01:55:25.531+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/src/tests/test_dags.py took 0.290 seconds

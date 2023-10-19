@@ -1,0 +1,76 @@
+[2023-10-18T20:30:04.605+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: games_details.transform.dim_platforms_run scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T20:30:04.623+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: games_details.transform.dim_platforms_run scheduled__2023-10-17T00:00:00+00:00 [queued]>
+[2023-10-18T20:30:04.623+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2023-10-18T20:30:04.636+0000] {taskinstance.py:1380} INFO - Executing <Task(DbtRunLocalOperator): transform.dim_platforms_run> on 2023-10-17 00:00:00+00:00
+[2023-10-18T20:30:04.650+0000] {standard_task_runner.py:57} INFO - Started process 1454 to run task
+[2023-10-18T20:30:04.653+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'games_details', 'transform.dim_platforms_run', 'scheduled__2023-10-17T00:00:00+00:00', '--job-id', '572', '--raw', '--subdir', 'DAGS_FOLDER/data_pipeline.py', '--cfg-path', '/tmp/tmprtlofo09']
+[2023-10-18T20:30:04.656+0000] {standard_task_runner.py:85} INFO - Job 572: Subtask transform.dim_platforms_run
+[2023-10-18T20:30:04.744+0000] {task_command.py:415} INFO - Running <TaskInstance: games_details.transform.dim_platforms_run scheduled__2023-10-17T00:00:00+00:00 [running]> on host f991a33f9277
+[2023-10-18T20:30:04.857+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='games_details' AIRFLOW_CTX_TASK_ID='transform.dim_platforms_run' AIRFLOW_CTX_EXECUTION_DATE='2023-10-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-10-17T00:00:00+00:00'
+[2023-10-18T20:30:04.859+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.859+0000[0m] {[34mlocal.py:[0m190} INFO[0m - [35m(astronomer-cosmos)[0m - Cloning project to writable temp directory /tmp/tmpqtd7llew from /opt/***/includes/dbt[0m
+[2023-10-18T20:30:04.859+0000] {local.py:190} INFO - Cloning project to writable temp directory /tmp/tmpqtd7llew from /opt/airflow/includes/dbt
+[2023-10-18T20:30:04.926+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.926+0000[0m] {[34mconfig.py:[0m168} INFO[0m - [35m(astronomer-cosmos)[0m - Using user-supplied profiles.yml at /opt/***/includes/dbt/profiles.yml[0m
+[2023-10-18T20:30:04.926+0000] {config.py:168} INFO - Using user-supplied profiles.yml at /opt/airflow/includes/dbt/profiles.yml
+[2023-10-18T20:30:04.927+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.927+0000[0m] {[34mlocal.py:[0m222} INFO[0m - [35m(astronomer-cosmos)[0m - Trying to run the command:
+ ['/home/***/.local/bin/dbt', 'run', '--models', 'dim_platforms', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev']
+From /tmp/tmpqtd7llew/dbt_project[0m
+[2023-10-18T20:30:04.927+0000] {local.py:222} INFO - Trying to run the command:
+ ['/home/***/.local/bin/dbt', 'run', '--models', 'dim_platforms', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev']
+From /tmp/tmpqtd7llew/dbt_project
+[2023-10-18T20:30:04.927+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.927+0000[0m] {[34mlocal.py:[0m223} INFO[0m - [35m(astronomer-cosmos)[0m - Using environment variables keys: dict_keys(['AIRFLOW_CTX_DAG_OWNER', 'AIRFLOW_CTX_DAG_ID', 'AIRFLOW_CTX_TASK_ID', 'AIRFLOW_CTX_EXECUTION_DATE', 'AIRFLOW_CTX_TRY_NUMBER', 'AIRFLOW_CTX_DAG_RUN_ID'])[0m
+[2023-10-18T20:30:04.927+0000] {local.py:223} INFO - Using environment variables keys: dict_keys(['AIRFLOW_CTX_DAG_OWNER', 'AIRFLOW_CTX_DAG_ID', 'AIRFLOW_CTX_TASK_ID', 'AIRFLOW_CTX_EXECUTION_DATE', 'AIRFLOW_CTX_TRY_NUMBER', 'AIRFLOW_CTX_DAG_RUN_ID'])
+[2023-10-18T20:30:04.927+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.927+0000[0m] {[34msubprocess.py:[0m60} INFO[0m - [35m(astronomer-cosmos)[0m - Tmp dir root location: 
+ /tmp[0m
+[2023-10-18T20:30:04.927+0000] {subprocess.py:60} INFO - Tmp dir root location: 
+ /tmp
+[2023-10-18T20:30:04.928+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.927+0000[0m] {[34msubprocess.py:[0m73} INFO[0m - [35m(astronomer-cosmos)[0m - Running command: ['/home/***/.local/bin/dbt', 'run', '--models', 'dim_platforms', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev'][0m
+[2023-10-18T20:30:04.927+0000] {subprocess.py:73} INFO - Running command: ['/home/***/.local/bin/dbt', 'run', '--models', 'dim_platforms', '--profiles-dir', '/opt/***/includes/dbt', '--profile', 'games', '--target', 'dev']
+[2023-10-18T20:30:04.964+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:04.964+0000[0m] {[34msubprocess.py:[0m84} INFO[0m - [35m(astronomer-cosmos)[0m - Command output:[0m
+[2023-10-18T20:30:04.964+0000] {subprocess.py:84} INFO - Command output:
+[2023-10-18T20:30:08.987+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:08.987+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:08  Running with dbt=1.6.6[0m
+[2023-10-18T20:30:08.987+0000] {subprocess.py:94} INFO - [0m20:30:08  Running with dbt=1.6.6
+[2023-10-18T20:30:10.193+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:10.193+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:10  Registered adapter: bigquery=1.6.7[0m
+[2023-10-18T20:30:10.193+0000] {subprocess.py:94} INFO - [0m20:30:10  Registered adapter: bigquery=1.6.7
+[2023-10-18T20:30:10.224+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:10.224+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:10  Unable to do partial parsing because of a version mismatch[0m
+[2023-10-18T20:30:10.224+0000] {subprocess.py:94} INFO - [0m20:30:10  Unable to do partial parsing because of a version mismatch
+[2023-10-18T20:30:11.718+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:11.718+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:11  Found 11 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models[0m
+[2023-10-18T20:30:11.718+0000] {subprocess.py:94} INFO - [0m20:30:11  Found 11 models, 1 source, 0 exposures, 0 metrics, 508 macros, 0 groups, 0 semantic models
+[2023-10-18T20:30:11.719+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:11.718+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:11[0m
+[2023-10-18T20:30:11.718+0000] {subprocess.py:94} INFO - [0m20:30:11
+[2023-10-18T20:30:12.927+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:12.926+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:12  Concurrency: 1 threads (target='dev')[0m
+[2023-10-18T20:30:12.926+0000] {subprocess.py:94} INFO - [0m20:30:12  Concurrency: 1 threads (target='dev')
+[2023-10-18T20:30:12.928+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:12.928+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:12[0m
+[2023-10-18T20:30:12.928+0000] {subprocess.py:94} INFO - [0m20:30:12
+[2023-10-18T20:30:12.940+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:12.940+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:12  1 of 1 START sql table model games.dim_platforms ............................... [RUN][0m
+[2023-10-18T20:30:12.940+0000] {subprocess.py:94} INFO - [0m20:30:12  1 of 1 START sql table model games.dim_platforms ............................... [RUN]
+[2023-10-18T20:30:17.843+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.843+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17  1 of 1 OK created sql table model games.dim_platforms .......................... [[32mCREATE TABLE (618.0 rows, 14.5 KiB processed)[0m in 4.91s][0m
+[2023-10-18T20:30:17.843+0000] {subprocess.py:94} INFO - [0m20:30:17  1 of 1 OK created sql table model games.dim_platforms .......................... [[32mCREATE TABLE (618.0 rows, 14.5 KiB processed)[0m in 4.91s]
+[2023-10-18T20:30:17.846+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.846+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17[0m
+[2023-10-18T20:30:17.846+0000] {subprocess.py:94} INFO - [0m20:30:17
+[2023-10-18T20:30:17.846+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.846+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17  Finished running 1 table model in 0 hours 0 minutes and 6.13 seconds (6.13s).[0m
+[2023-10-18T20:30:17.846+0000] {subprocess.py:94} INFO - [0m20:30:17  Finished running 1 table model in 0 hours 0 minutes and 6.13 seconds (6.13s).
+[2023-10-18T20:30:17.862+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.862+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17[0m
+[2023-10-18T20:30:17.862+0000] {subprocess.py:94} INFO - [0m20:30:17
+[2023-10-18T20:30:17.863+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.862+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17  [32mCompleted successfully[0m[0m
+[2023-10-18T20:30:17.862+0000] {subprocess.py:94} INFO - [0m20:30:17  [32mCompleted successfully[0m
+[2023-10-18T20:30:17.863+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.863+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17[0m
+[2023-10-18T20:30:17.863+0000] {subprocess.py:94} INFO - [0m20:30:17
+[2023-10-18T20:30:17.863+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:17.863+0000[0m] {[34msubprocess.py:[0m94} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1[0m
+[2023-10-18T20:30:17.863+0000] {subprocess.py:94} INFO - [0m20:30:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+[2023-10-18T20:30:18.789+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:18.788+0000[0m] {[34msubprocess.py:[0m98} INFO[0m - [35m(astronomer-cosmos)[0m - Command exited with return code 0[0m
+[2023-10-18T20:30:18.788+0000] {subprocess.py:98} INFO - Command exited with return code 0
+[2023-10-18T20:30:18.799+0000] {local.py:86} WARNING - Artifact schema version: https://schemas.getdbt.com/dbt/manifest/v10.json is above dbt-ol supported version 7. This might cause errors.
+[2023-10-18T20:30:18.811+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:18.811+0000[0m] {[34mlocal.py:[0m239} INFO[0m - [35m(astronomer-cosmos)[0m - Inlets: [Dataset(uri='bigquery/pristine-flames-400818.games.raw_games', extra=None)][0m
+[2023-10-18T20:30:18.811+0000] {local.py:239} INFO - Inlets: [Dataset(uri='bigquery/pristine-flames-400818.games.raw_games', extra=None)]
+[2023-10-18T20:30:18.811+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:18.811+0000[0m] {[34mlocal.py:[0m240} INFO[0m - [35m(astronomer-cosmos)[0m - Outlets: [Dataset(uri='bigquery/pristine-flames-400818.games.dim_platforms', extra=None)][0m
+[2023-10-18T20:30:18.811+0000] {local.py:240} INFO - Outlets: [Dataset(uri='bigquery/pristine-flames-400818.games.dim_platforms', extra=None)]
+[2023-10-18T20:30:18.811+0000] {dag.py:2915} INFO - Sync 1 DAGs
+[2023-10-18T20:30:18.859+0000] {dag.py:3696} INFO - Setting next_dagrun for games_details to 2023-10-18T00:00:00+00:00, run_after=2023-10-19T00:00:00+00:00
+[2023-10-18T20:30:18.926+0000] {log.py:232} WARNING - [[34m2023-10-18T20:30:18.926+0000[0m] {[34mlocal.py:[0m358} INFO[0m - [35m(astronomer-cosmos)[0m - [0m20:30:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1[0m
+[2023-10-18T20:30:18.926+0000] {local.py:358} INFO - [0m20:30:17  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+[2023-10-18T20:30:18.927+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/models/baseoperator.py:1473: RemovedInAirflow3Warning: Passing 'execution_date' to 'TaskInstance.xcom_push()' is deprecated.
+  context["ti"].xcom_push(key=key, value=value, execution_date=execution_date)
+
+[2023-10-18T20:30:18.951+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=games_details, task_id=transform.dim_platforms_run, execution_date=20231017T000000, start_date=20231018T203004, end_date=20231018T203018
+[2023-10-18T20:30:18.977+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-10-18T20:30:18.997+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check
