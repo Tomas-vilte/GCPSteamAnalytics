@@ -315,8 +315,26 @@ Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
 
 1. `top_10_discounted_games.sql`: Este informe identifica y muestra los diez juegos con los mayores descuentos en términos de porcentaje de descuento. Es útil para comprender cuáles son los juegos más rebajados en el catálogo.
 
+    ![Top 10 juegos con descuentos](/images/top%2010%20juegos%20con%20descuentos.png)
+
 
 2. `top_10_high_tax_games.sql`: Este informe muestra los diez juegos que tienen el impuesto más alto aplicado a sus precios. Ayuda a identificar los juegos con mayores impuestos y, por lo tanto, precios más elevados.
 
+    ![Top 10 juegos con mas impuestos](/images/top%2010%20de%20juegos%20com%20impuestos.png)
+
 
 3. `top_10_most_expensive_games.sql`: Este informe enumera los diez juegos con los precios más altos en el catálogo. Proporciona información sobre los juegos más caros disponibles.
+
+    ![Top 10 juegos con precios mas altos](/images/top%2010%20juegos%20mas%20caros%20.png)
+
+4. `games_launched_by_date.sql`: Muestra las fechas de lanzamiento y la cantidad de juegos lanzados en cada fecha.
+
+    ![Cantidad de juegos lanzados en cada fecha](/images/Cantidad%20de%20Juegos%20Lanzados%20en%20Diferenetes%20Fechas.png)
+
+5. `top_10_most_successful_editors.sql`: Enumera los 10 editores de juegos más exitosos en términos de ingresos generados.
+
+    ![Top 10 editores mas exitosos](/images/Top%2010%20Editores%20Más%20Exitosos.png)
+
+6. `top_10_developers_by_game_count.sql`: Muestra a los 10 desarrolladores que han creado la mayor cantidad de juegos.
+
+    ![Top 10 cantidad de juegos desarrollador por desarrolladores](/images/Top%2010%20Desarrolladores%20por%20Cantidad%20de%20Juegos.png)
