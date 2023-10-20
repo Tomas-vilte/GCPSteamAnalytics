@@ -320,3 +320,9 @@ Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
 
 
 3. `top_10_most_expensive_games.sql`: Este informe enumera los diez juegos con los precios más altos en el catálogo. Proporciona información sobre los juegos más caros disponibles.
+
+4. `games_launched_by_date.sql`: Muestra las fechas de lanzamiento y la cantidad de juegos lanzados en cada fecha.
+
+5. `top_10_most_successful_editors.sql`: Enumera los 10 editores de juegos más exitosos en términos de ingresos generados.
+
+6. `top_10_developers_by_game_count.sql`: Muestra a los 10 desarrolladores que han creado la mayor cantidad de juegos.
