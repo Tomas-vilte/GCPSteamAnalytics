@@ -6,7 +6,6 @@ gcp/terraform.tfstate.backup
 gcp/.terraform.lock.hcl
 configGCP.env
 gcp/.terraform.tfstate.lock.info
-venv
 venv/
 pipeline/src/config/config.env
 credentials.json
@@ -14,3 +13,4 @@ __pycache__/
 dags/logs/
 /includes/dbt/target/
 /dags/src/config/config.env
+logs/
