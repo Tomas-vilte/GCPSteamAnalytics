@@ -324,10 +324,18 @@ Para ejecutar el Pipeline primero necesitas obtener los datos de la API de Steam
     ```
     Esto lo que hace es obtener los appids a procesar.
 
-4. Despues una vez que se hayan cargado los appids en la tabla, comenta lo que descomentaste, y inicia el servidor
+4. Despues una vez que se hayan cargado los appids en la tabla, comenta lo que descomentaste, y inicia el servidor.
 
 5. Una vez que este corriendo el servidor pegale desde Postman o otro medio a este endpoint localhost:8081/processGames?limit=150,
 esto va a obtener los juegos y los guarda en la db.
+
+6. Una vez que vas a ejecutar el Pipeline vas a tener que cambiar la IP de archivo [config.env](/dags/src/config/config.env)
+    ```
+    DB_PASS=tomi
+    DB_NAME=steamAnalytics
+    DB_USER=tomi
+    DB_HOST=172.19.0.4 Aca reemplazalo por la ip del contenedor
+    ```
 
 ## Ejecución
 
