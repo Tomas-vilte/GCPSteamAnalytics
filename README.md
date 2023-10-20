@@ -26,6 +26,7 @@ Implemente un límite de velocidad en las solicitudes a la API. El límite actua
 - [Procesar juegos de Steam](#procesar-juegos-de-steam)
 - [Procesar reviews de Steam](#procesar-reviews-de-steam)
 - [Explicacion Flujo de Trabajo ELT](#explicacion-flujo-de-trabajo-elt)
+- [Informes y Consultas DBT](#informes-y-consultas-dbt)
 
 ## Obtener Detalles de un Juego por appID
 
@@ -286,6 +287,47 @@ Este proyecto tiene como objetivo demostrar un flujo de trabajo de Extracción, 
   - Soda Data para las validaciones de calidad.
   - dbt para la transformación de datos.
   - Looker Studio para la visualización.
+  - Golang 1.21.2.
+
+## Generacion de los datos
+
+Para ejecutar el Pipeline primero necesitas obtener los datos de la API de Steam y configurar MySQL
+
+1. Una vez que hayas levatando los servicios que estan en el archivo [Docker-Compose](/docker-compose.yaml), Automaticamente se van a crear las tablas necesarias para guardar la info.
+
+2. Despues vas a tener que pasarle la ip del contenedor a la url de la conexion
+    ```go
+    // Esta conexion sirve si no vas a usar servicios de gcp.
+    func createClientLocal() *sqlx.DB {
+        db, err := sqlx.Open("mysql", "tomi:tomi@tcp(172.19.0.4:3307)/steamAnalytics?parseTime=true")
+        if err != nil {
+            panic(err)
+        }
+        return db
+    }
+    ```
+    Cabe aclarar que la IP no es la misma, por lo tanto vas a tener que obtenerla con este comando:
+    ```
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 47bad4ba7c13 aca lo reemplazas con el id del contenedor
+    ```
+3. Una vez que hayas configurado eso, vas a tener que descomentar estas lineas
+    ```go
+    func main() {
+	// Si vas a usarlo en local o en gcp acordate primero de ejecutar esto
+	// data := &handlers.RealDataFetcher{}
+	// db1 := &db.MySQLDatabase{}
+	// fmt.Println(db.InsertData(data, db1))
+
+	log.Printf("App started!")
+	api.StartServer()
+    }
+    ```
+    Esto lo que hace es obtener los appids a procesar.
+
+4. Despues una vez que se hayan cargado los appids en la tabla, comenta lo que descomentaste, y inicia el servidor
+
+5. Una vez que este corriendo el servidor pegale desde Postman o otro medio a este endpoint localhost:8081/processGames?limit=150,
+esto va a obtener los juegos y los guarda en la db.
 
 ## Ejecución
 
@@ -299,12 +341,14 @@ Para ejecutar este flujo de trabajo, sigue los siguientes pasos:
 
    ```bash
    docker-compose up -d
+   ```
 
 4. Esto iniciará los servicios necesarios para ejecutar el flujo de trabajo. Después de que los contenedores se hayan iniciado correctamente, puedes ejecutar el proceso de ELT utilizando un Dockerfile personalizado que contiene los paquetes y configuraciones necesarios. Ejecuta el siguiente comando:
 
     ```bash
     cd GCPSteamAnalytics/
     docker build . --tag extended_airflow:2.7.1
+    ```
 
 
 ## Informes y Consultas DBT
