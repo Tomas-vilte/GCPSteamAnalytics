@@ -249,7 +249,7 @@ Este endpoint se utiliza para procesar las reseñas de usuarios de Steam.
 
 ## Flujo de Trabajo de ELT, Validación y Generación de Informes
 
-Este proyecto tiene como objetivo demostrar un flujo de trabajo de Extracción, Transformación y Carga (ELT) que garantiza la calidad de los datos en cada etapa y facilita la generación de informes confiables. Aquí se describe en detalle cómo funciona el flujo de trabajo y las herramientas que utilice.
+Este proyecto tiene como objetivo demostrar un flujo de trabajo de Extracción, Carga y Transformación (ELT) que garantiza la calidad de los datos en cada etapa y facilita la generación de informes confiables. Aquí se describe en detalle cómo funciona el flujo de trabajo y las herramientas que utilice.
 
 ## Explicacion Flujo de Trabajo ELT
 ![Arquitectura Data Pipeline](/diagram/Data%20pipeline%20arquitectura.png)
